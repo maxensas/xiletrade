@@ -65,7 +65,7 @@ public partial class SuggestionSearchViewModel : ViewModelBase
 
         Suggestions.Clear();
 
-        _cVm.LaunchCustomSearch();
+        _cVm.LaunchCustomSearchAsync();
     }
 
     private async Task UpdateSuggestionsAsync()

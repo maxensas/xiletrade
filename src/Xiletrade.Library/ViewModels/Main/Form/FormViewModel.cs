@@ -484,7 +484,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
         catch (Exception ex)
         {
-            _message.Show(ex.GetFormated(), "Refreshing search error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error009_XSearchRefresh, MessageStatus.Error);
         }
     }
 

@@ -2526,4 +2526,91 @@ Garena server : Traditional Chinese.</value>
   <data name="KeysConverter014_InvalidKeyCombination" xml:space="preserve">
     <value>Key combination is not valid.</value>
   </data>
+  <data name="Error002_CannotTravel" xml:space="preserve">
+    <value>Cannot travel to hideout</value>
+  </data>
+  <data name="Error003_EmptySettings" xml:space="preserve">
+    <value>Empty settings</value>
+  </data>
+  <data name="Error004_XError" xml:space="preserve">
+    <value>Error encountered</value>
+  </data>
+  <data name="Error005_XUpdateResult" xml:space="preserve">
+    <value>Error updating results</value>
+  </data>
+  <data name="Error006_XUpdatePrice" xml:space="preserve">
+    <value>Error updating price</value>
+  </data>
+  <data name="Error007_XSaveConfig" xml:space="preserve">
+    <value>Error saving the configuration</value>
+  </data>
+  <data name="Error008_XFetch" xml:space="preserve">
+    <value>Error fetching data</value>
+  </data>
+  <data name="Error009_XSearchRefresh" xml:space="preserve">
+    <value>Error while refreshing the search</value>
+  </data>
+  <data name="Error010_XUnknownError" xml:space="preserve">
+    <value>An unknown error has occurred</value>
+  </data>
+  <data name="Error011_XAntiSpam" xml:space="preserve">
+    <value>Anti-spam task error</value>
+  </data>
+  <data name="Error012_XMainTask" xml:space="preserve">
+    <value>Main task error</value>
+  </data>
+  <data name="Error013_XCustomSearch" xml:space="preserve">
+    <value>Custom search error</value>
+  </data>
+  <data name="Error014_XSendRegex" xml:space="preserve">
+    <value>Send regex error</value>
+  </data>
+  <data name="Error015_XMainCommand" xml:space="preserve">
+    <value>Main command error</value>
+  </data>
+  <data name="Error016_XSendWhisper" xml:space="preserve">
+    <value>Send whisper message error</value>
+  </data>
+  <data name="Error017_XSerialization" xml:space="preserve">
+    <value>JSON serialization error</value>
+  </data>
+  <data name="Error018_XReqAuth" xml:space="preserve">
+    <value>This feature requires authentication</value>
+  </data>
+  <data name="Error019_XInvalid" xml:space="preserve">
+    <value>Invalid operation</value>
+  </data>
+  <data name="Error020_XUpdateCheck" xml:space="preserve">
+    <value>Xiletrade update check failed</value>
+  </data>
+  <data name="Error021_XErrorCode" xml:space="preserve">
+    <value>ERROR Code : </value>
+  </data>
+  <data name="Error022_XClipboard" xml:space="preserve">
+    <value>Clipboard access error : </value>
+  </data>
+  <data name="Error023_XClipboardRegex" xml:space="preserve">
+    <value>Clipboard access error (regex)</value>
+  </data>
+  <data name="Error024_XSaveFile" xml:space="preserve">
+    <value>File cannot be saved</value>
+  </data>
+  <data name="Error025_XRedirection" xml:space="preserve">
+    <value>The redirection failed</value>
+  </data>
+  <data name="Error026_XUpdate" xml:space="preserve">
+    <value>Failed to update</value>
+  </data>
+  <data name="Error027_XPoeSearch" xml:space="preserve">
+    <value>Failed to open PoE search window</value>
+  </data>
+  <data name="Error028_XLoadSettings" xml:space="preserve">
+    <value>Can not load app settings</value>
+  </data>
+  <data name="Error029_XCurrencyHistory" xml:space="preserve">
+    <value>Can not load currency history</value>
+  </data>
+  <data name="Error030_XNinjaLeague" xml:space="preserve">
+    <value>Can not load leagues list from poe.ninja</value>
+  </data>
 </root>

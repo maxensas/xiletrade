@@ -426,7 +426,7 @@ public sealed class DataManagerService
         }
         catch (Exception ex)
         {
-            _message.Show(ex.GetFormated(), "Error: file cannot be saved", MessageStatus.Exclamation);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error024_XSaveFile, MessageStatus.Exclamation);
             return false;
         }
     }
@@ -462,7 +462,7 @@ public sealed class DataManagerService
             {
                 //ignore
             }
-            _message.Show(ex.GetFormated(), "Error while saving configuration", MessageStatus.Exclamation);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error007_XSaveConfig, MessageStatus.Exclamation);
         }
         return false;
     }

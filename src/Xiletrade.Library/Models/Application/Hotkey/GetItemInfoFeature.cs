@@ -40,7 +40,7 @@ internal sealed class GetItemInfoFeature(INetService net, INavigationService nav
             if (!string.IsNullOrEmpty(clip))
             {
                 vm.ClipboardText = clip;
-                _ = vm.RunMainUpdaterTaskAsync(_shortcut.Fonction);
+                _ = vm.RunMainTaskAsync(_shortcut.Fonction);
             }
         }
         catch (COMException ex) // for now : do not re-throw exception

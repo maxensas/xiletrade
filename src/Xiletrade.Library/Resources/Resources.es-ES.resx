@@ -2530,4 +2530,97 @@ Servidor Garena: chino tradicional.</value>
   <data name="KeysConverter014_InvalidKeyCombination" xml:space="preserve">
     <value>La combinación de teclas no es válida.</value>
   </data>
+  <data name="Error001_CannotOpenSearch" xml:space="preserve">
+    <value>No se puede abrir la búsqueda en el navegador : 
+	</value>
+    <comment>Unable to open search in the browser : 
+	</comment>
+  </data>
+  <data name="Error002_CannotTravel" xml:space="preserve">
+    <value>No se puede viajar al escondite</value>
+  </data>
+  <data name="Error003_EmptySettings" xml:space="preserve">
+    <value>Configuración vacía</value>
+  </data>
+  <data name="Error004_XError" xml:space="preserve">
+    <value>Se ha producido un error</value>
+  </data>
+  <data name="Error005_XUpdateResult" xml:space="preserve">
+    <value>Error al actualizar los resultados</value>
+  </data>
+  <data name="Error006_XUpdatePrice" xml:space="preserve">
+    <value>Error al actualizar el precio</value>
+  </data>
+  <data name="Error007_XSaveConfig" xml:space="preserve">
+    <value>Error al guardar la configuración</value>
+  </data>
+  <data name="Error008_XFetch" xml:space="preserve">
+    <value>Error al obtener los datos</value>
+  </data>
+  <data name="Error009_XSearchRefresh" xml:space="preserve">
+    <value>Error al actualizar la búsqueda</value>
+  </data>
+  <data name="Error010_XUnknownError" xml:space="preserve">
+    <value>Se ha producido un error desconocido</value>
+  </data>
+  <data name="Error011_XAntiSpam" xml:space="preserve">
+    <value>Error en la tarea antispam</value>
+  </data>
+  <data name="Error012_XMainTask" xml:space="preserve">
+    <value>Error en la tarea principal</value>
+  </data>
+  <data name="Error013_XCustomSearch" xml:space="preserve">
+    <value>Error en la búsqueda personalizada</value>
+  </data>
+  <data name="Error014_XSendRegex" xml:space="preserve">
+    <value>Error al enviar la expresión regular</value>
+  </data>
+  <data name="Error015_XMainCommand" xml:space="preserve">
+    <value>Error en el comando principal</value>
+  </data>
+  <data name="Error016_XSendWhisper" xml:space="preserve">
+    <value>Error al enviar el mensaje privado</value>
+  </data>
+  <data name="Error017_XSerialization" xml:space="preserve">
+    <value>Error de serialización JSON</value>
+  </data>
+  <data name="Error018_XReqAuth" xml:space="preserve">
+    <value>Esta función requiere autenticación</value>
+  </data>
+  <data name="Error019_XInvalid" xml:space="preserve">
+    <value>Operación no válida</value>
+  </data>
+  <data name="Error020_XUpdateCheck" xml:space="preserve">
+    <value>Error al comprobar las actualizaciones de Xiletrade</value>
+  </data>
+  <data name="Error021_XErrorCode" xml:space="preserve">
+    <value>CÓDIGO DE ERROR : </value>
+  </data>
+  <data name="Error022_XClipboard" xml:space="preserve">
+    <value>Error al acceder al portapapeles : </value>
+  </data>
+  <data name="Error023_XClipboardRegex" xml:space="preserve">
+    <value>Error al acceder al portapapeles (regex)</value>
+  </data>
+  <data name="Error024_XSaveFile" xml:space="preserve">
+    <value>No se puede guardar el archivo</value>
+  </data>
+  <data name="Error025_XRedirection" xml:space="preserve">
+    <value>La redirección ha fallado</value>
+  </data>
+  <data name="Error026_XUpdate" xml:space="preserve">
+    <value>Error al actualizar</value>
+  </data>
+  <data name="Error027_XPoeSearch" xml:space="preserve">
+    <value>No se pudo abrir la ventana de búsqueda de PoE</value>
+  </data>
+  <data name="Error028_XLoadSettings" xml:space="preserve">
+    <value>No se pueden cargar los ajustes de la aplicación</value>
+  </data>
+  <data name="Error029_XCurrencyHistory" xml:space="preserve">
+    <value>No se puede cargar el historial de divisas</value>
+  </data>
+  <data name="Error030_XNinjaLeague" xml:space="preserve">
+    <value>No se puede cargar la lista de ligas de poe.ninja</value>
+  </data>
 </root>

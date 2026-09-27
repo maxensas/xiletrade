@@ -2528,4 +2528,126 @@ Garena 서버 : 중국어 번체.</value>
   <data name="KeysConverter014_InvalidKeyCombination" xml:space="preserve">
     <value>키 조합이 유효하지 않습니다.</value>
   </data>
+  <data name="Error001_CannotOpenSearch" xml:space="preserve">
+    <value>브라우저에서 검색을 열 수 없습니다 : 
+	</value>
+    <comment>Unable to open search in the browser : 
+	</comment>
+  </data>
+  <data name="Error002_CannotTravel" xml:space="preserve">
+    <value>은신처로 이동할 수 없습니다</value>
+    <comment>Cannot travel to hideout</comment>
+  </data>
+  <data name="Error003_EmptySettings" xml:space="preserve">
+    <value>설정이 비어 있습니다</value>
+    <comment>Empty settings</comment>
+  </data>
+  <data name="Error004_XError" xml:space="preserve">
+    <value>오류가 발생했습니다</value>
+    <comment>Error encountered</comment>
+  </data>
+  <data name="Error005_XUpdateResult" xml:space="preserve">
+    <value>결과 업데이트 중 오류가 발생했습니다</value>
+    <comment>Error updating results</comment>
+  </data>
+  <data name="Error006_XUpdatePrice" xml:space="preserve">
+    <value>가격 업데이트 중 오류가 발생했습니다</value>
+    <comment>Error updating price</comment>
+  </data>
+  <data name="Error007_XSaveConfig" xml:space="preserve">
+    <value>설정 저장 중 오류가 발생했습니다</value>
+    <comment>Error saving the configuration</comment>
+  </data>
+  <data name="Error008_XFetch" xml:space="preserve">
+    <value>데이터를 가져오는 중 오류가 발생했습니다</value>
+    <comment>Error fetching data</comment>
+  </data>
+  <data name="Error009_XSearchRefresh" xml:space="preserve">
+    <value>검색 새로 고침 중 오류가 발생했습니다</value>
+    <comment>Error while refreshing the search</comment>
+  </data>
+  <data name="Error010_XUnknownError" xml:space="preserve">
+    <value>알 수 없는 오류가 발생했습니다</value>
+    <comment>An unknown error has occurred</comment>
+  </data>
+  <data name="Error011_XAntiSpam" xml:space="preserve">
+    <value>스팸 방지 작업 오류</value>
+    <comment>Anti-spam task error</comment>
+  </data>
+  <data name="Error012_XMainTask" xml:space="preserve">
+    <value>주요 작업 오류</value>
+    <comment>Main task error</comment>
+  </data>
+  <data name="Error013_XCustomSearch" xml:space="preserve">
+    <value>사용자 지정 검색 오류</value>
+    <comment>Custom search error</comment>
+  </data>
+  <data name="Error014_XSendRegex" xml:space="preserve">
+    <value>정규식 전송 오류</value>
+    <comment>Send regex error</comment>
+  </data>
+  <data name="Error015_XMainCommand" xml:space="preserve">
+    <value>주요 명령 오류</value>
+    <comment>Main command error</comment>
+  </data>
+  <data name="Error016_XSendWhisper" xml:space="preserve">
+    <value>귓속말 메시지 전송 오류</value>
+    <comment>Send whisper message error</comment>
+  </data>
+  <data name="Error017_XSerialization" xml:space="preserve">
+    <value>JSON 직렬화 오류</value>
+    <comment>JSON serialization error</comment>
+  </data>
+  <data name="Error018_XReqAuth" xml:space="preserve">
+    <value>이 기능을 사용하려면 인증이 필요합니다</value>
+    <comment>This feature requires authentication</comment>
+  </data>
+  <data name="Error019_XInvalid" xml:space="preserve">
+    <value>잘못된 작업입니다</value>
+    <comment>Invalid operation</comment>
+  </data>
+  <data name="Error020_XUpdateCheck" xml:space="preserve">
+    <value>Xiletrade 업데이트 확인에 실패했습니다</value>
+    <comment>Xiletrade update check failed</comment>
+  </data>
+  <data name="Error021_XErrorCode" xml:space="preserve">
+    <value>오류 코드 : </value>
+    <comment>ERROR Code : </comment>
+  </data>
+  <data name="Error022_XClipboard" xml:space="preserve">
+    <value>클립보드 액세스 오류 : </value>
+    <comment>Clipboard access error : </comment>
+  </data>
+  <data name="Error023_XClipboardRegex" xml:space="preserve">
+    <value>클립보드 액세스 오류 (정규식)</value>
+    <comment>Clipboard access error (regex)</comment>
+  </data>
+  <data name="Error024_XSaveFile" xml:space="preserve">
+    <value>파일을 저장할 수 없습니다</value>
+    <comment>File cannot be saved</comment>
+  </data>
+  <data name="Error025_XRedirection" xml:space="preserve">
+    <value>리디렉션에 실패했습니다</value>
+    <comment>The redirection failed</comment>
+  </data>
+  <data name="Error026_XUpdate" xml:space="preserve">
+    <value>업데이트에 실패했습니다</value>
+    <comment>Failed to update</comment>
+  </data>
+  <data name="Error027_XPoeSearch" xml:space="preserve">
+    <value>PoE 검색 창을 열지 못했습니다</value>
+    <comment>Failed to open PoE search window</comment>
+  </data>
+  <data name="Error028_XLoadSettings" xml:space="preserve">
+    <value>앱 설정을 불러올 수 없습니다</value>
+    <comment>Can not load app settings</comment>
+  </data>
+  <data name="Error029_XCurrencyHistory" xml:space="preserve">
+    <value>통화 기록을 불러올 수 없습니다</value>
+    <comment>Can not load currency history</comment>
+  </data>
+  <data name="Error030_XNinjaLeague" xml:space="preserve">
+    <value>poe.ninja에서 리그 목록을 불러올 수 없습니다</value>
+    <comment>Can not load leagues list from poe.ninja</comment>
+  </data>
 </root>

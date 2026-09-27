@@ -281,7 +281,7 @@ public sealed partial class EditorViewModel : ViewModelBase
         }
         catch (Exception ex) 
         {
-            _message.Show(ex.Message, "Error encountered", MessageStatus.Error);
+            _message.Show(ex.Message, Resources.Resources.Error004_XError, MessageStatus.Error);
         }
     }
 }

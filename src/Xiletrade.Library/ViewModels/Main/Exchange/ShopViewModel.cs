@@ -173,7 +173,7 @@ public sealed partial class ShopViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _message.Show(ex.GetFormated(), "Refreshing search error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error009_XSearchRefresh, MessageStatus.Error);
         }
     }
 
@@ -205,7 +205,7 @@ public sealed partial class ShopViewModel : ViewModelBase
             }
             catch (Exception ex)
             {
-                _message.Show(ex.GetFormated(), "Failed to open PoE search window.", MessageStatus.Error);
+                _message.Show(ex.GetFormated(), Resources.Resources.Error027_XPoeSearch, MessageStatus.Error);
             }
         }
         return Task.CompletedTask;

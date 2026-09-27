@@ -145,7 +145,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         }
         catch (Exception)
         {
-            _message.Show("Failed to redirect to Poe Wiki website.", "Error", MessageStatus.Warning);
+            _message.Show("Poe Wiki website", Resources.Resources.Error025_XRedirection, MessageStatus.Warning);
         }
     }
 
@@ -159,7 +159,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         }
         catch (Exception)
         {
-            _message.Show("Failed to redirect to Github website.", "Error", MessageStatus.Warning);
+            _message.Show("Github website", Resources.Resources.Error025_XRedirection, MessageStatus.Warning);
         }
     }
 
@@ -172,7 +172,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         }
         catch (Exception)
         {
-            _message.Show(Resources.Resources.Main126_PaypalFail, "Error", MessageStatus.Warning);
+            _message.Show(Resources.Resources.Main126_PaypalFail, Resources.Resources.Error004_XError, MessageStatus.Warning);
         }
     }
 
@@ -186,7 +186,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         }
         catch (Exception)
         {
-            _message.Show("Failed to redirect to Discord.gg website.", "Error", MessageStatus.Warning);
+            _message.Show("Discord.gg website", Resources.Resources.Error025_XRedirection, MessageStatus.Warning);
         }
     }
 
@@ -200,7 +200,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         }
         catch (Exception)
         {
-            _message.Show("Failed to redirect to Liberapay website.", "Error", MessageStatus.Warning);
+            _message.Show("Liberapay website", Resources.Resources.Error025_XRedirection, MessageStatus.Warning);
         }
     }
 

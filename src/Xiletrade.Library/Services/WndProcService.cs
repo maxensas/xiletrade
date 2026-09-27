@@ -39,7 +39,7 @@ public sealed class WndProcService
             }
             catch (Exception ex)
             {
-                message.Show(ex.GetFormated(), "Main commands error", MessageStatus.Error);
+                message.Show(ex.GetFormated(), Resources.Resources.Error015_XMainCommand, MessageStatus.Error);
             }
             finally
             {

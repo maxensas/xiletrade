@@ -136,7 +136,7 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
                 _message.Show(ex.GetFormated(), "Poeprices error code : " + exception.StatusCode, MessageStatus.Information);
                 return;
             }
-            _message.Show(ex.GetFormated(), "UTF8 Deserialize error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error017_XSerialization, MessageStatus.Error);
         }
         finally
         {
@@ -165,10 +165,10 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
         {
             if (saleInfo.HideoutToken is null || saleInfo.HideoutToken.Length is 0)
             {
-                _message.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is missing or expired !" +
+                _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\nYour POESESSID is missing or expired !" +
                     "\n\nFor advanced users : You can manually update your POESESSID " +
                     "under settings by using the developer manager in the authentication section.",
-                    "This feature requires authentication", MessageStatus.Exclamation);
+                    Resources.Resources.Error018_XReqAuth, MessageStatus.Exclamation);
                 return;
             }
 
@@ -192,23 +192,24 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
                     }
                     if (exception.StatusCode is System.Net.HttpStatusCode.BadRequest)
                     {
-                        _message.Show("Cannot travel to hideout :" + "\n\nIs your account correctly connected ?"
-                        , "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                        _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\nIs your account correctly connected ?", 
+                            Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
                         return;
                     }
                     if (exception.StatusCode is System.Net.HttpStatusCode.Forbidden)
                     {
-                        _message.Show("Cannot travel to hideout.", "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                        _message.Show(Resources.Resources.Error002_CannotTravel, 
+                            Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
                         return;
                     }
-                    _message.Show("Cannot travel to hideout : " + "\n\nYour POESESSID is probably missing or expired !" +
+                    _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\nYour POESESSID is probably missing or expired !" +
                         "\n\nYou can manually update it under settings by using the developer manager in the authentication section.",
-                        "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
+                        Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
 
                 }
-                _message.Show("Cannot travel to hideout :\n\n" +
+                _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\n" +
                     string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace),
-                    "Unknown error encountered", MessageStatus.Error);
+                    Resources.Resources.Error010_XUnknownError, MessageStatus.Error);
             }
         }
     }
@@ -230,7 +231,7 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
         catch (InvalidOperationException ex)
         {
             result = new(emptyLine: true);
-            _message.Show(ex.GetFormated(), "Invalid operation", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error019_XInvalid, MessageStatus.Error);
         }
         catch (Exception ex)
         {

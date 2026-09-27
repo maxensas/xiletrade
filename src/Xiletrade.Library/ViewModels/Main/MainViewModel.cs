@@ -188,8 +188,9 @@ public sealed partial class MainViewModel : ViewModelBase
         {
             if (ex.InnerException is HttpRequestException exception)
             {
-                _message.Show("Cannot open search in browser : \n" + exception.Message, "ERROR Code : " + exception.StatusCode, MessageStatus.Error);
-            }
+                _message.Show(Resources.Resources.Error001_CannotOpenSearch + exception.Message, 
+                    Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
+            } 
         }
     }
 
@@ -232,20 +233,15 @@ public sealed partial class MainViewModel : ViewModelBase
             var message = type is UrlType.PoeDb ? Resources.Resources.Main201_PoedbFail
             : type is UrlType.PoeWiki ? Resources.Resources.Main124_WikiFail
             : type is UrlType.Ninja ? Resources.Resources.Main125_NinjaFail
-            : type is UrlType.CraftOfExile ? "Fail CoE"
-            : string.Empty;
-            var caption = type is UrlType.PoeDb ? "Redirection to poedb failed "
-            : type is UrlType.PoeWiki ? "Redirection to wiki failed "
-            : type is UrlType.Ninja ? "Redirection to ninja failed "
-            : type is UrlType.CraftOfExile ? "Redirection to Craft of Exile failed "
+            : type is UrlType.CraftOfExile ? "Craft of Exile website"
             : string.Empty;
 
-            _message.Show(message, caption, MessageStatus.Warning);
+            _message.Show(message, Resources.Resources.Error025_XRedirection, MessageStatus.Warning);
         }
         return Task.CompletedTask;
     }
 
-    internal async Task RunMainUpdaterTaskAsync(string fonction)
+    internal async Task RunMainTaskAsync(string fonction)
     {
         try
         {
@@ -258,12 +254,12 @@ public sealed partial class MainViewModel : ViewModelBase
             bool openCoeOnly = fonction is Strings.Feature.coe;
             bool openWindow = !openWikiOnly && !openNinjaOnly && !openCoeOnly;
 
-            TaskManager.MainUpdaterTask = Task.Run(() =>
+            TaskManager.MainTask = Task.Run(() =>
             {
                 try
                 {
 #if DEBUG
-                    _logger.LogInformation("Starting Main Updater Task.");
+                    _logger.LogInformation("Starting Main Task.");
 #endif
                     var infoDesc = new InfoDescription(ClipboardText);
                     if (!infoDesc.IsPoeItem)
@@ -316,14 +312,13 @@ public sealed partial class MainViewModel : ViewModelBase
                 }
                 catch (Exception ex)
                 {
-                    _message.Show(ex.GetFormated(), "Item parsing error : method UpdateMainViewModel", MessageStatus.Error);
+                    _message.Show(ex.GetFormated(), Resources.Resources.Error012_XMainTask, MessageStatus.Error);
                 }
             }, token);
         }
         catch (Exception ex)
         {
-            // Log cancel/initialization errors (this doesn't happen often, but better to be safe than sorry)
-            _message.Show(ex.GetFormated(), "Anti-spam task error", MessageStatus.Warning);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error011_XAntiSpam, MessageStatus.Warning);
         }
     }
 
@@ -347,7 +342,7 @@ public sealed partial class MainViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _message.Show(ex.GetFormated(), "JSON serialization error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error017_XSerialization, MessageStatus.Error);
         }
         return null;
     }

@@ -103,7 +103,7 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _message.Show(ex.GetFormated(), "Failed to redirect to Poe Regex website", MessageStatus.Warning);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error025_XRedirection, MessageStatus.Warning);
         }
     }
 }

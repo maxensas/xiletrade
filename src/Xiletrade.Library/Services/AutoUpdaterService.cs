@@ -41,7 +41,7 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
         }
         catch (Exception ex)
         {
-            _message.Show(ex.GetFormated(),"Failed to check for Xiletrade updates", MessageStatus.Exclamation);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error020_XUpdateCheck, MessageStatus.Exclamation);
         }
     }
 

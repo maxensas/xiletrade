@@ -2524,4 +2524,126 @@
   <data name="KeysConverter014_InvalidKeyCombination" xml:space="preserve">
     <value>Комбинация клавиш недействительна.</value>
   </data>
+  <data name="Error001_CannotOpenSearch" xml:space="preserve">
+    <value>Не удалось открыть поиск в браузере : 
+	</value>
+    <comment>Unable to open search in the browser : 
+	</comment>
+  </data>
+  <data name="Error002_CannotTravel" xml:space="preserve">
+    <value>Невозможно переместиться в убежище</value>
+    <comment>Cannot travel to hideout</comment>
+  </data>
+  <data name="Error003_EmptySettings" xml:space="preserve">
+    <value>Пустые настройки</value>
+    <comment>Empty settings</comment>
+  </data>
+  <data name="Error004_XError" xml:space="preserve">
+    <value>Произошла ошибка</value>
+    <comment>Error encountered</comment>
+  </data>
+  <data name="Error005_XUpdateResult" xml:space="preserve">
+    <value>Ошибка при обновлении результатов</value>
+    <comment>Error updating results</comment>
+  </data>
+  <data name="Error006_XUpdatePrice" xml:space="preserve">
+    <value>Ошибка при обновлении цены</value>
+    <comment>Error updating price</comment>
+  </data>
+  <data name="Error007_XSaveConfig" xml:space="preserve">
+    <value>Ошибка при сохранении конфигурации</value>
+    <comment>Error saving the configuration</comment>
+  </data>
+  <data name="Error008_XFetch" xml:space="preserve">
+    <value>Ошибка при получении данных</value>
+    <comment>Error fetching data</comment>
+  </data>
+  <data name="Error009_XSearchRefresh" xml:space="preserve">
+    <value>Ошибка при обновлении поиска</value>
+    <comment>Error while refreshing the search</comment>
+  </data>
+  <data name="Error010_XUnknownError" xml:space="preserve">
+    <value>Произошла неизвестная ошибка</value>
+    <comment>An unknown error has occurred</comment>
+  </data>
+  <data name="Error011_XAntiSpam" xml:space="preserve">
+    <value>Ошибка задачи защиты от спама</value>
+    <comment>Anti-spam task error</comment>
+  </data>
+  <data name="Error012_XMainTask" xml:space="preserve">
+    <value>Ошибка основной задачи</value>
+    <comment>Main task error</comment>
+  </data>
+  <data name="Error013_XCustomSearch" xml:space="preserve">
+    <value>Ошибка пользовательского поиска</value>
+    <comment>Custom search error</comment>
+  </data>
+  <data name="Error014_XSendRegex" xml:space="preserve">
+    <value>Ошибка при отправке регулярного выражения</value>
+    <comment>Send regex error</comment>
+  </data>
+  <data name="Error015_XMainCommand" xml:space="preserve">
+    <value>Ошибка основной команды</value>
+    <comment>Main command error</comment>
+  </data>
+  <data name="Error016_XSendWhisper" xml:space="preserve">
+    <value>Ошибка при отправке личного сообщения</value>
+    <comment>Send whisper message error</comment>
+  </data>
+  <data name="Error017_XSerialization" xml:space="preserve">
+    <value>Ошибка сериализации JSON</value>
+    <comment>JSON serialization error</comment>
+  </data>
+  <data name="Error018_XReqAuth" xml:space="preserve">
+    <value>Для этой функции требуется аутентификация</value>
+    <comment>This feature requires authentication</comment>
+  </data>
+  <data name="Error019_XInvalid" xml:space="preserve">
+    <value>Недопустимая операция</value>
+    <comment>Invalid operation</comment>
+  </data>
+  <data name="Error020_XUpdateCheck" xml:space="preserve">
+    <value>Не удалось проверить наличие обновлений Xiletrade</value>
+    <comment>Xiletrade update check failed</comment>
+  </data>
+  <data name="Error021_XErrorCode" xml:space="preserve">
+    <value>КОД ОШИБКИ : </value>
+    <comment>ERROR Code : </comment>
+  </data>
+  <data name="Error022_XClipboard" xml:space="preserve">
+    <value>Ошибка доступа к буферу обмена : </value>
+    <comment>Clipboard access error : </comment>
+  </data>
+  <data name="Error023_XClipboardRegex" xml:space="preserve">
+    <value>Ошибка доступа к буферу обмена (regex)</value>
+    <comment>Clipboard access error (regex)</comment>
+  </data>
+  <data name="Error024_XSaveFile" xml:space="preserve">
+    <value>Невозможно сохранить файл</value>
+    <comment>File cannot be saved</comment>
+  </data>
+  <data name="Error025_XRedirection" xml:space="preserve">
+    <value>Переадресация не удалась</value>
+    <comment>The redirection failed</comment>
+  </data>
+  <data name="Error026_XUpdate" xml:space="preserve">
+    <value>Не удалось обновить</value>
+    <comment>Failed to update</comment>
+  </data>
+  <data name="Error027_XPoeSearch" xml:space="preserve">
+    <value>Не удалось открыть окно поиска PoE</value>
+    <comment>Failed to open PoE search window</comment>
+  </data>
+  <data name="Error028_XLoadSettings" xml:space="preserve">
+    <value>Не удалось загрузить настройки приложения</value>
+    <comment>Can not load app settings</comment>
+  </data>
+  <data name="Error029_XCurrencyHistory" xml:space="preserve">
+    <value>Не удалось загрузить историю валют</value>
+    <comment>Can not load currency history</comment>
+  </data>
+  <data name="Error030_XNinjaLeague" xml:space="preserve">
+    <value>Не удалось загрузить список лиг с poe.ninja</value>
+    <comment>Can not load leagues list from poe.ninja</comment>
+  </data>
 </root>

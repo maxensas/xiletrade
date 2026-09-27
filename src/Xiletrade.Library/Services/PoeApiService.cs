@@ -78,7 +78,7 @@ public sealed class PoeApiService
         }
         catch (Exception ex)
         {
-            _message.Show(ex.GetFormated(), "Error encountered while serializing Exchange object...", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error005_XUpdateResult, MessageStatus.Error);
         }
 
         return new ResultBar(state: ResultBarSate.NoResult);
@@ -151,7 +151,7 @@ public sealed class PoeApiService
             {
                 return new(ex, abort);
             }
-            _message.Show(ex.GetFormated(), "FetchResults() : Error encountered while fetching data...", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "Result : " + Resources.Resources.Error008_XFetch, MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
         return new(_dm, currencys.ListCur, _vm.Form.Tab.QuickSelected);
@@ -199,7 +199,7 @@ public sealed class PoeApiService
                 return new(ex, false);
             }
 
-            _message.Show(ex.GetFormated(), "Error encountered while updating price...", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error006_XUpdatePrice, MessageStatus.Error);
         }
         return new(emptyLine: true);
     }
@@ -394,7 +394,7 @@ public sealed class PoeApiService
             {
                 return new(ex, abort);
             }
-            _message.Show(ex.GetFormated(), "FillBulkWindow() : Error encountered while fetching data...", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "Bulk : " + Resources.Resources.Error008_XFetch, MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
         return new();
@@ -482,7 +482,7 @@ public sealed class PoeApiService
             {
                 return new(ex, abort);
             }
-            _message.Show(ex.GetFormated(), "FillShopWindow() : Error encountered while fetching data...", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), "Shop : " + Resources.Resources.Error008_XFetch, MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
         return new();

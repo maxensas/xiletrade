@@ -45,7 +45,7 @@ public sealed class ClipboardService(ISendInputService input, IClipboardAdapterS
         }
         catch (COMException ex)
         {
-            _message.Show(ex.GetFormated(), "Clipboard access error : setting " + command, MessageStatus.Error);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error022_XClipboard + command, MessageStatus.Error);
         }
     }
 
@@ -121,7 +121,7 @@ public sealed class ClipboardService(ISendInputService input, IClipboardAdapterS
         }
         catch (Exception ex)
         {
-            _message.Show(ex.GetFormated(), "Send whisper message error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error016_XSendWhisper, MessageStatus.Error);
         }
         finally
         {
@@ -161,12 +161,12 @@ public sealed class ClipboardService(ISendInputService input, IClipboardAdapterS
         {
             if (!ex.Message.Contain("0x800401D0")) // CLIPBRD_E_CANT_OPEN // System.Runtime.InteropServices.COMException
             {
-                _message.Show(ex.GetFormated(), "Clipboard access error (regex)", MessageStatus.Error);
+                _message.Show(ex.GetFormated(), Resources.Resources.Error023_XClipboardRegex, MessageStatus.Error);
             }
         }
         catch (Exception ex)
         {
-            _message.Show(ex.GetFormated(), "Send regex error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error014_XSendRegex, MessageStatus.Error);
         }
     }
 }

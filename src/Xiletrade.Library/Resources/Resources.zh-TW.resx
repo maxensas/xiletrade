@@ -2601,4 +2601,126 @@ Garena服務器：繁體中文。</value>
   <data name="KeysConverter014_InvalidKeyCombination" xml:space="preserve">
     <value>鍵組合無效。</value>
   </data>
+  <data name="Error001_CannotOpenSearch" xml:space="preserve">
+    <value>無法在瀏覽器中開啟搜尋： 
+	</value>
+    <comment>Unable to open search in the browser : 
+	</comment>
+  </data>
+  <data name="Error002_CannotTravel" xml:space="preserve">
+    <value>無法前往藏身處</value>
+    <comment>Cannot travel to hideout</comment>
+  </data>
+  <data name="Error003_EmptySettings" xml:space="preserve">
+    <value>設定為空</value>
+    <comment>Empty settings</comment>
+  </data>
+  <data name="Error004_XError" xml:space="preserve">
+    <value>發生錯誤</value>
+    <comment>Error encountered</comment>
+  </data>
+  <data name="Error005_XUpdateResult" xml:space="preserve">
+    <value>更新結果時發生錯誤</value>
+    <comment>Error updating results</comment>
+  </data>
+  <data name="Error006_XUpdatePrice" xml:space="preserve">
+    <value>更新價格時發生錯誤</value>
+    <comment>Error updating price</comment>
+  </data>
+  <data name="Error007_XSaveConfig" xml:space="preserve">
+    <value>儲存設定時發生錯誤</value>
+    <comment>Error saving the configuration</comment>
+  </data>
+  <data name="Error008_XFetch" xml:space="preserve">
+    <value>取得資料時發生錯誤</value>
+    <comment>Error fetching data</comment>
+  </data>
+  <data name="Error009_XSearchRefresh" xml:space="preserve">
+    <value>重新整理搜尋時發生錯誤</value>
+    <comment>Error while refreshing the search</comment>
+  </data>
+  <data name="Error010_XUnknownError" xml:space="preserve">
+    <value>發生未知錯誤</value>
+    <comment>An unknown error has occurred</comment>
+  </data>
+  <data name="Error011_XAntiSpam" xml:space="preserve">
+    <value>反垃圾郵件工作發生錯誤</value>
+    <comment>Anti-spam task error</comment>
+  </data>
+  <data name="Error012_XMainTask" xml:space="preserve">
+    <value>主要工作發生錯誤</value>
+    <comment>Main task error</comment>
+  </data>
+  <data name="Error013_XCustomSearch" xml:space="preserve">
+    <value>自訂搜尋發生錯誤</value>
+    <comment>Custom search error</comment>
+  </data>
+  <data name="Error014_XSendRegex" xml:space="preserve">
+    <value>傳送正規表示式時發生錯誤</value>
+    <comment>Send regex error</comment>
+  </data>
+  <data name="Error015_XMainCommand" xml:space="preserve">
+    <value>主要指令發生錯誤</value>
+    <comment>Main command error</comment>
+  </data>
+  <data name="Error016_XSendWhisper" xml:space="preserve">
+    <value>傳送密語訊息時發生錯誤</value>
+    <comment>Send whisper message error</comment>
+  </data>
+  <data name="Error017_XSerialization" xml:space="preserve">
+    <value>JSON 序列化錯誤</value>
+    <comment>JSON serialization error</comment>
+  </data>
+  <data name="Error018_XReqAuth" xml:space="preserve">
+    <value>此功能需要驗證</value>
+    <comment>This feature requires authentication</comment>
+  </data>
+  <data name="Error019_XInvalid" xml:space="preserve">
+    <value>無效的操作</value>
+    <comment>Invalid operation</comment>
+  </data>
+  <data name="Error020_XUpdateCheck" xml:space="preserve">
+    <value>Xiletrade 更新檢查失敗</value>
+    <comment>Xiletrade update check failed</comment>
+  </data>
+  <data name="Error021_XErrorCode" xml:space="preserve">
+    <value>錯誤代碼： </value>
+    <comment>ERROR Code : </comment>
+  </data>
+  <data name="Error022_XClipboard" xml:space="preserve">
+    <value>剪貼簿存取錯誤： </value>
+    <comment>Clipboard access error : </comment>
+  </data>
+  <data name="Error023_XClipboardRegex" xml:space="preserve">
+    <value>剪貼簿存取錯誤（正規表示式）</value>
+    <comment>Clipboard access error (regex)</comment>
+  </data>
+  <data name="Error024_XSaveFile" xml:space="preserve">
+    <value>無法儲存檔案</value>
+    <comment>File cannot be saved</comment>
+  </data>
+  <data name="Error025_XRedirection" xml:space="preserve">
+    <value>重新導向失敗</value>
+    <comment>The redirection failed</comment>
+  </data>
+  <data name="Error026_XUpdate" xml:space="preserve">
+    <value>更新失敗</value>
+    <comment>Failed to update</comment>
+  </data>
+  <data name="Error027_XPoeSearch" xml:space="preserve">
+    <value>無法開啟 PoE 搜尋視窗</value>
+    <comment>Failed to open PoE search window</comment>
+  </data>
+  <data name="Error028_XLoadSettings" xml:space="preserve">
+    <value>無法載入應用程式設定</value>
+    <comment>Can not load app settings</comment>
+  </data>
+  <data name="Error029_XCurrencyHistory" xml:space="preserve">
+    <value>無法載入貨幣歷史記錄</value>
+    <comment>Can not load currency history</comment>
+  </data>
+  <data name="Error030_XNinjaLeague" xml:space="preserve">
+    <value>無法從 poe.ninja 載入聯盟列表</value>
+    <comment>Can not load leagues list from poe.ninja</comment>
+  </data>
 </root>

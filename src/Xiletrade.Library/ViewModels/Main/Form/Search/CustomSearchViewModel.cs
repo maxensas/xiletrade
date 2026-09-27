@@ -133,7 +133,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
             _vm.Form.CorruptedIndex = 0;
             _vm.Form.Rarity.Index = 4;
 
-            LaunchCustomSearch();
+            LaunchCustomSearchAsync();
         }
     }
 
@@ -158,7 +158,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     private void CustomSearch(object commandParameter)
     {
         UnidUniquesIndex = 0;
-        LaunchCustomSearch();
+        LaunchCustomSearchAsync();
     }
 
     [RelayCommand]
@@ -187,7 +187,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         return minMaxList;
     }
 
-    internal async void LaunchCustomSearch()
+    internal async void LaunchCustomSearchAsync()
     {
         if (!_vm.Form.Tab.CustomSearchSelected ||
             (string.IsNullOrEmpty(_vm.Form.CustomSearch.Search.SearchQuery) 
@@ -214,7 +214,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _message.Show(ex.GetFormated(), "Custom search error", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error013_XCustomSearch, MessageStatus.Error);
         }
     }
 }

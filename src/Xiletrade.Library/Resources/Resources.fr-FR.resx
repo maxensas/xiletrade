@@ -2527,4 +2527,126 @@ Serveur Garena: Chinois traditionnel.</value>
   <data name="KeysConverter014_InvalidKeyCombination" xml:space="preserve">
     <value>La combinaison de touches n'est pas valide.</value>
   </data>
+  <data name="Error001_CannotOpenSearch" xml:space="preserve">
+    <value>Impossible d'ouvrir la recherche dans le navigateur : 
+	</value>
+    <comment>Unable to open search in the browser : 
+	</comment>
+  </data>
+  <data name="Error002_CannotTravel" xml:space="preserve">
+    <value>Impossible de voyager vers le repaire</value>
+    <comment>Cannot travel to hideout</comment>
+  </data>
+  <data name="Error003_EmptySettings" xml:space="preserve">
+    <value>Paramètres vides</value>
+    <comment>Empty settings</comment>
+  </data>
+  <data name="Error004_XError" xml:space="preserve">
+    <value>Une erreur est survenue</value>
+    <comment>Error encountered</comment>
+  </data>
+  <data name="Error005_XUpdateResult" xml:space="preserve">
+    <value>Erreur lors de la mise à jour des résultats</value>
+    <comment>Error updating results</comment>
+  </data>
+  <data name="Error006_XUpdatePrice" xml:space="preserve">
+    <value>Erreur lors de la mise à jour du prix</value>
+    <comment>Error updating price</comment>
+  </data>
+  <data name="Error007_XSaveConfig" xml:space="preserve">
+    <value>Erreur lors de l'enregistrement de la configuration</value>
+    <comment>Error saving the configuration</comment>
+  </data>
+  <data name="Error008_XFetch" xml:space="preserve">
+    <value>Erreur lors de la récupération des données</value>
+    <comment>Error fetching data</comment>
+  </data>
+  <data name="Error009_XSearchRefresh" xml:space="preserve">
+    <value>Erreur lors de l'actualisation de la recherche</value>
+    <comment>Error while refreshing the search</comment>
+  </data>
+  <data name="Error010_XUnknownError" xml:space="preserve">
+    <value>Une erreur inconnue est survenue</value>
+    <comment>An unknown error has occurred</comment>
+  </data>
+  <data name="Error011_XAntiSpam" xml:space="preserve">
+    <value>Erreur de la tâche anti-spam</value>
+    <comment>Anti-spam task error</comment>
+  </data>
+  <data name="Error012_XMainTask" xml:space="preserve">
+    <value>Erreur de la tâche principale</value>
+    <comment>Main task error</comment>
+  </data>
+  <data name="Error013_XCustomSearch" xml:space="preserve">
+    <value>Erreur de la recherche personnalisée</value>
+    <comment>Custom search error</comment>
+  </data>
+  <data name="Error014_XSendRegex" xml:space="preserve">
+    <value>Erreur lors de l'envoi de l'expression régulière</value>
+    <comment>Send regex error</comment>
+  </data>
+  <data name="Error015_XMainCommand" xml:space="preserve">
+    <value>Erreur de la commande principale</value>
+    <comment>Main command error</comment>
+  </data>
+  <data name="Error016_XSendWhisper" xml:space="preserve">
+    <value>Erreur lors de l'envoi du message privé</value>
+    <comment>Send whisper message error</comment>
+  </data>
+  <data name="Error017_XSerialization" xml:space="preserve">
+    <value>Erreur de sérialisation JSON</value>
+    <comment>JSON serialization error</comment>
+  </data>
+  <data name="Error018_XReqAuth" xml:space="preserve">
+    <value>Cette fonctionnalité nécessite une authentification</value>
+    <comment>This feature requires authentication</comment>
+  </data>
+  <data name="Error019_XInvalid" xml:space="preserve">
+    <value>Opération non valide</value>
+    <comment>Invalid operation</comment>
+  </data>
+  <data name="Error020_XUpdateCheck" xml:space="preserve">
+    <value>Échec de la vérification des mises à jour de Xiletrade</value>
+    <comment>Xiletrade update check failed</comment>
+  </data>
+  <data name="Error021_XErrorCode" xml:space="preserve">
+    <value>CODE D'ERREUR : </value>
+    <comment>ERROR Code : </comment>
+  </data>
+  <data name="Error022_XClipboard" xml:space="preserve">
+    <value>Erreur d'accès au presse-papiers : </value>
+    <comment>Clipboard access error : </comment>
+  </data>
+  <data name="Error023_XClipboardRegex" xml:space="preserve">
+    <value>Erreur d'accès au presse-papiers (regex)</value>
+    <comment>Clipboard access error (regex)</comment>
+  </data>
+  <data name="Error024_XSaveFile" xml:space="preserve">
+    <value>Impossible d'enregistrer le fichier</value>
+    <comment>File cannot be saved</comment>
+  </data>
+  <data name="Error025_XRedirection" xml:space="preserve">
+    <value>La redirection a échoué</value>
+    <comment>The redirection failed</comment>
+  </data>
+  <data name="Error026_XUpdate" xml:space="preserve">
+    <value>Échec de la mise à jour</value>
+    <comment>Failed to update</comment>
+  </data>
+  <data name="Error027_XPoeSearch" xml:space="preserve">
+    <value>Impossible d'ouvrir la fenêtre de recherche de PoE</value>
+    <comment>Failed to open PoE search window</comment>
+  </data>
+  <data name="Error028_XLoadSettings" xml:space="preserve">
+    <value>Impossible de charger les paramètres de l'application</value>
+    <comment>Can not load app settings</comment>
+  </data>
+  <data name="Error029_XCurrencyHistory" xml:space="preserve">
+    <value>Impossible de charger l'historique des devises</value>
+    <comment>Can not load currency history</comment>
+  </data>
+  <data name="Error030_XNinjaLeague" xml:space="preserve">
+    <value>Impossible de charger la liste des ligues depuis poe.ninja</value>
+    <comment>Can not load leagues list from poe.ninja</comment>
+  </data>
 </root>

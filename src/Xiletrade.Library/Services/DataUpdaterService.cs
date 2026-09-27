@@ -134,12 +134,12 @@ public sealed class DataUpdaterService
                 {
                     return settings;
                 }
-                _message.Show("Empty settings", "Can not load app settings", MessageStatus.Information);
+                _message.Show(Resources.Resources.Error003_EmptySettings, Resources.Resources.Error028_XLoadSettings, MessageStatus.Information);
             }
         }
         catch (Exception ex)
         {
-            _message.Show(ex.GetFormated(), "Can not load app settings from GitHub", MessageStatus.Information);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error028_XLoadSettings, MessageStatus.Information);
         }
         return null;
     }

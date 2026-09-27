@@ -57,7 +57,7 @@ public sealed partial class UpdateViewModel(IUpdateDownloader downloader,
         }
         catch (Exception ex)
         {
-            _message.Show(ex.GetFormated(), "Failed to update", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error026_XUpdate, MessageStatus.Error);
         }
     }
 
@@ -65,13 +65,13 @@ public sealed partial class UpdateViewModel(IUpdateDownloader downloader,
     {
         if (_downloader.DownloadPath is null || archiveFile is null)
         {
-            _message.Show("No update asset found.", "Update", MessageStatus.Error);
+            _message.Show("No update asset found.", Resources.Resources.Error004_XError, MessageStatus.Error);
             return;
         }
         var exe = Directory.GetFiles(_downloader.DownloadPath, _downloader.ListUpdaterFiles[0], SearchOption.AllDirectories).FirstOrDefault();
         if (exe is null)
         {
-            _message.Show("Update extracted, but no .exe found.", "Update", MessageStatus.Warning);
+            _message.Show("Update extracted, but no .exe found.", Resources.Resources.Error004_XError, MessageStatus.Warning);
             return;
         }
 

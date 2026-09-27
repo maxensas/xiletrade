@@ -16,14 +16,14 @@ internal sealed class TaskManager
 
     internal Task<ResultBar> PriceTask { get; set; } = null;
     internal Task NinjaTask { get; set; } = null;
-    internal Task MainUpdaterTask { get; set; } = null;
+    internal Task MainTask { get; set; } = null;
 
     /// <summary>
     /// Avoid price check spam, previous threads need to end properly
     /// </summary>
     internal async Task CancelPreviousTasksAsync()
     {
-        if (MainUpdaterTask is not null && !MainUpdaterTask.IsCompleted)
+        if (MainTask is not null && !MainTask.IsCompleted)
         {
             MainUpdaterCts?.Cancel();
         }
@@ -35,8 +35,8 @@ internal sealed class TaskManager
 
         try
         {
-            if (MainUpdaterTask is not null)
-                await MainUpdaterTask.ConfigureAwait(false);
+            if (MainTask is not null)
+                await MainTask.ConfigureAwait(false);
 
             if (PriceTask is not null)
                 await PriceTask.ConfigureAwait(false);

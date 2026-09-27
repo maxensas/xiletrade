@@ -107,7 +107,7 @@ public sealed class PoeNinjaService
         }
         catch (Exception ex)
         {
-            _message.Show(ex.GetFormated(), "Can not load leagues list from poe.ninja", MessageStatus.Information);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error030_XNinjaLeague, MessageStatus.Information);
             NinjaState ??= GenerateCustomState();
         }
     }
@@ -139,7 +139,7 @@ public sealed class PoeNinjaService
         }
         catch (Exception ex)
         {
-            _message.Show(ex.GetFormated(), "Can not load currency history from poe.ninja", MessageStatus.Information);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error029_XCurrencyHistory, MessageStatus.Information);
         }
         return null;
     }
