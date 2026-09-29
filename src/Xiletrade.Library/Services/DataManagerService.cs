@@ -20,7 +20,7 @@ namespace Xiletrade.Library.Services;
 public sealed class DataManagerService
 {
     private readonly IMessageAdapterService _message;
-    private readonly UIService _ui;
+    private readonly IUIService _ui;
 
     internal JsonHelper Json { get; private set; }
 
@@ -50,7 +50,7 @@ public sealed class DataManagerService
     internal CurrencyResultData[] CurrenciesGateway { get; private set; }
 
     public DataManagerService(ILogger<DataManagerService> logger,
-        IMessageAdapterService message, UIService ui)
+        IMessageAdapterService message, IUIService ui)
     {
         _message = message;
         _ui = ui;

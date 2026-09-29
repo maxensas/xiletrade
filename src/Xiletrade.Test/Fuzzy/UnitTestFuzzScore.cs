@@ -1,6 +1,4 @@
-﻿using Xunit.Abstractions;
-
-namespace Xiletrade.Test.Fuzzy;
+﻿namespace Xiletrade.Test.Fuzzy;
 
 public class UnitTestFuzzScore : UnitTest
 {

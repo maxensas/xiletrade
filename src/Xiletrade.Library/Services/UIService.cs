@@ -2,10 +2,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.Library.Services;
 
-public sealed class UIService
+public sealed class UIService : IUIService
 {
     public static SynchronizationContext UiThreadContext { get; private set; }
 

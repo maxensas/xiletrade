@@ -1,7 +1,4 @@
-﻿using System;
-using Xunit.Abstractions;
-
-namespace Xiletrade.Test.Fuzzy;
+﻿namespace Xiletrade.Test.Fuzzy;
 
 public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
 {

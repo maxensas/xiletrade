@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
-using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.Shared.Interop;
 
@@ -36,7 +36,7 @@ public partial class MainView : ViewBase, IMainView
 
     private void Window_DragMove(object sender, MouseButtonEventArgs e)
     {
-        var mainHwnd = App.Services.GetRequiredService<UIService>().MainHwnd;
+        var mainHwnd = App.Services.GetRequiredService<IUIService>().MainHwnd;
 
         if (!Native.GetForegroundWindow().Equals(mainHwnd))
         {

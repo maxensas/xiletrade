@@ -10,12 +10,12 @@ namespace Xiletrade.Library.Services;
 
 /// <summary> Service used to interact with clipboard and PoE message whispering.</summary>
 public sealed class ClipboardService(ISendInputService input, IClipboardAdapterService clipboard, 
-    IMessageAdapterService message, UIService ui)
+    IMessageAdapterService message, IUIService ui)
 {
     private readonly ISendInputService _input = input;
     private readonly IClipboardAdapterService _clipboard = clipboard;
     private readonly IMessageAdapterService _message = message;
-    private readonly UIService _ui = ui;    
+    private readonly IUIService _ui = ui;    
 
     private bool _sendingWhisper;
 

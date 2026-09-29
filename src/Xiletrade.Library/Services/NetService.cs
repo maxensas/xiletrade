@@ -70,7 +70,7 @@ public class NetService : INetService
     private readonly SemaphoreSlim _throttle = new(MAX_CONCURRENT_REQUEST);
 
     public NetService(ILogger<NetService> logger, ITokenService token, 
-        DataManagerService dm, UIService ui)
+        DataManagerService dm, IUIService ui)
     {
         _token = token;
         _dm = dm;

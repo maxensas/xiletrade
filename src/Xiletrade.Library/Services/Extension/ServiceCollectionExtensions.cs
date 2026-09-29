@@ -44,7 +44,7 @@ public static class ServiceCollectionExtensions
             .AddSingleton<ClipboardService>()
             .AddSingleton<LocalizationService>()
             .AddSingleton<FeatureProviderService>()
-            .AddSingleton<UIService>()
+            .AddSingleton<IUIService, UIService>()
             .AddSingleton<IAutoUpdaterService, AutoUpdaterService>()
             .AddSingleton<ITokenService, TokenService>()
             .AddSingleton<IUpdateDownloader, UpdateDownloader>()

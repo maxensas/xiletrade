@@ -9,9 +9,9 @@ namespace Xiletrade.Library.Services.Windows;
 
 public sealed class WindowsMessageAdapterService : IMessageAdapterService
 {
-    private readonly UIService _ui;
+    private readonly IUIService _ui;
 
-    public WindowsMessageAdapterService(ILogger<WindowsMessageAdapterService> logger, UIService ui)
+    public WindowsMessageAdapterService(ILogger<WindowsMessageAdapterService> logger, IUIService ui)
     {
         _ui = ui;
 

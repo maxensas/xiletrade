@@ -1,7 +1,6 @@
 ﻿using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Serialization;
 using Xiletrade.Library.Models.Poe.Contract;
-using Xunit.Abstractions;
 
 namespace Xiletrade.Test.Fuzzy;
 

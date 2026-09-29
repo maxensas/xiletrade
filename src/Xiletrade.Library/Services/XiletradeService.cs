@@ -12,7 +12,7 @@ namespace Xiletrade.Library.Services;
 public sealed class XiletradeService
 {
     public XiletradeService(ILogger<XiletradeService> logger, DataManagerService dm, 
-        DataUpdaterService dataUpdater, UIService ui, INavigationService navigation, 
+        DataUpdaterService dataUpdater, IUIService ui, INavigationService navigation, 
         IMessageAdapterService message, IAutoUpdaterService updater,
         // Instantiate singletons : 
         IMainView main, ITaskbar taskbar,
@@ -27,7 +27,7 @@ public sealed class XiletradeService
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     private static async Task Start(ILogger<XiletradeService> logger, DataManagerService dm,
-        DataUpdaterService dataUpdater, UIService ui, INavigationService navigation, 
+        DataUpdaterService dataUpdater, IUIService ui, INavigationService navigation, 
         IMessageAdapterService message, IAutoUpdaterService updater)
     {
         try

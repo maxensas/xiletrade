@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Timers;
-using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Poe.Domain;
@@ -13,7 +13,7 @@ namespace Xiletrade.Library.Models.Poe.Domain;
 /// </summary>
 public sealed class TradeCooldownHandler
 {
-    private readonly UIService _ui;
+    private readonly IUIService _ui;
 
     private readonly Timer _cooldownTimer = new(1000);
     private readonly Action _cooldownAction;
@@ -25,7 +25,7 @@ public sealed class TradeCooldownHandler
 
     internal bool IsEnabled => _cooldownTimer.Enabled;
 
-    public TradeCooldownHandler(UIService ui)
+    public TradeCooldownHandler(IUIService ui)
     {
         _ui = ui;
 

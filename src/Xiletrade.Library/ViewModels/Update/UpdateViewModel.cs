@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.GitHub.Contract;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.Shared;
@@ -17,12 +16,12 @@ using Xiletrade.Library.Shared.Enum;
 namespace Xiletrade.Library.ViewModels.Update;
 
 public sealed partial class UpdateViewModel(IUpdateDownloader downloader, 
-    IMessageAdapterService message, UIService ui, GitHubRelease release) : ViewModelBase
+    IMessageAdapterService message, IUIService ui, GitHubRelease release) : ViewModelBase
 {
     private readonly IUpdateDownloader _downloader = downloader;
     private readonly IMessageAdapterService _message = message;
     private readonly GitHubRelease _release = release;
-    private readonly UIService _ui = ui;
+    private readonly IUIService _ui = ui;
 
     [ObservableProperty]
     private string releaseName = $"{Resources.Resources.Update001_NewVersion} : {release.TagName}";

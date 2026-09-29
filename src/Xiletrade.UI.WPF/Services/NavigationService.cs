@@ -34,7 +34,7 @@ public class NavigationService : INavigationService
     private readonly LocalizationService _localization;
     private readonly DataManagerService _dm;
     private readonly ClipboardService _clipboard;
-    private readonly UIService _ui;
+    private readonly IUIService _ui;
     
     private IViewBase ConfigView => _sp.GetRequiredService<IConfigView>();
     private IViewBase UpdateView => _sp.GetRequiredService<IUpdateView>();
@@ -44,7 +44,7 @@ public class NavigationService : INavigationService
     public NavigationService(IServiceProvider sp, ILogger<NavigationService> logger,
         IKeysConverter keyConv, IMessageAdapterService message, 
         IUpdateDownloader updater, LocalizationService localization,
-        ClipboardService clipboard, DataManagerService dm, UIService ui)
+        ClipboardService clipboard, DataManagerService dm, IUIService ui)
     {
         _sp = sp;
         _logger = logger;

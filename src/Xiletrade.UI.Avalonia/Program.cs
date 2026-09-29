@@ -8,21 +8,10 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Services.Linux;
-using Xiletrade.Library.Services.Windows;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.ViewModels.Config;
-using Xiletrade.Library.ViewModels.Editor;
-using Xiletrade.Library.ViewModels.Main;
-using Xiletrade.Library.ViewModels.Regex;
 using Xiletrade.UI.Avalonia.Services;
 using Xiletrade.UI.Avalonia.Util;
-using Xiletrade.UI.Avalonia.Views;
-using Notification.Avalonia;
-using Notification.Core;
-using Xiletrade.Library.Services.Extension;
 
 namespace Xiletrade.UI.Avalonia;
 
@@ -43,8 +32,12 @@ internal sealed class Program
             sbArgs.AppendLine(arg);
         }
 
-        AppHost = Host.CreateDefaultBuilder(args)
-            .ConfigureServices((context, services) => ConfigureServices(services, sbArgs.ToString())).Build();
+        AppHost = Host.CreateDefaultBuilder(args).ConfigureServices((context, services) 
+            => services.AddAvaloniaPlatform(sbArgs.ToString())).UseDefaultServiceProvider(o =>
+            {
+                // o.ValidateOnBuild = true;
+                o.ValidateScopes = true;
+            }).Build();
         AppHost.Start();
 #if DEBUG
         var logger = AppHost.Services.GetRequiredService<ILogger<Program>>();
@@ -99,51 +92,6 @@ internal sealed class Program
             .UsePlatformDetect()
             .WithInterFont()
             .LogToTrace();
-
-    // Here we pass all windows platform related implementations
-    private static void ConfigureServices(IServiceCollection sc, string args)
-    {
-        //services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
-
-        // Platform-specific library services
-        if (OperatingSystem.IsWindows())
-        {
-            sc.AddSingleton<IHookService>(sp => new WindowsHookService(sp.GetRequiredService<WndProcService>().ProcessMessageAsync))
-                .AddSingleton<IProtocolRegisterService, WindowsProtocolRegisterService>()
-                .AddSingleton<ISendInputService, WindowsSendInputService>();
-        }
-        else if (OperatingSystem.IsLinux())
-        {
-            //TOTEST
-            sc.AddSingleton<IHookService>(sp => new LinuxHookService(sp.GetRequiredService<WndProcService>().ProcessMessageAsync))
-                .AddSingleton<IProtocolRegisterService, LinuxProtocolRegisterService>()
-                .AddSingleton<ISendInputService, LinuxSendInputService>();
-        }
-        else
-        {
-            return;
-        }
-        // Avalonia imp
-        sc.AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
-            .AddSingleton<INavigationService, NavigationService>()
-            .AddSingleton<IMessageAdapterService, MessageAdapterService>()
-            .AddAvaloniaNotifications(cfg => // TO TEST
-            {
-                cfg.SuccessBackgroundColor = NotificationColor.FromHex("#FF252525");
-                cfg.ErrorBackgroundColor = NotificationColor.FromHex("#FF252525");
-                cfg.SuccessIconColor = NotificationColor.LimeGreen;
-                cfg.ErrorIconColor = NotificationColor.OrangeRed;
-                cfg.DefaultExpirationTime = TimeSpan.FromSeconds(5);
-            })
-            // views
-            .AddSingleton(sp => new MainView(sp, sp.GetRequiredService<MainViewModel>()))
-            .AddTransient(sp => new ConfigView(sp.CreateScope().ServiceProvider.GetRequiredService<ConfigViewModel>()))
-            .AddTransient(sp => new EditorView(sp.GetRequiredService<EditorViewModel>()))
-            .AddTransient(sp => new RegexView(sp.GetRequiredService<RegexManagerViewModel>()))
-            .AddTransient<UpdateView>()
-            // library
-            .AddLibraryServices(args);
-    }
 
     private static bool TryInitMutex()
     {

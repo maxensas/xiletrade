@@ -69,10 +69,6 @@ public class BaseDataComparer : IEqualityComparer<BaseData>
                 {
                     return false;
                 }
-                if (xx[j].InheritsFrom != yy[j].InheritsFrom)
-                {
-                    return false;
-                }
             }
         }
         return true;

@@ -21,7 +21,7 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
     private readonly IFileLoggerService _fileLogger;
     private readonly ILogger<ProtocolHandlerService> _logger;
     private readonly StartupArguments _startup;
-    private readonly UIService _ui;
+    private readonly IUIService _ui;
     private readonly TaskBarViewModel _taskBarVm;
 
     private const string PipeName = "XiletradePipe";
@@ -31,7 +31,7 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
 
     public ProtocolHandlerService(IMessageAdapterService message, ITokenService token, 
         IFileLoggerService fileLogger, ILogger<ProtocolHandlerService> logger,
-        StartupArguments startup, UIService ui, TaskBarViewModel taskBarVm)
+        StartupArguments startup, IUIService ui, TaskBarViewModel taskBarVm)
     {
         _message = message;
         _token = token;

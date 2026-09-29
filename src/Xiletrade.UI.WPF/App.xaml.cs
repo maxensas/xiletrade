@@ -11,19 +11,7 @@ using System.Windows.Threading;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.ViewModels.Config;
-using Xiletrade.Library.ViewModels.Main;
-using Xiletrade.Library.ViewModels.Regex;
-using Xiletrade.Library.ViewModels.Editor;
-using Xiletrade.Library.ViewModels.TaskBar;
-using Xiletrade.Library.Services.Windows;
-using Xiletrade.Library.Services.Extension;
-using Xiletrade.Library.Services.Interface.View;
-using Xiletrade.UI.WPF.UserControls.Main;
 using Xiletrade.UI.WPF.Services;
-using Xiletrade.UI.WPF.Views;
-using Notification.Wpf.DependencyInjection;
-using Notification.Core;
 
 namespace Xiletrade.UI.WPF;
 
@@ -104,40 +92,12 @@ public partial class App : Application, IDisposable
         return createdNew;
     }
 
-    private static ServiceProvider InitServices(string args)
-    {
-        var sc = new ServiceCollection();
-        ConfigureServices(sc, args);
-        return sc.BuildServiceProvider();
-    }
-
-    // Here we pass all windows platform related implementations
-    private static void ConfigureServices(IServiceCollection sc, string args)
-    {
-        // WPF imp
-        sc.AddSingleton<INavigationService, NavigationService>()
-            .AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
-            .AddWpfNotifications(cfg =>
-            {
-                cfg.SuccessBackgroundColor = NotificationColor.FromHex("#FF252525");
-                cfg.ErrorBackgroundColor = NotificationColor.FromHex("#FF252525");
-                cfg.SuccessIconColor = NotificationColor.LimeGreen;
-                cfg.ErrorIconColor = NotificationColor.OrangeRed;
-            })
-            // views
-            .AddSingleton<IMainView>(sp => new MainView(sp.GetRequiredService<MainViewModel>()))
-            .AddSingleton<ITaskbar>(sp => new TaskbarIcon(sp.GetRequiredService<TaskBarViewModel>()))
-            .AddTransient<IConfigView>(sp => new ConfigView(sp.CreateScope().ServiceProvider.GetRequiredService<ConfigViewModel>()))
-            .AddTransient<IEditorView>(sp => new EditorView(sp.GetRequiredService<EditorViewModel>()))
-            .AddTransient<IRegexView>(sp => new RegexView(sp.GetRequiredService<RegexManagerViewModel>()))
-            .AddTransient<IUpdateView, UpdateView>()
-            // library
-            .AddSingleton<IMessageAdapterService, WindowsMessageAdapterService>()
-            .AddSingleton<IProtocolRegisterService, WindowsProtocolRegisterService>()
-            .AddSingleton<ISendInputService, WindowsSendInputService>()
-            .AddSingleton<IHookService>(sp => new WindowsHookService(sp.GetRequiredService<WndProcService>().ProcessMessageAsync))
-            .AddLibraryServices(args);
-    }
+    private static ServiceProvider InitServices(string args) => new ServiceCollection().AddWpfPlatform(args)
+        .BuildServiceProvider(new ServiceProviderOptions
+        {
+            //ValidateOnBuild = true, // detects missing dependencies at build time
+            ValidateScopes = true     // detects singleton -> scoped, etc.
+        });
 
     private void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {

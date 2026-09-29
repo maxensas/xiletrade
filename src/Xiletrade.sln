@@ -14,6 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xiletrade.Benchmark", "Xile
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xiletrade.Test", "Xiletrade.Test\Xiletrade.Test.csproj", "{AE967431-315B-4304-AA53-411F98DDCEE9}"
 	ProjectSection(ProjectDependencies) = postProject
+		{34A71044-101C-3366-6E67-0E8B2914C2E4} = {34A71044-101C-3366-6E67-0E8B2914C2E4}
 		{545F294F-24BE-44C4-95E7-68D9F05275B9} = {545F294F-24BE-44C4-95E7-68D9F05275B9}
 	EndProjectSection
 EndProject

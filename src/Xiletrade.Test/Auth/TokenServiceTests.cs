@@ -7,8 +7,9 @@ namespace Xiletrade.Test.Auth;
 
 public class TokenServiceTests
 {
-    private readonly IMessageAdapterService _message;
-    private readonly DataManagerService _dm;
+    //private readonly IMessageAdapterService _message;
+    private readonly ITokenService _token;
+    //private readonly DataManagerService _dm;
 
     public TokenServiceTests()
     {
@@ -17,27 +18,28 @@ public class TokenServiceTests
         var services = new ServiceCollection();
         services.AddSingleton(messageAdapterMock.Object);
         services.AddSingleton<DataManagerService>();
-        var serviceProvider = services.BuildServiceProvider();
-        _message = serviceProvider.GetRequiredService<IMessageAdapterService>();
-        _dm = serviceProvider.GetRequiredService<DataManagerService>();
-        _dm.TryInit();
+        services.AddSingleton<ITokenService, TokenService>();
+        var sp = services.BuildServiceProvider();
+
+        //_message = sp.GetRequiredService<IMessageAdapterService>();
+        //_dm = sp.GetRequiredService<DataManagerService>();
+        _token = sp.GetRequiredService<ITokenService>();
     }
 
     [Fact]
     public void TryInitToken_WithValidToken_LoadReturnsSameToken()
     {
         // Arrange
-        var tokenService = new TokenService(_message, _dm);
         var expireDays = 90;
         var query = $"access_token=test-token-123&expires_in={expireDays}";
 
         // Act
-        var success = tokenService.TryInitToken(query);
+        var success = _token.TryInitToken(query);
 
         // Assert
         Assert.True(success);
 
-        var token = tokenService.CacheToken;
+        var token = _token.CacheToken;
 
         Assert.NotNull(token);
         Assert.Equal("test-token-123", token.AccessToken);
@@ -48,16 +50,15 @@ public class TokenServiceTests
     public void TryInitToken_WithInvalidQuery_ReturnsFalse()
     {
         // Arrange
-        var tokenService = new TokenService(_message, _dm);
         var query = "foo=bar";
 
         // Act
-        tokenService.ClearTokens();
-        var result = tokenService.TryInitToken(query);
+        _token.ClearTokens();
+        var result = _token.TryInitToken(query);
 
         // Assert
         Assert.False(result);
-        Assert.Null(tokenService.CacheToken);
+        Assert.Null(_token.CacheToken);
     }
 }
 

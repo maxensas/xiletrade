@@ -16,7 +16,7 @@ public sealed class HotKeyService
     private readonly ISendInputService _input;
     private readonly DataManagerService _dm;
     private readonly ClipboardService _clipboard;
-    private readonly UIService _ui;
+    private readonly IUIService _ui;
 
     private readonly Action _hotkeyHandler;
     private System.Timers.Timer _registerTimer;
@@ -32,7 +32,7 @@ public sealed class HotKeyService
     public HotKeyService(ILogger<HotKeyService> logger, 
         INavigationService navigation, IHookService hook,
         IKeysConverter keyConverter, ISendInputService input, 
-        DataManagerService dm, ClipboardService clipboard, UIService ui)
+        DataManagerService dm, ClipboardService clipboard, IUIService ui)
     {
         _navigation = navigation;
         _hook = hook;
