@@ -64,13 +64,13 @@ public static class ServiceCollectionExtensions
             .AddSingleton<INetService, NetService>()
 #endif
             // viewmodels
+            .AddSingleton<IViewModelProvider, ViewModelProvider>()
             .AddSingleton<MainViewModel>()
             .AddSingleton<TaskBarViewModel>()
             .AddScoped<ConfigViewModel>()
             .AddTransient<EditorViewModel>()
             .AddTransient<RegexViewModel>()
             .AddTransient<RegexManagerViewModel>()
-            .AddTransient<FormViewModel>()
             .AddTransient<NinjaViewModel>()
             .AddTransient<ResultViewModel>();
         return sc;

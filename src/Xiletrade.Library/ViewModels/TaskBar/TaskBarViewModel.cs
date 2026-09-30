@@ -12,6 +12,7 @@ using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.ViewModels.TaskBar;
 
+[ViewModelCreation(ViewModelCreation.Container)]
 public sealed partial class TaskBarViewModel : ViewModelBase
 {
     private readonly IMessageAdapterService _message;

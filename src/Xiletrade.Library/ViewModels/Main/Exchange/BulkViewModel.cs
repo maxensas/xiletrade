@@ -123,7 +123,7 @@ public sealed partial class BulkViewModel : ViewModelBase
                 Pay.ImageLast = Pay.Image;
 
                 _vm.Form.Visible.BulkLastSearch = true;
-                _vm.Result.UpdateWithApiAsync(minimumStock);
+                _vm.Result.UpdateAsync(minimumStock);
                 if (!_vm.Form.IsPoeTwo)
                 {
                     UpdateBulkNinjaTask();

@@ -3,8 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
@@ -19,7 +17,8 @@ using Xiletrade.Library.ViewModels.Main.Form.Search;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
-public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
+[ViewModelCreation(ViewModelCreation.Factory)]
+public sealed partial class FormViewModel : ViewModelBase
 {
     private readonly INavigationService _navigation;
     private readonly IMessageAdapterService _message;
@@ -33,14 +32,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private string itemNameColor = string.Empty;
 
     [ObservableProperty]
-    private string itemBaseType = useBulk ? Resources.Resources.Main247_CustomSearch + " / "
-        + Resources.Resources.Main032_cbTotalExchange : string.Empty;
+    private string itemBaseType;
 
     [ObservableProperty]
-    private string itemBaseTypeColor = useBulk ? Strings.Color.Moccasin : string.Empty;
+    private string itemBaseTypeColor;
 
     [ObservableProperty]
-    private double baseTypeFontSize = useBulk ? 16 : 12; // FontSize cannot be equal to 0
+    private double baseTypeFontSize;
 
     [ObservableProperty]
     private string dps = string.Empty;
@@ -70,67 +68,67 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private AsyncObservableCollection<ModLineViewModel> modList;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> fractured = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> fractured = GetNewOptions();
 
     [ObservableProperty]
     private int fracturedIndex;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> split = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> split = GetNewOptions();
 
     [ObservableProperty]
     private int splitIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> mirrored = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> mirrored = GetNewOptions();
 
     [ObservableProperty]
     private int mirroredIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> identified = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> identified = GetNewOptions();
 
     [ObservableProperty]
     private int identifiedIndex;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> corruption = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> corruption = GetNewOptions();
 
     [ObservableProperty]
     private int corruptedIndex;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> doubleCorruption = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> doubleCorruption = GetNewOptions();
 
     [ObservableProperty]
     private int doubleCorruptedIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> crafted = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> crafted = GetNewOptions();
 
     [ObservableProperty]
     private int craftedIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> mutated = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> mutated = GetNewOptions();
 
     [ObservableProperty]
     private int mutatedIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> desecrated = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> desecrated = GetNewOptions();
 
     [ObservableProperty]
     private int desecratedIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> veiled = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> veiled = GetNewOptions();
 
     [ObservableProperty]
     private int veiledIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> sanctified = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> sanctified = GetNewOptions();
 
     [ObservableProperty]
     private int sanctifiedIndex = 0;
@@ -235,24 +233,28 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             _vm.TaskManager.NinjaTask = _vm.Ninja.TryUpdateNinjaTask();
         }
-        _vm.Result.UpdateWithApiAsync(minimumStock: 0);
+        _vm.Result.UpdateAsync(minimumStock: 0);
     }
 
-    public FormViewModel(DataManagerService dm, MainViewModel vm, PoeApiService poeApi,
-        INavigationService navigation, IMessageAdapterService message, bool useCustomOrBulk) : this(useCustomOrBulk)
+    public FormViewModel(DataManagerService dm, MainViewModel vm,
+        INavigationService navigation, IMessageAdapterService message, bool useCustomOrBulk)
     {
         _dm = dm;
         _vm = vm;
         _navigation = navigation;
         _message = message;
 
+        itemBaseType = useCustomOrBulk ? Resources.Resources.Main247_CustomSearch + " / "
+            + Resources.Resources.Main032_cbTotalExchange : string.Empty;
+        itemBaseTypeColor = useCustomOrBulk ? Strings.Color.Moccasin : string.Empty;
+        baseTypeFontSize = useCustomOrBulk ? 16 : 12; // FontSize cannot be equal to 0
         itemExchange = new(_dm, _vm, _navigation, _message, useCustomOrBulk);
         if (useCustomOrBulk)
         {
             visible = new();
             rarity = new();
             tab = new(this);
-            customSearch = new(_dm, _vm, poeApi, _navigation, _message);
+            customSearch = new(_dm, _vm, _navigation, _message);
         }
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
@@ -267,10 +269,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         league = _dm.GetLeagueAsyncCollection();
     }
 
-    public FormViewModel(DataManagerService dm, MainViewModel vm, PoeApiService poeApi,
+    public FormViewModel(DataManagerService dm, MainViewModel vm, 
         INavigationService navigation, IMessageAdapterService message,
         ItemData item, InfoDescription infoDesc, bool showMinMax) 
-        : this(dm, vm, poeApi, navigation, message, useCustomOrBulk: false)
+        : this(dm, vm, navigation, message, useCustomOrBulk: false)
     {
         var flag = item.Flag;
         if (item.ModList?.Count > 0)
@@ -479,7 +481,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
 
             if (Tab.QuickSelected || Tab.DetailSelected)
             {
-                _vm.Result.UpdateWithApiAsync(minimumStock: 1);
+                _vm.Result.UpdateAsync(minimumStock: 1);
             }
         }
         catch (Exception ex)
@@ -559,4 +561,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
         return unique;
     }
+
+    private static AsyncObservableCollection<string> GetNewOptions() =>
+        new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
 }

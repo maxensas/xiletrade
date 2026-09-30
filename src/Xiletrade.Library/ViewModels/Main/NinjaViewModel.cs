@@ -12,6 +12,7 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
+[ViewModelCreation(ViewModelCreation.Container)]
 public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNinjaService ninja,
     MainViewModel vm, DataManagerService dm) : ViewModelBase
 {

@@ -83,7 +83,7 @@ public abstract class ServiceConfigurationTestsBase
         ReplaceSideEffects(services);
         return services.BuildServiceProvider(new ServiceProviderOptions
         {
-            //ValidateOnBuild = true,
+            ValidateOnBuild = true,
             ValidateScopes = true
         });
     }

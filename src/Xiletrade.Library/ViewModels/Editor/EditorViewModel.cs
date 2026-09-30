@@ -17,6 +17,7 @@ using Xiletrade.Library.ViewModels.TaskBar;
 
 namespace Xiletrade.Library.ViewModels.Editor;
 
+[ViewModelCreation(ViewModelCreation.Container)]
 public sealed partial class EditorViewModel : ViewModelBase
 {
     private readonly ITokenService _tokenService;

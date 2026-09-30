@@ -17,6 +17,7 @@ using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.Library.ViewModels.Config;
 
+[ViewModelCreation(ViewModelCreation.Container)]
 public sealed partial class ConfigViewModel : ViewModelBase
 {
     private readonly IMessageAdapterService _message;

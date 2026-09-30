@@ -19,7 +19,6 @@ using Xiletrade.Library.Models.Poe.Domain.Interface;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Models.Wiki.Domain;
 using Xiletrade.Library.Services;
-using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -28,6 +27,7 @@ using Xiletrade.Library.ViewModels.Main.Result;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
+[ViewModelCreation(ViewModelCreation.Container)]
 public sealed partial class MainViewModel : ViewModelBase
 {
     private readonly IServiceProvider _sp;
@@ -36,15 +36,15 @@ public sealed partial class MainViewModel : ViewModelBase
     private readonly INetService _net;
     private readonly IMessageAdapterService _message;
     private readonly INavigationService _navigation;
-    
+    private readonly IViewModelProvider _vmProvider;
+
     private ResultViewModel GetNewResult => _sp.GetRequiredService<ResultViewModel>();
     private NinjaViewModel GetNewNinja => _sp.GetRequiredService<NinjaViewModel>();
 
-    private FormViewModel GetNewForm(bool useCustomOrBulk) =>
-        _sp.CreateInstance<FormViewModel>(useCustomOrBulk);
+    private FormViewModel GetNewForm(bool useCustomOrBulk) => _vmProvider.CreateForm(this, useCustomOrBulk);
 
     private FormViewModel GetNewForm(ItemData item, InfoDescription infoDesc, bool showMinMax) =>
-        _sp.CreateInstance<FormViewModel>(item, infoDesc, showMinMax);
+        _vmProvider.CreateForm(this, item, infoDesc, showMinMax);
 
     [ObservableProperty]
     private FormViewModel form;
@@ -71,7 +71,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
     public MainViewModel(IServiceProvider sp, ILogger<MainViewModel> logger, 
         DataManagerService dm, INetService net, IMessageAdapterService message, 
-        INavigationService navigation)
+        INavigationService navigation, IViewModelProvider vmProvider)
     {
         _sp = sp;
         _logger = logger;
@@ -79,6 +79,7 @@ public sealed partial class MainViewModel : ViewModelBase
         _net = net;
         _message = message;
         _navigation = navigation;
+        _vmProvider = vmProvider;
 
 #if DEBUG
         logger.LogInformation("ViewModel initialized");
@@ -285,7 +286,7 @@ public sealed partial class MainViewModel : ViewModelBase
                         {
                             TaskManager.NinjaTask = Ninja.TryUpdateNinjaTask();
                         }
-                        Result.UpdateWithApiAsync(minimumStock: 0);
+                        Result.UpdateAsync(minimumStock: 0);
                         return;
                     }
 

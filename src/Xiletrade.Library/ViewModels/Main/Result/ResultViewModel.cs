@@ -18,6 +18,7 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels.Main.Result;
 
+[ViewModelCreation(ViewModelCreation.Container)]
 public sealed partial class ResultViewModel(IMessageAdapterService message, INetService net, 
     PoeApiService poeApi, DataManagerService dm, MainViewModel vm ) : ViewModelBase
 {
@@ -260,7 +261,7 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
         ShopList.Clear();
     }
 
-    internal async void UpdateWithApiAsync(int minimumStock)
+    internal async void UpdateAsync(int minimumStock)
     {
         try
         {
@@ -320,14 +321,14 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
             var isCurrency = _vm.Item is not null && _vm.Item.State.ExchangeCurrency; // quick or detail
             var isItemExchange = _vm.Form.Tab.BulkSelected || _vm.Form.Tab.ShopSelected;
             var usePoeApi = isItemExchange || !isCurrency;
-            ResultBar resultApi = null;
+            ResultBar resultBar = null;
             if (usePoeApi)
             {
                 var priceInfo = new PricingInfo(entity, _vm.Form.League[_vm.Form.LeagueIndex]
                     , _vm.Form.Market[_vm.Form.MarketIndex], minimumStock, maxFetch, _vm.Form.SameUser, _vm.Form.Tab.BulkSelected);
-                resultApi = await _poeApi.UpdateResult(_vm.Result, priceInfo);
+                resultBar = await UpdateWithApi(priceInfo);
             }
-            RefreshResultBar(isItemExchange, resultApi ?? new(state: ResultBarSate.Unimplemented));
+            RefreshResultBar(isItemExchange, resultBar ?? new(state: ResultBarSate.Unimplemented));
         }
         catch (Exception ex)
         {
@@ -414,6 +415,47 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
             /*&& !Quick.Total.Contain(Resources.Resources.Main011_PriceBase)*/ ?
             Resources.Resources.Main011_PriceBase + " " + (Data.StatDetail.Begin - (removed + unpriced)) + " "
             + Resources.Resources.Main017_Results.ToLowerInvariant() : string.Empty;
+    }
+
+    internal async Task<ResultBar> UpdateWithApi(PricingInfo pricingInfo)
+    {
+        string urlApi = string.Empty;
+        string sEntity = null;
+        try
+        {
+            if (pricingInfo.IsTradeEntity)
+            {
+                sEntity = pricingInfo.TradeEntity;
+                urlApi = Strings.Api.Trade;
+                Data.StatDetail = new();
+            }
+            else if (pricingInfo.IsExchangeEntity)
+            {
+                var change = new Models.Poe.Contract.Exchange();
+                change.ExchangeData.Status.Option = pricingInfo.Market;
+                change.ExchangeData.Minimum = pricingInfo.MinimumStock;
+                change.Engine = "new";
+                change.ExchangeData.Have = pricingInfo.ExchangeHave;
+                change.ExchangeData.Want = pricingInfo.ExchangeWant;
+
+                sEntity = _dm.Json.Serialize<Models.Poe.Contract.Exchange>(change);
+                urlApi = Strings.Api.Exchange;
+                Data.StatBulk = new();
+            }
+            if (sEntity is null || sEntity.Length is 0)
+            {
+                return new ResultBar(state: ResultBarSate.NoData);
+            }
+            var token = _vm.TaskManager.GetPriceToken(initCts: true);
+            _vm.TaskManager.PriceTask = _poeApi.RunPriceTask(_vm.Result, pricingInfo, sEntity, urlApi, token);
+            return await _vm.TaskManager.PriceTask;
+        }
+        catch (Exception ex)
+        {
+            _message.Show(ex.GetFormated(), Resources.Resources.Error005_XUpdateResult, MessageStatus.Error);
+        }
+
+        return new ResultBar(state: ResultBarSate.NoResult);
     }
 
     // private methods

@@ -4,6 +4,7 @@ using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.ViewModels.Regex;
 
+[ViewModelCreation(ViewModelCreation.Container)]
 public sealed partial class RegexViewModel(ClipboardService clipboard) : ViewModelBase
 {
     private readonly ClipboardService _clipboard = clipboard;

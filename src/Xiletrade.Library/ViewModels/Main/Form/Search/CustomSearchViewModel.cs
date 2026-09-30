@@ -19,7 +19,6 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
 {
     private readonly INavigationService _navigation;
     private readonly IMessageAdapterService _message;
-    private readonly PoeApiService _poeApi;
     private readonly DataManagerService _dm;
     private readonly MainViewModel _vm;
 
@@ -38,12 +37,11 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     [ObservableProperty]
     private int unidUniquesIndex;
 
-    public CustomSearchViewModel(DataManagerService dm, MainViewModel vm, PoeApiService poeApi,
+    public CustomSearchViewModel(DataManagerService dm, MainViewModel vm,
         INavigationService navigation, IMessageAdapterService message)
     {
         _vm = vm;
         _dm = dm;
-        _poeApi = poeApi;
         _navigation = navigation;
         _message = message;
 
@@ -210,7 +208,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
                 , _vm.Form.Market[_vm.Form.MarketIndex], minimumStock: 1, maxFetch
                 , _vm.Form.SameUser, _vm.Form.Tab.BulkSelected);
 
-            var result = await _poeApi.UpdateResult(_vm.Result, priceInfo); // result bar not used in custom search
+            var result = await _vm.Result.UpdateWithApi(priceInfo); // result bar not used in custom search
         }
         catch (Exception ex)
         {

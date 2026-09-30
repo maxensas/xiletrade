@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
-using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.Shared;
@@ -14,13 +14,14 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.ViewModels.Regex;
 
+[ViewModelCreation(ViewModelCreation.Container)]
 public sealed partial class RegexManagerViewModel : ViewModelBase
 {
     private readonly IServiceProvider _sp;
     private readonly IMessageAdapterService _message;
     private readonly DataManagerService _dm;
 
-    private RegexViewModel GetNewRegex => _sp.CreateInstance<RegexViewModel>();
+    private RegexViewModel GetNewRegex => _sp.GetRequiredService<RegexViewModel>();
     private const int MAX_REGEX = 20;
 
     [ObservableProperty]

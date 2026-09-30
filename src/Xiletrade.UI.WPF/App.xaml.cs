@@ -95,7 +95,7 @@ public partial class App : Application, IDisposable
     private static ServiceProvider InitServices(string args) => new ServiceCollection().AddWpfPlatform(args)
         .BuildServiceProvider(new ServiceProviderOptions
         {
-            //ValidateOnBuild = true, // detects missing dependencies at build time
+            ValidateOnBuild = true,   // detects missing dependencies at build time
             ValidateScopes = true     // detects singleton -> scoped, etc.
         });
 

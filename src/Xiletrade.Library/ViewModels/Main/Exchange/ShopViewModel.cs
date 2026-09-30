@@ -164,7 +164,7 @@ public sealed partial class ShopViewModel : ViewModelBase
                     minimumStock = 1;
                     Stock = "1";
                 }
-                _vm.Result.UpdateWithApiAsync(minimumStock);
+                _vm.Result.UpdateAsync(minimumStock);
                 return;
             }
 

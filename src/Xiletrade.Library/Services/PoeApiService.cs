@@ -43,47 +43,6 @@ public sealed class PoeApiService
 #endif
     }
 
-    internal async Task<ResultBar> UpdateResult(ResultViewModel rVm, PricingInfo pricingInfo)
-    {
-        string urlApi = string.Empty;
-        string sEntity = null;
-        try
-        {
-            if (pricingInfo.IsTradeEntity)
-            {
-                sEntity = pricingInfo.TradeEntity;
-                urlApi = Strings.Api.Trade;
-                rVm.Data.StatDetail = new();
-            }
-            else if (pricingInfo.IsExchangeEntity)
-            {
-                var change = new Exchange();
-                change.ExchangeData.Status.Option = pricingInfo.Market;
-                change.ExchangeData.Minimum = pricingInfo.MinimumStock;
-                change.Engine = "new";
-                change.ExchangeData.Have = pricingInfo.ExchangeHave;
-                change.ExchangeData.Want = pricingInfo.ExchangeWant;
-
-                sEntity = _dm.Json.Serialize<Exchange>(change);
-                urlApi = Strings.Api.Exchange;
-                rVm.Data.StatBulk = new();
-            }
-            if (sEntity is null || sEntity.Length is 0)
-            {
-                return new ResultBar(state: ResultBarSate.NoData);
-            }
-            var token = _vm.TaskManager.GetPriceToken(initCts: true);
-            _vm.TaskManager.PriceTask = RunPriceTask(_vm.Result, pricingInfo, sEntity, urlApi, token);
-            return await _vm.TaskManager.PriceTask;
-        }
-        catch (Exception ex)
-        {
-            _message.Show(ex.GetFormated(), Resources.Resources.Error005_XUpdateResult, MessageStatus.Error);
-        }
-
-        return new ResultBar(state: ResultBarSate.NoResult);
-    }
-
     internal async Task<ResultBar> FetchResult(ResultViewModel rVm, int maxFetch, string market, bool hideSameUser, CancellationToken token)
     {
         CurrencyFetch currencys = new();
@@ -157,9 +116,7 @@ public sealed class PoeApiService
         return new(_dm, currencys.ListCur, _vm.Form.Tab.QuickSelected);
     }
 
-    // private
-
-    private async Task<ResultBar> RunPriceTask(ResultViewModel rVm, PricingInfo pricingInfo,
+    internal async Task<ResultBar> RunPriceTask(ResultViewModel rVm, PricingInfo pricingInfo,
         string sEntity, string urlApi, CancellationToken token)
     {
         try
@@ -203,6 +160,8 @@ public sealed class PoeApiService
         }
         return new(emptyLine: true);
     }
+
+    // private
 
     // TODO: move responsibility to a viewmodel dedicated to Quick and Detail
     private CurrencyFetch FillDetailVm(ResultViewModel rVm, bool hideSameUser, ReadOnlySpan<char> sResult, CancellationToken token)
