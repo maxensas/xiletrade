@@ -15,7 +15,7 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services;
 
-/// <summary>Service (singleton) handling all serializable data in memory for Xiletrade.</summary>
+/// <summary>Service handling all serializable data in memory for Xiletrade.</summary>
 /// <remarks></remarks>
 public sealed class DataManagerService
 {
@@ -74,7 +74,7 @@ public sealed class DataManagerService
         {
             _message.Show(Resources.Resources.Main118_Closing + "\n" + ex.InnerException.Message
                 , Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
-            _ui.ShutDownXiletrade(1);
+            _ui.ShutDownApp(1);
         }
     }
 
@@ -411,7 +411,7 @@ public sealed class DataManagerService
         catch (Exception ex)
         {
             _message.Show(ex.GetFormated(), Resources.Resources.Main118_Closing, MessageStatus.Exclamation);
-            _ui.ShutDownXiletrade();
+            _ui.ShutDownApp();
             return null;
         }
         return config;

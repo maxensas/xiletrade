@@ -2,11 +2,9 @@
 using Notification.Avalonia;
 using Notification.Core;
 using System;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Services.Linux;
-using Xiletrade.Library.Services.Windows;
+using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.ViewModels.Config;
 using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.Library.ViewModels.Main;
@@ -25,26 +23,6 @@ public static class AvaloniaServiceRegistration
     /// <returns></returns>
     public static IServiceCollection AddAvaloniaPlatform(this IServiceCollection sc, string args)
     {
-        //services.Configure<AppSettings>(Configuration.GetSection(nameof(AppSettings)));
-
-        // Platform-specific library services
-        if (OperatingSystem.IsWindows())
-        {
-            sc.AddSingleton<IHookService>(sp => new WindowsHookService(sp.GetRequiredService<WndProcService>().ProcessMessageAsync))
-                .AddSingleton<IProtocolRegisterService, WindowsProtocolRegisterService>()
-                .AddSingleton<ISendInputService, WindowsSendInputService>();
-        }
-        else if (OperatingSystem.IsLinux())
-        {
-            //TOTEST
-            sc.AddSingleton<IHookService>(sp => new LinuxHookService(sp.GetRequiredService<WndProcService>().ProcessMessageAsync))
-                .AddSingleton<IProtocolRegisterService, LinuxProtocolRegisterService>()
-                .AddSingleton<ISendInputService, LinuxSendInputService>();
-        }
-        else
-        {
-            return sc;
-        }
         // Avalonia imp
         sc.AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
             .AddSingleton<INavigationService, NavigationService>()
@@ -59,6 +37,14 @@ public static class AvaloniaServiceRegistration
             })
             // views
             .AddSingleton(sp => new MainView(sp, sp.GetRequiredService<MainViewModel>()))
+            /* TODO
+            .AddSingleton<ITaskbar>(sp => new TaskbarIcon(sp.GetRequiredService<TaskBarViewModel>()))
+            .AddTransient<IConfigView>(sp =>
+            {
+                var scope = sp.CreateScope();
+                var vm = scope.ServiceProvider.GetRequiredService<ConfigViewModel>();
+                return new ConfigView(vm, scope);
+            })*/
             .AddTransient(sp => new ConfigView(sp.CreateScope().ServiceProvider.GetRequiredService<ConfigViewModel>()))
             .AddTransient(sp => new EditorView(sp.GetRequiredService<EditorViewModel>()))
             .AddTransient(sp => new RegexView(sp.GetRequiredService<RegexManagerViewModel>()))

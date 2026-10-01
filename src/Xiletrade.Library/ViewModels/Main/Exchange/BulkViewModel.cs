@@ -15,6 +15,7 @@ namespace Xiletrade.Library.ViewModels.Main.Exchange;
 public sealed partial class BulkViewModel : ViewModelBase
 {
     private readonly INavigationService _navigation;
+    private readonly IKeyboardAdapterService _keyboard;
     private readonly IMessageAdapterService _message;
     private readonly DataManagerService _dm;
     private readonly MainViewModel _vm;
@@ -38,16 +39,18 @@ public sealed partial class BulkViewModel : ViewModelBase
     private ExchangeViewModel pay;
 
     public BulkViewModel(DataManagerService dm, MainViewModel vm,
-        INavigationService navigation, IMessageAdapterService message)
+        INavigationService navigation, IKeyboardAdapterService keyboard, 
+        IMessageAdapterService message)
     {
         _dm = dm;
         _vm = vm;
         _navigation = navigation;
+        _keyboard = keyboard;
         _message = message;
 
         stock = "1";
-        get = new(_dm, _navigation, _vm);
-        pay = new(_dm, _navigation, _vm);
+        get = new(_dm, _keyboard, _vm);
+        pay = new(_dm, _keyboard, _vm);
     }
 
     [RelayCommand]
@@ -104,7 +107,7 @@ public sealed partial class BulkViewModel : ViewModelBase
     {
         try
         {
-            _navigation.ClearKeyboardFocus();
+            _keyboard.ClearFocus();
             _vm.Result.InitData();
 
             if (!_vm.Form.Tab.BulkSelected)

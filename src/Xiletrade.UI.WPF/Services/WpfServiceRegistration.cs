@@ -2,11 +2,9 @@
 using Notification.Core;
 using Notification.Wpf.DependencyInjection;
 using System;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services.Interface.View;
-using Xiletrade.Library.Services.Windows;
 using Xiletrade.Library.ViewModels.Config;
 using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.Library.ViewModels.Main;
@@ -28,6 +26,7 @@ public static class WpfServiceRegistration
     public static IServiceCollection AddWpfPlatform(this IServiceCollection sc, string args)
     {
         return sc.AddSingleton<INavigationService, NavigationService>()
+            .AddSingleton<IKeyboardAdapterService, KeyboardAdapterService>()
             .AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
             .AddWpfNotifications(cfg =>
             {
@@ -39,15 +38,16 @@ public static class WpfServiceRegistration
             // views
             .AddSingleton<IMainView>(sp => new MainView(sp.GetRequiredService<MainViewModel>()))
             .AddSingleton<ITaskbar>(sp => new TaskbarIcon(sp.GetRequiredService<TaskBarViewModel>()))
-            .AddTransient<IConfigView>(sp => new ConfigView(sp.CreateScope().ServiceProvider.GetRequiredService<ConfigViewModel>()))
+            .AddTransient<IConfigView>(sp =>
+            {
+                var scope = sp.CreateScope();
+                var vm = scope.ServiceProvider.GetRequiredService<ConfigViewModel>();
+                return new ConfigView(vm, scope);
+            })
             .AddTransient<IEditorView>(sp => new EditorView(sp.GetRequiredService<EditorViewModel>()))
             .AddTransient<IRegexView>(sp => new RegexView(sp.GetRequiredService<RegexManagerViewModel>()))
             .AddTransient<IUpdateView, UpdateView>()
             // library
-            .AddSingleton<IMessageAdapterService, WindowsMessageAdapterService>()
-            .AddSingleton<IProtocolRegisterService, WindowsProtocolRegisterService>()
-            .AddSingleton<ISendInputService, WindowsSendInputService>()
-            .AddSingleton<IHookService>(sp => new WindowsHookService(sp.GetRequiredService<WndProcService>().ProcessMessageAsync))
             .AddLibraryServices(args);
     }
 }

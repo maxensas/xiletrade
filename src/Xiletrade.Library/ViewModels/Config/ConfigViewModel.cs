@@ -22,11 +22,11 @@ public sealed partial class ConfigViewModel : ViewModelBase
 {
     private readonly IMessageAdapterService _message;
     private readonly INavigationService _navigation;
-    private readonly IKeysConverter _keyConv;
+    private readonly IKeyboardAdapterService _keyboard;
     private readonly DataManagerService _dm;
     private readonly DataUpdaterService _updater;
     private readonly LocalizationService _localization;
-    private readonly HotKeyService _hotkey;
+    private readonly InputService _input;
     private readonly PoeNinjaService _ninja;
     private readonly INetService _net;
 
@@ -49,17 +49,18 @@ public sealed partial class ConfigViewModel : ViewModelBase
     internal ConfigData Config { get; set; }
     internal string ConfigBackup { get; set; }
 
-    public ConfigViewModel(IMessageAdapterService message, INavigationService navigation, IKeysConverter keyConv,
-        DataManagerService dm, DataUpdaterService updater, LocalizationService localization,
-        HotKeyService hotkey, PoeNinjaService ninja, INetService net)
+    public ConfigViewModel(IMessageAdapterService message, INavigationService navigation,
+        IKeyboardAdapterService keyboard, DataManagerService dm, 
+        DataUpdaterService updater, LocalizationService localization,
+        InputService input, PoeNinjaService ninja, INetService net)
     {
         _message = message;
         _navigation = navigation;
-        _keyConv = keyConv;
+        _keyboard = keyboard;
         _dm = dm;
         _updater = updater;
         _localization = localization;
-        _hotkey = hotkey;
+        _input = input;
         _ninja = ninja;
         _net = net;
 
@@ -303,9 +304,9 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
         var configToSave = _dm.Json.Serialize<ConfigData>(Config);
 
-        _hotkey.DisableHotkeys();
+        _input.DisableHotkeys();
         _dm.SaveConfiguration(configToSave); // parentWindow
-        _hotkey.EnableHotkeys();
+        _input.EnableHotkeys();
         if (gameSwitch)
         {
             _ = _ninja.InitLeaguesAsync();
@@ -314,8 +315,8 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
     internal void InitShortcuts()
     {
-        CommonKeys = new(_navigation, _message, this);
-        AdditionalKeys = new(_navigation, _message, this);
+        CommonKeys = new(_keyboard, _message, this);
+        AdditionalKeys = new(_keyboard, _message, this);
 
         var listKv = GetListHotkey();
         var listKvValue = GetListHotkeyWithValue();
@@ -325,7 +326,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         {
             if (item.Fonction is Strings.Feature.chatkey)
             {
-                AdditionalKeys.ChatKey.Hotkey = _keyConv.ConvertToInvariantString(item.Keycode);
+                AdditionalKeys.ChatKey.Hotkey = _keyboard.Converter.ConvertToInvariantString(item.Keycode);
                 continue;
             }
             if (listKv.ContainsKey(item.Fonction))
@@ -350,7 +351,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         hkVm.IsEnable = item.Enable;
         if (item.Keycode > 0)
         {
-            hkVm.Hotkey = GetModText(item.Modifier) + _keyConv.ConvertToInvariantString(item.Keycode);
+            hkVm.Hotkey = GetModText(item.Modifier) + _keyboard.Converter.ConvertToInvariantString(item.Keycode);
             if (isChat)
             {
                 hkVm.ListIndex = int.Parse(item.Value, CultureInfo.InvariantCulture);
@@ -422,9 +423,9 @@ public sealed partial class ConfigViewModel : ViewModelBase
         return listKvChat;
     }
 
-    private int GetModCode(string modifier) => _navigation.GetModifierCode(modifier);
+    private int GetModCode(string modifier) => _keyboard.GetModifierCode(modifier);
 
-    private string GetModText(int modifier) => _navigation.GetModifierText(modifier);
+    private string GetModText(int modifier) => _keyboard.GetModifierText(modifier);
 
     private int VerifyKeycode(HotkeyViewModel hotkey, int keycode)
     {
@@ -444,11 +445,11 @@ public sealed partial class ConfigViewModel : ViewModelBase
             {
                 key = hotkey.Hotkey;
             }
-            return (int)_keyConv.ConvertFromString(key);
+            return (int)_keyboard.Converter.ConvertFromString(key);
         }
         catch
         {
-            hotkey.Hotkey = modRet + _keyConv.ConvertToString(keycode);
+            hotkey.Hotkey = modRet + _keyboard.Converter.ConvertToString(keycode);
         }
         return keycode;
     }

@@ -7,6 +7,9 @@ using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.Library.Services.Windows;
 
+/// <summary>
+/// Provides Windows-specific message dialogs using the native Win32 API.
+/// </summary>
 public sealed class WindowsMessageAdapterService : IMessageAdapterService
 {
     private readonly IUIService _ui;
@@ -26,7 +29,7 @@ public sealed class WindowsMessageAdapterService : IMessageAdapterService
         {
             Message.MessageBox(IntPtr.Zero, message, caption, Message.MB_OK | Message.MB_TOPMOST | GetNativeIcon(status));
         });
-        _ui.DelegateActionToUiThread(action);
+        _ui.Invoke(action);
     }
 
     public bool ShowResult(string message, string caption, MessageStatus status, bool yesNo = false)
@@ -37,7 +40,7 @@ public sealed class WindowsMessageAdapterService : IMessageAdapterService
                     (yesNo ? Message.MB_YESNO : Message.MB_OK) | Message.MB_TOPMOST | GetNativeIcon(status))
                     is Message.IDYES or Message.IDOK;
         });
-        return _ui.DelegateFuncToUiThread(func);
+        return _ui.Invoke(func);
     }
 
     public Task<bool> ShowResultAsync(string message, string caption, MessageStatus status, bool yesNo = false)

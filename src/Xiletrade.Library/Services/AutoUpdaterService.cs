@@ -29,11 +29,11 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
 
     private const string ASSETNAME = "Xiletrade_win-x64.7z";
 
-    public async Task CheckUpdateAsync(bool manualCheck = false)
+    public async Task CheckForUpdateAsync(bool manualCheck = false)
     {
         try
         {
-            var release = await CheckForUpdateAsync(manualCheck);
+            var release = await GetAvailableUpdateAsync(manualCheck);
             if (release is not null)
             {
                 _navigation.ShowUpdateView(release);
@@ -45,7 +45,10 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
         }
     }
 
-    private async Task<GitHubRelease> CheckForUpdateAsync(bool manualCheck)
+    /// <summary>
+    /// Gets the latest compatible update if a newer version is available.
+    /// </summary>
+    private async Task<GitHubRelease> GetAvailableUpdateAsync(bool manualCheck)
     {
         var release = await _net.GetFromJsonAsync<GitHubRelease>(Strings.Github.ApiLatestRelease, Client.GitHub);
         if (release is null)

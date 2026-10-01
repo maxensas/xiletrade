@@ -7,11 +7,17 @@ using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.Library.Services.Windows;
 
-public sealed class WindowsSendInputService : ISendInputService
+/// <summary>
+/// Provides Windows-specific clipboard operations for interacting with Path of Exile.
+/// </summary>
+/// <remarks>
+/// win32 API implementation
+/// </remarks>
+public sealed class WindowsPoeActionService : IPoeActionService
 {
     private readonly DataManagerService _dm;
 
-    public WindowsSendInputService(ILogger<WindowsSendInputService> logger, DataManagerService dm)
+    public WindowsPoeActionService(ILogger<WindowsPoeActionService> logger, DataManagerService dm)
     {
         _dm = dm;
 

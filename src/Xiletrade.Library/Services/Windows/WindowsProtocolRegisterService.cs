@@ -4,6 +4,9 @@ using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.Library.Services.Windows;
 
+/// <summary>
+/// Registers and updates the application's custom protocol handler in the Windows registry.
+/// </summary>
 public class WindowsProtocolRegisterService : IProtocolRegisterService
 {
     public WindowsProtocolRegisterService(ILogger<WindowsProtocolRegisterService> logger)

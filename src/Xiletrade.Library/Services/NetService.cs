@@ -14,7 +14,6 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services;
 
-/// <summary>Service used to handle http requests and responses for Xiletrade.</summary>
 public class NetService : INetService
 {
     private readonly ITokenService _token;

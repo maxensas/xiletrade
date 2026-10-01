@@ -3,24 +3,30 @@ using System.Threading.Tasks;
 
 namespace Xiletrade.Library.Services.Interface;
 
+/// <summary>
+/// Provides UI thread operations and application lifecycle management.
+/// </summary>
 public interface IUIService
 {
-    nint MainHwnd { get; set; }
+    nint MainWindowHandle { get; set; }
 
     /// <summary>
     /// Executes the action on the UI thread without waiting for completion.
     /// </summary>
-    void DelegateActionToUiThread(Action action);
+    void Invoke(Action action);
 
     /// <summary>
-    /// Executes the function on the UI thread and waits for the result.
+    /// Executes a function on the UI thread and returns its result.
     /// </summary>
-    TResult DelegateFuncToUiThread<TResult>(Func<TResult> func);
+    TResult Invoke<TResult>(Func<TResult> func);
 
     /// <summary>
-    /// Executes an asynchronous function on the UI thread.
+    /// Executes an asynchronous function on the UI thread and returns its result.
     /// </summary>
-    Task<TResult> DelegateActionToUiThreadAsync<TResult>(Func<Task<TResult>> asyncFunc);
+    Task<TResult> InvokeAsync<TResult>(Func<Task<TResult>> asyncFunc);
 
-    void ShutDownXiletrade(int code = 0);
+    /// <summary>
+    /// Shuts down the application with the specified exit code.
+    /// </summary>
+    void ShutDownApp(int code = 0);
 }

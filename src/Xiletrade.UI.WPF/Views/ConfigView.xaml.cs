@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.Shared;
 
@@ -9,16 +10,27 @@ namespace Xiletrade.UI.WPF.Views;
 /// </summary>
 public partial class ConfigView : ViewBase, IConfigView
 {
-    public ConfigView(object vm)
+    private readonly IDisposable _scope;
+
+    public ConfigView(object vm, IDisposable scope = null)
     {
+        _scope = scope;
         DataContext = vm;
         InitializeComponent();
         Name = Strings.WindowName.Config;
         MouseLeftButtonDown += Window_DragWindow;
+        Closed += ConfigView_Closed;
     }
     
     private void Window_DragWindow(object sender, MouseButtonEventArgs e)
     {
         this.DragMove();
+    }
+
+    private void ConfigView_Closed(object sender, EventArgs e)
+    {
+        Closed -= ConfigView_Closed;
+        MouseLeftButtonDown -= Window_DragWindow;
+        _scope?.Dispose();
     }
 }

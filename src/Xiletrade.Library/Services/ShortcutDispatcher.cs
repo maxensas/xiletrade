@@ -8,19 +8,19 @@ using Xiletrade.Library.Shared.Interop;
 namespace Xiletrade.Library.Services;
 
 /// <summary>
-/// Service class used to launch Xiletrade feature after pressing registered hotkey.
+/// Service responsible for launching features when a registered hotkey is pressed.
 /// </summary>
-public sealed class WndProcService
+public sealed class ShortcutDispatcher
 {
     private static bool _runingProcess = false;
 
-    public readonly Action<int, nint> ProcessMessageAsync;
+    public readonly Action<int, nint> HandleMessage;
 
-    public WndProcService(ILogger<WndProcService> logger, IMessageAdapterService message, 
-        DataManagerService dm, FeatureProviderService featureProvider)
+    public ShortcutDispatcher(ILogger<ShortcutDispatcher> logger, IMessageAdapterService message, 
+        DataManagerService dm, FeatureProvider featureProvider)
     {
         // Here we process incoming messages
-        ProcessMessageAsync = new((Msg, WParam) =>
+        HandleMessage = new((Msg, WParam) =>
         {
             if (_runingProcess || Msg is not Native.WM_HOTKEY) // Native.WM_DRAWITEM, Native.WM_CLIPBOARDUPDATE
             {
@@ -29,7 +29,7 @@ public sealed class WndProcService
             _runingProcess = true;
             try
             {
-                var shortcut = dm.Config.Shortcuts[WParam.ToInt32() - HotKeyService.SHIFTHOTKEYID];
+                var shortcut = dm.Config.Shortcuts[WParam.ToInt32() - InputService.SHIFTHOTKEYID];
                 if (shortcut is null || shortcut.Fonction is null)
                 {
                     return;

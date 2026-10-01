@@ -1,13 +1,14 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
 using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Models.Application.Diagnostic;
-using Xiletrade.Library.Models.Application.Hotkey.Converter;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Services.Linux;
+using Xiletrade.Library.Services.Windows;
 using Xiletrade.Library.ViewModels.Config;
 using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.Library.ViewModels.Main;
-using Xiletrade.Library.ViewModels.Main.Form;
 using Xiletrade.Library.ViewModels.Main.Result;
 using Xiletrade.Library.ViewModels.Regex;
 using Xiletrade.Library.ViewModels.TaskBar;
@@ -37,19 +38,18 @@ public static class ServiceCollectionExtensions
             .AddSingleton<XiletradeService>()
             .AddSingleton<DataManagerService>()
             .AddSingleton<DataUpdaterService>()
-            .AddSingleton<WndProcService>()
+            .AddSingleton<ShortcutDispatcher>()
             .AddSingleton<PoeApiService>()
             .AddSingleton<PoeNinjaService>()
-            .AddSingleton<HotKeyService>()
+            .AddSingleton<InputService>()
             .AddSingleton<ClipboardService>()
             .AddSingleton<LocalizationService>()
-            .AddSingleton<FeatureProviderService>()
+            .AddSingleton<FeatureProvider>()
             .AddSingleton<IUIService, UIService>()
             .AddSingleton<IAutoUpdaterService, AutoUpdaterService>()
             .AddSingleton<ITokenService, TokenService>()
             .AddSingleton<IUpdateDownloader, UpdateDownloader>()
             .AddSingleton<IProtocolHandlerService, ProtocolHandlerService>()
-            .AddSingleton<IKeysConverter, KeysConverter>()
             // logs
             .AddSingleton<IFileLoggerService, FileLoggerService>()
 #if DEBUG
@@ -73,6 +73,24 @@ public static class ServiceCollectionExtensions
             .AddTransient<RegexManagerViewModel>()
             .AddTransient<NinjaViewModel>()
             .AddTransient<ResultViewModel>();
-        return sc;
+
+        if (OperatingSystem.IsWindows())
+        {
+            return sc.AddSingleton<IMessageAdapterService, WindowsMessageAdapterService>()
+                .AddSingleton<IProtocolRegisterService, WindowsProtocolRegisterService>()
+                .AddSingleton<IPoeActionService, WindowsPoeActionService>()
+                .AddSingleton<IHookService>(sp => new WindowsHookService(sp.GetRequiredService<ShortcutDispatcher>().HandleMessage));
+        }
+
+        // TODO
+        if (OperatingSystem.IsLinux())
+        {
+            return sc//.AddSingleton<IMessageAdapterService, LinuxMessageAdapterService>()
+                .AddSingleton<IProtocolRegisterService, LinuxProtocolRegisterService>()
+                .AddSingleton<IPoeActionService, LinuxPoeActionService>()
+                .AddSingleton<IHookService>(sp => new LinuxHookService(sp.GetRequiredService<ShortcutDispatcher>().HandleMessage));
+        }
+
+        throw new PlatformNotSupportedException("Xiletrade is only supported on Windows.");
     }
 }

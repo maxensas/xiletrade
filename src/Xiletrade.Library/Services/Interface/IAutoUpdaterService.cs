@@ -2,7 +2,10 @@
 
 namespace Xiletrade.Library.Services.Interface;
 
+/// <summary>
+/// Checks for available application updates and notifies the user when an update is available.
+/// </summary>
 public interface IAutoUpdaterService
 {
-    Task CheckUpdateAsync(bool manualCheck = false);
+    Task CheckForUpdateAsync(bool manualCheck = false);
 }

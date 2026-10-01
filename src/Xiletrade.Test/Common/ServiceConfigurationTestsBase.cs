@@ -30,6 +30,7 @@ public abstract class ServiceConfigurationTestsBase
     [
         // framework imp
         typeof(INavigationService),
+        typeof(IKeyboardAdapterService),
         typeof(IClipboardAdapterService),
         //INotifications
         typeof(IMainView),
@@ -41,40 +42,37 @@ public abstract class ServiceConfigurationTestsBase
         // platform imp
         typeof(IMessageAdapterService),
         typeof(IProtocolRegisterService),
-        typeof(ISendInputService),
+        typeof(IPoeActionService),
         typeof(IHookService),
         // lib imp
         typeof(StartupArguments),
         typeof(XiletradeService),
         typeof(DataManagerService),
         typeof(DataUpdaterService),
-        typeof(WndProcService),
+        typeof(ShortcutDispatcher),
         typeof(PoeApiService),
         typeof(PoeNinjaService),
-        typeof(HotKeyService),
+        typeof(InputService),
         typeof(ClipboardService),
         typeof(LocalizationService),
-        typeof(FeatureProviderService),
+        typeof(FeatureProvider),
         typeof(IUIService),
         typeof(IAutoUpdaterService),
         typeof(ITokenService),
         typeof(IUpdateDownloader),
         typeof(IProtocolHandlerService),
-        typeof(IKeysConverter),
         typeof(IFileLoggerService),
-        //typeof(ILogger<>),
         typeof(INetService),
-        //vm
+        typeof(IViewModelProvider),
+        // registered vm
         typeof(MainViewModel),
         typeof(TaskBarViewModel),
         typeof(ResultViewModel),
         typeof(NinjaViewModel),
         typeof(RegexViewModel),
         typeof(RegexManagerViewModel),
-
-        //typeof(FormViewModel),
-        //typeof(ConfigViewModel),
-        //typeof(EditorViewModel),
+        typeof(EditorViewModel),
+        typeof(ConfigViewModel)
     ];
 
     protected ServiceProvider BuildProvider()
@@ -102,8 +100,10 @@ public abstract class ServiceConfigurationTestsBase
         //SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
 
         using var provider = BuildProvider();
+        using var scope = provider.CreateScope();
+
         foreach (var type in RequiredServices)
-            provider.GetService(type).Should().NotBeNull($"{type.Name} is required");
+            scope.ServiceProvider.GetService(type).Should().NotBeNull($"{type.Name} is required");
     }
 
     /*
@@ -187,5 +187,28 @@ public abstract class ServiceConfigurationTestsBase
             .ToList();
 
         Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
+    }
+
+    private static IEnumerable<Type> TypesWith(ViewModelCreation mode) =>
+    typeof(MainViewModel).Assembly.GetTypes()
+        .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("ViewModel"))
+        .Where(t => t.GetCreationMode() == mode);
+
+    /*
+    [Fact]
+    public void Container_viewmodels_are_resolvable()
+    {
+        using var sp = BuildProvider();
+        foreach (var t in TypesWith(ViewModelCreation.Container))
+            Assert.NotNull(sp.GetRequiredService(t));
+    }
+    */
+
+    [Fact]
+    public void Manual_viewmodels_are_not_registered()
+    {
+        using var sp = BuildProvider();
+        foreach (var t in TypesWith(ViewModelCreation.Manual))
+            Assert.Null(sp.GetService(t)); // enregistré mais non tagué = oubli
     }
 }

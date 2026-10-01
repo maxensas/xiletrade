@@ -1,5 +1,8 @@
 ﻿namespace Xiletrade.Library.Services.Interface;
 
+/// <summary>
+/// Handles communication between application instances through a custom protocol.
+/// </summary>
 public interface IProtocolHandlerService
 {
     /// <summary>

@@ -4,6 +4,9 @@ using Xiletrade.Library.Shared.Interop;
 
 namespace Xiletrade.Library.Services.Windows;
 
+/// <summary>
+/// Provides a native Windows window for receiving system messages.
+/// </summary>
 public sealed class WindowsHookService : IHookService
 {
     public nint Hwnd { get; private set; }

@@ -5,6 +5,10 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Services;
 
+/// <summary>
+/// Provides access to localized resources and manages the current UI culture.
+/// </summary>
+/// <param name="dm"></param>
 public partial class LocalizationService(DataManagerService dm) : ObservableObject
 {
     private readonly DataManagerService _dm = dm;

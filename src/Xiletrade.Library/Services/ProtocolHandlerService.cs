@@ -128,7 +128,7 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
 
                 if (!string.IsNullOrWhiteSpace(message))
                 {
-                    _ui.DelegateActionToUiThread(new(() => { HandleUrl(message); }));
+                    _ui.Invoke(new(() => { HandleUrl(message); }));
                 }
 
                 server.Disconnect();

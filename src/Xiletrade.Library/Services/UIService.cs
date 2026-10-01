@@ -10,7 +10,7 @@ public sealed class UIService : IUIService
 {
     public static SynchronizationContext UiThreadContext { get; private set; }
 
-    public nint MainHwnd { get; set; }
+    public nint MainWindowHandle { get; set; }
 
     public UIService(ILogger<UIService> logger)
     {
@@ -25,7 +25,7 @@ public sealed class UIService : IUIService
     /// <summary>
     /// Executes the action on the UI thread without waiting for completion.
     /// </summary>
-    public void DelegateActionToUiThread(Action action)
+    public void Invoke(Action action)
     {
         if (UiThreadContext is null)
         {
@@ -44,7 +44,7 @@ public sealed class UIService : IUIService
     /// <summary>
     /// Executes the function on the UI thread and waits for the result.
     /// </summary>
-    public TResult DelegateFuncToUiThread<TResult>(Func<TResult> func)
+    public TResult Invoke<TResult>(Func<TResult> func)
     {
         if (UiThreadContext is null)
         {
@@ -82,8 +82,7 @@ public sealed class UIService : IUIService
     /// <summary>
     /// Executes an asynchronous function on the UI thread.
     /// </summary>
-    public Task<TResult> DelegateActionToUiThreadAsync<TResult>(
-        Func<Task<TResult>> asyncFunc)
+    public Task<TResult> InvokeAsync<TResult>(Func<Task<TResult>> asyncFunc)
     {
         if (UiThreadContext is null)
         {
@@ -114,5 +113,5 @@ public sealed class UIService : IUIService
         return tcs.Task;
     }
 
-    public void ShutDownXiletrade(int code = 0) => Environment.Exit(code);
+    public void ShutDownApp(int code = 0) => Environment.Exit(code);
 }

@@ -51,23 +51,23 @@ public sealed partial class CommonKeysViewModel : ViewModelBase
     [ObservableProperty]
     private HotkeyViewModel openRegexManager;
 
-    public CommonKeysViewModel(INavigationService nav, IMessageAdapterService message, ConfigViewModel vm)
+    public CommonKeysViewModel(IKeyboardAdapterService key, IMessageAdapterService message, ConfigViewModel vm)
     {
-        priceCheck = new(nav, message, vm, Resources.Resources.Config077_lbPrice, Resources.Resources.Config092_lbPriceTip);
-        openBulk = new(nav, message, vm, Resources.Resources.Config078_lbBulkEx, Resources.Resources.Config093_lbBulkExTip);
-        openConfig = new(nav, message, vm, Resources.Resources.Config079_lbSettingsWin, Resources.Resources.Config094_lbSettingsWinTip);
-        closeWindow = new(nav, message, vm, Resources.Resources.Config080_lbCloseWin, Resources.Resources.Config095_lbCloseWinTip);
-        openSyndicate = new(nav, message, vm, Resources.Resources.Config081_lbSyndicate, Resources.Resources.Config096_lbSyndicateTip);
-        openIncursion = new(nav, message, vm, Resources.Resources.Config082_lbIncursion, Resources.Resources.Config097_lbIncursionTip);
-        tcpLogout = new(nav, message, vm, Resources.Resources.Config084_lbTcp, Resources.Resources.Config098_lbTcpTip);
-        openWiki = new(nav, message, vm, Resources.Resources.Config086_lbWiki, Resources.Resources.Config099_lbWikiTip);
-        openNinja = new(nav, message, vm, Resources.Resources.Config087_lbNinja, Resources.Resources.Config100_lbNinjaTip);
-        openPoeLab = new(nav, message, vm, Resources.Resources.Config088_lbLab, Resources.Resources.Config101_lbLabTip);
-        openPoeDb = new(nav, message, vm, Resources.Resources.Config089_lbData, Resources.Resources.Config102_lbDataTip);
-        openCoe = new(nav, message, vm, Resources.Resources.Config172_coe, Resources.Resources.Config173_coeTip);
-        openCustomFirst = new(nav, message, vm, Resources.Resources.Config090_lbCustom1, Resources.Resources.Config103_lbCustom1Tip);
-        openCustomSecond = new(nav, message, vm, Resources.Resources.Config091_lbCustom2, Resources.Resources.Config104_lbCustom2Tip);
-        openRegexManager = new(nav, message, vm, Resources.Resources.Config157_lbRegex, Resources.Resources.Config158_lbRegexTip);
+        priceCheck = new(key, message, vm, Resources.Resources.Config077_lbPrice, Resources.Resources.Config092_lbPriceTip);
+        openBulk = new(key, message, vm, Resources.Resources.Config078_lbBulkEx, Resources.Resources.Config093_lbBulkExTip);
+        openConfig = new(key, message, vm, Resources.Resources.Config079_lbSettingsWin, Resources.Resources.Config094_lbSettingsWinTip);
+        closeWindow = new(key, message, vm, Resources.Resources.Config080_lbCloseWin, Resources.Resources.Config095_lbCloseWinTip);
+        openSyndicate = new(key, message, vm, Resources.Resources.Config081_lbSyndicate, Resources.Resources.Config096_lbSyndicateTip);
+        openIncursion = new(key, message, vm, Resources.Resources.Config082_lbIncursion, Resources.Resources.Config097_lbIncursionTip);
+        tcpLogout = new(key, message, vm, Resources.Resources.Config084_lbTcp, Resources.Resources.Config098_lbTcpTip);
+        openWiki = new(key, message, vm, Resources.Resources.Config086_lbWiki, Resources.Resources.Config099_lbWikiTip);
+        openNinja = new(key, message, vm, Resources.Resources.Config087_lbNinja, Resources.Resources.Config100_lbNinjaTip);
+        openPoeLab = new(key, message, vm, Resources.Resources.Config088_lbLab, Resources.Resources.Config101_lbLabTip);
+        openPoeDb = new(key, message, vm, Resources.Resources.Config089_lbData, Resources.Resources.Config102_lbDataTip);
+        openCoe = new(key, message, vm, Resources.Resources.Config172_coe, Resources.Resources.Config173_coeTip);
+        openCustomFirst = new(key, message, vm, Resources.Resources.Config090_lbCustom1, Resources.Resources.Config103_lbCustom1Tip);
+        openCustomSecond = new(key, message, vm, Resources.Resources.Config091_lbCustom2, Resources.Resources.Config104_lbCustom2Tip);
+        openRegexManager = new(key, message, vm, Resources.Resources.Config157_lbRegex, Resources.Resources.Config158_lbRegexTip);
     }
 
     internal IEnumerable<HotkeyViewModel> GetListHotkey()

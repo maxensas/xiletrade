@@ -5,6 +5,9 @@ using Xiletrade.Library.Models.Poe.Contract;
 
 namespace Xiletrade.Library.Services.Interface;
 
+/// <summary>
+/// Provides window management services for the application, including showing or closing views.
+/// </summary>
 public interface INavigationService
 {
     void ShowMainView();
@@ -18,11 +21,5 @@ public interface INavigationService
     void ShowUpdateView(GitHubRelease release);
     void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data);
     void SetMainHandle(object view);
-    void ShutDownXiletrade(int code = 0);
-
-    //move next to other service
-    string GetKeyPressed(EventArgs e);
-    int GetModifierCode(string textMod);
-    string GetModifierText(int modifier);
-    void ClearKeyboardFocus();
+    void ShutDownNativeApp(int exitCode = 0);
 }

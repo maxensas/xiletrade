@@ -5,6 +5,7 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services.Interface;
 
+/// <summary>Provides HTTP client management and request operations for Xiletrade.</summary>
 public interface INetService
 {
     TradeCooldownHandler TradeCooldown { get; }

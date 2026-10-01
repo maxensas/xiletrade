@@ -81,7 +81,7 @@ public sealed class TradeCooldownHandler
 
     private void Cooldown_Tick(object sender, EventArgs e)
     {
-        _ui.DelegateActionToUiThread(_cooldownAction);
+        _ui.Invoke(_cooldownAction);
     }
 
     private int GetMaxCooldown()

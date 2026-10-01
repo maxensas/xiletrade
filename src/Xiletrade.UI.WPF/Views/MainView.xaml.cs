@@ -36,7 +36,7 @@ public partial class MainView : ViewBase, IMainView
 
     private void Window_DragMove(object sender, MouseButtonEventArgs e)
     {
-        var mainHwnd = App.Services.GetRequiredService<IUIService>().MainHwnd;
+        var mainHwnd = App.Services.GetRequiredService<IUIService>().MainWindowHandle;
 
         if (!Native.GetForegroundWindow().Equals(mainHwnd))
         {

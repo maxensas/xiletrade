@@ -6,9 +6,9 @@ using Xiletrade.Library.Services.Interface;
 namespace Xiletrade.Library.Services.Linux;
 
 //TOTEST
-public sealed class LinuxSendInputService : ISendInputService
+public sealed class LinuxPoeActionService : IPoeActionService
 {
-    private readonly HotKeyService _hotkey;
+    private readonly InputService _input;
 
     private readonly string _xdotoolPath;
     private readonly string _wtypePath;
@@ -16,9 +16,9 @@ public sealed class LinuxSendInputService : ISendInputService
 
     public (string Key, ushort Code) ChatKey { get; set; }
 
-    public LinuxSendInputService(HotKeyService hotkey)
+    public LinuxPoeActionService(InputService input)
     {
-        _hotkey = hotkey;
+        _input = input;
 
         _isWayland = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WAYLAND_DISPLAY"));
 

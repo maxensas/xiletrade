@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
-using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.Library.Models.Application.Hotkey.Converter;
 

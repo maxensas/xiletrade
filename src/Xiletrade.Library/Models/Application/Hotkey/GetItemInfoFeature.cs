@@ -9,8 +9,8 @@ using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Application.Hotkey;
 
-internal sealed class GetItemInfoFeature(ILogger<GetItemInfoFeature> logger, INetService net, INavigationService navigation, 
-    ISendInputService sendInput,ClipboardService clipboard,
+internal sealed class GetItemInfoFeature(ILogger<GetItemInfoFeature> logger, INetService net, 
+    INavigationService navigation, IPoeActionService poe, ClipboardService clipboard,
     MainViewModel vm, ConfigShortcut shortcut) : BaseFeature(shortcut)
 {
     internal override void Launch()
@@ -28,7 +28,7 @@ internal sealed class GetItemInfoFeature(ILogger<GetItemInfoFeature> logger, INe
 
             vm.StopWatch.Restart();
 
-            sendInput.CopyItemDetail();
+            poe.CopyItemDetail();
             
             if (!clipboard.ContainsAnyTextData())
             {

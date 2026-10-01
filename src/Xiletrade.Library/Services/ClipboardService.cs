@@ -9,10 +9,10 @@ using Xiletrade.Library.Shared.Interop;
 namespace Xiletrade.Library.Services;
 
 /// <summary> Service used to interact with clipboard and PoE message whispering.</summary>
-public sealed class ClipboardService(ISendInputService input, IClipboardAdapterService clipboard, 
+public sealed class ClipboardService(IPoeActionService poe, IClipboardAdapterService clipboard, 
     IMessageAdapterService message, IUIService ui)
 {
-    private readonly ISendInputService _input = input;
+    private readonly IPoeActionService _poe = poe;
     private readonly IClipboardAdapterService _clipboard = clipboard;
     private readonly IMessageAdapterService _message = message;
     private readonly IUIService _ui = ui;    
@@ -40,7 +40,7 @@ public sealed class ClipboardService(ISendInputService input, IClipboardAdapterS
         {
             Clear();
             SetClipboard(command);
-            _input.CleanChatAndPasteClipboard();
+            _poe.CleanChatAndPasteClipboard();
             Clear();
         }
         catch (COMException ex)
@@ -52,13 +52,13 @@ public sealed class ClipboardService(ISendInputService input, IClipboardAdapterS
     internal void SendClipboardCommandLastWhisper(string command)
     {
         Clear();
-        _input.CutLastWhisperToClipboard();
+        _poe.CutLastWhisperToClipboard();
         string clip = GetClipboard();
         if (clip?.Length > 1 && clip.StartsWith('@') && clip.Contain(' '))
         {
             string charName = clip.Split(' ')[0].Replace("@", string.Empty);
             SetClipboard(command + " " + charName);
-            _input.PasteClipboard();
+            _poe.PasteClipboard();
             Clear();
         }
     }
@@ -76,7 +76,7 @@ public sealed class ClipboardService(ISendInputService input, IClipboardAdapterS
             string tradechat;
             bool IsMesssage = message.Length > 0;
 
-            nint origHwnd = IsMesssage ? _ui.MainHwnd : origHwnd = Native.GetForegroundWindow();
+            nint origHwnd = IsMesssage ? _ui.MainWindowHandle : origHwnd = Native.GetForegroundWindow();
             nint findHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
             bool isPoeWindow = findHwnd.ToInt32() > 0 && findHwnd.ToInt32() != origHwnd.ToInt32();
             if (!isPoeWindow)
@@ -113,7 +113,7 @@ public sealed class ClipboardService(ISendInputService input, IClipboardAdapterS
             {
                 if (Native.SwitchWindow(findHwnd))
                 {
-                    _input.CleanChatAndPasteClipboard();
+                    _poe.CleanChatAndPasteClipboard();
                 }
                 Clear();
                 Native.SwitchWindow(origHwnd);
@@ -150,7 +150,7 @@ public sealed class ClipboardService(ISendInputService input, IClipboardAdapterS
                 {
                     if (Native.SwitchWindow(findPoeHwnd))
                     {
-                        _input.CleanPoeSearchBarAndPasteClipboard();
+                        _poe.CleanPoeSearchBarAndPasteClipboard();
                     }
                     Clear();
                     Native.SwitchWindow(origHwnd);

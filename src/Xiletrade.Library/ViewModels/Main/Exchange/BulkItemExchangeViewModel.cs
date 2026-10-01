@@ -15,9 +15,6 @@ namespace Xiletrade.Library.ViewModels.Main.Exchange;
 public sealed partial class BulkItemExchangeViewModel : ViewModelBase
 {
     private readonly DataManagerService _dm;
-    private readonly INavigationService _navigation;
-    private readonly IMessageAdapterService _message;
-    private readonly MainViewModel _vm;
 
     [ObservableProperty]
     private BulkViewModel bulk;
@@ -26,18 +23,15 @@ public sealed partial class BulkItemExchangeViewModel : ViewModelBase
     private ShopViewModel shop;
 
     public BulkItemExchangeViewModel(DataManagerService dm, MainViewModel vm, 
-        INavigationService navigation, IMessageAdapterService message,
-        bool useCustomOrBulk)
+        INavigationService navigation, IKeyboardAdapterService keyboard,
+        IMessageAdapterService message, bool useCustomOrBulk)
     {
         _dm = dm;
-        _vm = vm;
-        _navigation = navigation;
-        _message = message;
 
-        bulk = new(_dm, _vm, _navigation, _message); // mandatory (auto select currency item on price check)
+        bulk = new(_dm, vm, navigation, keyboard, message); // mandatory (auto select currency item on price check)
         if (useCustomOrBulk)
         {
-            shop = new(_dm, _vm, _navigation, _message);
+            shop = new(_dm, vm, navigation, keyboard, message);
         }
     }
 

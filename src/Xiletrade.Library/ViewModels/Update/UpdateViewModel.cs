@@ -125,7 +125,7 @@ public sealed partial class UpdateViewModel(IUpdateDownloader downloader,
             {
                 view.Close();
             }
-            _ui.ShutDownXiletrade();
+            _ui.ShutDownApp();
         }
     }
 }

@@ -63,27 +63,27 @@ public sealed partial class AdditionalKeysViewModel : ViewModelBase
     [ObservableProperty]
     private HotkeyViewModel partyLeave;
 
-    internal AdditionalKeysViewModel(INavigationService nav, IMessageAdapterService message, ConfigViewModel vm)
+    internal AdditionalKeysViewModel(IKeyboardAdapterService key, IMessageAdapterService message, ConfigViewModel vm)
     {
-        chatKey = new(nav, message, vm, Resources.Resources.Config105_lbChatKey, Resources.Resources.Config118_lbChatKeyTip, useCb: false);
-        hideout = new(nav, message, vm, Resources.Resources.Config106_lbHideout, Resources.Resources.Config119_lbHideoutTip);
-        charSelection = new(nav, message, vm, Resources.Resources.Config109_lbExit, Resources.Resources.Config122_lbExitTip);
-        pasteWhisper = new(nav, message, vm, Resources.Resources.Config108_lbPaste, Resources.Resources.Config121_lbPasteTip);
-        chatCommandFirst = new(nav, message, vm, string.Empty, string.Empty, initList: true);
-        chatCommandSecond = new(nav, message, vm, string.Empty, string.Empty, initList: true);
-        chatCommandThird = new(nav, message, vm, string.Empty, string.Empty, initList: true);
-        inviteLast = new(nav, message, vm, "Invite", Resources.Resources.Config129_lbWhisperInviteTip);
-        tradeLast = new(nav, message, vm, "Trade", Resources.Resources.Config130_lbWhisperTradeTip);
-        whoisLast = new(nav, message, vm, "Whois", Resources.Resources.Config131_lbWhisperWhoisTip);
-        replyLast = new(nav, message, vm, "Reply : ", Resources.Resources.Config132_lbWhisperReplyTip);
-        tradeChan = new(nav, message, vm, Resources.Resources.Config112_lbJoinTrade, Resources.Resources.Config124_lbJoinTradeTip);
-        globalChan = new(nav, message, vm, Resources.Resources.Config113_lbJoinGlobal, Resources.Resources.Config125_lbJoinGlobalTip);
-        setAfk = new(nav, message, vm, Resources.Resources.Config114_lbAfk, Resources.Resources.Config126_lbAfkTip);
-        setAutoReply = new(nav, message, vm, Resources.Resources.Config115_lbAutoReply, Resources.Resources.Config127_lbAutoReplyTip);
-        setDnd = new(nav, message, vm, Resources.Resources.Config116_lbDnd, Resources.Resources.Config128_lbDndTip);
-        partyInvite = new(nav, message, vm, "Invite", Resources.Resources.Config133_lbGroupInviteTip);
-        partyKick = new(nav, message, vm, "Kick", Resources.Resources.Config134_lbGroupKickTip);
-        partyLeave = new(nav, message, vm, "Leave", Resources.Resources.Config135_lbGroupLeaveTip);
+        chatKey = new(key, message, vm, Resources.Resources.Config105_lbChatKey, Resources.Resources.Config118_lbChatKeyTip, useCb: false);
+        hideout = new(key, message, vm, Resources.Resources.Config106_lbHideout, Resources.Resources.Config119_lbHideoutTip);
+        charSelection = new(key, message, vm, Resources.Resources.Config109_lbExit, Resources.Resources.Config122_lbExitTip);
+        pasteWhisper = new(key, message, vm, Resources.Resources.Config108_lbPaste, Resources.Resources.Config121_lbPasteTip);
+        chatCommandFirst = new(key, message, vm, string.Empty, string.Empty, initList: true);
+        chatCommandSecond = new(key, message, vm, string.Empty, string.Empty, initList: true);
+        chatCommandThird = new(key, message, vm, string.Empty, string.Empty, initList: true);
+        inviteLast = new(key, message, vm, "Invite", Resources.Resources.Config129_lbWhisperInviteTip);
+        tradeLast = new(key, message, vm, "Trade", Resources.Resources.Config130_lbWhisperTradeTip);
+        whoisLast = new(key, message, vm, "Whois", Resources.Resources.Config131_lbWhisperWhoisTip);
+        replyLast = new(key, message, vm, "Reply : ", Resources.Resources.Config132_lbWhisperReplyTip);
+        tradeChan = new(key, message, vm, Resources.Resources.Config112_lbJoinTrade, Resources.Resources.Config124_lbJoinTradeTip);
+        globalChan = new(key, message, vm, Resources.Resources.Config113_lbJoinGlobal, Resources.Resources.Config125_lbJoinGlobalTip);
+        setAfk = new(key, message, vm, Resources.Resources.Config114_lbAfk, Resources.Resources.Config126_lbAfkTip);
+        setAutoReply = new(key, message, vm, Resources.Resources.Config115_lbAutoReply, Resources.Resources.Config127_lbAutoReplyTip);
+        setDnd = new(key, message, vm, Resources.Resources.Config116_lbDnd, Resources.Resources.Config128_lbDndTip);
+        partyInvite = new(key, message, vm, "Invite", Resources.Resources.Config133_lbGroupInviteTip);
+        partyKick = new(key, message, vm, "Kick", Resources.Resources.Config134_lbGroupKickTip);
+        partyLeave = new(key, message, vm, "Leave", Resources.Resources.Config135_lbGroupLeaveTip);
 
         for (int i = 0; i < vm.Config.ChatCommands.Length; i++)
         {

@@ -11,7 +11,7 @@ namespace Xiletrade.Library.ViewModels.Config;
 
 public sealed partial class HotkeyViewModel : ViewModelBase
 {
-    private readonly INavigationService _navigation;
+    private readonly IKeyboardAdapterService _keybord;
     private readonly IMessageAdapterService _message;
     private readonly ConfigViewModel _cfgVm;
 
@@ -42,10 +42,10 @@ public sealed partial class HotkeyViewModel : ViewModelBase
     [ObservableProperty]
     private int listIndex;
 
-    public HotkeyViewModel(INavigationService navigation, IMessageAdapterService message, ConfigViewModel cfgVm,
-        string txt, string tip, bool useCb = true, bool initList = false)
+    public HotkeyViewModel(IKeyboardAdapterService keybord, IMessageAdapterService message, 
+        ConfigViewModel cfgVm, string txt, string tip, bool useCb = true, bool initList = false)
     {
-        _navigation = navigation;
+        _keybord = keybord;
         _message = message;
         _cfgVm = cfgVm;
 
@@ -67,7 +67,7 @@ public sealed partial class HotkeyViewModel : ViewModelBase
     {
         if (commandParameter is CompositeCommandParameter composite)
         {
-            var keyPressed = _navigation.GetKeyPressed(composite.EventArgs);
+            var keyPressed = _keybord.GetKeyPressed(composite.EventArgs);
             if (keyPressed.Length > 0)
             {
                 Hotkey = keyPressed;

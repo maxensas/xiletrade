@@ -63,8 +63,7 @@ public sealed partial class TaskBarViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void CheckUpdate(object commandParameter) 
-        => _updater.CheckUpdateAsync(manualCheck: true);
+    private void CheckUpdate(object commandParameter) => _updater.CheckForUpdateAsync(manualCheck: true);
 
     [RelayCommand]
     private void OpenConfig(object commandParameter)
@@ -84,7 +83,7 @@ public sealed partial class TaskBarViewModel : ViewModelBase
     {
         if (commandParameter is string str && str is "terminate")
         {
-            _navigation.ShutDownXiletrade();
+            _navigation.ShutDownNativeApp();
         }
         _navigation.CloseMainView();
         _vm.ClearContentViewModels();

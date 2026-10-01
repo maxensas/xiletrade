@@ -8,7 +8,10 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Services;
 
-public sealed class FeatureProviderService(IServiceProvider sp, 
+/// <summary>
+/// Resolves features from configured shortcuts.
+/// </summary>
+public sealed class FeatureProvider(IServiceProvider sp, 
     DataManagerService dm, LocalizationService localization)
 {
     private readonly IServiceProvider _sp = sp;

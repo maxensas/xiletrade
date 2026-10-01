@@ -7,19 +7,19 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Services;
 
-/// <summary>Service containing all hotkeys registering management.</summary>
-public sealed class HotKeyService
+/// <summary>Service responsible for hotkey registrations and global input interactions.</summary>
+public sealed class InputService
 {
     private readonly INavigationService _navigation;
     private readonly IHookService _hook;
-    private readonly IKeysConverter _keyConverter;
-    private readonly ISendInputService _input;
+    private readonly IKeyboardAdapterService _keyboard;
+    private readonly IPoeActionService _poe;
     private readonly DataManagerService _dm;
     private readonly ClipboardService _clipboard;
     private readonly IUIService _ui;
 
-    private readonly Action _hotkeyHandler;
-    private System.Timers.Timer _registerTimer;
+    private readonly Action _inputHandler;
+    private System.Timers.Timer _startupTimer;
     private nint _hookHwnd;
 
     private static bool _isAllHotKeysRegistered = false;
@@ -29,20 +29,20 @@ public sealed class HotKeyService
 
     public const int SHIFTHOTKEYID = 10001;
 
-    public HotKeyService(ILogger<HotKeyService> logger, 
+    public InputService(ILogger<InputService> logger, 
         INavigationService navigation, IHookService hook,
-        IKeysConverter keyConverter, ISendInputService input, 
+        IKeyboardAdapterService keyboard, IPoeActionService poe, 
         DataManagerService dm, ClipboardService clipboard, IUIService ui)
     {
         _navigation = navigation;
         _hook = hook;
-        _keyConverter = keyConverter;
-        _input = input;
+        _keyboard = keyboard;
+        _poe = poe;
         _dm = dm;
         _clipboard = clipboard;
         _ui = ui;
 
-        _hotkeyHandler = new(() =>
+        _inputHandler = new(() =>
         {
             var isPoeFocused = Native.GetForegroundWindow().Equals(Native.FindWindow(Strings.PoeClass, Strings.PoeCaption));
             if (!_capturingMouse && isPoeFocused && _dm.Config.Options.CtrlWheel)
@@ -87,26 +87,25 @@ public sealed class HotKeyService
             }
         });
 
-        StartAutoRegister();
+        StartTimer();
 
 #if DEBUG
         logger.LogInformation("Service launched");
 #endif
     }
 
-    private void StartAutoRegister()
+    private void StartTimer()
     {
         _hookHwnd = _hook.Hwnd;
 
         // If the SynchronizingObject property is null, the handler runs on a thread pool thread.
-        _registerTimer?.Stop();
-        _registerTimer = new(100);
-        _registerTimer.Elapsed += AutoRegisterHotkey_Tick;
-        _registerTimer.Start();
+        _startupTimer?.Stop();
+        _startupTimer = new(100);
+        _startupTimer.Elapsed += OnRegisterTimerElapsed;
+        _startupTimer.Start();
     }
 
-    private void AutoRegisterHotkey_Tick(object sender, EventArgs e) 
-        => _ui.DelegateActionToUiThread(_hotkeyHandler);
+    private void OnRegisterTimerElapsed(object sender, EventArgs e) => _ui.Invoke(_inputHandler);
 
     internal void EnableHotkeys() => InstallRegisterHotKey();
 
@@ -130,9 +129,8 @@ public sealed class HotKeyService
             if (fonction is Strings.Feature.chatkey)
             {
                 var cultureEn = new CultureInfo("en-US");
-                _input.ChatKey = ("{" + 
-                    _keyConverter.ConvertToString(null, cultureEn, shortcut.Keycode).ToUpper() + "}", 
-                    (ushort)shortcut.Keycode);
+                _poe.ChatKey = ("{" + _keyboard.Converter
+                    .ConvertToString(null, cultureEn, shortcut.Keycode).ToUpper() + "}", (ushort)shortcut.Keycode);
                 continue;
             }
             if (fonction is Strings.Feature.close && !IsXiletradeWindowOpened())

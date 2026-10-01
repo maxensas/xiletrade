@@ -4,7 +4,7 @@ using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.Library.Models.Application.Hotkey;
 
-internal class ReplyLastFeature(ClipboardService clipboard, ISendInputService sendInput,
+internal class ReplyLastFeature(ClipboardService clipboard, IPoeActionService poe,
     ConfigShortcut shortcut) : BaseFeature(shortcut)
 {
     internal override void Launch()
@@ -12,7 +12,7 @@ internal class ReplyLastFeature(ClipboardService clipboard, ISendInputService se
         clipboard.Clear();
         clipboard.SetClipboard(_shortcut.Value);
         //Thread.Sleep(100);
-        sendInput.ReplyLastWhisper();
+        poe.ReplyLastWhisper();
         clipboard.Clear();
     }
 }

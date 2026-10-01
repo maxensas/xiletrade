@@ -8,7 +8,7 @@ using Xiletrade.Library.Shared.Enum;
 namespace Xiletrade.Library.Services;
 
 /// <summary>Main service used to launch Xiletrade application.</summary>
-/// <remarks>Initialize all services.</remarks>
+/// <remarks>Bootstraps the application and initializes its services.</remarks>
 public sealed class XiletradeService
 {
     public XiletradeService(ILogger<XiletradeService> logger, DataManagerService dm, 
@@ -16,7 +16,7 @@ public sealed class XiletradeService
         IMessageAdapterService message, IAutoUpdaterService updater,
         // Instantiate singletons : 
         IMainView main, ITaskbar taskbar,
-        IProtocolHandlerService handler, IProtocolRegisterService reg, HotKeyService hk)
+        IProtocolHandlerService handler, IProtocolRegisterService reg, InputService input)
     {
         _ = Start(logger, dm, dataUpdater, ui, navigation, message, updater);
     }
@@ -46,7 +46,7 @@ public sealed class XiletradeService
             }
             if (options.CheckUpdates)
             {
-                _ = updater.CheckUpdateAsync();
+                _ = updater.CheckForUpdateAsync();
             }
 
             Shared.Common.CollectGarbage();
@@ -62,7 +62,7 @@ public sealed class XiletradeService
                 strMessage += $"\n\n{ex.InnerException.Message}";
             }
             await message.ShowResultAsync(strMessage, Resources.Resources.Error032_XFailedLaunch, MessageStatus.Exclamation);
-            ui.ShutDownXiletrade(1);
+            ui.ShutDownApp(1);
         }
     }
 }

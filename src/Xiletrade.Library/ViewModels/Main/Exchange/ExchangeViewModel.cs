@@ -12,7 +12,7 @@ namespace Xiletrade.Library.ViewModels.Main.Exchange;
 
 public sealed partial class ExchangeViewModel : ViewModelBase
 {
-    private readonly INavigationService _navigation;
+    private readonly IKeyboardAdapterService _keyboard;
     private readonly DataManagerService _dm;
     private readonly MainViewModel _vm;
 
@@ -137,10 +137,10 @@ public sealed partial class ExchangeViewModel : ViewModelBase
     [ObservableProperty]
     private string search = string.Empty;
 
-    public ExchangeViewModel(DataManagerService dm, INavigationService navigation, MainViewModel vm)
+    public ExchangeViewModel(DataManagerService dm, IKeyboardAdapterService keyboard, MainViewModel vm)
     {
         _dm = dm;
-        _navigation = navigation;
+        _keyboard = keyboard;
         _vm = vm;
 
         var isPoe2 = _dm.Config.Options.GameVersion is 1;
@@ -186,14 +186,14 @@ public sealed partial class ExchangeViewModel : ViewModelBase
                 CategoryIndex = 0;
                 CurrencyIndex = 0;
             }
-            _navigation.ClearKeyboardFocus();
+            _keyboard.ClearFocus();
         }
     }
 
     [RelayCommand]
     private void UpdateWithCurrency(object commandParameter)
     {
-        _navigation.ClearKeyboardFocus();
+        _keyboard.ClearFocus();
         if (commandParameter is string str)
         {
             if (str is "nothing")

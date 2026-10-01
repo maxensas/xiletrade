@@ -16,6 +16,7 @@ namespace Xiletrade.Library.ViewModels.Main.Exchange;
 public sealed partial class ShopViewModel : ViewModelBase
 {
     private readonly INavigationService _navigation;
+    private readonly IKeyboardAdapterService _keyboard;
     private readonly IMessageAdapterService _message;
     private readonly DataManagerService _dm;
     private readonly MainViewModel _vm;
@@ -32,16 +33,18 @@ public sealed partial class ShopViewModel : ViewModelBase
     [ObservableProperty]
     private AsyncObservableCollection<ResultListItemViewModel> payList;
 
-    public ShopViewModel(DataManagerService dm, MainViewModel vm, 
-        INavigationService navigation, IMessageAdapterService message)
+    public ShopViewModel(DataManagerService dm, MainViewModel vm,
+        INavigationService navigation, IKeyboardAdapterService keyboard, 
+        IMessageAdapterService message)
     {
         _dm = dm;
         _vm = vm;
         _navigation = navigation;
+        _keyboard = keyboard;
         _message = message;
 
         stock = "1";
-        exchange = new(_dm, _navigation, _vm);
+        exchange = new(_dm, _keyboard, _vm);
         getList = new();
         payList = new();
     }
@@ -149,7 +152,7 @@ public sealed partial class ShopViewModel : ViewModelBase
     {
         try
         {
-            _navigation.ClearKeyboardFocus();
+            _keyboard.ClearFocus();
             _vm.Result.InitData();
 
             if (!_vm.Form.Tab.ShopSelected)
