@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using System.Reflection;
 using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Services;
@@ -10,7 +9,6 @@ using Xiletrade.Library.ViewModels;
 using Xiletrade.Library.ViewModels.Config;
 using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.Library.ViewModels.Main;
-using Xiletrade.Library.ViewModels.Main.Form;
 using Xiletrade.Library.ViewModels.Main.Result;
 using Xiletrade.Library.ViewModels.Regex;
 using Xiletrade.Library.ViewModels.TaskBar;
@@ -48,7 +46,6 @@ public abstract class ServiceConfigurationTestsBase
         typeof(StartupArguments),
         typeof(XiletradeService),
         typeof(DataManagerService),
-        typeof(DataUpdaterService),
         typeof(ShortcutDispatcher),
         typeof(PoeApiService),
         typeof(PoeNinjaService),
@@ -57,6 +54,7 @@ public abstract class ServiceConfigurationTestsBase
         typeof(LocalizationService),
         typeof(FeatureProvider),
         typeof(IUIService),
+        typeof(IDataUpdaterService),
         typeof(IAutoUpdaterService),
         typeof(ITokenService),
         typeof(IUpdateDownloader),
@@ -75,6 +73,12 @@ public abstract class ServiceConfigurationTestsBase
         typeof(ConfigViewModel)
     ];
 
+    private static IEnumerable<Type> GetViewModelsFromAssembly(ViewModelCreation mode) =>
+        typeof(ViewModelBase).Assembly.GetTypes()
+        .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("ViewModel"))
+        .Where(t => t.GetCustomAttribute<ViewModelCreationAttribute>()?.Mode == mode
+            || (mode == ViewModelCreation.Manual && t.GetCustomAttribute<ViewModelCreationAttribute>() is null));
+
     protected ServiceProvider BuildProvider()
     {
         var services = CreateServices();
@@ -87,15 +91,14 @@ public abstract class ServiceConfigurationTestsBase
     }
 
     [Fact]
-    public void Container_Should_Build_And_Validate()
+    public void _01_Container_Should_Build_And_Validate()
     {
         var act = () => BuildProvider();
         act.Should().NotThrow();
     }
 
     [Fact]
-    //[STAThread]
-    public void Required_Services_Should_Be_Registered()
+    public void _02_Required_Services_Should_Be_Registered()
     {
         //SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(Dispatcher.CurrentDispatcher));
 
@@ -106,109 +109,102 @@ public abstract class ServiceConfigurationTestsBase
             scope.ServiceProvider.GetService(type).Should().NotBeNull($"{type.Name} is required");
     }
 
-    /*
     [Fact]
-    public void All_Closed_Registrations_Should_Resolve()
+    public void _03_All_Closed_Registrations_Should_Resolve()
     {
         var services = CreateServices();
         ReplaceSideEffects(services);
         using var provider = services.BuildServiceProvider(validateScopes: true);
 
-        var failures = services
-            .Where(d => !d.ServiceType.ContainsGenericParameters)   // ignore open generics
-            .Where(d => d.ServiceKey is null)
-            .Select(d =>
+        var failures = new List<string>();
+
+        var desc = services.Where(d => !d.ServiceType.ContainsGenericParameters).Where(d => d.ServiceKey is null);
+        foreach (var d in desc)
+        {
+            try
             {
-                try { provider.GetRequiredService(d.ServiceType); return null; }
-                catch (Exception ex) { return $"{d.ServiceType.Name}: {ex.Message}"; }
-            })
-            .Where(m => m is not null);
+                if (d.Lifetime == ServiceLifetime.Scoped)
+                {
+                    using var scope = provider.CreateScope();
+                    scope.ServiceProvider.GetRequiredService(d.ServiceType);
+                }
+                else
+                {
+                    provider.GetRequiredService(d.ServiceType);
+                }
+            }
+            catch (Exception ex)
+            {
+                failures.Add($"{d.ServiceType.Name} [{d.Lifetime}]:{Environment.NewLine}{ex.GetBaseException()}");
+            }
+        }
 
         failures.Should().BeEmpty();
     }
-    */
 
-
-    /// Assemblies à scanner. Par défaut, celle de ViewModelBase (la librairie).
-    protected virtual IEnumerable<Assembly> ViewModelAssemblies =>
-        new[] { typeof(ViewModelBase).Assembly };
-
-    /// ViewModels créés à la main : type -> arguments runtime (hors dépendances DI).
-    protected virtual IReadOnlyDictionary<Type, object[]> ManuallyCreatedViewModels =>
-        new Dictionary<Type, object[]>();
-
-    private IEnumerable<Type> DiscoverViewModels() => ViewModelAssemblies
-        .SelectMany(a => a.GetTypes())
-        .Where(t => t.IsClass
-                    && !t.IsAbstract
-                    && !t.ContainsGenericParameters
-                    && typeof(ViewModelBase).IsAssignableFrom(t))
-        .Distinct();
-    /*
     [Fact]
-    public void Registered_ViewModels_Should_Be_Resolvable()
+    public void _04_Container_ViewModels_Should_Be_Resolvable()
     {
         using var provider = BuildProvider();
         using var scope = provider.CreateScope();
 
-        var viewModelTypes = DiscoverViewModels()
-            .Where(t => !ManuallyCreatedViewModels.ContainsKey(t))
-            .ToList();
+        var vms = GetViewModelsFromAssembly(ViewModelCreation.Container);
 
-        Assert.NotEmpty(viewModelTypes);
+        Assert.NotEmpty(vms);
 
-        var failures = viewModelTypes
-            .Select(vm =>
+        var failures = vms.Select(vm =>
             {
                 try { scope.ServiceProvider.GetRequiredService(vm); return null; }
-                catch (Exception ex) { return $"{vm.Name}: {ex.GetBaseException().Message}"; }
-            })
-            .Where(m => m is not null)
-            .ToList();
+                catch (Exception ex) { return $"{vm.Name}:{Environment.NewLine}{ex.GetBaseException()}"; }
+            }).Where(m => m is not null).ToList();
 
-        Assert.True(failures.Count == 0,
-            "ViewModels non résolubles (à enregistrer, ou à déclarer dans ManuallyCreatedViewModels) :"
+        Assert.True(failures.Count is 0,
+            "ViewModels marked as Container but not resolvable (need to be registered or have their mode changed) :"
             + Environment.NewLine + string.Join(Environment.NewLine, failures));
     }
-    */
+
     [Fact]
-    public void Manually_Created_ViewModels_Should_Be_Constructible_With_Container_Dependencies()
+    public void _05_Non_Container_ViewModels_Should_Not_Be_Registered_Directly()
     {
         using var provider = BuildProvider();
         using var scope = provider.CreateScope();
+        var isService = scope.ServiceProvider.GetService<IServiceProviderIsService>()!;
 
-        var failures = ManuallyCreatedViewModels
-            .Select(entry =>
+        var vms = GetViewModelsFromAssembly(ViewModelCreation.Manual)
+            .Concat(GetViewModelsFromAssembly(ViewModelCreation.Activator))
+            .Concat(GetViewModelsFromAssembly(ViewModelCreation.Factory));
+
+        var wronglyRegistered = vms.Where(t => isService.IsService(t))
+            .Select(t => $"{t.Name} ({t.GetCreationMode()})").ToList();
+
+        Assert.True(wronglyRegistered.Count == 0,
+            "ViewModels Manual/Activator registered in the container (fix the attribute or the registration):"
+            + Environment.NewLine+ string.Join(Environment.NewLine, wronglyRegistered));
+    }
+
+    [Fact]
+    public void _06_Activator_ViewModels_Should_Be_Constructible_With_Utilities()
+    {
+        using var sp = BuildProvider();
+        using var scope = sp.CreateScope();
+
+        List<string> failures = new();
+
+        var vms = GetViewModelsFromAssembly(ViewModelCreation.Activator);
+        foreach (var vm in vms)
+        {
+            try
             {
-                try { ActivatorUtilities.CreateInstance(scope.ServiceProvider, entry.Key, entry.Value); return null; }
-                catch (Exception ex) { return $"{entry.Key.Name}: {ex.GetBaseException().Message}"; }
-            })
-            .Where(m => m is not null)
-            .ToList();
+                var instance = ActivatorUtilities.CreateInstance(scope.ServiceProvider, vm);
+            }
+            catch (Exception ex)
+            {
+                failures.Add($"{vm.Name}:{Environment.NewLine}{ex.GetBaseException()}");
+            }
+        }
 
-        Assert.True(failures.Count == 0, string.Join(Environment.NewLine, failures));
-    }
-
-    private static IEnumerable<Type> TypesWith(ViewModelCreation mode) =>
-    typeof(MainViewModel).Assembly.GetTypes()
-        .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("ViewModel"))
-        .Where(t => t.GetCreationMode() == mode);
-
-    /*
-    [Fact]
-    public void Container_viewmodels_are_resolvable()
-    {
-        using var sp = BuildProvider();
-        foreach (var t in TypesWith(ViewModelCreation.Container))
-            Assert.NotNull(sp.GetRequiredService(t));
-    }
-    */
-
-    [Fact]
-    public void Manual_viewmodels_are_not_registered()
-    {
-        using var sp = BuildProvider();
-        foreach (var t in TypesWith(ViewModelCreation.Manual))
-            Assert.Null(sp.GetService(t)); // enregistré mais non tagué = oubli
+        Assert.True(failures.Count is 0,
+            "Non-instantiable Activator ViewModels (unregistered dependency or missing runtime argument):"
+            + Environment.NewLine + string.Join(Environment.NewLine, failures));
     }
 }

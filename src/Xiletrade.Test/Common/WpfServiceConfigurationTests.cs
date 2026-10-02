@@ -15,16 +15,17 @@ public class WpfServiceConfigurationTests : ServiceConfigurationTestsBase
     protected override void ReplaceSideEffects(IServiceCollection services)
     {
         services
-            // STA
-            .Replace(ServiceDescriptor.Singleton(Mock.Of<IUIService>())) // from lib
+            // lib
+            .Replace(ServiceDescriptor.Singleton(Mock.Of<IUIService>())) // STA
+            .Replace(ServiceDescriptor.Singleton(Mock.Of<IDataUpdaterService>()))
+            // platform
             .Replace(ServiceDescriptor.Singleton(Mock.Of<IMainView>()))
             .Replace(ServiceDescriptor.Singleton(Mock.Of<ITaskbar>()))
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IConfigView>()))
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IRegexView>()))
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IUpdateView>()))
-            // null object
-            .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IEditorView>()))
-            .Replace(ServiceDescriptor.Singleton(Mock.Of<INavigationService>()))
+            .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IEditorView>())) // null object
+            .Replace(ServiceDescriptor.Singleton(Mock.Of<INavigationService>())) // null object
             //.Replace(ServiceDescriptor.Singleton(Mock.Of<IClipboardAdapterService>()))
             //.Replace(ServiceDescriptor.Singleton(Mock.Of<IMessageAdapterService>()))
             //.Replace(ServiceDescriptor.Singleton(Mock.Of<IProtocolRegisterService>()))
@@ -33,7 +34,7 @@ public class WpfServiceConfigurationTests : ServiceConfigurationTestsBase
             ;
     }
 
-    // Tests spécifiques WPF
+    // WPF-specific tests
     /*
     [Fact]
     public void Message_Adapter_Should_Be_Windows_Implementation() { }

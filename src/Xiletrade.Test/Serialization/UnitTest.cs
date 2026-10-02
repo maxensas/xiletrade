@@ -7,6 +7,7 @@ public class UnitTest<T> where T : class
     public static readonly string[] Culture = ["en-US", "ko-KR", "fr-FR", "es-ES", "de-DE", "pt-BR", "ru-RU", "th-TH", "zh-TW", "zh-CN", "ja-JP"];
     public static Utf8JsonSerializer Utf8Serializer { get; private set; } = new();
     public static JsonHelper NETSerializer { get; private set; } = new();
+    // TO TRY when AOT compatibility will be added : 'REDox.Json' from CAPCOM https://github.com/CAPCOM-TD-OSS/REDox
 
     public Dictionary<string, string> Jsons { get; private set; } = new();
     public Dictionary<string, object> Serializable { get; private set; } = new();

@@ -24,7 +24,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
     private readonly INavigationService _navigation;
     private readonly IKeyboardAdapterService _keyboard;
     private readonly DataManagerService _dm;
-    private readonly DataUpdaterService _updater;
+    private readonly IDataUpdaterService _updater;
     private readonly LocalizationService _localization;
     private readonly InputService _input;
     private readonly PoeNinjaService _ninja;
@@ -50,8 +50,8 @@ public sealed partial class ConfigViewModel : ViewModelBase
     internal string ConfigBackup { get; set; }
 
     public ConfigViewModel(IMessageAdapterService message, INavigationService navigation,
-        IKeyboardAdapterService keyboard, DataManagerService dm, 
-        DataUpdaterService updater, LocalizationService localization,
+        IKeyboardAdapterService keyboard, DataManagerService dm,
+        IDataUpdaterService updater, LocalizationService localization,
         InputService input, PoeNinjaService ninja, INetService net)
     {
         _message = message;

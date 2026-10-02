@@ -18,7 +18,7 @@ namespace Xiletrade.Library.Services;
 
 /// <summary>Service used to update all JSON local data files used by Xiletrade.</summary>
 /// <remarks>Retrieve source data from Xiletrade Github repository and GGG server.</remarks>
-public sealed class DataUpdaterService
+public sealed class DataUpdaterService : IDataUpdaterService
 {
     private readonly INotificationService _notif;
     private readonly IMessageAdapterService _message;
@@ -42,7 +42,7 @@ public sealed class DataUpdaterService
 
     private static string ErrorMsg { get; set; } = string.Empty;
 
-    internal async Task UpdateAsync(GeneralViewModel cfgVm = null, bool allLanguages = false, bool updateGenerated = true)
+    public async Task UpdateAsync(GeneralViewModel cfgVm = null, bool allLanguages = false, bool updateGenerated = true)
     {
         List<Task> taskList = new();
 
@@ -122,7 +122,7 @@ public sealed class DataUpdaterService
         _notif.Show(new() { Title = title, Message = msg, Type = type, ShowCloseButton = false });
     }
 
-    internal async Task<SettingsData> GetAppSettings()
+    public async Task<SettingsData> GetAppSettings()
     {
         try
         {
