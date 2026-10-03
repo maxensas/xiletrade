@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text;
 
-namespace Xiletrade.Library.Models.Application.Hotkey.Converter;
+namespace Xiletrade.Library.Models.Application.Keyboard.Converter;
 
 /// <summary>
 ///  Provides a type converter to convert <see cref="Keys"/> objects to and from various

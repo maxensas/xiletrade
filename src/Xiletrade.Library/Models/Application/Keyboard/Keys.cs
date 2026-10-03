@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using Xiletrade.Library.Models.Application.Keyboard.Converter;
 
-namespace Xiletrade.Library.Models.Application.Hotkey.Converter;
+namespace Xiletrade.Library.Models.Application.Keyboard;
 
 /// <summary>
 ///  Specifies key codes and modifiers.

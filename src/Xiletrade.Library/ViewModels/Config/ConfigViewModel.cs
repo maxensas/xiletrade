@@ -21,7 +21,7 @@ namespace Xiletrade.Library.ViewModels.Config;
 public sealed partial class ConfigViewModel : ViewModelBase
 {
     private readonly IMessageAdapterService _message;
-    private readonly INavigationService _navigation;
+    private readonly IViewManager _view;
     private readonly IKeyboardAdapterService _keyboard;
     private readonly DataManagerService _dm;
     private readonly IDataUpdaterService _updater;
@@ -49,13 +49,13 @@ public sealed partial class ConfigViewModel : ViewModelBase
     internal ConfigData Config { get; set; }
     internal string ConfigBackup { get; set; }
 
-    public ConfigViewModel(IMessageAdapterService message, INavigationService navigation,
+    public ConfigViewModel(IMessageAdapterService message, IViewManager view,
         IKeyboardAdapterService keyboard, DataManagerService dm,
         IDataUpdaterService updater, LocalizationService localization,
         InputService input, PoeNinjaService ninja, INetService net)
     {
         _message = message;
-        _navigation = navigation;
+        _view = view;
         _keyboard = keyboard;
         _dm = dm;
         _updater = updater;
@@ -133,7 +133,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
         {
             Native.SendMessage(pHwnd, Native.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
         }
-        _navigation.ShowEditorView();
+        _view.ShowEditorView();
         CloseConfig(null);
     }
 

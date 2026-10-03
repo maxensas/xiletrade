@@ -7,10 +7,10 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.ViewModels.Main;
 
-namespace Xiletrade.Library.Models.Application.Hotkey;
+namespace Xiletrade.Library.Models.Application.Feature;
 
 internal sealed class GetItemInfoFeature(ILogger<GetItemInfoFeature> logger, INetService net, 
-    INavigationService navigation, IPoeActionService poe, ClipboardService clipboard,
+    IViewManager view, IPoeActionService poe, ClipboardService clipboard,
     MainViewModel vm, ConfigShortcut shortcut) : BaseFeature(shortcut)
 {
     internal override void Launch()
@@ -21,7 +21,7 @@ internal sealed class GetItemInfoFeature(ILogger<GetItemInfoFeature> logger, INe
             {
                 if (_shortcut.Fonction is Strings.Feature.run)
                 {
-                    navigation.ShowMainView();
+                    view.ShowMainView();
                 }
                 return;
             }

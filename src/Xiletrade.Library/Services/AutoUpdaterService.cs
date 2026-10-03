@@ -11,14 +11,14 @@ namespace Xiletrade.Library.Services;
 
 public sealed class AutoUpdaterService : IAutoUpdaterService
 {
-    private readonly INavigationService _navigation;
+    private readonly IViewManager _view;
     private readonly IMessageAdapterService _message;
     private readonly INetService _net;
 
-    public AutoUpdaterService(ILogger<AutoUpdaterService> logger, INavigationService navigation,
-    IMessageAdapterService message, INetService net)
+    public AutoUpdaterService(ILogger<AutoUpdaterService> logger, IViewManager view,
+        IMessageAdapterService message, INetService net)
     {
-        _navigation = navigation;
+        _view = view;
         _message = message;
         _net = net;
 
@@ -36,7 +36,7 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
             var release = await GetAvailableUpdateAsync(manualCheck);
             if (release is not null)
             {
-                _navigation.ShowUpdateView(release);
+                _view.ShowUpdateView(release);
             }
         }
         catch (Exception ex)

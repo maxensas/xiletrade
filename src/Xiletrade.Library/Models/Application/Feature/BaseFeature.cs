@@ -1,6 +1,6 @@
 ﻿using Xiletrade.Library.Models.Application.Configuration.DTO;
 
-namespace Xiletrade.Library.Models.Application.Hotkey;
+namespace Xiletrade.Library.Models.Application.Feature;
 
 internal abstract class BaseFeature
 {  

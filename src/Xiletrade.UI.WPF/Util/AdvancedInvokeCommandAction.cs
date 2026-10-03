@@ -13,6 +13,11 @@ public sealed class AdvancedInvokeCommandAction : TriggerAction<DependencyObject
 {
     private string commandName;
 
+    /// <summary>
+    /// Marks the routed event as handled after the command is executed.
+    /// </summary>
+    public bool MarkEventHandled { get; set; }
+
     public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(AdvancedInvokeCommandAction), null);
     public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(object), typeof(AdvancedInvokeCommandAction), null);
     public static readonly DependencyProperty EventArgsConverterProperty = DependencyProperty.Register("EventArgsConverter", typeof(IValueConverter), typeof(AdvancedInvokeCommandAction), new PropertyMetadata(null));
@@ -134,8 +139,13 @@ public sealed class AdvancedInvokeCommandAction : TriggerAction<DependencyObject
 
                 if (command.CanExecute(commandParameter))
                 {
-                    var compositeCommandParameter = new CompositeCommandParameter((EventArgs)eventArgs, commandParameter);
+                    var compositeCommandParameter = new CompositeCommandParameter(eventArgs, commandParameter);
                     command.Execute(compositeCommandParameter);
+
+                    if (MarkEventHandled && parameter is RoutedEventArgs routed)
+                    {
+                        routed.Handled = true;
+                    }
                 }
             }
         }

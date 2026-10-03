@@ -24,9 +24,7 @@ public static class AvaloniaServiceRegistration
     public static IServiceCollection AddAvaloniaPlatform(this IServiceCollection sc, string args)
     {
         // Avalonia imp
-        sc.AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
-            .AddSingleton<INavigationService, NavigationService>()
-            .AddSingleton<IMessageAdapterService, MessageAdapterService>()
+        sc.AddSingleton<IViewManager, ViewManager>()
             .AddAvaloniaNotifications(cfg => // TO TEST
             {
                 cfg.SuccessBackgroundColor = NotificationColor.FromHex("#FF252525");
@@ -36,19 +34,19 @@ public static class AvaloniaServiceRegistration
                 cfg.DefaultExpirationTime = TimeSpan.FromSeconds(5);
             })
             // views
-            .AddSingleton(sp => new MainView(sp, sp.GetRequiredService<MainViewModel>()))
+            .AddSingleton<IMainView>(sp => new MainView(sp, sp.GetRequiredService<MainViewModel>()))
             /* TODO
             .AddSingleton<ITaskbar>(sp => new TaskbarIcon(sp.GetRequiredService<TaskBarViewModel>()))
+            */
             .AddTransient<IConfigView>(sp =>
             {
                 var scope = sp.CreateScope();
                 var vm = scope.ServiceProvider.GetRequiredService<ConfigViewModel>();
                 return new ConfigView(vm, scope);
-            })*/
-            .AddTransient(sp => new ConfigView(sp.CreateScope().ServiceProvider.GetRequiredService<ConfigViewModel>()))
-            .AddTransient(sp => new EditorView(sp.GetRequiredService<EditorViewModel>()))
-            .AddTransient(sp => new RegexView(sp.GetRequiredService<RegexManagerViewModel>()))
-            .AddTransient<UpdateView>()
+            })
+            .AddTransient<IEditorView>(sp => new EditorView(sp.GetRequiredService<EditorViewModel>()))
+            .AddTransient<IRegexView>(sp => new RegexView(sp.GetRequiredService<RegexManagerViewModel>()))
+            .AddTransient<IUpdateView, UpdateView>()
             // library
             .AddLibraryServices(args);
 

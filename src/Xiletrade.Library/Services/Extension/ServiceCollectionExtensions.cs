@@ -45,6 +45,7 @@ public static class ServiceCollectionExtensions
             .AddSingleton<LocalizationService>()
             .AddSingleton<FeatureProvider>()
             .AddSingleton<IUIService, UIService>()
+            .AddSingleton<IKeyboardAdapterService, KeyboardAdapterService>()
             .AddSingleton<IDataUpdaterService, DataUpdaterService>()
             .AddSingleton<IAutoUpdaterService, AutoUpdaterService>()
             .AddSingleton<ITokenService, TokenService>()
@@ -77,6 +78,7 @@ public static class ServiceCollectionExtensions
         if (OperatingSystem.IsWindows())
         {
             return sc.AddSingleton<IMessageAdapterService, WindowsMessageAdapterService>()
+                .AddSingleton<IClipboardAdapterService, WindowsClipboardAdapterService>()
                 .AddSingleton<IProtocolRegisterService, WindowsProtocolRegisterService>()
                 .AddSingleton<IPoeActionService, WindowsPoeActionService>()
                 .AddSingleton<IHookService>(sp => new WindowsHookService(sp.GetRequiredService<ShortcutDispatcher>().HandleMessage));

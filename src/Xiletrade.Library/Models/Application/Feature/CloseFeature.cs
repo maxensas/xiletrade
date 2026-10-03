@@ -3,9 +3,9 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Interop;
 
-namespace Xiletrade.Library.Models.Application.Hotkey;
+namespace Xiletrade.Library.Models.Application.Feature;
 
-internal sealed class CloseFeature(INavigationService navigation, 
+internal sealed class CloseFeature(IViewManager view, 
     ConfigShortcut shortcut) : BaseFeature(shortcut)
 {
     internal override void Launch()
@@ -19,7 +19,7 @@ internal sealed class CloseFeature(INavigationService navigation,
                 break;
             }
         }
-        var isVisibleMain = navigation.IsVisibleMainView();
+        var isVisibleMain = view.IsVisibleMainView();
         if (findHwnd.ToInt32() is 0 && !isVisibleMain)
         {
             nint findPoeHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
@@ -35,6 +35,6 @@ internal sealed class CloseFeature(INavigationService navigation,
         {
             Native.SendMessage(findHwnd, Native.WM_CLOSE, nint.Zero, nint.Zero);
         }
-        navigation.CloseMainView();
+        view.CloseMainView();
     }
 }

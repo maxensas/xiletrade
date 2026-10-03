@@ -25,9 +25,7 @@ public static class WpfServiceRegistration
     /// <returns></returns>
     public static IServiceCollection AddWpfPlatform(this IServiceCollection sc, string args)
     {
-        return sc.AddSingleton<INavigationService, NavigationService>()
-            .AddSingleton<IKeyboardAdapterService, KeyboardAdapterService>()
-            .AddSingleton<IClipboardAdapterService, ClipboardAdapterService>()
+        return sc.AddSingleton<IViewManager, ViewManager>()
             .AddWpfNotifications(cfg =>
             {
                 cfg.SuccessBackgroundColor = NotificationColor.FromHex("#FF252525");

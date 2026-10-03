@@ -35,7 +35,7 @@ public sealed partial class MainViewModel : ViewModelBase
     private readonly DataManagerService _dm;
     private readonly INetService _net;
     private readonly IMessageAdapterService _message;
-    private readonly INavigationService _navigation;
+    private readonly IViewManager _view;
     private readonly IViewModelProvider _vmProvider;
 
     private ResultViewModel GetNewResult => _sp.GetRequiredService<ResultViewModel>();
@@ -71,14 +71,14 @@ public sealed partial class MainViewModel : ViewModelBase
 
     public MainViewModel(IServiceProvider sp, ILogger<MainViewModel> logger, 
         DataManagerService dm, INetService net, IMessageAdapterService message, 
-        INavigationService navigation, IViewModelProvider vmProvider)
+        IViewManager view, IViewModelProvider vmProvider)
     {
         _sp = sp;
         _logger = logger;
         _dm = dm;
         _net = net;
         _message = message;
-        _navigation = navigation;
+        _view = view;
         _vmProvider = vmProvider;
 
 #if DEBUG
@@ -87,7 +87,7 @@ public sealed partial class MainViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void ViewLoaded(object commandParameter) => _navigation.SetMainHandle(commandParameter);
+    private void ViewLoaded(object commandParameter) => _view.SetMainHandle(commandParameter);
 
     [RelayCommand]
     private void ViewDeactivated(object commandParameter)
@@ -96,7 +96,7 @@ public sealed partial class MainViewModel : ViewModelBase
             && !Form.Tab.BulkSelected && !Form.Tab.ShopSelected
             && _dm.Config.Options.Autoclose)
         {
-            _navigation.CloseMainView();
+            _view.CloseMainView();
         }
     }
 
@@ -109,7 +109,7 @@ public sealed partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void CloseView(object commandParameter)
     {
-        _navigation.CloseMainView();
+        _view.CloseMainView();
         ClearContentViewModels();
     }
 
@@ -281,7 +281,7 @@ public sealed partial class MainViewModel : ViewModelBase
 #endif
                     if (openWindow)
                     {
-                        _navigation.ShowMainView();
+                        _view.ShowMainView();
                         if (_dm.Config.Options.Gateway is not 8 and not 9)
                         {
                             TaskManager.NinjaTask = Ninja.TryUpdateNinjaTask();

@@ -23,15 +23,14 @@ public sealed partial class BulkItemExchangeViewModel : ViewModelBase
     private ShopViewModel shop;
 
     public BulkItemExchangeViewModel(DataManagerService dm, MainViewModel vm, 
-        INavigationService navigation, IKeyboardAdapterService keyboard,
-        IMessageAdapterService message, bool useCustomOrBulk)
+        IViewManager view, IMessageAdapterService message, bool useCustomOrBulk)
     {
         _dm = dm;
 
-        bulk = new(_dm, vm, navigation, keyboard, message); // mandatory (auto select currency item on price check)
+        bulk = new(_dm, vm, view, message); // mandatory (auto select currency item on price check)
         if (useCustomOrBulk)
         {
-            shop = new(_dm, vm, navigation, keyboard, message);
+            shop = new(_dm, vm, view, message);
         }
     }
 

@@ -12,13 +12,13 @@ namespace Xiletrade.Library.Services;
 public sealed class XiletradeService
 {
     public XiletradeService(ILogger<XiletradeService> logger, DataManagerService dm,
-        IDataUpdaterService dataUpdater, IUIService ui, INavigationService navigation, 
+        IDataUpdaterService dataUpdater, IUIService ui, IViewManager view, 
         IMessageAdapterService message, IAutoUpdaterService updater,
         // Instantiate singletons : 
         IMainView main, ITaskbar taskbar,
         IProtocolHandlerService handler, IProtocolRegisterService reg, InputService input)
     {
-        _ = Start(logger, dm, dataUpdater, ui, navigation, message, updater);
+        _ = Start(logger, dm, dataUpdater, ui, view, message, updater);
     }
 
     /// <summary>
@@ -27,7 +27,7 @@ public sealed class XiletradeService
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     private static async Task Start(ILogger<XiletradeService> logger, DataManagerService dm,
-        IDataUpdaterService dataUpdater, IUIService ui, INavigationService navigation, 
+        IDataUpdaterService dataUpdater, IUIService ui, IViewManager view, 
         IMessageAdapterService message, IAutoUpdaterService updater)
     {
         try
@@ -38,7 +38,7 @@ public sealed class XiletradeService
             var options = dm.Config.Options;
             if (!options.DisableStartupMessage)
             {
-                await navigation.ShowStartView();
+                await view.ShowStartView();
             }
             if (options.CheckFilters)
             {

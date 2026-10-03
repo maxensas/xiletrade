@@ -20,7 +20,7 @@ namespace Xiletrade.Library.ViewModels.Main.Form;
 [ViewModelCreation(ViewModelCreation.Factory)]
 public sealed partial class FormViewModel : ViewModelBase
 {
-    private readonly INavigationService _navigation;
+    private readonly IViewManager _view;
     private readonly IKeyboardAdapterService _keyboard;
     private readonly IMessageAdapterService _message;
     private readonly DataManagerService _dm;
@@ -227,7 +227,7 @@ public sealed partial class FormViewModel : ViewModelBase
         {
             return;
         }
-        _keyboard.ClearFocus();
+        _view.ClearFocus();
 
         _vm.Result.InitData();
         if (_dm.Config.Options.Gateway is not 8 and not 9)
@@ -238,12 +238,12 @@ public sealed partial class FormViewModel : ViewModelBase
     }
 
     public FormViewModel(DataManagerService dm, MainViewModel vm,
-        INavigationService navigation, IKeyboardAdapterService keyboard,
+        IViewManager view, IKeyboardAdapterService keyboard,
         IMessageAdapterService message, bool useCustomOrBulk)
     {
         _dm = dm;
         _vm = vm;
-        _navigation = navigation;
+        _view = view;
         _keyboard = keyboard;
         _message = message;
 
@@ -251,13 +251,13 @@ public sealed partial class FormViewModel : ViewModelBase
             + Resources.Resources.Main032_cbTotalExchange : string.Empty;
         itemBaseTypeColor = useCustomOrBulk ? Strings.Color.Moccasin : string.Empty;
         baseTypeFontSize = useCustomOrBulk ? 16 : 12; // FontSize cannot be equal to 0
-        itemExchange = new(_dm, _vm, _navigation, _keyboard, _message, useCustomOrBulk);
+        itemExchange = new(_dm, _vm, _view, _message, useCustomOrBulk);
         if (useCustomOrBulk)
         {
             visible = new();
             rarity = new();
             tab = new(this);
-            customSearch = new(_dm, _vm, _keyboard, _message);
+            customSearch = new(_dm, _vm, _view, _message);
         }
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
@@ -273,9 +273,9 @@ public sealed partial class FormViewModel : ViewModelBase
     }
 
     public FormViewModel(DataManagerService dm, MainViewModel vm, 
-        INavigationService navigation, IKeyboardAdapterService keyboard, IMessageAdapterService message,
+        IViewManager view, IKeyboardAdapterService keyboard, IMessageAdapterService message,
         ItemData item, InfoDescription infoDesc, bool showMinMax) 
-        : this(dm, vm, navigation, keyboard, message, useCustomOrBulk: false)
+        : this(dm, vm, view, keyboard, message, useCustomOrBulk: false)
     {
         var flag = item.Flag;
         if (item.ModList?.Count > 0)
@@ -370,7 +370,7 @@ public sealed partial class FormViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void ClearFocus(object commandParameter) => _keyboard.ClearFocus();
+    private void ClearFocus(object commandParameter) => _view.ClearFocus();
 
     [RelayCommand]
     private void SetModCurrent(object commandParameter) // quick view
@@ -479,7 +479,7 @@ public sealed partial class FormViewModel : ViewModelBase
     {
         try
         {
-            _keyboard.ClearFocus();
+            _view.ClearFocus();
             _vm.Result.InitData();
 
             if (Tab.QuickSelected || Tab.DetailSelected)

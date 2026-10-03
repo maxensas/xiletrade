@@ -5,10 +5,11 @@ using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using Notification.Core;
 using System;
+using Xiletrade.Library.Services.Interface.View;
 
 namespace Xiletrade.UI.Avalonia.Views;
 
-public partial class MainView : ViewBase
+public partial class MainView : ViewBase, IMainView
 {
     private static IServiceProvider _serviceProvider;
 

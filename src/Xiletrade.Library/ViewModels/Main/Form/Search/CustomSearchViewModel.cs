@@ -17,7 +17,7 @@ namespace Xiletrade.Library.ViewModels.Main.Form.Search;
 
 public sealed partial class CustomSearchViewModel : ViewModelBase
 {
-    private readonly IKeyboardAdapterService _keyboard;
+    private readonly IViewManager _view;
     private readonly IMessageAdapterService _message;
     private readonly DataManagerService _dm;
     private readonly MainViewModel _vm;
@@ -38,11 +38,11 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     private int unidUniquesIndex;
 
     public CustomSearchViewModel(DataManagerService dm, MainViewModel vm,
-        IKeyboardAdapterService keyboard, IMessageAdapterService message)
+        IViewManager view, IMessageAdapterService message)
     {
         _vm = vm;
         _dm = dm;
-        _keyboard = keyboard;
+        _view = view;
         _message = message;
 
         var searchList = dm.Items.SelectMany(cat => cat.Entries)
@@ -116,7 +116,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         {
             return;
         }
-        _keyboard.ClearFocus();
+        _view.ClearFocus();
 
         Search.SearchQuery = string.Empty;
 
@@ -196,7 +196,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
 
         try
         {
-            _keyboard.ClearFocus();
+            _view.ClearFocus();
 
             _vm.Result.InitData();
             _vm.Result.DetailList.Clear();

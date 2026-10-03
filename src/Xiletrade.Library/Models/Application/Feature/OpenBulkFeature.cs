@@ -2,19 +2,19 @@
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels.Main;
 
-namespace Xiletrade.Library.Models.Application.Hotkey;
+namespace Xiletrade.Library.Models.Application.Feature;
 
-internal class OpenBulkFeature(INavigationService navigation, INetService net, 
+internal class OpenBulkFeature(IViewManager view, INetService net, 
     MainViewModel vm, ConfigShortcut shortcut) : BaseFeature(shortcut)
 {
     internal override void Launch()
     {
         if (net.TradeCooldown is not null && net.TradeCooldown.IsEnabled)
         {
-            navigation.ShowMainView();
+            view.ShowMainView();
             return;
         }
         vm.InitViewModels(useCustomOrBulk: true);
-        navigation.ShowMainView();
+        view.ShowMainView();
     }
 }

@@ -1,8 +1,9 @@
 using Avalonia.Input;
+using Xiletrade.Library.Services.Interface.View;
 
 namespace Xiletrade.UI.Avalonia.Views;
 
-public partial class EditorView : ViewBase
+public partial class EditorView : ViewBase, IEditorView
 {
     public EditorView()
     {

@@ -15,8 +15,7 @@ namespace Xiletrade.Library.ViewModels.Main.Exchange;
 
 public sealed partial class ShopViewModel : ViewModelBase
 {
-    private readonly INavigationService _navigation;
-    private readonly IKeyboardAdapterService _keyboard;
+    private readonly IViewManager _view;
     private readonly IMessageAdapterService _message;
     private readonly DataManagerService _dm;
     private readonly MainViewModel _vm;
@@ -34,17 +33,15 @@ public sealed partial class ShopViewModel : ViewModelBase
     private AsyncObservableCollection<ResultListItemViewModel> payList;
 
     public ShopViewModel(DataManagerService dm, MainViewModel vm,
-        INavigationService navigation, IKeyboardAdapterService keyboard, 
-        IMessageAdapterService message)
+        IViewManager view, IMessageAdapterService message)
     {
         _dm = dm;
         _vm = vm;
-        _navigation = navigation;
-        _keyboard = keyboard;
+        _view = view;
         _message = message;
 
         stock = "1";
-        exchange = new(_dm, _keyboard, _vm);
+        exchange = new(_dm, _view, _vm);
         getList = new();
         payList = new();
     }
@@ -143,7 +140,7 @@ public sealed partial class ShopViewModel : ViewModelBase
             var item = _vm.Result.ShopList.Where(x => x.Index == idx).FirstOrDefault();
             item.FgColor = Strings.Color.Gray;
             var data = _vm.Result.ShopOffers[idx];
-            _navigation.ShowWhisperView(data);
+            _view.ShowWhisperView(data);
         }
     }
 
@@ -152,7 +149,7 @@ public sealed partial class ShopViewModel : ViewModelBase
     {
         try
         {
-            _keyboard.ClearFocus();
+            _view.ClearFocus();
             _vm.Result.InitData();
 
             if (!_vm.Form.Tab.ShopSelected)

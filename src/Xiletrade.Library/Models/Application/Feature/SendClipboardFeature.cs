@@ -2,7 +2,7 @@
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 
-namespace Xiletrade.Library.Models.Application.Hotkey;
+namespace Xiletrade.Library.Models.Application.Feature;
 
 internal class SendClipboardFeature(ClipboardService clipboard, ConfigShortcut shortcut, 
     string stringValue) : BaseFeature(shortcut, stringValue)

@@ -1,8 +1,9 @@
 using Avalonia.Input;
+using Xiletrade.Library.Services.Interface.View;
 
 namespace Xiletrade.UI.Avalonia.Views;
 
-public partial class RegexView : ViewBase
+public partial class RegexView : ViewBase, IRegexView
 {
     public RegexView()
     {

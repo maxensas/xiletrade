@@ -1,16 +1,14 @@
-﻿using System;
-
-namespace Xiletrade.Library.ViewModels.Command;
+﻿namespace Xiletrade.Library.ViewModels.Command;
 
 public class CompositeCommandParameter
 {
-    public CompositeCommandParameter(EventArgs eventArgs, object parameter)
+    public CompositeCommandParameter(object eventData, object parameter)
     {
-        EventArgs = eventArgs;
+        EventData = eventData;
         Parameter = parameter;
     }
 
-    public EventArgs EventArgs { get; }
+    public object EventData { get; }
 
     public object Parameter { get; }
 }

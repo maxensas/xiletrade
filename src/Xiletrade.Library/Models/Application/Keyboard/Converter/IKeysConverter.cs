@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
-namespace Xiletrade.Library.Models.Application.Hotkey.Converter;
+namespace Xiletrade.Library.Models.Application.Keyboard.Converter;
 
 /// <summary>
 /// Provides conversion between key values and their string representations.

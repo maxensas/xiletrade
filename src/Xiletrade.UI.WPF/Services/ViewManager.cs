@@ -16,15 +16,12 @@ using Xiletrade.UI.WPF.Views;
 namespace Xiletrade.UI.WPF.Services;
 
 /// <summary>
-/// Provides window management services for the Xiletrade application, including showing or closing views and handling keyboard input.
+/// WPF UI Framework implementation of the IViewManager interface. 
 /// </summary>
-/// <remarks>
-///  WPF UI Framework implementation of the INavigationService interface. 
-/// </remarks>
-public class NavigationService : INavigationService
+public class ViewManager : IViewManager
 {
     private readonly IServiceProvider _sp;
-    private readonly ILogger<NavigationService> _logger;
+    private readonly ILogger<ViewManager> _logger;
     private readonly IMessageAdapterService _message;
     private readonly IUpdateDownloader _updater;
     private readonly LocalizationService _localization;
@@ -37,7 +34,7 @@ public class NavigationService : INavigationService
     private IViewBase RegexView => _sp.GetRequiredService<IRegexView>();
     private IViewBase EditorView => _sp.GetRequiredService<IEditorView>();
 
-    public NavigationService(IServiceProvider sp, ILogger<NavigationService> logger,
+    public ViewManager(IServiceProvider sp, ILogger<ViewManager> logger,
         IMessageAdapterService message, IUpdateDownloader updater, LocalizationService localization,
         ClipboardService clipboard, DataManagerService dm, IUIService ui)
     {
@@ -148,4 +145,6 @@ public class NavigationService : INavigationService
         window.ShowDialog();
         return Task.CompletedTask;
     }
+
+    public void ClearFocus() => System.Windows.Input.Keyboard.ClearFocus(); // UI responsibility, contrary to what code say.
 }

@@ -27,9 +27,7 @@ public abstract class ServiceConfigurationTestsBase
     protected virtual IEnumerable<Type> RequiredServices =>
     [
         // framework imp
-        typeof(INavigationService),
-        typeof(IKeyboardAdapterService),
-        typeof(IClipboardAdapterService),
+        typeof(IViewManager),
         //INotifications
         typeof(IMainView),
         typeof(ITaskbar),
@@ -42,6 +40,7 @@ public abstract class ServiceConfigurationTestsBase
         typeof(IProtocolRegisterService),
         typeof(IPoeActionService),
         typeof(IHookService),
+        typeof(IClipboardAdapterService),
         // lib imp
         typeof(StartupArguments),
         typeof(XiletradeService),
@@ -62,6 +61,7 @@ public abstract class ServiceConfigurationTestsBase
         typeof(IFileLoggerService),
         typeof(INetService),
         typeof(IViewModelProvider),
+        typeof(IKeyboardAdapterService),
         // registered vm
         typeof(MainViewModel),
         typeof(TaskBarViewModel),

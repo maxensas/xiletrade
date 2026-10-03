@@ -19,7 +19,7 @@ public sealed partial class TaskBarViewModel : ViewModelBase
     private readonly ITokenService _token;
     private readonly DataManagerService _dm;
     private readonly IAutoUpdaterService _updater;
-    private readonly INavigationService _navigation;
+    private readonly IViewManager _view;
     private readonly MainViewModel _vm;
 
     [ObservableProperty]
@@ -32,12 +32,12 @@ public sealed partial class TaskBarViewModel : ViewModelBase
     private string notifyName;
 
     public TaskBarViewModel(ILogger<TaskBarViewModel> logger, ITokenService token,
-        IMessageAdapterService message, INavigationService navigation, 
+        IMessageAdapterService message, IViewManager view, 
         IAutoUpdaterService updater, DataManagerService dm, MainViewModel vm)
     {
         _message = message;
         _token = token;
-        _navigation = navigation;
+        _view = view;
         _updater = updater;
         _dm = dm;
         _vm = vm;
@@ -73,7 +73,7 @@ public sealed partial class TaskBarViewModel : ViewModelBase
         {
             Native.SendMessage(pHwnd, Native.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
         }
-        var service = _navigation;
+        var service = _view;
         service.CloseMainView();
         service.ShowConfigView();
     }
@@ -83,9 +83,9 @@ public sealed partial class TaskBarViewModel : ViewModelBase
     {
         if (commandParameter is string str && str is "terminate")
         {
-            _navigation.ShutDownNativeApp();
+            _view.ShutDownNativeApp();
         }
-        _navigation.CloseMainView();
+        _view.CloseMainView();
         _vm.ClearContentViewModels();
     }
 

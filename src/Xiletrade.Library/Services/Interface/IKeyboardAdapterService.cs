@@ -1,17 +1,16 @@
-﻿using System;
-using Xiletrade.Library.Models.Application.Hotkey.Converter;
+﻿using Xiletrade.Library.Models.Application.Keyboard;
+using Xiletrade.Library.Models.Application.Keyboard.Converter;
 
 namespace Xiletrade.Library.Services.Interface;
 
 /// <summary>
-/// Provides platform-specific keyboard input conversion.
+/// Provides keyboard input conversion without platform or framework dependency
 /// </summary>
 public interface IKeyboardAdapterService
 {
     IKeysConverter Converter { get; }
 
-    string GetKeyPressed(EventArgs e);
+    string GetKeyPressed(KeyboardInput input);
     int GetModifierCode(string textMod);
     string GetModifierText(int modifier);
-    void ClearFocus();
 }

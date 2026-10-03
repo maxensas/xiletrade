@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Linq;
+using Xiletrade.Library.Models.Application.Keyboard;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
@@ -11,7 +12,7 @@ namespace Xiletrade.Library.ViewModels.Config;
 
 public sealed partial class HotkeyViewModel : ViewModelBase
 {
-    private readonly IKeyboardAdapterService _keybord;
+    private readonly IKeyboardAdapterService _keyboard;
     private readonly IMessageAdapterService _message;
     private readonly ConfigViewModel _cfgVm;
 
@@ -42,10 +43,10 @@ public sealed partial class HotkeyViewModel : ViewModelBase
     [ObservableProperty]
     private int listIndex;
 
-    public HotkeyViewModel(IKeyboardAdapterService keybord, IMessageAdapterService message, 
+    public HotkeyViewModel(IKeyboardAdapterService keyboard, IMessageAdapterService message, 
         ConfigViewModel cfgVm, string txt, string tip, bool useCb = true, bool initList = false)
     {
-        _keybord = keybord;
+        _keyboard = keyboard;
         _message = message;
         _cfgVm = cfgVm;
 
@@ -65,9 +66,9 @@ public sealed partial class HotkeyViewModel : ViewModelBase
     [RelayCommand]
     private void CheckHotkey(object commandParameter)
     {
-        if (commandParameter is CompositeCommandParameter composite)
+        if (commandParameter is CompositeCommandParameter { EventData: KeyboardInput input })
         {
-            var keyPressed = _keybord.GetKeyPressed(composite.EventArgs);
+            var keyPressed = _keyboard.GetKeyPressed(input);
             if (keyPressed.Length > 0)
             {
                 Hotkey = keyPressed;

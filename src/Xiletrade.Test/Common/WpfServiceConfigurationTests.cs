@@ -25,7 +25,7 @@ public class WpfServiceConfigurationTests : ServiceConfigurationTestsBase
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IRegexView>()))
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IUpdateView>()))
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IEditorView>())) // null object
-            .Replace(ServiceDescriptor.Singleton(Mock.Of<INavigationService>())) // null object
+            .Replace(ServiceDescriptor.Singleton(Mock.Of<IViewManager>())) // null object
             //.Replace(ServiceDescriptor.Singleton(Mock.Of<IClipboardAdapterService>()))
             //.Replace(ServiceDescriptor.Singleton(Mock.Of<IMessageAdapterService>()))
             //.Replace(ServiceDescriptor.Singleton(Mock.Of<IProtocolRegisterService>()))

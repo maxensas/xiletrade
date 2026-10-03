@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 
-namespace Xiletrade.Library.Models.Application.Hotkey;
+namespace Xiletrade.Library.Models.Application.Feature;
 
 internal class StartProcessFeature(ConfigShortcut shortcut, string stringValue) 
     : BaseFeature(shortcut, stringValue)

@@ -3,19 +3,19 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Interop;
 using Xiletrade.Library.Shared;
 
-namespace Xiletrade.Library.Models.Application.Hotkey;
+namespace Xiletrade.Library.Models.Application.Feature;
 
-internal class ImagePopupFeature(INavigationService navigation,
+internal class ImagePopupFeature(IViewManager view,
     ConfigShortcut shortcut): BaseFeature(shortcut)
 {
     internal override void Launch()
     {
-        navigation.CloseMainView();
+        view.CloseMainView();
         nint pHwnd = Native.FindWindow(null, Strings.WindowName.Popup);
         if (pHwnd.ToInt32() is not 0)
         {
             Native.SendMessage(pHwnd, Native.WM_CLOSE, nint.Zero, nint.Zero);
         }
-        navigation.ShowPopupView(_shortcut.Value);
+        view.ShowPopupView(_shortcut.Value);
     }
 }

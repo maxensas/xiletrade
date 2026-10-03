@@ -10,7 +10,7 @@ namespace Xiletrade.Library.Services;
 /// <summary>Service responsible for hotkey registrations and global input interactions.</summary>
 public sealed class InputService
 {
-    private readonly INavigationService _navigation;
+    private readonly IViewManager _view;
     private readonly IHookService _hook;
     private readonly IKeyboardAdapterService _keyboard;
     private readonly IPoeActionService _poe;
@@ -30,11 +30,11 @@ public sealed class InputService
     public const int SHIFTHOTKEYID = 10001;
 
     public InputService(ILogger<InputService> logger, 
-        INavigationService navigation, IHookService hook,
+        IViewManager view, IHookService hook,
         IKeyboardAdapterService keyboard, IPoeActionService poe, 
         DataManagerService dm, ClipboardService clipboard, IUIService ui)
     {
-        _navigation = navigation;
+        _view = view;
         _hook = hook;
         _keyboard = keyboard;
         _poe = poe;
@@ -176,7 +176,7 @@ public sealed class InputService
 
     private bool IsXiletradeWindowOpened()
     {
-        if (_navigation.IsVisibleMainView())
+        if (_view.IsVisibleMainView())
         {
             return true;
         }

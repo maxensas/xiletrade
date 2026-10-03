@@ -3,9 +3,9 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Interop;
 
-namespace Xiletrade.Library.Models.Application.Hotkey;
+namespace Xiletrade.Library.Models.Application.Feature;
 
-internal class OpenRegexManagerFeature(INavigationService navigation,
+internal class OpenRegexManagerFeature(IViewManager view,
     ConfigShortcut shortcut) : BaseFeature(shortcut)
 {
     internal override void Launch()
@@ -15,7 +15,7 @@ internal class OpenRegexManagerFeature(INavigationService navigation,
         {
             Native.SendMessage(pHwnd, Native.WM_CLOSE, nint.Zero, nint.Zero);
         }
-        navigation.CloseMainView();
-        navigation.ShowRegexView();
+        view.CloseMainView();
+        view.ShowRegexView();
     }
 }

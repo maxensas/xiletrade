@@ -2,7 +2,7 @@
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 
-namespace Xiletrade.Library.Models.Application.Hotkey;
+namespace Xiletrade.Library.Models.Application.Feature;
 
 internal class ReplyLastFeature(ClipboardService clipboard, IPoeActionService poe,
     ConfigShortcut shortcut) : BaseFeature(shortcut)

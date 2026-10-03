@@ -6,9 +6,12 @@ using Xiletrade.Library.Models.Poe.Contract;
 namespace Xiletrade.Library.Services.Interface;
 
 /// <summary>
-/// Provides window management services for the application, including showing or closing views.
+/// Handles application view creation, display, and global UI operations.
 /// </summary>
-public interface INavigationService
+/// <remarks>
+/// Implementations may target different UI frameworks.
+/// </remarks>
+public interface IViewManager
 {
     void ShowMainView();
     bool IsVisibleMainView();
@@ -20,6 +23,7 @@ public interface INavigationService
     Task ShowStartView();
     void ShowUpdateView(GitHubRelease release);
     void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data);
+    void ClearFocus();
     void SetMainHandle(object view);
     void ShutDownNativeApp(int exitCode = 0);
 }

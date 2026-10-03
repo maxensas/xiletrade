@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
-using Xiletrade.Library.Models.Application.Hotkey;
+using Xiletrade.Library.Models.Application.Feature;
 using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Shared.Interop;
 using Xiletrade.Library.Shared;

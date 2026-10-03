@@ -1,7 +1,7 @@
 ﻿using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Shared.Interop;
 
-namespace Xiletrade.Library.Models.Application.Hotkey;
+namespace Xiletrade.Library.Models.Application.Feature;
 
 internal class KillTcpFeature(ConfigShortcut shortcut) : BaseFeature(shortcut)
 {

@@ -3,7 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using Xiletrade.Library.Models.Application.Hotkey.Converter;
+using Xiletrade.Library.Models.Application.Keyboard;
+using Xiletrade.Library.Models.Application.Keyboard.Converter;
 using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.UI.WPF.Services;
@@ -142,5 +143,10 @@ public sealed class KeyboardAdapterService : IKeyboardAdapterService
         {
             return false;
         }
+    }
+
+    public string GetKeyPressed(KeyboardInput input)
+    {
+        throw new NotImplementedException();
     }
 }
