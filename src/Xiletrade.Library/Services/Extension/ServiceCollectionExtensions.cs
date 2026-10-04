@@ -11,6 +11,7 @@ using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Main.Result;
 using Xiletrade.Library.ViewModels.Regex;
+using Xiletrade.Library.ViewModels.Start;
 using Xiletrade.Library.ViewModels.TaskBar;
 
 #if MOCK_API
@@ -64,8 +65,9 @@ public static class ServiceCollectionExtensions
 #else
             .AddSingleton<INetService, NetService>()
 #endif
-            // viewmodels
+            // viewmodels :
             .AddSingleton<IViewModelProvider, ViewModelProvider>()
+            // with attribute [ViewModelCreation(ViewModelCreation.Container)]
             .AddSingleton<MainViewModel>()
             .AddSingleton<TaskBarViewModel>()
             .AddScoped<ConfigViewModel>()
@@ -73,7 +75,8 @@ public static class ServiceCollectionExtensions
             .AddTransient<RegexViewModel>()
             .AddTransient<RegexManagerViewModel>()
             .AddTransient<NinjaViewModel>()
-            .AddTransient<ResultViewModel>();
+            .AddTransient<ResultViewModel>()
+            .AddTransient<StartViewModel>();
 
         if (OperatingSystem.IsWindows())
         {

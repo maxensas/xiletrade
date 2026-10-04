@@ -10,8 +10,6 @@ public sealed class UIService : IUIService
 {
     public static SynchronizationContext UiThreadContext { get; private set; }
 
-    public nint MainWindowHandle { get; set; }
-
     public UIService(ILogger<UIService> logger)
     {
         UiThreadContext = SynchronizationContext.Current ?? 
@@ -112,6 +110,4 @@ public sealed class UIService : IUIService
 
         return tcs.Task;
     }
-
-    public void ShutDownApp(int code = 0) => Environment.Exit(code);
 }

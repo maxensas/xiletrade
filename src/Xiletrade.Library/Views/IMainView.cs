@@ -1,4 +1,4 @@
-﻿namespace Xiletrade.Library.Services.Interface.View;
+﻿namespace Xiletrade.Library.Views;
 
 /// <summary>
 /// Represents the application's main view.

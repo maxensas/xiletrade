@@ -20,7 +20,7 @@ namespace Xiletrade.Library.Services;
 public sealed class DataManagerService
 {
     private readonly IMessageAdapterService _message;
-    private readonly IUIService _ui;
+    private readonly IViewManager _view;
 
     internal JsonHelper Json { get; private set; }
 
@@ -50,10 +50,10 @@ public sealed class DataManagerService
     internal CurrencyResultData[] CurrenciesGateway { get; private set; }
 
     public DataManagerService(ILogger<DataManagerService> logger,
-        IMessageAdapterService message, IUIService ui)
+        IMessageAdapterService message, IViewManager view)
     {
         _message = message;
-        _ui = ui;
+        _view = view;
 
         TryInit();
 #if DEBUG
@@ -74,7 +74,7 @@ public sealed class DataManagerService
         {
             _message.Show(Resources.Resources.Main118_Closing + "\n" + ex.InnerException.Message
                 , Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
-            _ui.ShutDownApp(1);
+            _view.ShutDownNativeApp(1);
         }
     }
 
@@ -411,7 +411,7 @@ public sealed class DataManagerService
         catch (Exception ex)
         {
             _message.Show(ex.GetFormated(), Resources.Resources.Main118_Closing, MessageStatus.Exclamation);
-            _ui.ShutDownApp();
+            _view.ShutDownNativeApp();
             return null;
         }
         return config;

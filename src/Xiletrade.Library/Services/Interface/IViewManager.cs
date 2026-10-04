@@ -13,6 +13,8 @@ namespace Xiletrade.Library.Services.Interface;
 /// </remarks>
 public interface IViewManager
 {
+    nint MainHandle { get; }
+
     void ShowMainView();
     bool IsVisibleMainView();
     void CloseMainView();

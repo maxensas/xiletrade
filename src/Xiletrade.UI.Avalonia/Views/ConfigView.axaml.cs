@@ -1,6 +1,6 @@
 using Avalonia.Input;
 using System;
-using Xiletrade.Library.Services.Interface.View;
+using Xiletrade.Library.Views;
 
 namespace Xiletrade.UI.Avalonia.Views;
 

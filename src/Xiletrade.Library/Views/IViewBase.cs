@@ -1,4 +1,4 @@
-﻿namespace Xiletrade.Library.Services.Interface.View;
+﻿namespace Xiletrade.Library.Views;
 
 public interface IViewBase
 {

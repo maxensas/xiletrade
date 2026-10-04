@@ -11,9 +11,10 @@ namespace Xiletrade.UI.WPF.Views;
 /// </summary>
 public partial class WhisperListView : ViewBase
 {
-    public WhisperListView()
+    public WhisperListView(object vm)
     {
         InitializeComponent();
+        DataContext = vm;
         Name = Strings.WindowName.Whisper;
         Loaded += Window_Loaded;
         MouseLeftButtonDown += Window_DragWindow;

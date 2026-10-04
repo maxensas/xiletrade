@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
-using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Services.Interface.View;
-using Xiletrade.Library.ViewModels.Start;
 using Xiletrade.Library.ViewModels.Update;
 using Xiletrade.Library.ViewModels.Whisper;
+using Xiletrade.Library.Views;
 using Xiletrade.UI.WPF.Views;
 
 namespace Xiletrade.UI.WPF.Services;
@@ -22,44 +21,30 @@ public class ViewManager : IViewManager
 {
     private readonly IServiceProvider _sp;
     private readonly ILogger<ViewManager> _logger;
-    private readonly IMessageAdapterService _message;
-    private readonly IUpdateDownloader _updater;
-    private readonly LocalizationService _localization;
-    private readonly DataManagerService _dm;
-    private readonly ClipboardService _clipboard;
     private readonly IUIService _ui;
-    
+    private readonly Action _showMainView;
+
     private IViewBase ConfigView => _sp.GetRequiredService<IConfigView>();
-    private IViewBase UpdateView => _sp.GetRequiredService<IUpdateView>();
+    private IViewBase StartView => _sp.GetRequiredService<IStartView>();
     private IViewBase RegexView => _sp.GetRequiredService<IRegexView>();
     private IViewBase EditorView => _sp.GetRequiredService<IEditorView>();
 
-    public ViewManager(IServiceProvider sp, ILogger<ViewManager> logger,
-        IMessageAdapterService message, IUpdateDownloader updater, LocalizationService localization,
-        ClipboardService clipboard, DataManagerService dm, IUIService ui)
+    private static Window MainWindow => Application.Current.MainWindow;
+
+    public nint MainHandle { get; private set; }
+
+    public ViewManager(IServiceProvider sp, ILogger<ViewManager> logger, IUIService ui)
     {
         _sp = sp;
         _logger = logger;
-        _message = message;
-        _updater = updater;
-        _localization = localization;
-        _clipboard = clipboard;
-        _dm = dm;
         _ui = ui;
 
-#if DEBUG
-        logger.LogInformation("Service launched");
-#endif
-    }
-
-    public void ShowMainView()
-    {
-        Action showMainView = new(() =>
+        _showMainView = new(() =>
         {
             try
             {
-                Application.Current.MainWindow.Show();
-                Application.Current.MainWindow.ShowActivated = false;
+                MainWindow.Show();
+                MainWindow.ShowActivated = false;
             }
             catch (Exception ex)
             {
@@ -67,37 +52,39 @@ public class ViewManager : IViewManager
                     _logger.LogDebug("Exception raised : {Message}", ex.Message);
             }
         });
-        _ui.Invoke(showMainView);
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
     }
 
-    public bool IsVisibleMainView()
-    {
-        return Application.Current.MainWindow is not null 
-            && Application.Current.MainWindow.IsVisible;
-    }
+    public void ShowMainView() => _ui.Invoke(_showMainView);
+
+    public bool IsVisibleMainView() => MainWindow is not null && MainWindow.IsVisible;
 
     public void CloseMainView()
     {
-        if (Application.Current.MainWindow is not null 
-            && Application.Current.MainWindow.IsVisible)
-        {
-            Application.Current.MainWindow.Close();
-        }
+        if (IsVisibleMainView()) MainWindow.Close();
     }
 
     public void ShowEditorView() => EditorView.Show();
 
     public void ShowConfigView() => ConfigView.Show();
 
-    public async Task ShowStartView() => await CreateDialog<StartView>
-        (new StartViewModel(_dm, _localization)).ConfigureAwait(false);
+    public Task ShowStartView()
+    {
+        StartView.ShowDialog();
+        return Task.CompletedTask;
+    }
 
-    public void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data) 
-        => CreateWindow<WhisperListView>(new WhisperViewModel(_dm, _clipboard, data), false);
+    public void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data)
+    {
+        var window = new WhisperListView(_sp.CreateInstance<WhisperViewModel>(data));
+        window.Show();
+    }
 
     public void ShowPopupView(string imgName)
     {
-        PopView Popup = new(imgName); // viewmodel not used.
+        _ = new PopView(imgName); // viewmodel not used.
     }
 
     public void SetMainHandle(object view)
@@ -106,44 +93,17 @@ public class ViewManager : IViewManager
         {
             throw new ArgumentException("The provided view must be a WPF Window.", nameof(view));
         }
-        _ui.MainWindowHandle = new System.Windows.Interop.WindowInteropHelper(win).Handle;
+        MainHandle = new System.Windows.Interop.WindowInteropHelper(win).Handle;
     }
 
     public void ShutDownNativeApp(int code = 0) => Application.Current.Shutdown(code);
 
     public void ShowRegexView() => RegexView.Show();
 
-    //.ShowDialog();
     public void ShowUpdateView(GitHubRelease release)
     {
-        Action showUpdateWindow = new(() =>
-        {
-            var view = UpdateView;
-            view.DataContext = new UpdateViewModel(_updater, _message, _ui, release);
-            view.ShowDialog();
-        });
-        _ui.Invoke(showUpdateWindow);
-    }
-
-    private static void CreateWindow<T>(object dataContext, bool show) where T : IViewBase, new()
-    {
-        if (Activator.CreateInstance<T>() is not Window window)
-            throw new InvalidOperationException("T must be a Window.");
-
-        window.DataContext = dataContext;
-
-        if (show)
-            window.Show();
-    }
-
-    private static Task CreateDialog<T>(object dataContext) where T : IViewBase, new()
-    {
-        if (Activator.CreateInstance<T>() is not Window window)
-            throw new InvalidOperationException("T must be a Window.");
-
-        window.DataContext = dataContext;
-        window.ShowDialog();
-        return Task.CompletedTask;
+        var view = new UpdateView(_sp.CreateInstance<UpdateViewModel>(release));
+        view.ShowDialog();
     }
 
     public void ClearFocus() => System.Windows.Input.Keyboard.ClearFocus(); // UI responsibility, contrary to what code say.

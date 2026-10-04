@@ -8,12 +8,13 @@ using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
-using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
+using Xiletrade.Library.Views;
 
 namespace Xiletrade.Library.ViewModels.Whisper;
 
+[ViewModelCreation(ViewModelCreation.Activator)]
 public sealed partial class WhisperViewModel : ViewModelBase
 {
     private readonly ClipboardService _clipboard;
@@ -40,12 +41,12 @@ public sealed partial class WhisperViewModel : ViewModelBase
 
         viewScale = dm.Config.Options.Scale;
 
-        message = data.Item1.Whisper;//?.ToString();
+        message = data.Item1?.Whisper;//?.ToString();
 
-        charName = data.Item1.Account.LastCharacterName;
+        charName = data.Item1?.Account.LastCharacterName;
         labelAccount = Resources.Resources.Whisper001_lblAccount + " " + charName;
 
-        if (data.Item1.Offers?.Length > 0)
+        if (data.Item1?.Offers?.Length > 0)
         {
             Offers.Clear();
             var offers = data.Item2 is not null ? [data.Item2] : data.Item1.Offers;

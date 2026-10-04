@@ -2,8 +2,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Views;
 
 namespace Xiletrade.Library.Services;
 
@@ -12,13 +12,13 @@ namespace Xiletrade.Library.Services;
 public sealed class XiletradeService
 {
     public XiletradeService(ILogger<XiletradeService> logger, DataManagerService dm,
-        IDataUpdaterService dataUpdater, IUIService ui, IViewManager view, 
+        IDataUpdaterService dataUpdater, IViewManager view, 
         IMessageAdapterService message, IAutoUpdaterService updater,
         // Instantiate singletons : 
         IMainView main, ITaskbar taskbar,
         IProtocolHandlerService handler, IProtocolRegisterService reg, InputService input)
     {
-        _ = Start(logger, dm, dataUpdater, ui, view, message, updater);
+        _ = Start(logger, dm, dataUpdater, view, message, updater);
     }
 
     /// <summary>
@@ -27,7 +27,7 @@ public sealed class XiletradeService
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     private static async Task Start(ILogger<XiletradeService> logger, DataManagerService dm,
-        IDataUpdaterService dataUpdater, IUIService ui, IViewManager view, 
+        IDataUpdaterService dataUpdater, IViewManager view, 
         IMessageAdapterService message, IAutoUpdaterService updater)
     {
         try
@@ -62,7 +62,7 @@ public sealed class XiletradeService
                 strMessage += $"\n\n{ex.InnerException.Message}";
             }
             await message.ShowResultAsync(strMessage, Resources.Resources.Error032_XFailedLaunch, MessageStatus.Exclamation);
-            ui.ShutDownApp(1);
+            view.ShutDownNativeApp(1);
         }
     }
 }

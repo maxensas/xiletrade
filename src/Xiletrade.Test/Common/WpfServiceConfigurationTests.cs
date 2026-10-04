@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Moq;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Services.Interface.View;
+using Xiletrade.Library.Views;
 using Xiletrade.UI.WPF.Services;
 
 namespace Xiletrade.Test.Common;
@@ -23,7 +23,7 @@ public class WpfServiceConfigurationTests : ServiceConfigurationTestsBase
             .Replace(ServiceDescriptor.Singleton(Mock.Of<ITaskbar>()))
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IConfigView>()))
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IRegexView>()))
-            .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IUpdateView>()))
+            .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IStartView>()))
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IEditorView>())) // null object
             .Replace(ServiceDescriptor.Singleton(Mock.Of<IViewManager>())) // null object
             //.Replace(ServiceDescriptor.Singleton(Mock.Of<IClipboardAdapterService>()))

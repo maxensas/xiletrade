@@ -1,8 +1,9 @@
 using Avalonia.Input;
+using Xiletrade.Library.Views;
 
 namespace Xiletrade.UI.Avalonia.Views;
 
-public partial class StartView : ViewBase
+public partial class StartView : ViewBase, IStartView
 {
     public StartView()
     {

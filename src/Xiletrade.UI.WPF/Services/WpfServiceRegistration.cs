@@ -4,12 +4,13 @@ using Notification.Wpf.DependencyInjection;
 using System;
 using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.ViewModels.Config;
 using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Regex;
+using Xiletrade.Library.ViewModels.Start;
 using Xiletrade.Library.ViewModels.TaskBar;
+using Xiletrade.Library.Views;
 using Xiletrade.UI.WPF.UserControls.Main;
 using Xiletrade.UI.WPF.Views;
 
@@ -44,7 +45,7 @@ public static class WpfServiceRegistration
             })
             .AddTransient<IEditorView>(sp => new EditorView(sp.GetRequiredService<EditorViewModel>()))
             .AddTransient<IRegexView>(sp => new RegexView(sp.GetRequiredService<RegexManagerViewModel>()))
-            .AddTransient<IUpdateView, UpdateView>()
+            .AddTransient<IStartView>(sp => new StartView(sp.GetRequiredService<StartViewModel>()))
             // library
             .AddLibraryServices(args);
     }

@@ -12,6 +12,9 @@ namespace Xiletrade.UI.WPF.Services;
 /// <summary>
 /// Service used to access System.Windows.Input
 /// </summary>
+/// <remarks>
+/// Deprecated
+/// </remarks>
 public sealed class KeyboardAdapterService : IKeyboardAdapterService
 {
     public IKeysConverter Converter { get; private set; }

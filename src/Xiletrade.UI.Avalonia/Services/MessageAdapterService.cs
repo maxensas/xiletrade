@@ -1,24 +1,17 @@
 ﻿using Avalonia.Controls;
-using Microsoft.Extensions.DependencyInjection;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Dto;
 using MsBox.Avalonia.Enums;
 using System;
 using System.Threading.Tasks;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.UI.Avalonia.Services;
 
-public class MessageAdapterService : IMessageAdapterService
+public class MessageAdapterService(IUIService ui) : IMessageAdapterService
 {
-    private static IServiceProvider _serviceProvider;
-
-    public MessageAdapterService(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
+    private readonly IUIService _ui = ui;
 
     public void Show(string message, string caption, MessageStatus status)
     {
@@ -38,7 +31,7 @@ public class MessageAdapterService : IMessageAdapterService
             _ = msgBox.ShowAsync();
         }
 
-        _serviceProvider.GetRequiredService<UIService>().DelegateActionToUiThread(Action);
+        _ui.Invoke(Action);
     }
 
     public bool ShowResult(string message, string caption, MessageStatus status, bool yesNo = false)
@@ -51,9 +44,7 @@ public class MessageAdapterService : IMessageAdapterService
         var icon = GetMessageBoxIcon(status);
         var buttons = yesNo ? ButtonEnum.YesNo : ButtonEnum.Ok;
 
-        var ui = _serviceProvider.GetRequiredService<UIService>();
-
-        var result = await ui.DelegateActionToUiThreadAsync(async () =>
+        var result = await _ui.Invoke(async () =>
         {
             var msgBox = MessageBoxManager.GetMessageBoxStandard(new MessageBoxStandardParams
             {

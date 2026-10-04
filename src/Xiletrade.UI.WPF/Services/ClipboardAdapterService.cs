@@ -8,6 +8,9 @@ namespace Xiletrade.UI.WPF.Services;
 /// <summary>
 /// Service used to access System.Windows.Clipboard with STA constraint.
 /// </summary>
+/// <remarks>
+/// Not used anymore
+/// </remarks>
 internal sealed class ClipboardAdapterService : IClipboardAdapterService
 {
     private static readonly Lock _clipboardLock = new();

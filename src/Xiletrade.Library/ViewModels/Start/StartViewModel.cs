@@ -3,13 +3,14 @@ using CommunityToolkit.Mvvm.Input;
 using Xiletrade.Library.Models.Application.Configuration.Domain;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
-using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Views;
 
 namespace Xiletrade.Library.ViewModels.Start;
 
+[ViewModelCreation(ViewModelCreation.Container)]
 public sealed partial class StartViewModel : ViewModelBase
 {
     private readonly DataManagerService _dm;

@@ -1,17 +1,20 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Services.Interface.View;
 using Xiletrade.Library.ViewModels;
 using Xiletrade.Library.ViewModels.Config;
 using Xiletrade.Library.ViewModels.Editor;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Main.Result;
 using Xiletrade.Library.ViewModels.Regex;
+using Xiletrade.Library.ViewModels.Start;
 using Xiletrade.Library.ViewModels.TaskBar;
+using Xiletrade.Library.Views;
 
 namespace Xiletrade.Test.Common;
 
@@ -34,7 +37,7 @@ public abstract class ServiceConfigurationTestsBase
         typeof(IConfigView),
         typeof(IEditorView),
         typeof(IRegexView),
-        typeof(IUpdateView),
+        typeof(IStartView),
         // platform imp
         typeof(IMessageAdapterService),
         typeof(IProtocolRegisterService),
@@ -70,14 +73,9 @@ public abstract class ServiceConfigurationTestsBase
         typeof(RegexViewModel),
         typeof(RegexManagerViewModel),
         typeof(EditorViewModel),
-        typeof(ConfigViewModel)
+        typeof(ConfigViewModel),
+        typeof(StartViewModel)
     ];
-
-    private static IEnumerable<Type> GetViewModelsFromAssembly(ViewModelCreation mode) =>
-        typeof(ViewModelBase).Assembly.GetTypes()
-        .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("ViewModel"))
-        .Where(t => t.GetCustomAttribute<ViewModelCreationAttribute>()?.Mode == mode
-            || (mode == ViewModelCreation.Manual && t.GetCustomAttribute<ViewModelCreationAttribute>() is null));
 
     protected ServiceProvider BuildProvider()
     {
@@ -88,6 +86,40 @@ public abstract class ServiceConfigurationTestsBase
             ValidateOnBuild = true,
             ValidateScopes = true
         });
+    }
+
+    private static IEnumerable<Type> GetViewModelsFromAssembly(ViewModelCreation mode) =>
+        typeof(ViewModelBase).Assembly.GetTypes()
+        .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("ViewModel"))
+        .Where(t => t.GetCustomAttribute<ViewModelCreationAttribute>()?.Mode == mode
+            || (mode == ViewModelCreation.Manual && t.GetCustomAttribute<ViewModelCreationAttribute>() is null));
+
+    private static object CreateRuntimeArgument(ParameterInfo p)
+    {
+        if (p.HasDefaultValue && p.DefaultValue is not null)
+            return p.DefaultValue;
+
+        var t = Nullable.GetUnderlyingType(p.ParameterType) ?? p.ParameterType;
+
+        if (t.IsValueType)
+            return Activator.CreateInstance(t)!; // false, 0, default enum, empty struct...
+
+        if (t == typeof(string))
+            return string.Empty;
+
+        // Interface / abstract class: mock Moq
+        if (t.IsInterface || t.IsAbstract)
+        {
+            var mock = (Mock)Activator.CreateInstance(typeof(Mock<>).MakeGenericType(t))!;
+            return mock.Object;
+        }
+
+        // Class with a parameterless constructor
+        if (t.GetConstructor(Type.EmptyTypes) is not null)
+            return Activator.CreateInstance(t)!;
+
+        // Last resort: uninitialized instance (constructor not executed)
+        return RuntimeHelpers.GetUninitializedObject(t);
     }
 
     [Fact]
@@ -187,24 +219,41 @@ public abstract class ServiceConfigurationTestsBase
     {
         using var sp = BuildProvider();
         using var scope = sp.CreateScope();
+        var isService = scope.ServiceProvider.GetRequiredService<IServiceProviderIsService>();
 
         List<string> failures = new();
 
         var vms = GetViewModelsFromAssembly(ViewModelCreation.Activator);
         foreach (var vm in vms)
         {
-            try
+            var ctors = vm.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var ctor in ctors)
             {
-                var instance = ActivatorUtilities.CreateInstance(scope.ServiceProvider, vm);
-            }
-            catch (Exception ex)
-            {
-                failures.Add($"{vm.Name}:{Environment.NewLine}{ex.GetBaseException()}");
+                // Parameters not provided by the container = runtime arguments
+                var runtimeParams = ctor.GetParameters().Where(p => !isService.IsService(p.ParameterType));
+
+                try
+                {
+                    var argTypes = runtimeParams.Select(p => p.ParameterType).ToArray();
+                    var args = runtimeParams.Select(CreateRuntimeArgument).ToArray();
+
+                    var factory = ActivatorUtilities.CreateFactory(vm, argTypes);
+                    var instance = factory(scope.ServiceProvider, args);
+
+                    (instance as IDisposable)?.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    var signature = string.Join(", ", ctor.GetParameters()
+                        .Select(p => $"{p.ParameterType.Name} {p.Name}"));
+                    failures.Add($"{vm.Name}({signature}):{Environment.NewLine}{ex.GetBaseException()}");
+                }
             }
         }
 
         Assert.True(failures.Count is 0,
-            "Non-instantiable Activator ViewModels (unregistered dependency or missing runtime argument):"
+            "Non-instantiable Activator ViewModels (unregistered dependency or invalid runtime argument):"
             + Environment.NewLine + string.Join(Environment.NewLine, failures));
     }
 }

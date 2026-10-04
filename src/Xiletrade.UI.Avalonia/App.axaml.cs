@@ -24,7 +24,7 @@ public partial class App : Application
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             //DisableAvaloniaDataAnnotationValidation();
             // Starts Xiletrade application.
-            _ = Services.GetRequiredService<XiletradeService>().Start();
+            _ = Services.GetRequiredService<XiletradeService>();
         }
 
         base.OnFrameworkInitializationCompleted();
