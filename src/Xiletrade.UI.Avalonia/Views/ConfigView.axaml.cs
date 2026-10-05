@@ -1,4 +1,3 @@
-using Avalonia.Input;
 using System;
 using Xiletrade.Library.Views;
 
@@ -17,20 +16,12 @@ public partial class ConfigView : ViewBase, IConfigView
     {
         _scope = scope;
         DataContext = vm;
-        PointerPressed += Window_PointerPressed;
         Closed += ConfigView_Closed;
-    }
-
-    private void Window_PointerPressed(object sender, PointerPressedEventArgs e)
-    {
-        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-            BeginMoveDrag(e);
     }
 
     private void ConfigView_Closed(object sender, EventArgs e)
     {
         Closed -= ConfigView_Closed;
-        PointerPressed -= Window_PointerPressed;
         _scope?.Dispose();
     }
 }

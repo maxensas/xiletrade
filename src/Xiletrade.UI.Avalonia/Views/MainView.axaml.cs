@@ -1,4 +1,3 @@
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using Microsoft.Extensions.DependencyInjection;
 using MsBox.Avalonia;
@@ -25,7 +24,6 @@ public partial class MainView : ViewBase, IMainView
         //Application.Current.MainWindow = this;
         Closing += Window_Closing;
         Loaded += MainView_Loaded;
-        PointerPressed += Window_PointerPressed;
     }
 
     private void MainView_Loaded(object sender, global::Avalonia.Interactivity.RoutedEventArgs e)
@@ -39,12 +37,6 @@ public partial class MainView : ViewBase, IMainView
         //Keyboard.ClearFocus();
         IsVisible = false;
         GC.Collect();
-    }
-
-    private void Window_PointerPressed(object sender, PointerPressedEventArgs e)
-    {
-        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-            BeginMoveDrag(e);
     }
 
     // TEMP : ONLY FOR UI TESTS

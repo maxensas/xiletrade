@@ -35,7 +35,7 @@ internal sealed class Program
         AppHost = Host.CreateDefaultBuilder(args).ConfigureServices((context, services) 
             => services.AddAvaloniaPlatform(sbArgs.ToString())).UseDefaultServiceProvider(o =>
             {
-                // o.ValidateOnBuild = true;
+                o.ValidateOnBuild = true;
                 o.ValidateScopes = true;
             }).Build();
         AppHost.Start();

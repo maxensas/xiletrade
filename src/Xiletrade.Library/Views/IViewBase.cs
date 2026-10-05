@@ -3,6 +3,7 @@
 public interface IViewBase
 {
     object DataContext { get; set; }
+    bool IsVisible { get; }
 
     void Show();
     bool? ShowDialog();

@@ -18,7 +18,7 @@ public sealed class XiletradeService
         IMainView main, ITaskbar taskbar,
         IProtocolHandlerService handler, IProtocolRegisterService reg, InputService input)
     {
-        _ = Start(logger, dm, dataUpdater, view, message, updater);
+        _ = StartAsync(logger, dm, dataUpdater, view, message, updater);
     }
 
     /// <summary>
@@ -26,8 +26,8 @@ public sealed class XiletradeService
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    private static async Task Start(ILogger<XiletradeService> logger, DataManagerService dm,
-        IDataUpdaterService dataUpdater, IViewManager view, 
+    private static async Task StartAsync(ILogger<XiletradeService> logger, DataManagerService dm,
+        IDataUpdaterService dataUpdater, IViewManager view,
         IMessageAdapterService message, IAutoUpdaterService updater)
     {
         try

@@ -15,10 +15,8 @@
             <TextBlock u:Localization.Key="Start001_lblWelcome" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,15,0,0" FontSize="16" FontWeight="Bold"/>
             <TextBlock u:Localization.Key="Start002_lblSelect" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Margin="0,175,0,0"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Height="26" Width="154" Margin="138,208,0,0">
-                <ComboBox u:Localization.KeyTip="Config159_cbGameConfigTip" 
-                          u:EventToCommand.EventName="SelectionChanged"
-                          u:EventToCommand.Command="{Binding UpdateGameVersionCommand}"
-                          Margin="0,0,0,0" Width="65" Height="26" VerticalAlignment="Top" HorizontalContentAlignment="Left" SelectedIndex="{Binding GameIndex}">
+                <ComboBox u:Localization.KeyTip="Config159_cbGameConfigTip" Margin="0,0,0,0" Width="65" Height="26" 
+                    VerticalAlignment="Top" HorizontalContentAlignment="Left" SelectedIndex="{Binding GameIndex}" Cursor="Hand">
                     <ComboBoxItem>
                         <Image Height="22" Width="22" Source="{StaticResource Poe1}"/>
                     </ComboBoxItem>
@@ -26,10 +24,8 @@
                         <Image Height="22" Width="22" Source="{StaticResource Poe2}"/>
                     </ComboBoxItem>
                 </ComboBox>
-                <ComboBox u:Localization.KeyTip="Start006_cbLanguageTip" 
-                          u:EventToCommand.EventName="SelectionChanged"
-                          u:EventToCommand.Command="{Binding UpdateLanguageCommand}"
-                          Width="150" Height="26" Margin="10,0,0,0" ItemsSource="{Binding Language}" SelectedIndex="{Binding LanguageIndex}" Cursor="Hand">
+                <ComboBox u:Localization.KeyTip="Start006_cbLanguageTip" Width="150" Height="26" Margin="10,0,0,0" 
+                    ItemsSource="{Binding Language}" SelectedIndex="{Binding LanguageIndex}" Cursor="Hand">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

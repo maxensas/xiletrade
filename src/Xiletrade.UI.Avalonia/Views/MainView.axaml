@@ -5,7 +5,9 @@
         xmlns:u="clr-namespace:Xiletrade.UI.Avalonia.Util"
         xmlns:uc="clr-namespace:Xiletrade.UI.Avalonia.UserControls"
         xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
-        x:DataType="t:MainViewModel" 
+        xmlns:i="using:Avalonia.Xaml.Interactivity"
+        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        x:DataType="t:MainViewModel" x:Name="MainWindow"
         Width="500" Height="500" 
         WindowStartupLocation="CenterScreen" CanResize="False"
         Background="{StaticResource Gradient}" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1"
@@ -17,8 +19,16 @@
     -->
     <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="Loaded">
+            <ia:InvokeCommandAction Command="{Binding ViewLoadedCommand}" CommandParameter="{Binding #MainWindow}" />
+        </ia:EventTriggerBehavior>
+        <ia:EventTriggerBehavior EventName="Deactivated">
+            <ia:InvokeCommandAction Command="{Binding ViewDeactivatedCommand}" />
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
     <Grid>
-        <uc:TaskbarIcon/>
+        <!--<uc:TaskbarIcon/>-->
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock u:Localization.Key="Start001_lblWelcome" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,15,0,0" FontSize="16" FontWeight="Bold"/>    
             <TextBlock Text="TO DO" HorizontalAlignment="Center" Foreground="{StaticResource ModBrush}"/>
@@ -29,13 +39,6 @@
             <Separator />
             <Button Content="Test message" Click="OnTestMessage" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="159" Height="35" FontSize="16" />
             <Separator /><!-- using event trigger -->
-            <Button Content="Test trigger" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="159" Height="35" FontSize="16">
-                <Interaction.Behaviors>
-                    <EventTriggerBehavior EventName="Click">
-                        <InvokeCommandAction Command="{Binding TrayCommands.CheckUpdateCommand}" />
-                    </EventTriggerBehavior>
-                </Interaction.Behaviors>
-            </Button>
         </StackPanel>
     </Grid>
 </view:ViewBase>

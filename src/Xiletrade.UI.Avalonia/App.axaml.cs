@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +16,7 @@ public partial class App : Application
     {
         AvaloniaXamlLoader.Load(this);
     }
-
+    
     public override void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
@@ -23,12 +24,15 @@ public partial class App : Application
             // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
             // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
             //DisableAvaloniaDataAnnotationValidation();
-            // Starts Xiletrade application.
-            _ = Services.GetRequiredService<XiletradeService>();
-        }
 
+            desktop.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+            // Starts Xiletrade application.
+            Services.GetRequiredService<XiletradeService>();
+        }
         base.OnFrameworkInitializationCompleted();
     }
+
     /*
     private void DisableAvaloniaDataAnnotationValidation()
     {

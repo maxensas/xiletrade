@@ -22,7 +22,7 @@ public sealed partial class StartViewModel : ViewModelBase
 
     [ObservableProperty]
     private int languageIndex;
-
+    
     partial void OnLanguageIndexChanged(int value) 
     {
         if (value < 0)
@@ -36,7 +36,7 @@ public sealed partial class StartViewModel : ViewModelBase
 
     [ObservableProperty]
     private int gameIndex;
-
+    
     partial void OnGameIndexChanged(int value) 
     {
         if (value < 0)
