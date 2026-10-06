@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using Xiletrade.Library.Shared;
-using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.Shared.Interop.Windows;
 
 namespace Xiletrade.UI.WPF.Views;
 

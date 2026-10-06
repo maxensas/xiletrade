@@ -1,13 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.Library.ViewModels.Regex;
 
 [ViewModelCreation(ViewModelCreation.Container)]
-public sealed partial class RegexViewModel(ClipboardService clipboard) : ViewModelBase
+public sealed partial class RegexViewModel(IClipboardService clipboard) : ViewModelBase
 {
-    private readonly ClipboardService _clipboard = clipboard;
+    private readonly IClipboardService _clipboard = clipboard;
 
     [ObservableProperty]
     private int id;

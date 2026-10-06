@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.IO.Pipes;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application;
@@ -9,17 +10,18 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.TaskBar;
 
-namespace Xiletrade.Library.Services;
+namespace Xiletrade.Library.Services.Windows;
 
 /// <summary>
 /// Named pipe server that listens for protocol URLs sent by secondary instances.
 /// </summary>
-public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
+[SupportedOSPlatform("windows")]
+public class WindowsProtocolHandlerService : IProtocolHandlerService, IDisposable
 {
     private readonly IMessageAdapterService _message;
     private readonly ITokenService _token;
     private readonly IFileLoggerService _fileLogger;
-    private readonly ILogger<ProtocolHandlerService> _logger;
+    private readonly ILogger<WindowsProtocolHandlerService> _logger;
     private readonly StartupArguments _startup;
     private readonly IUIService _ui;
     private readonly TaskBarViewModel _taskBarVm;
@@ -29,8 +31,8 @@ public class ProtocolHandlerService : IProtocolHandlerService, IDisposable
     private Task _listeningTask;
     private bool _init;
 
-    public ProtocolHandlerService(IMessageAdapterService message, ITokenService token, 
-        IFileLoggerService fileLogger, ILogger<ProtocolHandlerService> logger,
+    public WindowsProtocolHandlerService(IMessageAdapterService message, ITokenService token, 
+        IFileLoggerService fileLogger, ILogger<WindowsProtocolHandlerService> logger,
         StartupArguments startup, IUIService ui, TaskBarViewModel taskBarVm)
     {
         _message = message;

@@ -1,22 +1,24 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
+using System.Runtime.Versioning;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.Shared.Interop.Windows;
 
-namespace Xiletrade.Library.Services;
+namespace Xiletrade.Library.Services.Windows;
 
 /// <summary>
 /// Service responsible for launching features when a registered hotkey is pressed.
 /// </summary>
-public sealed class ShortcutDispatcher
+[SupportedOSPlatform("windows")]
+public sealed class WindowsShortcutDispatcher : IShortcutDispatcher
 {
     private static bool _runingProcess = false;
 
-    public readonly Action<int, nint> HandleMessage;
+    public Action<int, nint> HandleMessage { get; }
 
-    public ShortcutDispatcher(ILogger<ShortcutDispatcher> logger, IMessageAdapterService message, 
+    public WindowsShortcutDispatcher(ILogger<WindowsShortcutDispatcher> logger, IMessageAdapterService message, 
         DataManagerService dm, FeatureProvider featureProvider)
     {
         // Here we process incoming messages
@@ -29,7 +31,7 @@ public sealed class ShortcutDispatcher
             _runingProcess = true;
             try
             {
-                var shortcut = dm.Config.Shortcuts[WParam.ToInt32() - InputService.SHIFTHOTKEYID];
+                var shortcut = dm.Config.Shortcuts[WParam.ToInt32() - IInputService.SHIFTHOTKEYID];
                 if (shortcut is null || shortcut.Fonction is null)
                 {
                     return;

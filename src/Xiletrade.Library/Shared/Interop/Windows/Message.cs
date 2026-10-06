@@ -1,15 +1,18 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
+using Xiletrade.Library.Shared.Enum;
 
-namespace Xiletrade.Library.Shared.Interop;
+namespace Xiletrade.Library.Shared.Interop.Windows;
 
+[SupportedOSPlatform("windows")]
 public static class Message
 {
-#if Windows
     // -------- p/invoke --------
     [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-    public static extern int MessageBox(IntPtr hWnd, string lpText, string lpCaption, uint uType);
+    public static extern int MessageBox(nint hWnd, string lpText, string lpCaption, uint uType);
 
+    [DllImport("user32.dll")]
+    private static extern bool MessageBeep(uint uType);
     // -------- Codes --------
     public const uint MB_OK = 0x00000000;
     public const uint MB_OKCANCEL = 0x00000001;
@@ -29,11 +32,15 @@ public static class Message
     public const int IDIGNORE = 5;
     public const int IDYES = 6;
     public const int IDNO = 7;
-#endif
-#if Linux
-    // TODO
-#endif
-#if OSX
-    // TODO
-#endif
+
+    public static void MessageBeep(MessageStatus status) 
+    {
+        MessageBeep(status switch
+        {
+            MessageStatus.Information => MB_ICONINFORMATION,
+            MessageStatus.Exclamation => MB_ICONWARNING,
+            MessageStatus.Warning => MB_ICONWARNING,
+            _ => MB_ICONERROR
+        });
+    }
 }

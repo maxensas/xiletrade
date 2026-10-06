@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Runtime.Versioning;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.Shared.Interop.Windows;
 
 namespace Xiletrade.Library.Services.Windows;
 
 /// <summary>
 /// Provides a native Windows window for receiving system messages.
 /// </summary>
+[SupportedOSPlatform("windows")]
 public sealed class WindowsHookService : IHookService
 {
     public nint Hwnd { get; private set; }

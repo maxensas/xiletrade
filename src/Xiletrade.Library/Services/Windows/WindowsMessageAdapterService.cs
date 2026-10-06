@@ -1,15 +1,17 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.Shared.Interop.Windows;
 
 namespace Xiletrade.Library.Services.Windows;
 
 /// <summary>
 /// Provides Windows-specific message dialogs using the native Win32 API.
 /// </summary>
+[SupportedOSPlatform("windows")]
 public sealed class WindowsMessageAdapterService : IMessageAdapterService
 {
     private readonly IUIService _ui;

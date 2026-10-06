@@ -1,21 +1,23 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Globalization;
+using System.Runtime.Versioning;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Shared.Interop;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Interop.Windows;
 
-namespace Xiletrade.Library.Services;
+namespace Xiletrade.Library.Services.Windows;
 
 /// <summary>Service responsible for hotkey registrations and global input interactions.</summary>
-public sealed class InputService
+[SupportedOSPlatform("windows")]
+public sealed class WindowsInputService : IInputService
 {
     private readonly IViewManager _view;
     private readonly IHookService _hook;
     private readonly IKeyboardAdapterService _keyboard;
     private readonly IPoeActionService _poe;
     private readonly DataManagerService _dm;
-    private readonly ClipboardService _clipboard;
+    private readonly IClipboardService _clipboard;
     private readonly IUIService _ui;
 
     private readonly Action _inputHandler;
@@ -27,12 +29,10 @@ public sealed class InputService
     private static bool _capturingMouse = false;
     private static bool _configViewOpened = false;
 
-    public const int SHIFTHOTKEYID = 10001;
-
-    public InputService(ILogger<InputService> logger, 
+    public WindowsInputService(ILogger<WindowsInputService> logger, 
         IViewManager view, IHookService hook,
         IKeyboardAdapterService keyboard, IPoeActionService poe, 
-        DataManagerService dm, ClipboardService clipboard, IUIService ui)
+        DataManagerService dm, IClipboardService clipboard, IUIService ui)
     {
         _view = view;
         _hook = hook;
@@ -107,7 +107,7 @@ public sealed class InputService
 
     private void OnRegisterTimerElapsed(object sender, EventArgs e) => _ui.Invoke(_inputHandler);
 
-    internal void EnableHotkeys() => InstallRegisterHotKey();
+    public void EnableHotkeys() => InstallRegisterHotKey();
 
     private void InstallRegisterHotKey()
     {
@@ -139,13 +139,13 @@ public sealed class InputService
             }
             if (shortcut.Enable)
             {
-                Native.RegisterHotKey(_hookHwnd, SHIFTHOTKEYID + i, Convert.ToUInt32(shortcut.Modifier), (uint)Math.Abs(shortcut.Keycode));
+                Native.RegisterHotKey(_hookHwnd, IInputService.SHIFTHOTKEYID + i, Convert.ToUInt32(shortcut.Modifier), (uint)Math.Abs(shortcut.Keycode));
             }
         }
         _firstHotkeyRegistering = false;
     }
 
-    internal void DisableHotkeys() => RemoveRegisterHotKey(true);
+    public void DisableHotkeys() => RemoveRegisterHotKey(true);
 
     private void RemoveRegisterHotKey(bool reInit)
     {
@@ -169,7 +169,7 @@ public sealed class InputService
                 {
                     continue;
                 }
-                Native.UnregisterHotKey(_hookHwnd, SHIFTHOTKEYID + i);
+                Native.UnregisterHotKey(_hookHwnd, IInputService.SHIFTHOTKEYID + i);
             }
         }
     }

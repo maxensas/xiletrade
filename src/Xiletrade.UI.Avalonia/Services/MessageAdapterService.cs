@@ -1,87 +1,63 @@
-﻿using System;
+﻿using Avalonia.Controls;
+using Avalonia.Threading;
+using Microsoft.Extensions.Logging;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Base;
+using MsBox.Avalonia.Dto;
+using MsBox.Avalonia.Enums;
+using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
-/*
-using Avalonia.Controls;
-using MsBox.Avalonia;
-using MsBox.Avalonia.Dto;
-using MsBox.Avalonia.Enums;
-*/
+using Xiletrade.Library.Shared.Interop.Windows;
+
 namespace Xiletrade.UI.Avalonia.Services;
 
 /// <summary>
-/// Not used for now, maybe with linux implementation
+/// Implementation using Package Reference "MessageBox.Avalonia"
 /// </summary>
 /// <param name="ui"></param>
-public class MessageAdapterService(IUIService ui) : IMessageAdapterService
+public sealed class MessageAdapterService: IMessageAdapterService
 {
-    private readonly IUIService _ui = ui;
+    private readonly IUIService _ui;
+
+    public MessageAdapterService(ILogger<MessageAdapterService> logger, IUIService ui)
+    {
+        _ui = ui;
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
+    }
 
     public void Show(string message, string caption, MessageStatus status)
     {
-        throw new NotImplementedException();
+        _ui.Invoke(() => _ = CreateMessageBox(message, caption, status, false).ShowAsync());
     }
 
     public bool ShowResult(string message, string caption, MessageStatus status, bool yesNo = false)
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<bool> ShowResultAsync(string message, string caption, MessageStatus status, bool yesNo = false)
-    {
-        throw new NotImplementedException();
-    }
-
-    /*
-    public void Show(string message, string caption, MessageStatus status)
-    {
-        var icon = GetMessageBoxIcon(status);
-
-        void Action()
+        return _ui.Invoke(() =>
         {
-            var msgBox = MessageBoxManager
-                .GetMessageBoxStandard(new MessageBoxStandardParams
-                {
-                    ContentTitle = caption,
-                    ContentMessage = message,
-                    Icon = icon,
-                    ButtonDefinitions = ButtonEnum.Ok,
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner
-                });
-            _ = msgBox.ShowAsync();
-        }
+            var frame = new DispatcherFrame();
+            var task = CreateMessageBox(message, caption, status, yesNo).ShowAsync();
+            _ = task.ContinueWith(_ => Dispatcher.UIThread.Post(() => frame.Continue = false), TaskScheduler.Default);
 
-        _ui.Invoke(Action);
-    }
+            Dispatcher.UIThread.PushFrame(frame);
 
-    public bool ShowResult(string message, string caption, MessageStatus status, bool yesNo = false)
-    {
-        throw new NotImplementedException();
+            var result = task.GetAwaiter().GetResult();
+            return result == ButtonResult.Yes || result == ButtonResult.Ok;
+        });
     }
 
     public async Task<bool> ShowResultAsync(string message, string caption, MessageStatus status, bool yesNo = false)
     {
-        var icon = GetMessageBoxIcon(status);
-        var buttons = yesNo ? ButtonEnum.YesNo : ButtonEnum.Ok;
-
-        var result = await _ui.Invoke(async () =>
-        {
-            var msgBox = MessageBoxManager.GetMessageBoxStandard(new MessageBoxStandardParams
-            {
-                ButtonDefinitions = buttons,
-                ContentTitle = caption,
-                ContentMessage = message,
-                Icon = icon,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                CanResize = false
-            });
-
-            return await msgBox.ShowAsync();
-        });
-
-        return result == ButtonResult.Yes || result == ButtonResult.Ok;
+        var result = await _ui.InvokeAsync(() => CreateMessageBox(message, caption, status, yesNo).ShowAsync());
+        return IsPositive(result);
     }
+
+    private static bool IsPositive(ButtonResult result) => result == ButtonResult.Yes || result == ButtonResult.Ok;
 
     private static Icon GetMessageBoxIcon(MessageStatus status)
     {
@@ -93,5 +69,59 @@ public class MessageAdapterService(IUIService ui) : IMessageAdapterService
             _ => Icon.Error,
         };
     }
-    */
+
+    private static IMsBox<ButtonResult> CreateMessageBox(string message, string caption, MessageStatus status, bool yesNo)
+    {
+        PlaySystemSound(status);
+
+        return MessageBoxManager.GetMessageBoxStandard(new MessageBoxStandardParams
+        {
+            ButtonDefinitions = yesNo ? ButtonEnum.YesNo : ButtonEnum.Ok,
+            ContentTitle = caption,
+            ContentMessage = message,
+            Icon = GetMessageBoxIcon(status),
+            WindowStartupLocation = WindowStartupLocation.CenterOwner,
+            CanResize = false
+        });
+    }
+
+    private static void PlaySystemSound(MessageStatus status)
+    {
+        try
+        {
+            if (OperatingSystem.IsWindows())
+            {
+                Message.MessageBeep(status);
+            }
+            else if (OperatingSystem.IsLinux())
+            {
+                var id = status switch
+                {
+                    MessageStatus.Information => "dialog-information",
+                    MessageStatus.Exclamation or MessageStatus.Warning => "dialog-warning",
+                    _ => "dialog-error"
+                };
+                Process.Start(new ProcessStartInfo("canberra-gtk-play", $"-i {id}")
+                {
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                });
+            }
+            else if (OperatingSystem.IsMacOS())
+            {
+                var sound = status == MessageStatus.Information ? "Glass" : "Basso";
+                Process.Start(new ProcessStartInfo("afplay", $"/System/Library/Sounds/{sound}.aiff")
+                {
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                });
+            }
+        }
+        catch
+        {
+            // Sound is optional: ignore any errors (missing tool, no audio device, etc.)
+        }
+    }
+
+    
 }

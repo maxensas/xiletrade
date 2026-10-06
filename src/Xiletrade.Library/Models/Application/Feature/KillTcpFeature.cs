@@ -1,5 +1,5 @@
 ﻿using Xiletrade.Library.Models.Application.Configuration.DTO;
-using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.Shared.Interop.Windows;
 
 namespace Xiletrade.Library.Models.Application.Feature;
 

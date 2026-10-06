@@ -1,41 +1,42 @@
 ﻿using System;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.Shared.Interop.Windows;
 
-namespace Xiletrade.Library.Services;
+namespace Xiletrade.Library.Services.Windows;
 
 /// <summary> Service used to interact with clipboard and PoE message whispering.</summary>
-public sealed class ClipboardService(IPoeActionService poe, IClipboardAdapterService clipboard, 
-    IMessageAdapterService message, IUIService ui, IViewManager view)
+[SupportedOSPlatform("windows")]
+public sealed class WindowsClipboardService(IPoeActionService poe, IClipboardAdapterService clipboard, 
+    IMessageAdapterService message, IViewManager view) : IClipboardService
 {
     private readonly IPoeActionService _poe = poe;
     private readonly IClipboardAdapterService _clipboard = clipboard;
     private readonly IMessageAdapterService _message = message;
-    private readonly IUIService _ui = ui;
     private readonly IViewManager _view = view;
 
     private bool _sendingWhisper;
 
-    internal void Clear() => _clipboard.Clear();
+    public void Clear() => _clipboard.Clear();
 
-    internal void SetClipboard(string data) => _clipboard.SetClipboard(data);
+    public void SetClipboard(string data) => _clipboard.SetClipboard(data);
 
-    internal string GetClipboard(bool clear = false) => _clipboard.GetClipboard(clear);
+    public string GetClipboard(bool clear = false) => _clipboard.GetClipboard(clear);
 
-    internal bool ContainsUnicodeTextData() => _clipboard.ContainsUnicodeTextData();
+    public bool ContainsUnicodeTextData() => _clipboard.ContainsUnicodeTextData();
 
-    internal bool ContainsTextData() => _clipboard.ContainsTextData();
+    public bool ContainsTextData() => _clipboard.ContainsTextData();
 
-    internal bool ContainsAnyTextData()
+    public bool ContainsAnyTextData()
     {
         return ContainsUnicodeTextData() || ContainsTextData();
     }
 
-    internal void SendClipboardCommand(string command)
+    public void SendClipboardCommand(string command)
     {
         try
         {
@@ -50,7 +51,7 @@ public sealed class ClipboardService(IPoeActionService poe, IClipboardAdapterSer
         }
     }
 
-    internal void SendClipboardCommandLastWhisper(string command)
+    public void SendClipboardCommandLastWhisper(string command)
     {
         Clear();
         _poe.CutLastWhisperToClipboard();
@@ -64,7 +65,7 @@ public sealed class ClipboardService(IPoeActionService poe, IClipboardAdapterSer
         }
     }
 
-    internal void SendWhisperMessage(ReadOnlySpan<char> message)
+    public void SendWhisperMessage(ReadOnlySpan<char> message)
     {
         if (_sendingWhisper)
         {
@@ -130,7 +131,7 @@ public sealed class ClipboardService(IPoeActionService poe, IClipboardAdapterSer
         }
     }
 
-    internal void SendRegex(string message)
+    public void SendRegex(string message)
     {
         try
         {

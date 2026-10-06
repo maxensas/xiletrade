@@ -1,10 +1,10 @@
 ﻿using Xiletrade.Library.Models.Application.Configuration.DTO;
-using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Application.Feature;
 
-internal class SendClipboardFeature(ClipboardService clipboard, ConfigShortcut shortcut, 
+internal class SendClipboardFeature(IClipboardService clipboard, ConfigShortcut shortcut, 
     string stringValue) : BaseFeature(shortcut, stringValue)
 {
     internal override void Launch()

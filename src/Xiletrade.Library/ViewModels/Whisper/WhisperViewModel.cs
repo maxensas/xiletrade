@@ -8,6 +8,7 @@ using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Views;
@@ -17,7 +18,7 @@ namespace Xiletrade.Library.ViewModels.Whisper;
 [ViewModelCreation(ViewModelCreation.Activator)]
 public sealed partial class WhisperViewModel : ViewModelBase
 {
-    private readonly ClipboardService _clipboard;
+    private readonly IClipboardService _clipboard;
 
     [ObservableProperty]
     private string message = string.Empty;
@@ -34,7 +35,7 @@ public sealed partial class WhisperViewModel : ViewModelBase
     [ObservableProperty]
     private AsyncObservableCollection<WhisperOfferViewModel> offers = new();
 
-    public WhisperViewModel(DataManagerService dm, ClipboardService clipboard,
+    public WhisperViewModel(DataManagerService dm, IClipboardService clipboard,
         Tuple<FetchDataListing, OfferInfo> data)
     {
         _clipboard = clipboard;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
+using System.Runtime.Versioning;
 using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.Library.Services.Windows;
@@ -7,6 +8,7 @@ namespace Xiletrade.Library.Services.Windows;
 /// <summary>
 /// Registers and updates the application's custom protocol handler in the Windows registry.
 /// </summary>
+[SupportedOSPlatform("windows")]
 public class WindowsProtocolRegisterService : IProtocolRegisterService
 {
     public WindowsProtocolRegisterService(ILogger<WindowsProtocolRegisterService> logger)

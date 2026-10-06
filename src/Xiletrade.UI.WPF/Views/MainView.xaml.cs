@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.Shared.Interop.Windows;
 using Xiletrade.Library.Views;
 
 namespace Xiletrade.UI.WPF.Views;

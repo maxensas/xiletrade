@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.Versioning;
 using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.Library.Services.Linux;
 
 //TOTEST
+[SupportedOSPlatform("linux")]
 public class LinuxProtocolRegisterService : IProtocolRegisterService
 {
     private const string ProtocolName = "Xiletrade";

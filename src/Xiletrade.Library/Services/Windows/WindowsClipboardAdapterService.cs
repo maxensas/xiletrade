@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Threading;
 using Xiletrade.Library.Services.Interface;
@@ -11,6 +12,7 @@ namespace Xiletrade.Library.Services.Windows;
 /// <summary>
 /// Service used to access Clipboard by using win32 APIs
 /// </summary>
+[SupportedOSPlatform("windows")]
 public sealed class WindowsClipboardAdapterService : IClipboardAdapterService
 {
     private static readonly Lock _clipboardLock = new();

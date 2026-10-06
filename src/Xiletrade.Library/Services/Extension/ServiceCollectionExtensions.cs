@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Runtime.Versioning;
 using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Models.Application.Diagnostic;
 using Xiletrade.Library.Services.Interface;
@@ -38,11 +40,8 @@ public static class ServiceCollectionExtensions
         sc.AddSingleton(new StartupArguments(args))
             .AddSingleton<XiletradeService>()
             .AddSingleton<DataManagerService>()
-            .AddSingleton<ShortcutDispatcher>()
             .AddSingleton<PoeApiService>()
             .AddSingleton<PoeNinjaService>()
-            .AddSingleton<InputService>()
-            .AddSingleton<ClipboardService>()
             .AddSingleton<LocalizationService>()
             .AddSingleton<FeatureProvider>()
             .AddSingleton<IUIService, UIService>()
@@ -51,7 +50,6 @@ public static class ServiceCollectionExtensions
             .AddSingleton<IAutoUpdaterService, AutoUpdaterService>()
             .AddSingleton<ITokenService, TokenService>()
             .AddSingleton<IUpdateDownloader, UpdateDownloader>()
-            .AddSingleton<IProtocolHandlerService, ProtocolHandlerService>()
             // logs
             .AddSingleton<IFileLoggerService, FileLoggerService>()
 #if DEBUG
@@ -80,22 +78,42 @@ public static class ServiceCollectionExtensions
 
         if (OperatingSystem.IsWindows())
         {
-            return sc.AddSingleton<IMessageAdapterService, WindowsMessageAdapterService>()
-                .AddSingleton<IClipboardAdapterService, WindowsClipboardAdapterService>()
-                .AddSingleton<IProtocolRegisterService, WindowsProtocolRegisterService>()
-                .AddSingleton<IPoeActionService, WindowsPoeActionService>()
-                .AddSingleton<IHookService>(sp => new WindowsHookService(sp.GetRequiredService<ShortcutDispatcher>().HandleMessage));
+            sc.AddWindowsServices();
+            return sc;
         }
 
         // TODO
         if (OperatingSystem.IsLinux())
         {
-            return sc//.AddSingleton<IMessageAdapterService, LinuxMessageAdapterService>()
-                .AddSingleton<IProtocolRegisterService, LinuxProtocolRegisterService>()
-                .AddSingleton<IPoeActionService, LinuxPoeActionService>()
-                .AddSingleton<IHookService>(sp => new LinuxHookService(sp.GetRequiredService<ShortcutDispatcher>().HandleMessage));
+            sc.AddLinuxServices();
+            return sc;
         }
-
         throw new PlatformNotSupportedException("Xiletrade is only supported on Windows.");
+    }
+
+    [SupportedOSPlatform("windows")]
+    private static IServiceCollection AddWindowsServices(this IServiceCollection sc)
+    {
+        sc.TryAddSingleton<IMessageAdapterService, WindowsMessageAdapterService>();
+        sc.TryAddSingleton<IClipboardService, WindowsClipboardService>();
+        sc.TryAddSingleton<IClipboardAdapterService, WindowsClipboardAdapterService>();
+        sc.TryAddSingleton<IInputService, WindowsInputService>();
+        sc.TryAddSingleton<IProtocolHandlerService, WindowsProtocolHandlerService>();
+        sc.TryAddSingleton<IProtocolRegisterService, WindowsProtocolRegisterService>();
+        sc.TryAddSingleton<IPoeActionService, WindowsPoeActionService>();
+        sc.TryAddSingleton<IShortcutDispatcher, WindowsShortcutDispatcher>();
+        sc.TryAddSingleton<IHookService>(sp =>
+            new WindowsHookService(sp.GetRequiredService<IShortcutDispatcher>().HandleMessage));
+        return sc;
+    }
+
+    [SupportedOSPlatform("linux")]
+    private static IServiceCollection AddLinuxServices(this IServiceCollection sc)
+    {
+        sc.TryAddSingleton<IProtocolRegisterService, LinuxProtocolRegisterService>();
+        sc.TryAddSingleton<IPoeActionService, LinuxPoeActionService>();
+        sc.TryAddSingleton<IHookService>(sp =>
+            new LinuxHookService(sp.GetRequiredService<IShortcutDispatcher>().HandleMessage));
+        return sc;
     }
 }

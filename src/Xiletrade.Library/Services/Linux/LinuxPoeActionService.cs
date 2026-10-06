@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.Versioning;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Services.Windows;
 
 namespace Xiletrade.Library.Services.Linux;
 
 //TOTEST
+[SupportedOSPlatform("linux")]
 public sealed class LinuxPoeActionService : IPoeActionService
 {
-    private readonly InputService _input;
-
     private readonly string _xdotoolPath;
     private readonly string _wtypePath;
     private readonly bool _isWayland;
 
     public (string Key, ushort Code) ChatKey { get; set; }
 
-    public LinuxPoeActionService(InputService input)
+    public LinuxPoeActionService()
     {
-        _input = input;
-
         _isWayland = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WAYLAND_DISPLAY"));
 
         _xdotoolPath = FindTool("xdotool");

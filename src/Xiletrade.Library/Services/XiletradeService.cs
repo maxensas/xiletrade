@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Services.Windows;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Views;
 
@@ -16,7 +17,7 @@ public sealed class XiletradeService
         IMessageAdapterService message, IAutoUpdaterService updater,
         // Instantiate singletons : 
         IMainView main, ITaskbar taskbar,
-        IProtocolHandlerService handler, IProtocolRegisterService reg, InputService input)
+        IProtocolHandlerService handler, IProtocolRegisterService reg, IInputService input)
     {
         _ = StartAsync(logger, dm, dataUpdater, view, message, updater);
     }

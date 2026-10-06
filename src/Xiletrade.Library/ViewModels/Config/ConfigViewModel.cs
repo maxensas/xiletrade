@@ -12,7 +12,7 @@ using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.Shared.Interop.Windows;
 using Xiletrade.Library.Views;
 
 namespace Xiletrade.Library.ViewModels.Config;
@@ -26,7 +26,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
     private readonly DataManagerService _dm;
     private readonly IDataUpdaterService _updater;
     private readonly LocalizationService _localization;
-    private readonly InputService _input;
+    private readonly IInputService _input;
     private readonly PoeNinjaService _ninja;
     private readonly INetService _net;
 
@@ -52,7 +52,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
     public ConfigViewModel(IMessageAdapterService message, IViewManager view,
         IKeyboardAdapterService keyboard, DataManagerService dm,
         IDataUpdaterService updater, LocalizationService localization,
-        InputService input, PoeNinjaService ninja, INetService net)
+        IInputService input, PoeNinjaService ninja, INetService net)
     {
         _message = message;
         _view = view;

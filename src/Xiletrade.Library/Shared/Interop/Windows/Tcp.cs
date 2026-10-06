@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
-namespace Xiletrade.Library.Shared.Interop;
+namespace Xiletrade.Library.Shared.Interop.Windows;
 
 /// <summary>Static class used to call win32 functions.</summary>
 /// <remarks>
 /// Made by /u/Umocrajen. Kills TCP connections based on PID
 /// </remarks>
+[SupportedOSPlatform("windows")]
 public sealed class Tcp
 {
     private enum TcpTableClass
@@ -41,7 +43,6 @@ public sealed class Tcp
         private readonly MibTcprowOwnerPid table;
     }
 
-#if Windows
     [DllImport("iphlpapi.dll", SetLastError = true)]
     private static extern uint GetExtendedTcpTable(nint pTcpTable, ref int dwOutBufLen, bool sort, int ipVersion, TcpTableClass tblClass, uint reserved = 0);
 
@@ -100,11 +101,4 @@ public sealed class Tcp
         }
         return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - startTime;
     }
-#endif
-#if Linux
-    // TODO
-#endif
-#if OSX
-    // TODO
-#endif
 }

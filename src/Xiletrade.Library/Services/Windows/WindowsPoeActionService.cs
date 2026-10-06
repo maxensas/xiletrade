@@ -1,9 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Threading;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.Shared.Interop.Windows;
 
 namespace Xiletrade.Library.Services.Windows;
 
@@ -13,6 +14,7 @@ namespace Xiletrade.Library.Services.Windows;
 /// <remarks>
 /// win32 API implementation
 /// </remarks>
+[SupportedOSPlatform("windows")]
 public sealed class WindowsPoeActionService : IPoeActionService
 {
     private readonly DataManagerService _dm;

@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
-namespace Xiletrade.Library.Shared.Interop;
+namespace Xiletrade.Library.Shared.Interop.Windows;
 
 /// <summary>
 /// Do not use with .NET9
 /// </summary>
+[SupportedOSPlatform("windows")]
 internal static partial class NativeMethods
 {
-#if Windows
     /*
     [LibraryImport("user32.dll", SetLastError = true)]
     internal static partial nint SetClipboardViewer(nint hWnd);
@@ -71,5 +72,4 @@ internal static partial class NativeMethods
 
     [LibraryImport("user32.dll")]
     internal static partial uint SendInput(uint nInputs, [MarshalAs(UnmanagedType.LPArray), In] Mouse.Send.INPUT[] pInputs, int cbSize);*/
-#endif
 }

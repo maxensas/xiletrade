@@ -28,6 +28,7 @@ public static class AvaloniaServiceRegistration
     {
         // Avalonia imp
         sc.AddSingleton<IViewManager, ViewManager>()
+            .AddSingleton<IMessageAdapterService, MessageAdapterService>()
             .AddAvaloniaNotifications(cfg => // TO TEST
             {
                 cfg.SuccessBackgroundColor = NotificationColor.FromHex("#FF252525");

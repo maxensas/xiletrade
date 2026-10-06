@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
 
-namespace Xiletrade.Library.Shared.Interop;
+namespace Xiletrade.Library.Shared.Interop.Windows;
 
 /// <summary>Static class used to call native functions related to Mouse and Keyboard inputs behaviors.</summary>
 /// <remarks></remarks>
+[SupportedOSPlatform("windows")]
 public static class Input
 {
-#if Windows
     // -------- p/invoke --------
     [DllImport("user32.dll")]
     private static extern uint MapVirtualKey(uint uCode, uint uMapType);
@@ -50,19 +51,19 @@ public static class Input
     /// <summary>Class used to bind mouse inputs entry conditionally.</summary>
     public static class MouseHook
     {
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)] private static extern IntPtr GetModuleHandle(string lpModuleName);
-        [DllImport("user32.dll")] private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
-        [DllImport("user32.dll")] private static extern bool UnhookWindowsHookEx(IntPtr hhk);
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)] private static extern nint GetModuleHandle(string lpModuleName);
+        [DllImport("user32.dll")] private static extern nint SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, nint hMod, uint dwThreadId);
+        [DllImport("user32.dll")] private static extern bool UnhookWindowsHookEx(nint hhk);
         [DllImport("user32.dll")] private static extern short GetKeyState(int nVirtKey);
-        [DllImport("user32.dll")] private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-        public delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
+        [DllImport("user32.dll")] private static extern nint CallNextHookEx(nint hhk, int nCode, nint wParam, nint lParam);
+        public delegate nint LowLevelMouseProc(int nCode, nint wParam, nint lParam);
 
         private const int WH_MOUSE_LL = 14;
         private static event EventHandler MouseAction = delegate { };
 
         private static bool _mHotkeyProcBlock = false;
         private static LowLevelMouseProc _proc = HookCallback;
-        private static IntPtr _hookID = IntPtr.Zero;
+        private static nint _hookID = nint.Zero;
         private static bool _initialized = false;
         private static DateTime _mouseHookCallbackTime;
 
@@ -78,7 +79,7 @@ public static class Input
                 _initialized = true;
             }
 
-            if (_hookID != IntPtr.Zero)
+            if (_hookID != nint.Zero)
             {
                 StopMouseWheelCapture();
             }
@@ -100,7 +101,7 @@ public static class Input
             try
             {
                 UnhookWindowsHookEx(_hookID);
-                _hookID = IntPtr.Zero;
+                _hookID = nint.Zero;
             }
             catch (Exception ex)
             {
@@ -128,14 +129,14 @@ public static class Input
             }
         }
 
-        private static IntPtr SetHook(LowLevelMouseProc proc)
+        private static nint SetHook(LowLevelMouseProc proc)
         {
             using Process curProcess = Process.GetCurrentProcess();
             using ProcessModule curModule = curProcess.MainModule;
             return SetWindowsHookEx(WH_MOUSE_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
         }
 
-        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        private static nint HookCallback(int nCode, nint wParam, nint lParam)
         {
             if (nCode >= 0)
             {
@@ -152,7 +153,7 @@ public static class Input
                         MouseAction(null, mouseEventArgs);
                     }
                     catch { }
-                    return new IntPtr(1);
+                    return new nint(1);
                 }
                 _mouseHookCallbackTime = Convert.ToDateTime(DateTime.Now);
             }
@@ -192,7 +193,7 @@ public static class Input
             public uint mouseData;
             public uint flags;
             public uint time;
-            public IntPtr dwExtraInfo;
+            public nint dwExtraInfo;
         }
     }
 
@@ -227,7 +228,7 @@ public static class Input
                         wScan = scanCode,
                         dwFlags = flags,
                         time = 0,
-                        dwExtraInfo = IntPtr.Zero
+                        dwExtraInfo = nint.Zero
                     }
                 };
             }
@@ -241,7 +242,7 @@ public static class Input
                     {
                         time = 0,
                         dwFlags = flags,
-                        dwExtraInfo = UIntPtr.Zero,
+                        dwExtraInfo = nuint.Zero,
                         dx = 1,
                         dy = 1,
                     }
@@ -268,7 +269,7 @@ public static class Input
             internal int mouseData;
             internal MOUSEEVENTF dwFlags;
             internal uint time;
-            internal UIntPtr dwExtraInfo;
+            internal nuint dwExtraInfo;
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -278,7 +279,7 @@ public static class Input
             internal ushort wScan;
             internal uint dwFlags;
             internal uint time;
-            internal IntPtr dwExtraInfo;
+            internal nint dwExtraInfo;
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -397,11 +398,4 @@ public static class Input
             }
         }
     }*/
-#endif
-#if Linux
-    // TODO
-#endif
-#if OSX
-    // TODO
-#endif
 }

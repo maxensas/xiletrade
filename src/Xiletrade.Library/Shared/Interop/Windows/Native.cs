@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using System.Threading;
 
-namespace Xiletrade.Library.Shared.Interop;
+namespace Xiletrade.Library.Shared.Interop.Windows;
 
 /// <summary>Static class used to call win32 functions and constants associated.</summary>
+[SupportedOSPlatform("windows")]
 public static class Native
 {
-#if Windows
     // -------- p/invoke --------
     [DllImport("user32.dll", CharSet = CharSet.Unicode)] 
     public static extern nint FindWindow(string lpClassName, string lpWindowName);
@@ -42,25 +43,25 @@ public static class Native
 
     //sponge
     [DllImport("user32.dll", SetLastError = true)]
-    public static extern IntPtr CreateWindowEx(
+    public static extern nint CreateWindowEx(
         int dwExStyle, string lpClassName, string lpWindowName,
         int dwStyle, int x, int y, int nWidth, int nHeight,
-        IntPtr hWndParent, IntPtr hMenu, IntPtr hInstance, IntPtr lpParam);
+        nint hWndParent, nint hMenu, nint hInstance, nint lpParam);
 
     [DllImport("user32.dll")]
-    public static extern IntPtr DefWindowProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam);
+    public static extern nint DefWindowProc(nint hWnd, uint uMsg, nint wParam, nint lParam);
 
     [DllImport("user32.dll", SetLastError = true)]
-    public static extern bool DestroyWindow(IntPtr hWnd);
+    public static extern bool DestroyWindow(nint hWnd);
 
     [DllImport("user32.dll", SetLastError = true)]
     public static extern ushort RegisterClass([In] ref WNDCLASS lpWndClass);
 
     [DllImport("user32.dll", SetLastError = true)]
-    public static extern bool AddClipboardFormatListener(IntPtr hwnd);
+    public static extern bool AddClipboardFormatListener(nint hwnd);
 
     [DllImport("user32.dll", SetLastError = true)]
-    public static extern bool RemoveClipboardFormatListener(IntPtr hwnd);
+    public static extern bool RemoveClipboardFormatListener(nint hwnd);
 
     [DllImport("Kernel32.dll")]
     private static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
@@ -82,7 +83,7 @@ public static class Native
     //[DllImport("user32.dll")] public static extern int GetWindowLong(nint hWnd, int nIndex);
 
     // -------- delegate --------
-    public delegate IntPtr WndProcDelegate(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+    public delegate nint WndProcDelegate(nint hWnd, uint msg, nint wParam, nint lParam);
 
     // -------- Codes --------
     public const int WM_KEYUP = 0x0101;
@@ -104,10 +105,10 @@ public static class Native
         public WndProcDelegate lpfnWndProc;
         public int cbClsExtra;
         public int cbWndExtra;
-        public IntPtr hInstance;
-        public IntPtr hIcon;
-        public IntPtr hCursor;
-        public IntPtr hbrBackground;
+        public nint hInstance;
+        public nint hIcon;
+        public nint hCursor;
+        public nint hbrBackground;
         public string lpszMenuName;
         public string lpszClassName;
     }
@@ -166,11 +167,4 @@ public static class Native
         }
         return true;
     }
-#endif
-#if Linux
-    // TODO
-#endif
-#if OSX
-    // TODO
-#endif
 }
