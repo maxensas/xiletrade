@@ -6,27 +6,17 @@
         xmlns:uc="clr-namespace:Xiletrade.UI.Avalonia.UserControls"
         xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
-        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+        xmlns:ic="clr-namespace:Xiletrade.UI.Avalonia.Util.Command"
         x:DataType="t:MainViewModel" x:Name="MainWindow"
         Width="500" Height="500" 
         WindowStartupLocation="CenterScreen" CanResize="False"
         Background="{StaticResource Gradient}" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1"
         Icon="/Assets/AppIcon.ico" Title="Xiletrade">
-    <!--
-    <Design.DataContext>
-        <t:MainViewModel/>
-    </Design.DataContext>
-    -->
-    <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="Loaded">
-            <ia:InvokeCommandAction Command="{Binding ViewLoadedCommand}" CommandParameter="{Binding #MainWindow}" />
-        </ia:EventTriggerBehavior>
-        <ia:EventTriggerBehavior EventName="Deactivated">
-            <ia:InvokeCommandAction Command="{Binding ViewDeactivatedCommand}" />
-        </ia:EventTriggerBehavior>
+        <ic:LoadedCommandBehavior Command="{Binding ViewLoadedCommand}" PassAssociatedObject="True" />
+        <ic:WindowDeactivatedCommandBehavior Command="{Binding ViewDeactivatedCommand}" />
     </i:Interaction.Behaviors>
+    
     <Grid>
         <!--<uc:TaskbarIcon/>-->
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -35,10 +25,9 @@
             <Image Source="{StaticResource ImgStarGolden}" Width="40" Height="40"/>
             <Separator />
             <Button Content="Test notif" Click="OnTestNotif" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="159" Height="35" FontSize="16" />
-            <!-- CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" -->
             <Separator />
-            <Button Content="Test message" Click="OnTestMessage" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="159" Height="35" FontSize="16" />
-            <Separator /><!-- using event trigger -->
+            <Button Content="Test message" IsEnabled="False" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="159" Height="35" FontSize="16" />
+            <Separator />
         </StackPanel>
     </Grid>
 </view:ViewBase>

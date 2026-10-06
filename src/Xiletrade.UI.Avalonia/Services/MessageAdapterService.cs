@@ -1,18 +1,39 @@
-﻿using Avalonia.Controls;
-using MsBox.Avalonia;
-using MsBox.Avalonia.Dto;
-using MsBox.Avalonia.Enums;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
-
+/*
+using Avalonia.Controls;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Dto;
+using MsBox.Avalonia.Enums;
+*/
 namespace Xiletrade.UI.Avalonia.Services;
 
+/// <summary>
+/// Not used for now, maybe with linux implementation
+/// </summary>
+/// <param name="ui"></param>
 public class MessageAdapterService(IUIService ui) : IMessageAdapterService
 {
     private readonly IUIService _ui = ui;
 
+    public void Show(string message, string caption, MessageStatus status)
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool ShowResult(string message, string caption, MessageStatus status, bool yesNo = false)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<bool> ShowResultAsync(string message, string caption, MessageStatus status, bool yesNo = false)
+    {
+        throw new NotImplementedException();
+    }
+
+    /*
     public void Show(string message, string caption, MessageStatus status)
     {
         var icon = GetMessageBoxIcon(status);
@@ -72,4 +93,5 @@ public class MessageAdapterService(IUIService ui) : IMessageAdapterService
             _ => Icon.Error,
         };
     }
+    */
 }

@@ -3,12 +3,17 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Input.Platform;
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.UI.Avalonia.Services;
 
-// not async for now
+/// <summary>
+/// Not used for now, maybe with linux implementation
+/// </summary>
+/// <remarks>
+/// not async
+/// </remarks>
+/// <param name="ui"></param>
 internal sealed class ClipboardAdapterService : IClipboardAdapterService
 {
     private static readonly Lock _clipboardLock = new();

@@ -1,7 +1,5 @@
 using Avalonia.Interactivity;
 using Microsoft.Extensions.DependencyInjection;
-using MsBox.Avalonia;
-using MsBox.Avalonia.Enums;
 using Notification.Core;
 using System;
 using Xiletrade.Library.Views;
@@ -23,12 +21,6 @@ public partial class MainView : ViewBase, IMainView
         DataContext = vm;
         //Application.Current.MainWindow = this;
         Closing += Window_Closing;
-        Loaded += MainView_Loaded;
-    }
-
-    private void MainView_Loaded(object sender, global::Avalonia.Interactivity.RoutedEventArgs e)
-    {
-        //IsVisible = false;
     }
 
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -49,13 +41,5 @@ public partial class MainView : ViewBase, IMainView
             Type = NotificationType.Success, 
             ShowCloseButton = false };
         _serviceProvider.GetRequiredService<INotificationService>().Show(notif);
-    }
-
-    private async void OnTestMessage(object sender, RoutedEventArgs e)
-    {
-        var box = MessageBoxManager
-            .GetMessageBoxStandard("Title", "Hello from Avalonia!", ButtonEnum.Ok);
-
-        await box.ShowAsync();
     }
 }

@@ -50,7 +50,7 @@
             <Grid Margin="10,33,10,132" Width="460" Height="135" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <TextBlock TextWrapping="Wrap" FontSize="12" FontWeight="Light" VerticalAlignment="Center" TextAlignment="Center" u:Localization.Key="Start003_tbMessage1" FontFamily="{StaticResource FontinItalic}"/>
             </Grid>
-            <Button x:Name="btnClose" u:Localization.Key="Start004_btnClose" u:Localization.KeyTip="Start005_btnCloseTip" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" Margin="170,251,0,14" Width="159" Height="35" FontSize="16" Command="{Binding CloseStartCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
+            <Button x:Name="btnClose" u:Localization.Key="Start004_btnClose" u:Localization.KeyTip="Start005_btnCloseTip" Cursor="Hand" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" Margin="170,251,0,14" Width="159" Height="35" FontSize="16" Command="{Binding CloseStartCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"/>
         </Grid>
     </Border>
 </view:ViewBase>

@@ -2,7 +2,7 @@
 using Avalonia.Controls;
 using System.Windows.Input;
 
-namespace Xiletrade.UI.Avalonia.Util;
+namespace Xiletrade.UI.Avalonia.Util.Command;
 
 public static class EventToCommand
 {
