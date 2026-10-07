@@ -2658,4 +2658,7 @@ Garena 서버 : 중국어 번체.</value>
     <value>Xiletrade를 시작하지 못했습니다.</value>
     <comment>Failed to launch Xiletrade</comment>
   </data>
+  <data name="Error033_NotAdmin" xml:space="preserve">
+    <value>Xiletrade가 관리자 모드로 실행되고 있지 않습니다!</value>
+  </data>
 </root>

@@ -2731,4 +2731,7 @@ Garena服務器：繁體中文。</value>
     <value>無法啟動 Xiletrade</value>
     <comment>Failed to launch Xiletrade</comment>
   </data>
+  <data name="Error033_NotAdmin" xml:space="preserve">
+    <value>Xiletrade 未以系統管理員模式執行！</value>
+  </data>
 </root>

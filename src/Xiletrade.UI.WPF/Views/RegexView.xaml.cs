@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Views;
@@ -17,7 +18,7 @@ public partial class RegexView : ViewBase, IRegexView
         DataContext = vm;
         Loaded += Window_Loaded;
         MouseLeftButtonDown += Window_DragWindow;
-        this.Show();
+        Closed += OnClosed;
     }
 
     private void Window_DragWindow(object sender, MouseButtonEventArgs e)
@@ -29,5 +30,14 @@ public partial class RegexView : ViewBase, IRegexView
     {
         this.Left = (SystemParameters.PrimaryScreenWidth - this.Width) / 2;
         this.Top = SystemParameters.PrimaryScreenHeight / 6;
+    }
+
+    private void OnClosed(object sender, EventArgs e)
+    {
+        Loaded -= Window_Loaded;
+        MouseLeftButtonDown -= Window_DragWindow;
+        Closed -= OnClosed;
+        Content = null;
+        DataContext = null;
     }
 }

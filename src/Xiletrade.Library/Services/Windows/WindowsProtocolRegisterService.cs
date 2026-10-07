@@ -24,8 +24,6 @@ public class WindowsProtocolRegisterService : IProtocolRegisterService
     /// </summary>
     private static void RegisterOrUpdateProtocol()
     {
-#if Windows
-#pragma warning disable CA1416 // Validate platform compatibility
         string registryPath = $@"Software\Classes\{IProtocolRegisterService.ProtocolName}";
         string currentExePath = Environment.ProcessPath;
 
@@ -56,6 +54,4 @@ public class WindowsProtocolRegisterService : IProtocolRegisterService
             commandKey.SetValue("", expectedCommand);
         }
     }
-#pragma warning restore CA1416 // Validate platform compatibility
-#endif
 }

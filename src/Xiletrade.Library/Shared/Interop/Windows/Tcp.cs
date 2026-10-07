@@ -10,7 +10,7 @@ namespace Xiletrade.Library.Shared.Interop.Windows;
 /// Made by /u/Umocrajen. Kills TCP connections based on PID
 /// </remarks>
 [SupportedOSPlatform("windows")]
-public sealed class Tcp
+internal sealed partial class Tcp
 {
     private enum TcpTableClass
     {
@@ -26,7 +26,7 @@ public sealed class Tcp
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct MibTcprowOwnerPid
+    private struct MibTcprowOwnerPid
     {
         public uint state;
         public uint localAddr;
@@ -37,20 +37,30 @@ public sealed class Tcp
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct MibTcptableOwnerPid
+    private struct MibTcptableOwnerPid
     {
         public uint dwNumEntries;
         private readonly MibTcprowOwnerPid table;
     }
 
-    [DllImport("iphlpapi.dll", SetLastError = true)]
-    private static extern uint GetExtendedTcpTable(nint pTcpTable, ref int dwOutBufLen, bool sort, int ipVersion, TcpTableClass tblClass, uint reserved = 0);
+    [LibraryImport("iphlpapi.dll", SetLastError = true)]
+    private static partial uint GetExtendedTcpTable(nint pTcpTable, ref int dwOutBufLen, [MarshalAs(UnmanagedType.Bool)] bool sort, int ipVersion, TcpTableClass tblClass, uint reserved = 0);
 
-    [DllImport("iphlpapi.dll")]
-    private static extern int SetTcpEntry(nint pTcprow); // Run as administrator only
+    [LibraryImport("iphlpapi.dll")]
+    private static partial int SetTcpEntry(nint pTcprow); // Run as administrator only
 
-    public static long KillTCPConnectionForProcess()
+    internal static long KillTCPConnectionForProcess()
     {
+        using (var identity = System.Security.Principal.WindowsIdentity.GetCurrent())
+        {
+            bool isAdmin = new System.Security.Principal.WindowsPrincipal(identity)
+                .IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
+            if (!isAdmin)
+            {
+                return -2;
+            }
+        }
+
         long startTime = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 
         MibTcprowOwnerPid[] table = null;
@@ -64,13 +74,13 @@ public sealed class Tcp
             uint statusCode = GetExtendedTcpTable(buffTable, ref buffSize, true, afInet, TcpTableClass.TcpTableOwnerPidAll);
             if (statusCode != 0) return -1;
 
-            var tab = (MibTcptableOwnerPid)Marshal.PtrToStructure(buffTable, typeof(MibTcptableOwnerPid));
+            var tab = Marshal.PtrToStructure<MibTcptableOwnerPid>(buffTable);
             var rowPtr = (nint)((long)buffTable + Marshal.SizeOf(tab.dwNumEntries));
             table = new MibTcprowOwnerPid[tab.dwNumEntries];
 
             for (var i = 0; i < tab.dwNumEntries; i++)
             {
-                var tcpRow = (MibTcprowOwnerPid)Marshal.PtrToStructure(rowPtr, typeof(MibTcprowOwnerPid));
+                var tcpRow = Marshal.PtrToStructure<MibTcprowOwnerPid>(rowPtr);
                 table[i] = tcpRow;
                 rowPtr = (nint)((long)rowPtr + Marshal.SizeOf(tcpRow));
             }
@@ -97,7 +107,7 @@ public sealed class Tcp
         int errorCode = SetTcpEntry(ptr);
         if (errorCode > 0)
         {
-            //Debug.Trace("Error while killing TCP connection (using SetTcpEntry) : " + errorCode);
+            return -errorCode;
         }
         return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - startTime;
     }

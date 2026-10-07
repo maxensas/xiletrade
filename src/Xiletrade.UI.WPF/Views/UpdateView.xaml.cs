@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 
 namespace Xiletrade.UI.WPF.Views;
 
@@ -12,10 +13,19 @@ public partial class UpdateView : ViewBase
         InitializeComponent();
         DataContext = vm;
         MouseLeftButtonDown += Window_DragWindow;
+        Closed += OnClosed;
     }
 
     private void Window_DragWindow(object sender, MouseButtonEventArgs e)
     {
         this.DragMove();
+    }
+
+    private void OnClosed(object? sender, EventArgs e)
+    {
+        MouseLeftButtonDown -= Window_DragWindow;
+        Closed -= OnClosed;
+        Content = null;
+        DataContext = null;
     }
 }

@@ -2616,4 +2616,7 @@
     <value>ไม่สามารถเปิดใช้งาน Xiletrade ได้</value>
     <comment>Failed to launch Xiletrade</comment>
   </data>
+  <data name="Error033_NotAdmin" xml:space="preserve">
+    <value>Xiletrade ไม่ได้ทำงานในโหมดผู้ดูแลระบบ!</value>
+  </data>
 </root>

@@ -5,11 +5,16 @@ using Avalonia.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Shared.Interop.Windows;
 using Xiletrade.Library.ViewModels.Update;
 using Xiletrade.Library.ViewModels.Whisper;
 using Xiletrade.Library.Views;
@@ -23,6 +28,12 @@ namespace Xiletrade.UI.Avalonia.Services;
 public class ViewManager : IViewManager
 {
     private readonly IServiceProvider _sp;
+
+    // View content cleared upon closing
+    private IViewBase _configView;
+    private IViewBase _regexView;
+    private IViewBase _editorView;
+    private PopView _popView;
 
     private IViewBase MainView => _sp.GetRequiredService<IMainView>();
     private IViewBase ConfigView => _sp.GetRequiredService<IConfigView>();
@@ -53,17 +64,37 @@ public class ViewManager : IViewManager
         }
     }
 
-    public void ShowConfigView() => ConfigView.Show();
+    public void ShowConfigView()
+    {
+        CloseMainView();
+        _configView?.Close();
+        _configView = ConfigView;
+        _configView.Show();
+    }
 
-    public void ShowEditorView() => EditorView.Show();
+    public void ShowEditorView()
+    {
+        _configView?.Close();
+        _editorView?.Close();
+        _editorView = EditorView;
+        _editorView.Show();
+    }
 
     public void ShowMainView() => MainView.Show();
 
-    public void ShowRegexView() => RegexView.Show();
+    public void ShowRegexView()
+    {
+        CloseMainView();
+        _regexView?.Close();
+        _regexView = RegexView;
+        _regexView.Show();
+    }
 
     public void ShowPopupView(string imgName)
     {
-        _ = new PopView(imgName); // viewmodel not used.
+        CloseMainView();
+        _popView?.Close();
+        _popView = new PopView(imgName); // viewmodel not used.
     }
 
     public Task ShowStartView()
@@ -118,5 +149,69 @@ public class ViewManager : IViewManager
         win.Closed += (_, _) => frame.Continue = false;
         win.Show();
         Dispatcher.UIThread.PushFrame(frame); // blocks here, but the UI keeps running
+    }
+
+    public PoeState GetPoeWindowState()
+    {
+        if (OperatingSystem.IsWindows())
+        {
+            return GetWinPoeState();
+        }
+        if (OperatingSystem.IsLinux())
+        {
+            //TODO
+        }
+        return PoeState.NotLaunched;
+    }
+
+    public void CloseOpenedView(ConfigShortcut shortcut)
+    {
+        if (OperatingSystem.IsWindows())
+        {
+            CloseWinOpenedView(shortcut);
+        }
+        if (OperatingSystem.IsLinux())
+        {
+            //TODO
+        }
+    }
+
+    [SupportedOSPlatform("windows")]
+    private static PoeState GetWinPoeState()
+    {
+        nint findPoeHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
+        bool poeLaunched = findPoeHwnd.ToInt32() > 0;
+        bool poeFocused = Native.GetForegroundWindow().Equals(findPoeHwnd);
+
+        return poeFocused ? PoeState.LaunchedAndFocused :
+            poeLaunched ? PoeState.Launched : PoeState.NotLaunched;
+    }
+
+    [SupportedOSPlatform("windows")]
+    private void CloseWinOpenedView(ConfigShortcut shortcut)
+    {
+        foreach (var win in Strings.WindowName.XiletradeWindowList)
+        {
+            var findHwnd = Native.FindWindow(null, win);
+            if (findHwnd != nint.Zero)
+            {
+                Native.SendMessage(findHwnd, Native.WM_CLOSE, nint.Zero, nint.Zero);
+                return;
+            }
+        }
+        if (IsVisibleMainView())
+        {
+            CloseMainView();
+            return;
+        }
+
+        // In case the shortcut is not correctly unregistered.
+        // Acts as a relay: passes the intercepted event back to the game,
+        // ensuring the keypress retains its effect in PoE when the app is not involved.
+        nint findPoeHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
+        if (findPoeHwnd != nint.Zero)
+        {
+            Native.SendMessage(findPoeHwnd, Native.WM_KEYUP, new nint(shortcut.Keycode), nint.Zero);
+        }
     }
 }

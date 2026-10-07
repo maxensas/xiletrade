@@ -10,18 +10,20 @@ public partial class ConfigView : ViewBase, IConfigView
     public ConfigView()
     {
         InitializeComponent();
+        Closed += OnClosed;
     }
 
     public ConfigView(object vm, IDisposable scope = null) : this()
     {
         _scope = scope;
         DataContext = vm;
-        Closed += ConfigView_Closed;
     }
 
-    private void ConfigView_Closed(object sender, EventArgs e)
+    private void OnClosed(object sender, EventArgs e)
     {
-        Closed -= ConfigView_Closed;
+        Closed -= OnClosed;
         _scope?.Dispose();
+        Content = null;
+        DataContext = null;
     }
 }

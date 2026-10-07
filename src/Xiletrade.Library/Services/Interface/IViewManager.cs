@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services.Interface;
 
@@ -25,6 +27,8 @@ public interface IViewManager
     Task ShowStartView();
     void ShowUpdateView(GitHubRelease release);
     void ShowWhisperView(Tuple<FetchDataListing, OfferInfo> data);
+    void CloseOpenedView(ConfigShortcut shortcut);
+    PoeState GetPoeWindowState();
     void ClearFocus();
     void SetMainHandle(object view);
     void ShutDownNativeApp(int exitCode = 0);

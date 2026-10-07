@@ -15,7 +15,6 @@ public static partial class Strings
     internal const string ItemInfoDelimiter = "--------";
     /// <summary> Delimiter used for POE item info descriptions + Carriage Return + Line Feed</summary>
     internal const string ItemInfoDelimiterCRLF = "--------\r\n";
-    internal const string PoeClass = "POEWindowClass";
     internal const string Info = " [Xiletrade POE Helper]";
     internal const string Blight = "Blight";
     internal const string Ravaged = "Ravaged";
@@ -23,6 +22,8 @@ public static partial class Strings
     internal const string UnscalableValue = "Unscalable Value";
     internal const string ChaosOrb = "Chaos Orb";
     internal const string NullClass = "NullClass";
+
+    public const string PoeClass = "POEWindowClass";
 
     // initialized with data service
     private static bool IsPoe2 { get; set; }
@@ -34,7 +35,7 @@ public static partial class Strings
         Gateway = gateway;
     }
 
-    internal static string PoeCaption { get => IsPoe2 ? "Path of Exile 2" : "Path of Exile"; }
+    public static string PoeCaption { get => IsPoe2 ? "Path of Exile 2" : "Path of Exile"; }
 
     /// <summary>
     /// Get Poe1 or Poe2 BULK category.

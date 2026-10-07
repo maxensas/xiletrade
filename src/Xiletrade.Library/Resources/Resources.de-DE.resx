@@ -2656,4 +2656,7 @@ Garena Server: Traditionelles Chinesisch.</value>
     <value>Xiletrade konnte nicht gestartet werden.</value>
     <comment>Failed to launch Xiletrade</comment>
   </data>
+  <data name="Error033_NotAdmin" xml:space="preserve">
+    <value>Xiletrade wird nicht im Administratormodus ausgeführt!</value>
+  </data>
 </root>

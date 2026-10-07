@@ -126,16 +126,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void OpenEditor(object commandParameter)
-    {
-        IntPtr pHwnd = Native.FindWindow(null, Strings.WindowName.Editor);
-        if (pHwnd.ToInt32() > 0)
-        {
-            Native.SendMessage(pHwnd, Native.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
-        }
-        _view.ShowEditorView();
-        CloseConfig(null);
-    }
+    private void OpenEditor(object commandParameter) => _view.ShowEditorView();
 
     [RelayCommand]
     private void OpenChatCommandsList(object commandParameter)

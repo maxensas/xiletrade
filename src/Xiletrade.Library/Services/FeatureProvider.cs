@@ -3,31 +3,31 @@ using System.Linq;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Feature;
 using Xiletrade.Library.Services.Extension;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
-using Xiletrade.Library.Shared.Interop.Windows;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services;
 
 /// <summary>
 /// Resolves features from configured shortcuts.
 /// </summary>
-public sealed class FeatureProvider(IServiceProvider sp, 
+public sealed class FeatureProvider(IServiceProvider sp, IViewManager view,
     DataManagerService dm, LocalizationService localization)
 {
     private readonly IServiceProvider _sp = sp;
+    private readonly IViewManager _view = view;
     private readonly LocalizationService _localization = localization;
     private readonly DataManagerService _dm = dm;
 
     internal BaseFeature GetFeature(ConfigShortcut shortcut)
     {
-        nint findPoeHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
-        bool poeLaunched = findPoeHwnd.ToInt32() > 0;
-        bool poeFocused = Native.GetForegroundWindow().Equals(findPoeHwnd);
-        string fonction = shortcut.Fonction.ToLowerInvariant();
+        var poeState = _view.GetPoeWindowState();
+        var fonction = shortcut.Fonction.ToLowerInvariant();
 
         _localization.RefreshCurrentCulture();
         // POE is launched and got the focus or in dev mode
-        if (poeFocused || _dm.Config.Options.DevMode)
+        if (poeState is PoeState.LaunchedAndFocused || _dm.Config.Options.DevMode)
         {
             if (fonction is Strings.Feature.run or Strings.Feature.wiki or Strings.Feature.ninja or Strings.Feature.coe)
             {
@@ -58,7 +58,7 @@ public sealed class FeatureProvider(IServiceProvider sp,
         }
 
         // POE is launched and do not have the focus
-        if (poeLaunched && !poeFocused && fonction is Strings.Feature.whispertrade)
+        if (poeState is PoeState.Launched && fonction is Strings.Feature.whispertrade)
         {
             return _sp.CreateInstance<WhisperTradeFeature>(shortcut);
         }

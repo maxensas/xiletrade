@@ -1,4 +1,5 @@
-﻿using Xiletrade.Library.Shared;
+﻿using System;
+using Xiletrade.Library.Shared;
 using Xiletrade.Library.Views;
 
 namespace Xiletrade.UI.WPF.Views;
@@ -13,5 +14,13 @@ public partial class EditorView : ViewBase, IEditorView
         InitializeComponent();
         DataContext = vm;
         Name = Strings.WindowName.Editor;
+        Closed += OnClosed;
+    }
+
+    private void OnClosed(object? sender, EventArgs e)
+    {
+        Closed -= OnClosed;
+        Content = null;
+        DataContext = null;
     }
 }

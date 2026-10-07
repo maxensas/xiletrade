@@ -2,7 +2,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Services.Windows;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Views;
 

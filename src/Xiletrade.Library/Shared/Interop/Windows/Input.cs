@@ -9,37 +9,37 @@ namespace Xiletrade.Library.Shared.Interop.Windows;
 /// <summary>Static class used to call native functions related to Mouse and Keyboard inputs behaviors.</summary>
 /// <remarks></remarks>
 [SupportedOSPlatform("windows")]
-public static class Input
+internal static partial class Input
 {
     // -------- p/invoke --------
-    [DllImport("user32.dll")]
-    private static extern uint MapVirtualKey(uint uCode, uint uMapType);
+    [LibraryImport("user32.dll", EntryPoint = "MapVirtualKeyW")]
+    private static partial uint MapVirtualKey(uint uCode, uint uMapType);
 
     // -------- Codes --------
-    public const ushort VK_CONTROL = 0x11;
-    public const ushort VK_LCONTROL = 0xA2;
-    public const ushort VK_RCONTROL = 0xA3;
-    public const ushort VK_MENU = 0x12;   // ALT
-    public const ushort VK_RMENU = 0xA5;
-    public const ushort VK_SHIFT = 0x10;
-    public const ushort VK_LSHIFT = 0xA0;
-    public const ushort VK_RSHIFT = 0xA1;
-    public const ushort VK_C = 0x43;
-    public const ushort VK_V = 0x56;
-    public const ushort VK_X = 0x58;
-    public const ushort VK_RETURN = 0x0D;
-    public const ushort VK_DELETE = 0x2E;
-    public const ushort VK_HOME = 0x24;
-    public const ushort VK_F = 0x46;
-    public const ushort VK_BACK = 0x08;
-    public const ushort VK_INSERT = 0x2D;
-    public const ushort VK_END = 0x23;
-    public const ushort VK_PRIOR = 0x21; // Page Up
-    public const ushort VK_NEXT = 0x22; // Page Down
-    public const ushort VK_UP = 0x26;
-    public const ushort VK_LEFT = 0x25;
-    public const ushort VK_RIGHT = 0x27;
-    public const ushort VK_DOWN = 0x28;
+    //internal const ushort VK_CONTROL = 0x11;
+    internal const ushort VK_LCONTROL = 0xA2;
+    internal const ushort VK_RCONTROL = 0xA3;
+    internal const ushort VK_MENU = 0x12;   // ALT
+    internal const ushort VK_RMENU = 0xA5;
+    //internal const ushort VK_SHIFT = 0x10;
+    //internal const ushort VK_LSHIFT = 0xA0;
+    internal const ushort VK_RSHIFT = 0xA1;
+    internal const ushort VK_C = 0x43;
+    internal const ushort VK_V = 0x56;
+    internal const ushort VK_X = 0x58;
+    internal const ushort VK_RETURN = 0x0D;
+    internal const ushort VK_DELETE = 0x2E;
+    internal const ushort VK_HOME = 0x24;
+    internal const ushort VK_F = 0x46;
+    internal const ushort VK_BACK = 0x08;
+    internal const ushort VK_INSERT = 0x2D;
+    internal const ushort VK_END = 0x23;
+    internal const ushort VK_PRIOR = 0x21; // Page Up
+    internal const ushort VK_NEXT = 0x22; // Page Down
+    internal const ushort VK_UP = 0x26;
+    internal const ushort VK_LEFT = 0x25;
+    internal const ushort VK_RIGHT = 0x27;
+    internal const ushort VK_DOWN = 0x28;
 
     private const int INPUT_MOUSE = 0;
     private const int INPUT_KEYBOARD = 1;
@@ -49,14 +49,25 @@ public static class Input
     private const uint KEYEVENTF_SCANCODE = 0x0008;
 
     /// <summary>Class used to bind mouse inputs entry conditionally.</summary>
-    public static class MouseHook
+    internal static partial class MouseHook
     {
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)] private static extern nint GetModuleHandle(string lpModuleName);
-        [DllImport("user32.dll")] private static extern nint SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, nint hMod, uint dwThreadId);
-        [DllImport("user32.dll")] private static extern bool UnhookWindowsHookEx(nint hhk);
-        [DllImport("user32.dll")] private static extern short GetKeyState(int nVirtKey);
-        [DllImport("user32.dll")] private static extern nint CallNextHookEx(nint hhk, int nCode, nint wParam, nint lParam);
-        public delegate nint LowLevelMouseProc(int nCode, nint wParam, nint lParam);
+        [LibraryImport("kernel32.dll", EntryPoint = "GetModuleHandleW", StringMarshalling = StringMarshalling.Utf16)]
+        private static partial nint GetModuleHandle(string lpModuleName);
+
+        [LibraryImport("user32.dll", EntryPoint = "SetWindowsHookExW")]
+        private static partial nint SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, nint hMod, uint dwThreadId);
+
+        [LibraryImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static partial bool UnhookWindowsHookEx(nint hhk);
+
+        [LibraryImport("user32.dll")]
+        private static partial short GetKeyState(int nVirtKey);
+
+        [LibraryImport("user32.dll")]
+        private static partial nint CallNextHookEx(nint hhk, int nCode, nint wParam, nint lParam);
+
+        internal delegate nint LowLevelMouseProc(int nCode, nint wParam, nint lParam);
 
         private const int WH_MOUSE_LL = 14;
         private static event EventHandler MouseAction = delegate { };
@@ -70,7 +81,7 @@ public static class Input
         /// <summary>
         /// Start binding CTRL key + mouse wheel TO mouse LEFT click.
         /// </summary>
-        public static void StartMouseWheelCapture()
+        internal static void StartMouseWheelCapture()
         {
             if (!_initialized)
             {
@@ -96,7 +107,7 @@ public static class Input
         /// <summary>
         /// Stop binding CTRL key + mouse wheel TO mouse LEFT click.
         /// </summary>
-        public static void StopMouseWheelCapture()
+        internal static void StopMouseWheelCapture()
         {
             try
             {
@@ -198,13 +209,17 @@ public static class Input
     }
 
     /// <remarks>Class used to send inputs asynchronously without delay.</remarks>
-    internal static class Send
+    internal static partial class Send
     {
         private static Task _leftClickTask ;
 
         // invoke
+        /*
         [DllImport("user32.dll")]
         private static extern uint SendInput(uint nInputs, [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs, int cbSize);
+        */
+        [LibraryImport("user32.dll")]
+        private static partial uint SendInput(uint nInputs, ReadOnlySpan<INPUT> pInputs, int cbSize);
 
         // structs
         [StructLayout(LayoutKind.Sequential)]
@@ -364,16 +379,15 @@ public static class Input
         private const uint KLF_ACTIVATE = 0x00000001;
         private const uint MAPVK_VK_TO_VSC = 0;
 
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr LoadKeyboardLayout(string pwszKLID, uint Flags);
+        [LibraryImport("user32.dll", EntryPoint = "LoadKeyboardLayoutW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+        private static partial nint LoadKeyboardLayout(string pwszKLID, uint Flags);
 
-        [DllImport("user32.dll")]
-        private static extern int ToUnicodeEx(uint virtualKeyCode, uint scanCode, byte[] keyboardState,
-        [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder receivingBuffer, int bufferSize,
-        uint flags, IntPtr keyboardLayout);
+        [LibraryImport("user32.dll")]
+        private static partial int ToUnicodeEx(uint virtualKeyCode, uint scanCode, ReadOnlySpan<byte> keyboardState,
+            Span<char> receivingBuffer, int bufferSize, uint flags, nint keyboardLayout);
 
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetKeyboardLayout(uint idThread);
+        [LibraryImport("user32.dll")]
+        private static partial nint GetKeyboardLayout(uint idThread);
         
         internal static string GetLocalizedKeyName(uint virtualKeyCode, CultureInfo culture)
         {

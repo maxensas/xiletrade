@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Interop.Windows;
@@ -11,8 +13,11 @@ namespace Xiletrade.Library.Services.Windows;
 [SupportedOSPlatform("windows")]
 public sealed class WindowsHookService : IHookService
 {
+    private const string WindowClassName = "SpongeWindowClass";
+
     public nint Hwnd { get; private set; }
 
+    // Kept in a field so the GC never collects the delegate while Windows holds its function pointer.
     private readonly Native.WndProcDelegate _wndProcDelegate;
 
     private event EventHandler<NativeMessage> WndProcCalled;
@@ -21,17 +26,28 @@ public sealed class WindowsHookService : IHookService
     {
         _wndProcDelegate = WndProc;
 
-        var wc = new Native.WNDCLASS
+        nint classNamePtr = Marshal.StringToHGlobalUni(WindowClassName);
+        try
         {
-            lpfnWndProc = _wndProcDelegate,
-            lpszClassName = "SpongeWindowClass"
-        };
+            var wc = new Native.WNDCLASS
+            {
+                lpfnWndProc = Marshal.GetFunctionPointerForDelegate(_wndProcDelegate),
+                lpszClassName = classNamePtr
+            };
 
-        Native.RegisterClass(ref wc);
+            if (Native.RegisterClass(in wc) is 0)
+            {
+                throw new Win32Exception(Marshal.GetLastWin32Error());
+            }
+        }
+        finally
+        {
+            // RegisterClass copies the class name, the buffer can be freed.
+            Marshal.FreeHGlobal(classNamePtr);
+        }
 
-        Hwnd = Native.CreateWindowEx(0, wc.lpszClassName, "", 0, 0, 0, 0, 0,
-            IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero
-        );
+        Hwnd = Native.CreateWindowEx(0, WindowClassName, "", 0, 0, 0, 0, 0,
+            nint.Zero, nint.Zero, nint.Zero, nint.Zero);
 
         //Native.AddClipboardFormatListener(Hwnd);
 
@@ -39,7 +55,7 @@ public sealed class WindowsHookService : IHookService
         WndProcCalled += (s, e) => action(e.Msg, e.WParam);
     }
 
-    private IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
+    private nint WndProc(nint hWnd, uint msg, nint wParam, nint lParam)
     {
         WndProcCalled?.Invoke(this, new NativeMessage
         {

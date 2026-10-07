@@ -19,7 +19,7 @@ public partial class ConfigView : ViewBase, IConfigView
         InitializeComponent();
         Name = Strings.WindowName.Config;
         MouseLeftButtonDown += Window_DragWindow;
-        Closed += ConfigView_Closed;
+        Closed += OnClosed;
     }
     
     private void Window_DragWindow(object sender, MouseButtonEventArgs e)
@@ -27,10 +27,12 @@ public partial class ConfigView : ViewBase, IConfigView
         this.DragMove();
     }
 
-    private void ConfigView_Closed(object sender, EventArgs e)
+    private void OnClosed(object sender, EventArgs e)
     {
-        Closed -= ConfigView_Closed;
+        Content = null;
+        DataContext = null;
         MouseLeftButtonDown -= Window_DragWindow;
+        Closed -= OnClosed;
         _scope?.Dispose();
     }
 }

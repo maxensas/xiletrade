@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Threading;
 
@@ -7,89 +6,13 @@ namespace Xiletrade.Library.Shared.Interop.Windows;
 
 /// <summary>Static class used to call win32 functions and constants associated.</summary>
 [SupportedOSPlatform("windows")]
-public static class Native
+public static partial class Native
 {
-    // -------- p/invoke --------
-    [DllImport("user32.dll", CharSet = CharSet.Unicode)] 
-    public static extern nint FindWindow(string lpClassName, string lpWindowName);
-
-    [DllImport("user32.dll")] 
-    public static extern nint SendMessage(nint hWnd, uint Msg, nint wParam, nint lParam);
-
-    [DllImport("user32.dll")] 
-    public static extern nint GetForegroundWindow();
-
-    [DllImport("user32.dll")]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool SetForegroundWindow(nint hWnd);
-
-    [DllImport("kernel32.dll")]
-    public static extern uint GetCurrentThreadId();
-
-    [DllImport("user32.dll")]
-    public static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
-
-    [DllImport("user32.dll")] 
-    public static extern bool RegisterHotKey(nint hWnd, int id, uint fsModifiers, uint vk);
-
-    [DllImport("user32.dll")] 
-    public static extern bool UnregisterHotKey(nint hWnd, int id);
-
-    [DllImport("user32.dll", SetLastError = true)]
-    public static extern uint GetWindowThreadProcessId(nint hWnd, out uint processId);
-
-    [DllImport("user32.dll")]
-    public static extern int GetDpiForWindow(nint hWnd);
-
-    //sponge
-    [DllImport("user32.dll", SetLastError = true)]
-    public static extern nint CreateWindowEx(
-        int dwExStyle, string lpClassName, string lpWindowName,
-        int dwStyle, int x, int y, int nWidth, int nHeight,
-        nint hWndParent, nint hMenu, nint hInstance, nint lpParam);
-
-    [DllImport("user32.dll")]
-    public static extern nint DefWindowProc(nint hWnd, uint uMsg, nint wParam, nint lParam);
-
-    [DllImport("user32.dll", SetLastError = true)]
-    public static extern bool DestroyWindow(nint hWnd);
-
-    [DllImport("user32.dll", SetLastError = true)]
-    public static extern ushort RegisterClass([In] ref WNDCLASS lpWndClass);
-
-    [DllImport("user32.dll", SetLastError = true)]
-    public static extern bool AddClipboardFormatListener(nint hwnd);
-
-    [DllImport("user32.dll", SetLastError = true)]
-    public static extern bool RemoveClipboardFormatListener(nint hwnd);
-
-    [DllImport("Kernel32.dll")]
-    private static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
-
-    [DllImport("Kernel32.dll")]
-    private static extern bool QueryPerformanceFrequency(out long lpFrequency);
-
-    public static double MeasureHighPrecision(Action action)
-    {
-        QueryPerformanceFrequency(out long freq);
-        QueryPerformanceCounter(out long start);
-        action();
-        QueryPerformanceCounter(out long stop);
-        return (stop - start) * 1000.0 / freq; // ms
-    }
-
-    //[DllImport("user32.dll")] public static extern nint SetClipboardViewer(nint hWnd);
-    //[DllImport("user32.dll")] public static extern int SetWindowLong(nint hWnd, int nIndex, int dwNewLong);
-    //[DllImport("user32.dll")] public static extern int GetWindowLong(nint hWnd, int nIndex);
-
-    // -------- delegate --------
-    public delegate nint WndProcDelegate(nint hWnd, uint msg, nint wParam, nint lParam);
-
     // -------- Codes --------
     public const int WM_KEYUP = 0x0101;
     public const int WM_CLOSE = 0x0010;
     public const int WM_HOTKEY = 0x312;
-    public const int WM_CLIPBOARDUPDATE = 0x031D;
+    //public const int WM_CLIPBOARDUPDATE = 0x031D;
     //public const int WM_DRAWCLIPBOARD = 0x0308;
     //public const int WM_CHANGECBCHAIN = 0x030D;
     //public const int WM_INPUT = 0x00FF;
@@ -102,47 +25,73 @@ public static class Native
     public struct WNDCLASS
     {
         public uint style;
-        public WndProcDelegate lpfnWndProc;
+        public nint lpfnWndProc;     // pointeur de fonction (au lieu du delegate)
         public int cbClsExtra;
         public int cbWndExtra;
         public nint hInstance;
         public nint hIcon;
         public nint hCursor;
         public nint hbrBackground;
-        public string lpszMenuName;
-        public string lpszClassName;
+        public nint lpszMenuName;    // nint (au lieu de string)
+        public nint lpszClassName;   // nint (au lieu de string)
     }
 
-    /*
-    public static nint SetClipboardViewer(nint hWnd) => NativeMethods.SetClipboardViewer(hWnd);
+    // -------- p/invoke --------
+    [LibraryImport("user32.dll", EntryPoint = "FindWindowW", StringMarshalling = StringMarshalling.Utf16)]
+    public static partial nint FindWindow(string lpClassName, string lpWindowName);
 
-    public static nint FindWindow(string lpClassName, string lpWindowName) => NativeMethods.FindWindow(lpClassName, lpWindowName);
+    [LibraryImport("user32.dll", EntryPoint = "SendMessageW")]
+    public static partial nint SendMessage(nint hWnd, int Msg, nint wParam, nint lParam);
 
-    public static nint SendMessage(nint hWnd, uint Msg, nint wParam, nint lParam) => NativeMethods.SendMessage(hWnd, Msg, wParam, lParam);
+    [LibraryImport("user32.dll")]
+    public static partial nint GetForegroundWindow();
 
-    public static nint GetForegroundWindow() => NativeMethods.GetForegroundWindow();
+    [LibraryImport("user32.dll")]
+    public static partial int GetDpiForWindow(nint hWnd);
 
-    public static bool SetForegroundWindow(nint hWnd) => NativeMethods.SetForegroundWindow(hWnd);
+    // internal
+    [LibraryImport("kernel32.dll")]
+    internal static partial uint GetCurrentThreadId();
 
-    public static uint GetCurrentThreadId() => NativeMethods.GetCurrentThreadId();
+    [LibraryImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    internal static partial bool AttachThreadInput(uint idAttach, uint idAttachTo, [MarshalAs(UnmanagedType.Bool)] bool fAttach);
 
-    public static bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach) => NativeMethods.AttachThreadInput(idAttach, idAttachTo, fAttach);
+    [LibraryImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    internal static partial bool RegisterHotKey(nint hWnd, int id, uint fsModifiers, uint vk);
 
-    public static int SetWindowLong(nint hWnd, int nIndex, int dwNewLong) => NativeMethods.SetWindowLong(hWnd, nIndex, dwNewLong);
+    [LibraryImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    internal static partial bool UnregisterHotKey(nint hWnd, int id);
 
-    public static int GetWindowLong(nint hWnd, int nIndex) => NativeMethods.GetWindowLong(hWnd, nIndex);
+    [LibraryImport("user32.dll", SetLastError = true)]
+    internal static partial uint GetWindowThreadProcessId(nint hWnd, out uint processId);
 
-    public static bool RegisterHotKey(nint hWnd, int id, uint fsModifiers, uint vk) => NativeMethods.RegisterHotKey(hWnd, id, fsModifiers, vk);
+    //sponge
+    [LibraryImport("user32.dll", EntryPoint = "CreateWindowExW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+    internal static partial nint CreateWindowEx(int dwExStyle, string lpClassName, string lpWindowName,
+        int dwStyle, int x, int y, int nWidth, int nHeight, nint hWndParent, nint hMenu, nint hInstance, nint lpParam);
 
-    public static bool UnregisterHotKey(nint hWnd, int id) => NativeMethods.UnregisterHotKey(hWnd, id);
+    [LibraryImport("user32.dll", EntryPoint = "DefWindowProcW")]
+    internal static partial nint DefWindowProc(nint hWnd, uint uMsg, nint wParam, nint lParam);
 
-    public static uint GetWindowThreadProcessId(nint hWnd, out uint processId) => NativeMethods.GetWindowThreadProcessId(hWnd, out processId);
+    [LibraryImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    internal static partial bool DestroyWindow(nint hWnd);
 
-    public static int GetDpiForWindow(nint hWnd) => NativeMethods.GetDpiForWindow(hWnd);
-    */
+    [LibraryImport("user32.dll", EntryPoint = "RegisterClassW", SetLastError = true)]
+    internal static partial ushort RegisterClass(in WNDCLASS lpWndClass);
+
+    [LibraryImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static partial bool SetForegroundWindow(nint hWnd);
+
+    // -------- delegate --------
+    internal delegate nint WndProcDelegate(nint hWnd, uint msg, nint wParam, nint lParam);
 
     //helper
-    public static bool SwitchWindow(nint windowHandle)
+    internal static bool SwitchWindow(nint windowHandle)
     {
         if (GetForegroundWindow() == windowHandle)
             return true;

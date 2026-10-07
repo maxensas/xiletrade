@@ -13,7 +13,7 @@ namespace Xiletrade.Library.Services.Windows;
 /// Service used to access Clipboard by using win32 APIs
 /// </summary>
 [SupportedOSPlatform("windows")]
-public sealed class WindowsClipboardAdapterService : IClipboardAdapterService
+public sealed partial class WindowsClipboardAdapterService : IClipboardAdapterService
 {
     private static readonly Lock _clipboardLock = new();
 
@@ -22,40 +22,40 @@ public sealed class WindowsClipboardAdapterService : IClipboardAdapterService
 
     private const uint GMEM_MOVEABLE = 0x0002;
 
-    [DllImport("user32.dll", SetLastError = true)]
+    [LibraryImport("user32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool OpenClipboard(IntPtr hWndNewOwner);
+    private static partial bool OpenClipboard(nint hWndNewOwner);
 
-    [DllImport("user32.dll", SetLastError = true)]
+    [LibraryImport("user32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool CloseClipboard();
+    private static partial bool CloseClipboard();
 
-    [DllImport("user32.dll", SetLastError = true)]
+    [LibraryImport("user32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool EmptyClipboard();
+    private static partial bool EmptyClipboard();
 
-    [DllImport("user32.dll", SetLastError = true)]
-    private static extern IntPtr GetClipboardData(uint uFormat);
+    [LibraryImport("user32.dll", SetLastError = true)]
+    private static partial nint GetClipboardData(uint uFormat);
 
-    [DllImport("user32.dll", SetLastError = true)]
-    private static extern IntPtr SetClipboardData(uint uFormat, IntPtr hMem);
+    [LibraryImport("user32.dll", SetLastError = true)]
+    private static partial nint SetClipboardData(uint uFormat, nint hMem);
 
-    [DllImport("user32.dll", SetLastError = true)]
+    [LibraryImport("user32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool IsClipboardFormatAvailable(uint format);
+    private static partial bool IsClipboardFormatAvailable(uint format);
 
-    [DllImport("kernel32.dll", SetLastError = true)]
-    private static extern IntPtr GlobalAlloc(uint uFlags, UIntPtr dwBytes);
+    [LibraryImport("kernel32.dll", SetLastError = true)]
+    private static partial nint GlobalAlloc(uint uFlags, nuint dwBytes);
 
-    [DllImport("kernel32.dll", SetLastError = true)]
-    private static extern IntPtr GlobalLock(IntPtr hMem);
+    [LibraryImport("kernel32.dll", SetLastError = true)]
+    private static partial nint GlobalLock(nint hMem);
 
-    [DllImport("kernel32.dll", SetLastError = true)]
+    [LibraryImport("kernel32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool GlobalUnlock(IntPtr hMem);
+    private static partial bool GlobalUnlock(nint hMem);
 
-    [DllImport("kernel32.dll", SetLastError = true)]
-    private static extern IntPtr GlobalFree(IntPtr hMem);
+    [LibraryImport("kernel32.dll", SetLastError = true)]
+    private static partial nint GlobalFree(nint hMem);
 
     public WindowsClipboardAdapterService(ILogger<WindowsClipboardAdapterService> logger)
     {
@@ -227,6 +227,8 @@ public sealed class WindowsClipboardAdapterService : IClipboardAdapterService
             });
         }
     }
+
+    // private 
 
     private static void ExecuteWithClipboard(Action action)
     {

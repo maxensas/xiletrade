@@ -7663,5 +7663,14 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Error032_XFailedLaunch", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Xiletrade is not running in administrator mode !
+        /// </summary>
+        public static string Error033_NotAdmin {
+            get {
+                return ResourceManager.GetString("Error033_NotAdmin", resourceCulture);
+            }
+        }
     }
 }

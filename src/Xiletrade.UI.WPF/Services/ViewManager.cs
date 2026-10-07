@@ -3,10 +3,14 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared;
+using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Shared.Interop.Windows;
 using Xiletrade.Library.ViewModels.Update;
 using Xiletrade.Library.ViewModels.Whisper;
 using Xiletrade.Library.Views;
@@ -23,6 +27,12 @@ public class ViewManager : IViewManager
     private readonly ILogger<ViewManager> _logger;
     private readonly IUIService _ui;
     private readonly Action _showMainView;
+
+    // View content cleared upon closing
+    private IViewBase _configView;
+    private IViewBase _regexView;
+    private IViewBase _editorView;
+    private PopView _popView;
 
     private IViewBase ConfigView => _sp.GetRequiredService<IConfigView>();
     private IViewBase StartView => _sp.GetRequiredService<IStartView>();
@@ -66,9 +76,21 @@ public class ViewManager : IViewManager
         if (IsVisibleMainView()) MainWindow.Close();
     }
 
-    public void ShowEditorView() => EditorView.Show();
+    public void ShowEditorView()
+    {
+        _configView?.Close();
+        _editorView?.Close();
+        _editorView = EditorView;
+        _editorView.Show();
+    }
 
-    public void ShowConfigView() => ConfigView.Show();
+    public void ShowConfigView()
+    {
+        CloseMainView();
+        _configView?.Close();
+        _configView = ConfigView;
+        _configView.Show();
+    }
 
     public Task ShowStartView()
     {
@@ -84,7 +106,9 @@ public class ViewManager : IViewManager
 
     public void ShowPopupView(string imgName)
     {
-        _ = new PopView(imgName); // viewmodel not used.
+        CloseMainView();
+        _popView?.Close();
+        _popView = new PopView(imgName); // viewmodel not used.
     }
 
     public void SetMainHandle(object view)
@@ -98,7 +122,13 @@ public class ViewManager : IViewManager
 
     public void ShutDownNativeApp(int code = 0) => Application.Current.Shutdown(code);
 
-    public void ShowRegexView() => RegexView.Show();
+    public void ShowRegexView()
+    {
+        CloseMainView();
+        _regexView?.Close();
+        _regexView = RegexView;
+        _regexView.Show();
+    }
 
     public void ShowUpdateView(GitHubRelease release)
     {
@@ -107,4 +137,41 @@ public class ViewManager : IViewManager
     }
 
     public void ClearFocus() => System.Windows.Input.Keyboard.ClearFocus(); // UI responsibility, contrary to what code say.
+
+    public PoeState GetPoeWindowState()
+    {
+        nint findPoeHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
+        bool poeLaunched = findPoeHwnd != nint.Zero;
+        bool poeFocused = Native.GetForegroundWindow().Equals(findPoeHwnd);
+
+        return poeFocused ? PoeState.LaunchedAndFocused :
+            poeLaunched ? PoeState.Launched : PoeState.NotLaunched;
+    }
+
+    public void CloseOpenedView(ConfigShortcut shortcut)
+    {
+        foreach (var win in Strings.WindowName.XiletradeWindowList)
+        {
+            var findHwnd = Native.FindWindow(null, win);
+            if (findHwnd != nint.Zero)
+            {
+                Native.SendMessage(findHwnd, Native.WM_CLOSE, nint.Zero, nint.Zero);
+                return;
+            }
+        }
+        if (IsVisibleMainView())
+        {
+            CloseMainView();
+            return;
+        }
+
+        // In case the shortcut is not correctly unregistered.
+        // Acts as a relay: passes the intercepted event back to the game,
+        // ensuring the keypress retains its effect in PoE when the app is not involved.
+        nint findPoeHwnd = Native.FindWindow(Strings.PoeClass, Strings.PoeCaption);
+        if (findPoeHwnd != nint.Zero)
+        {
+            Native.SendMessage(findPoeHwnd, Native.WM_KEYUP, new nint(shortcut.Keycode), nint.Zero);
+        }
+    }
 }

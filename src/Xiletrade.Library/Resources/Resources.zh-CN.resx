@@ -2799,4 +2799,7 @@ Garena服务器：繁体中文。</value>
     <value>无法启动 Xiletrade</value>
     <comment>Failed to launch Xiletrade</comment>
   </data>
+  <data name="Error033_NotAdmin" xml:space="preserve">
+    <value>Xiletrade 未以管理员模式运行！</value>
+  </data>
 </root>

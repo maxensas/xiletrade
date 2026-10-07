@@ -66,17 +66,7 @@ public sealed partial class TaskBarViewModel : ViewModelBase
     private void CheckUpdate(object commandParameter) => _updater.CheckForUpdateAsync(manualCheck: true);
 
     [RelayCommand]
-    private void OpenConfig(object commandParameter)
-    {
-        IntPtr pHwnd = Native.FindWindow(null, Strings.WindowName.Config);
-        if (pHwnd.ToInt32() > 0)
-        {
-            Native.SendMessage(pHwnd, Native.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
-        }
-        var service = _view;
-        service.CloseMainView();
-        service.ShowConfigView();
-    }
+    private void OpenConfig(object commandParameter) => _view.ShowConfigView();
 
     [RelayCommand]
     private void CloseApplication(object commandParameter)
