@@ -96,10 +96,8 @@ public static class ServiceCollectionExtensions
     {
         sc.TryAddSingleton<IMessageAdapterService, WindowsMessageAdapterService>();
         sc.TryAddSingleton<IClipboardService, WindowsClipboardService>();
-        sc.TryAddSingleton<IClipboardAdapterService, WindowsClipboardAdapterService>();
         sc.TryAddSingleton<IInputService, WindowsInputService>();
         sc.TryAddSingleton<IProtocolHandlerService, WindowsProtocolHandlerService>();
-        sc.TryAddSingleton<IProtocolRegisterService, WindowsProtocolRegisterService>();
         sc.TryAddSingleton<IPoeActionService, WindowsPoeActionService>();
         sc.TryAddSingleton<IShortcutDispatcher, WindowsShortcutDispatcher>();
         sc.TryAddSingleton<IHookService>(sp =>
@@ -110,7 +108,6 @@ public static class ServiceCollectionExtensions
     [SupportedOSPlatform("linux")]
     private static IServiceCollection AddLinuxServices(this IServiceCollection sc)
     {
-        sc.TryAddSingleton<IProtocolRegisterService, LinuxProtocolRegisterService>();
         sc.TryAddSingleton<IPoeActionService, LinuxPoeActionService>();
         sc.TryAddSingleton<IHookService>(sp =>
             new LinuxHookService(sp.GetRequiredService<IShortcutDispatcher>().HandleMessage));

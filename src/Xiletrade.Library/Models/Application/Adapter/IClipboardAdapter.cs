@@ -1,9 +1,9 @@
-﻿namespace Xiletrade.Library.Services.Interface;
+﻿namespace Xiletrade.Library.Models.Application.Adapter;
 
 /// <summary>
 /// Provides a platform-specific interface for clipboard operations.
 /// </summary>
-public interface IClipboardAdapterService
+public interface IClipboardAdapter
 {
     public void Clear();
     public void SetClipboard(string data);

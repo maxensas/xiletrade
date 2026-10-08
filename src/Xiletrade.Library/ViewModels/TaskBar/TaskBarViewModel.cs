@@ -1,13 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Text;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.Shared.Interop.Windows;
 using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.ViewModels.TaskBar;

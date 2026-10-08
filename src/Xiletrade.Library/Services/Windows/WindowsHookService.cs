@@ -11,22 +11,26 @@ namespace Xiletrade.Library.Services.Windows;
 /// Provides a native Windows window for receiving system messages.
 /// </summary>
 [SupportedOSPlatform("windows")]
-public sealed class WindowsHookService : IHookService
+public sealed class WindowsHookService : IHookService, IDisposable
 {
+    public nint Hwnd { get; private set; }
+
     private const string WindowClassName = "SpongeWindowClass";
 
-    public nint Hwnd { get; private set; }
+    private readonly string _className = $"{WindowClassName}_{Guid.NewGuid():N}";
 
     // Kept in a field so the GC never collects the delegate while Windows holds its function pointer.
     private readonly Native.WndProcDelegate _wndProcDelegate;
 
     private event EventHandler<NativeMessage> WndProcCalled;
 
+    private bool _disposed;
+
     public WindowsHookService(Action<int, nint> action)
     {
         _wndProcDelegate = WndProc;
 
-        nint classNamePtr = Marshal.StringToHGlobalUni(WindowClassName);
+        nint classNamePtr = Marshal.StringToHGlobalUni(_className);
         try
         {
             var wc = new Native.WNDCLASS
@@ -68,19 +72,36 @@ public sealed class WindowsHookService : IHookService
         return Native.DefWindowProc(hWnd, msg, wParam, lParam);
     }
 
-    ~WindowsHookService()
+    ~WindowsHookService() => Dispose(false);
+
+    public void Dispose()
     {
-        //Native.RemoveClipboardFormatListener(Hwnd);
-        Native.DestroyWindow(Hwnd);
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    private void Dispose(bool disposing)
+    {
+        if (_disposed) return;
+        _disposed = true;
+
+        if (Hwnd != nint.Zero)
+        {
+            // Only succeeds if called from the creating thread
+            Native.DestroyWindow(Hwnd);
+            Hwnd = nint.Zero;
+        }
+
+        Native.UnregisterClass(_className, nint.Zero);
     }
 
     // Message struct
-    internal class NativeMessage : EventArgs
+    private class NativeMessage : EventArgs
     {
-        public IntPtr HWnd { get; set; }
+        public nint HWnd { get; set; }
         public int Msg { get; set; }
-        public IntPtr WParam { get; set; }
-        public IntPtr LParam { get; set; }
+        public nint WParam { get; set; }
+        public nint LParam { get; set; }
     }
 }
 

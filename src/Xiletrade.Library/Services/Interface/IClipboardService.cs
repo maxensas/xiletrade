@@ -2,6 +2,7 @@
 
 namespace Xiletrade.Library.Services.Interface;
 
+/// <summary> Service used to interact with sytem clipboard and PoE chat message.</summary>
 public interface IClipboardService
 {
     void Clear();

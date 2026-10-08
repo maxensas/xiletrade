@@ -5,6 +5,8 @@
 /// </summary>
 public interface IProtocolHandlerService
 {
+    const string ProtocolName = "Xiletrade";
+
     /// <summary>
     /// Sends a protocol URL to the already running instance of the application.
     /// </summary>

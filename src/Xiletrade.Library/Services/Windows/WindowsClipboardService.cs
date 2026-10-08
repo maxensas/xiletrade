@@ -11,13 +11,14 @@ namespace Xiletrade.Library.Services.Windows;
 
 /// <summary> Service used to interact with clipboard and PoE message whispering.</summary>
 [SupportedOSPlatform("windows")]
-public sealed class WindowsClipboardService(IPoeActionService poe, IClipboardAdapterService clipboard, 
+public sealed class WindowsClipboardService(IPoeActionService poe, 
     IMessageAdapterService message, IViewManager view) : IClipboardService
 {
     private readonly IPoeActionService _poe = poe;
-    private readonly IClipboardAdapterService _clipboard = clipboard;
     private readonly IMessageAdapterService _message = message;
     private readonly IViewManager _view = view;
+
+    private readonly WindowsClipboardAdapter _clipboard = new();
 
     private bool _sendingWhisper;
 

@@ -58,10 +58,11 @@ public class ViewManager : IViewManager
 
     public void SetMainHandle(object view)
     {
-        if (view is Window win)
+        if (view is not Window win)
         {
-            MainHandle = win.TryGetPlatformHandle()?.Handle ?? IntPtr.Zero;
+            throw new ArgumentException("The provided view must be an Avalonia window.", nameof(view));
         }
+        MainHandle = win.TryGetPlatformHandle()?.Handle ?? IntPtr.Zero;
     }
 
     public void ShowConfigView()

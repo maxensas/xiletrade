@@ -8,7 +8,10 @@ using Xiletrade.Library.Shared.Interop.Windows;
 
 namespace Xiletrade.Library.Services.Windows;
 
-/// <summary>Service responsible for hotkey registrations and global input interactions.</summary>
+/// <summary>
+/// Service responsible for hotkey registrations and
+/// <br/>global input interactions like mouse hook and auto sending whisper
+/// </summary>
 [SupportedOSPlatform("windows")]
 public sealed class WindowsInputService : IInputService
 {

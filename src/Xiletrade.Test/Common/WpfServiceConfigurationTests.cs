@@ -19,13 +19,13 @@ public class WpfServiceConfigurationTests : ServiceConfigurationTestsBase
             .Replace(ServiceDescriptor.Singleton(Mock.Of<IUIService>())) // STA
             .Replace(ServiceDescriptor.Singleton(Mock.Of<IDataUpdaterService>()))
             // platform
-            .Replace(ServiceDescriptor.Singleton(Mock.Of<IMainView>()))
+            .Replace(ServiceDescriptor.Singleton(Mock.Of<IViewManager>())) // null object
             .Replace(ServiceDescriptor.Singleton(Mock.Of<ITaskbar>()))
+            .Replace(ServiceDescriptor.Singleton(Mock.Of<IMainView>()))
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IConfigView>()))
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IRegexView>()))
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IStartView>()))
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IEditorView>())) // null object
-            .Replace(ServiceDescriptor.Singleton(Mock.Of<IViewManager>())) // null object
             //.Replace(ServiceDescriptor.Singleton(Mock.Of<IClipboardAdapterService>()))
             //.Replace(ServiceDescriptor.Singleton(Mock.Of<IMessageAdapterService>()))
             //.Replace(ServiceDescriptor.Singleton(Mock.Of<IProtocolRegisterService>()))

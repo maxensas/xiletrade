@@ -83,6 +83,10 @@ public static partial class Native
     [LibraryImport("user32.dll", EntryPoint = "RegisterClassW", SetLastError = true)]
     internal static partial ushort RegisterClass(in WNDCLASS lpWndClass);
 
+    [LibraryImport("user32.dll", EntryPoint = "UnregisterClassW", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    internal static partial bool UnregisterClass(string lpClassName, nint hInstance);
+
     [LibraryImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
     private static partial bool SetForegroundWindow(nint hWnd);

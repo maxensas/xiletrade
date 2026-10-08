@@ -8,13 +8,15 @@ using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.ViewModels.TaskBar;
 
 namespace Xiletrade.Library.Services.Windows;
 
 /// <summary>
-/// Named pipe server that listens for protocol URLs sent by secondary instances.
+/// Start a named pipe server that listens for protocol URLs sent by secondary instances.
 /// </summary>
+/// <remarks>
+/// Registers the protocol and starts listening upon instantiation.
+/// </remarks>
 [SupportedOSPlatform("windows")]
 public class WindowsProtocolHandlerService : IProtocolHandlerService, IDisposable
 {
@@ -24,7 +26,6 @@ public class WindowsProtocolHandlerService : IProtocolHandlerService, IDisposabl
     private readonly ILogger<WindowsProtocolHandlerService> _logger;
     private readonly StartupArguments _startup;
     private readonly IUIService _ui;
-    private readonly TaskBarViewModel _taskBarVm;
 
     private const string PipeName = "XiletradePipe";
     private CancellationTokenSource _cts;
@@ -33,7 +34,7 @@ public class WindowsProtocolHandlerService : IProtocolHandlerService, IDisposabl
 
     public WindowsProtocolHandlerService(IMessageAdapterService message, ITokenService token, 
         IFileLoggerService fileLogger, ILogger<WindowsProtocolHandlerService> logger,
-        StartupArguments startup, IUIService ui, TaskBarViewModel taskBarVm)
+        StartupArguments startup, IUIService ui)
     {
         _message = message;
         _token = token;
@@ -41,13 +42,49 @@ public class WindowsProtocolHandlerService : IProtocolHandlerService, IDisposabl
         _logger = logger;
         _startup = startup;
         _ui = ui;
-        _taskBarVm = taskBarVm;
 
+        RegisterOrUpdateProtocol();
         StartListening();
 
 #if DEBUG
         logger.LogInformation("Service launched");
 #endif
+    }
+
+    /// <summary>
+    /// Automatically register or update the custom protocol handler in the registry
+    /// </summary>
+    private static void RegisterOrUpdateProtocol()
+    {
+        string registryPath = $@"Software\Classes\{IProtocolHandlerService.ProtocolName}";
+        string currentExePath = Environment.ProcessPath;
+
+        // Create or open the protocol registry key
+        using Microsoft.Win32.RegistryKey protocolKey = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(registryPath);
+        protocolKey.SetValue("", $"URL:{IProtocolHandlerService.ProtocolName} Protocol");
+        protocolKey.SetValue("URL Protocol", "");
+
+        // Set or update the icon path
+        using (Microsoft.Win32.RegistryKey iconKey = protocolKey.CreateSubKey("DefaultIcon"))
+        {
+            object existingIcon = iconKey.GetValue("");
+            if (existingIcon is null || existingIcon.ToString() != currentExePath)
+            {
+                iconKey.SetValue("", currentExePath);
+            }
+        }
+
+        // Set or update the command used when launching the app
+
+        using Microsoft.Win32.RegistryKey commandKey = protocolKey.CreateSubKey(@"shell\open\command");
+
+        string expectedCommand = $"\"{currentExePath}\" \"%1\"";
+        object existingCommand = commandKey.GetValue("");
+
+        if (existingCommand is null || existingCommand.ToString() != expectedCommand)
+        {
+            commandKey.SetValue("", expectedCommand);
+        }
     }
 
     /// <summary>
@@ -99,6 +136,7 @@ public class WindowsProtocolHandlerService : IProtocolHandlerService, IDisposabl
     public void Dispose()
     {
         StopListening();
+        GC.SuppressFinalize(this);
     }
 
     //private
@@ -108,7 +146,6 @@ public class WindowsProtocolHandlerService : IProtocolHandlerService, IDisposabl
         if (uri.Host is "oauth")
         {
             _token.TryInitToken(uri.Query);
-            _taskBarVm.RefreshAuthenticationState();
             return;
         }
         _message.Show($"Unknown protocol URL: {url}", "Protocol Handler", MessageStatus.Error);

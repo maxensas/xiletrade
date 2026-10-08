@@ -12,7 +12,6 @@ using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.Shared.Interop.Windows;
 using Xiletrade.Library.Views;
 
 namespace Xiletrade.Library.ViewModels.Config;

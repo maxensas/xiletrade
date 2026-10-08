@@ -40,19 +40,18 @@ public abstract class ServiceConfigurationTestsBase
         typeof(IStartView),
         // platform imp
         typeof(IMessageAdapterService),
-        typeof(IProtocolRegisterService),
+        typeof(IClipboardService),
+        typeof(IInputService),
+        typeof(IProtocolHandlerService),
         typeof(IPoeActionService),
+        typeof(IShortcutDispatcher),
         typeof(IHookService),
-        typeof(IClipboardAdapterService),
         // lib imp
         typeof(StartupArguments),
         typeof(XiletradeService),
         typeof(DataManagerService),
-        typeof(IShortcutDispatcher),
         typeof(PoeApiService),
         typeof(PoeNinjaService),
-        typeof(IInputService),
-        typeof(IClipboardService),
         typeof(LocalizationService),
         typeof(FeatureProvider),
         typeof(IUIService),
@@ -60,7 +59,6 @@ public abstract class ServiceConfigurationTestsBase
         typeof(IAutoUpdaterService),
         typeof(ITokenService),
         typeof(IUpdateDownloader),
-        typeof(IProtocolHandlerService),
         typeof(IFileLoggerService),
         typeof(INetService),
         typeof(IViewModelProvider),
@@ -121,7 +119,7 @@ public abstract class ServiceConfigurationTestsBase
         // Last resort: uninitialized instance (constructor not executed)
         return RuntimeHelpers.GetUninitializedObject(t);
     }
-
+    
     [Fact]
     public void _01_Container_Should_Build_And_Validate()
     {
@@ -140,7 +138,7 @@ public abstract class ServiceConfigurationTestsBase
         foreach (var type in RequiredServices)
             scope.ServiceProvider.GetService(type).Should().NotBeNull($"{type.Name} is required");
     }
-
+    
     [Fact]
     public void _03_All_Closed_Registrations_Should_Resolve()
     {
@@ -173,7 +171,7 @@ public abstract class ServiceConfigurationTestsBase
 
         failures.Should().BeEmpty();
     }
-
+    
     [Fact]
     public void _04_Container_ViewModels_Should_Be_Resolvable()
     {

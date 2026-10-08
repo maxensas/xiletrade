@@ -1,19 +1,18 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using System.Text;
 using System.Threading;
-using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Models.Application.Adapter;
 
 namespace Xiletrade.Library.Services.Windows;
 
 /// <summary>
-/// Service used to access Clipboard by using win32 APIs
+/// Provides access to the Windows clipboard through the Win32 API.
 /// </summary>
 [SupportedOSPlatform("windows")]
-public sealed partial class WindowsClipboardAdapterService : IClipboardAdapterService
+public sealed partial class WindowsClipboardAdapter : IClipboardAdapter
 {
     private static readonly Lock _clipboardLock = new();
 
@@ -56,13 +55,6 @@ public sealed partial class WindowsClipboardAdapterService : IClipboardAdapterSe
 
     [LibraryImport("kernel32.dll", SetLastError = true)]
     private static partial nint GlobalFree(nint hMem);
-
-    public WindowsClipboardAdapterService(ILogger<WindowsClipboardAdapterService> logger)
-    {
-#if DEBUG
-        logger.LogInformation("Service launched");
-#endif
-    }
 
     public bool ContainsTextData()
     {

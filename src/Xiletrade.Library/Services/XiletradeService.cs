@@ -15,8 +15,7 @@ public sealed class XiletradeService
         IDataUpdaterService dataUpdater, IViewManager view, 
         IMessageAdapterService message, IAutoUpdaterService updater,
         // Instantiate singletons : 
-        IMainView main, ITaskbar taskbar,
-        IProtocolHandlerService handler, IProtocolRegisterService reg, IInputService input)
+        IInputService input, IProtocolHandlerService protocol, IMainView main, ITaskbar taskbar)
     {
         _ = StartAsync(logger, dm, dataUpdater, view, message, updater);
     }
@@ -27,8 +26,8 @@ public sealed class XiletradeService
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     private static async Task StartAsync(ILogger<XiletradeService> logger, DataManagerService dm,
-        IDataUpdaterService dataUpdater, IViewManager view,
-        IMessageAdapterService message, IAutoUpdaterService updater)
+        IDataUpdaterService dataUpdater, IViewManager view, 
+        IMessageAdapterService message, IAutoUpdaterService appUpdater)
     {
         try
         {
@@ -46,7 +45,7 @@ public sealed class XiletradeService
             }
             if (options.CheckUpdates)
             {
-                _ = updater.CheckForUpdateAsync();
+                _ = appUpdater.CheckForUpdateAsync();
             }
 
             Shared.Common.CollectGarbage();
