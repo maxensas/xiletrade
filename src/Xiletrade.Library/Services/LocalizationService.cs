@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.Logging;
 using System.Globalization;
 using System.Resources;
 using Xiletrade.Library.Shared;
@@ -9,10 +10,20 @@ namespace Xiletrade.Library.Services;
 /// Provides access to localized resources and manages the current UI culture.
 /// </summary>
 /// <param name="dm"></param>
-public partial class LocalizationService(DataManagerService dm) : ObservableObject
+public partial class LocalizationService : ObservableObject
 {
-    private readonly DataManagerService _dm = dm;
-    private readonly ResourceManager _rm = Resources.Resources.ResourceManager;
+    private readonly DataManagerService _dm;
+    private readonly ResourceManager _rm;
+
+    public LocalizationService(ILogger<LocalizationService> logger, DataManagerService dm)
+    {
+        _dm = dm;
+        _rm = Resources.Resources.ResourceManager;
+
+#if DEBUG
+        logger?.LogInformation("Service launched");
+#endif
+    }
 
     [ObservableProperty]
     private CultureInfo currentCulture = CultureInfo.CurrentUICulture;

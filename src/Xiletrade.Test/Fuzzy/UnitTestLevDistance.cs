@@ -152,10 +152,11 @@ public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
     [MemberData(nameof(XiletradeTestCases))]
     public void _02_Fastenshtein_Distance(string culture, string source, string expected)
     {
+        var idxCulture = GetCultureIndex(culture);
         int levenshteinDistance = Fastenshtein.Levenshtein.Distance(source, expected);
         DisplayDistance(levenshteinDistance, source, expected);
 
-        Assert.True(true);
+        Assert.True(idxCulture >= 0);
     }
 
     [Theory]
@@ -163,10 +164,11 @@ public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
     [MemberData(nameof(XiletradeTestCases))]
     public void _02_Raffinert_Levenshtein_Distance(string culture, string source, string expected)
     {
+        var idxCulture = GetCultureIndex(culture);
         int levenshteinDistance = Raffinert.FuzzySharp.Levenshtein.Distance(source, expected);
         DisplayDistance(levenshteinDistance, source, expected);
 
-        Assert.True(true);
+        Assert.True(idxCulture >= 0);
     }
     #endregion
 

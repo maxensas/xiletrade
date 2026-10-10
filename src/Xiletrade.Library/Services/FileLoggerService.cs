@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.IO;
 using System.Threading;
 using Xiletrade.Library.Services.Interface;
@@ -10,8 +11,11 @@ public class FileLoggerService : IFileLoggerService
     private readonly string _filePath = Path.GetFullPath("Xiletrade.log");
     private readonly SemaphoreSlim _semaphore = new(1, 1);
 
-    public FileLoggerService()
+    public FileLoggerService(ILogger<FileLoggerService> logger)
     {
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
     }
 
     public void Log(string message)

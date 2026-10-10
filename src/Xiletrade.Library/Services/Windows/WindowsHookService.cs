@@ -15,9 +15,7 @@ public sealed class WindowsHookService : IHookService, IDisposable
 {
     public nint Hwnd { get; private set; }
 
-    private const string WindowClassName = "SpongeWindowClass";
-
-    private readonly string _className = $"{WindowClassName}_{Guid.NewGuid():N}";
+    private readonly string _className = $"SpongeWindowClass_{Guid.NewGuid():N}";
 
     // Kept in a field so the GC never collects the delegate while Windows holds its function pointer.
     private readonly Native.WndProcDelegate _wndProcDelegate;
@@ -50,7 +48,7 @@ public sealed class WindowsHookService : IHookService, IDisposable
             Marshal.FreeHGlobal(classNamePtr);
         }
 
-        Hwnd = Native.CreateWindowEx(0, WindowClassName, "", 0, 0, 0, 0, 0,
+        Hwnd = Native.CreateWindowEx(0, _className, "", 0, 0, 0, 0, 0,
             nint.Zero, nint.Zero, nint.Zero, nint.Zero);
 
         //Native.AddClipboardFormatListener(Hwnd);
@@ -72,15 +70,15 @@ public sealed class WindowsHookService : IHookService, IDisposable
         return Native.DefWindowProc(hWnd, msg, wParam, lParam);
     }
 
-    ~WindowsHookService() => Dispose(false);
+    ~WindowsHookService() => DisposeHook();
 
     public void Dispose()
     {
-        Dispose(true);
+        DisposeHook();
         GC.SuppressFinalize(this);
     }
 
-    private void Dispose(bool disposing)
+    private void DisposeHook()
     {
         if (_disposed) return;
         _disposed = true;

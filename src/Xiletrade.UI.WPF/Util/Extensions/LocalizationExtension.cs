@@ -8,27 +8,22 @@ using Xiletrade.Library.Services;
 
 namespace Xiletrade.UI.WPF.Util.Extensions;
 
-public class LocalizationExtension : MarkupExtension
+public class LocalizationExtension(string key) : MarkupExtension
 {
-    private static LocalizationService _designLocalization;
+    private static readonly LocalizationService _designLocalization;
 
-    public string Key { get; }
+    public string Key { get; } = key ?? throw new ArgumentNullException(nameof(key));
 
-    static LocalizationExtension()
+    static LocalizationExtension() // fix for XAML designer
     {
         var isInDesignMode = DesignerProperties.GetIsInDesignMode(new DependencyObject());
         if (isInDesignMode)
         {
-            _designLocalization = new(null);
+            _designLocalization = new(null, null); 
         }
     }
 
-    public LocalizationExtension(string key)
-    {
-        Key = key ?? throw new ArgumentNullException(nameof(key));
-    }
-
-    public override object ProvideValue(IServiceProvider serviceProvider)
+    public override object ProvideValue(IServiceProvider serviceProvider) // do not use this provider
     {
         var source = _designLocalization ?? App.Services.GetRequiredService<LocalizationService>();
 

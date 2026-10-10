@@ -1,4 +1,5 @@
-﻿using SharpCompress.Archives.SevenZip;
+﻿using Microsoft.Extensions.Logging;
+using SharpCompress.Archives.SevenZip;
 using SharpCompress.Common;
 using SharpCompress.Readers;
 using System;
@@ -23,7 +24,7 @@ internal class UpdateDownloader : IUpdateDownloader
     public string InstallationPath { get; } = string.Empty;
     public List<string> ListUpdaterFiles { get; } = new() { "Update.exe"/*, "av_libglesv2.dll", "libHarfBuzzSharp.dll", "libSkiaSharp.dll"*/ };
 
-    public UpdateDownloader(INetService net)
+    public UpdateDownloader(ILogger<UpdateDownloader> logger, INetService net)
     {
         _httpClient = net.GetClient(Client.GitHub);
         //var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -31,6 +32,10 @@ internal class UpdateDownloader : IUpdateDownloader
         // Application folder should be used in archive : 'Xiletrade' atm
         var currentDirectory = new DirectoryInfo(Environment.CurrentDirectory);
         if (currentDirectory.Parent is not null) InstallationPath = currentDirectory.Parent.FullName;
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
     }
 
     public async Task<string> DownloadAndExtractUpdateAsync(GitHubRelease release, DownloadStatusViewModel status)

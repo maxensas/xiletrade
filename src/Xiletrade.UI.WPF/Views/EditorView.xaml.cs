@@ -17,7 +17,7 @@ public partial class EditorView : ViewBase, IEditorView
         Closed += OnClosed;
     }
 
-    private void OnClosed(object? sender, EventArgs e)
+    private void OnClosed(object sender, EventArgs e)
     {
         Closed -= OnClosed;
         Content = null;

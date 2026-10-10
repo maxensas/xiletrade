@@ -22,7 +22,7 @@ public partial class StartView : ViewBase, IStartView
         this.DragMove();
     }
 
-    private void OnClosed(object? sender, EventArgs e)
+    private void OnClosed(object sender, EventArgs e)
     {
         MouseLeftButtonDown -= Window_DragWindow;
         Closed -= OnClosed;

@@ -1,33 +1,23 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Moq;
-using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Test.Common;
 
 namespace Xiletrade.Test.Auth;
 
-public class TokenServiceTests
+public class TokenServiceTests : LibServiceConfiguration
 {
-    //private readonly IMessageAdapterService _message;
     private readonly ITokenService _token;
-    //private readonly DataManagerService _dm;
 
     public TokenServiceTests()
     {
-        // Simuler IMessageAdapterService (mock requis si erreur dans le service)
-        var messageAdapterMock = new Mock<IMessageAdapterService>();
-        var services = new ServiceCollection();
-        services.AddSingleton(messageAdapterMock.Object);
-        services.AddSingleton<DataManagerService>();
-        services.AddSingleton<ITokenService, TokenService>();
-        var sp = services.BuildServiceProvider();
+        using var provider = BuildProvider();
+        using var scope = provider.CreateScope();
 
-        //_message = sp.GetRequiredService<IMessageAdapterService>();
-        //_dm = sp.GetRequiredService<DataManagerService>();
-        _token = sp.GetRequiredService<ITokenService>();
+        _token = provider.GetRequiredService<ITokenService>();
     }
 
     [Fact]
-    public void TryInitToken_WithValidToken_LoadReturnsSameToken()
+    public void _01_Init_Token_With_Valid_Query_Returns_AccessToken()
     {
         // Arrange
         var expireDays = 90;
@@ -35,19 +25,17 @@ public class TokenServiceTests
 
         // Act
         var success = _token.TryInitToken(query);
+        var token = _token.CacheToken;
 
         // Assert
         Assert.True(success);
-
-        var token = _token.CacheToken;
-
         Assert.NotNull(token);
         Assert.Equal("test-token-123", token.AccessToken);
         Assert.False(token.IsExpired());
     }
 
     [Fact]
-    public void TryInitToken_WithInvalidQuery_ReturnsFalse()
+    public void _02_Init_Token_With_Bad_Query_Returns_Null_Token()
     {
         // Arrange
         var query = "foo=bar";
