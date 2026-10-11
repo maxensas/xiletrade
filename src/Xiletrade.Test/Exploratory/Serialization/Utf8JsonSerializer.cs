@@ -2,7 +2,7 @@
 using Utf8Json;
 using Utf8Json.Resolvers;
 
-namespace Xiletrade.Test.Serialization;
+namespace Xiletrade.Test.Exploratory.Serialization;
 
 /// <summary>
 /// Deprecated (old xiletrade serializer)

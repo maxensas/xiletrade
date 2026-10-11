@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Xiletrade.Library.Models.Poe.Contract;
 
-namespace Xiletrade.Test.Serialization.Comparer;
+namespace Xiletrade.Test.Exploratory.Serialization.Comparer;
 
 public class FilterDataComparer : IEqualityComparer<FilterData>
 {

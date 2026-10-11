@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 
-namespace Xiletrade.Test.Serialization.Comparer;
+namespace Xiletrade.Test.Exploratory.Serialization.Comparer;
 
 public class BaseDataComparer : IEqualityComparer<BaseData>
 {

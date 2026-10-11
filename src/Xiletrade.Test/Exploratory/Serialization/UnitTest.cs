@@ -1,10 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System.Runtime.Intrinsics.Arm;
 using Xiletrade.Library.Models.Application.Serialization;
 using Xiletrade.Library.Services;
-using Xiletrade.Test.Common;
+using Xiletrade.Test.Configuration;
 
-namespace Xiletrade.Test.Serialization;
+namespace Xiletrade.Test.Exploratory.Serialization;
 
 public class UnitTest<T> : LibServiceConfiguration where T : class
 {

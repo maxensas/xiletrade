@@ -16,7 +16,7 @@ using Xiletrade.Library.ViewModels.Start;
 using Xiletrade.Library.ViewModels.TaskBar;
 using Xiletrade.Library.Views;
 
-namespace Xiletrade.Test.Common;
+namespace Xiletrade.Test.Configuration;
 
 public abstract class ServiceConfigurationBase
 {
@@ -95,7 +95,7 @@ public abstract class ServiceConfigurationBase
         typeof(ViewModelBase).Assembly.GetTypes()
         .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("ViewModel"))
         .Where(t => t.GetCustomAttribute<ViewModelCreationAttribute>()?.Mode == mode
-            || (mode == ViewModelCreation.Manual && t.GetCustomAttribute<ViewModelCreationAttribute>() is null));
+            || mode == ViewModelCreation.Manual && t.GetCustomAttribute<ViewModelCreationAttribute>() is null);
 
     protected static object CreateRuntimeArgument(ParameterInfo p)
     {

@@ -1,4 +1,4 @@
-﻿namespace Xiletrade.Test.Fuzzy;
+﻿namespace Xiletrade.Test.Exploratory.ParsingStrategy;
 
 public class UnitTestFuzzScore : UnitTest
 {
@@ -12,7 +12,7 @@ public class UnitTestFuzzScore : UnitTest
         _output = output;
     }
 
-    [Fact]
+    [Fact(Explicit = true)]
     [Trait("Type", "Exploratory")]
     public void _01_ParserRules_Original_Fuzz_WeightedRatio()
     {
@@ -68,7 +68,7 @@ public class UnitTestFuzzScore : UnitTest
         Assert.True(test);
     }
 
-    [Fact]
+    [Fact(Explicit = true)]
     [Trait("Type", "Exploratory")]
     public void _02_ParserRules_Raffinert_Fuzz_WeightedRatio()
     {

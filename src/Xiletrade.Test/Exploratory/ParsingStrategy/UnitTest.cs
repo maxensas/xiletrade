@@ -2,7 +2,7 @@
 using Xiletrade.Library.Models.Application.Serialization;
 using Xiletrade.Library.Models.Poe.Contract;
 
-namespace Xiletrade.Test.Fuzzy;
+namespace Xiletrade.Test.Exploratory.ParsingStrategy;
 
 public class UnitTest
 {

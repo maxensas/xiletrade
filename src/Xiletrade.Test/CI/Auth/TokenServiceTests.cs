@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Test.Common;
+using Xiletrade.Test.Configuration;
 
-namespace Xiletrade.Test.Auth;
+namespace Xiletrade.Test.CI.Auth;
 
 public class TokenServiceTests : LibServiceConfiguration
 {

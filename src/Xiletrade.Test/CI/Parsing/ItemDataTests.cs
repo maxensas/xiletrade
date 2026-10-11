@@ -2,9 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
-using Xiletrade.Test.Common;
+using Xiletrade.Test.Configuration;
 
-namespace Xiletrade.Test.ItemDataParsing;
+namespace Xiletrade.Test.CI.Parsing;
 
 public class ItemDataTests : LibServiceConfiguration
 {
@@ -19,11 +19,15 @@ public class ItemDataTests : LibServiceConfiguration
         using var provider = BuildProvider();
         using var scope = provider.CreateScope();
 
-        _dm = scope.ServiceProvider.GetRequiredService<DataManagerService>();
+        var sp = scope.ServiceProvider;
+        _dm = sp.GetRequiredService<DataManagerService>();
+        sp.GetRequiredService<LocalizationService>().RefreshCurrentCulture(culture: 0);
+
+        // TO UPDATE : a dm by game
     }
 
     [Fact]
-    public void ItemData_PoE1()
+    public void _01_Parsing_PoE1_ItemData()
     {
         // Arrange
         var infoDesc = new InfoDescription(_infoDescPoe1);
@@ -40,7 +44,7 @@ public class ItemDataTests : LibServiceConfiguration
         }
         catch (Exception ex)
         {
-            failure = ($"{Environment.NewLine}{ex.GetBaseException()}");
+            failure = $"{Environment.NewLine}{ex.GetBaseException()}";
         }
 
         // Assert
@@ -49,7 +53,7 @@ public class ItemDataTests : LibServiceConfiguration
     }
 
     [Fact]
-    public void ItemData_PoE2()
+    public void _02_Parsing_PoE2_ItemData()
     {
         // Arrange
         var infoDesc = new InfoDescription(_infoDescPoe2);
@@ -66,7 +70,7 @@ public class ItemDataTests : LibServiceConfiguration
         }
         catch (Exception ex)
         {
-            failure = ($"{Environment.NewLine}{ex.GetBaseException()}");
+            failure = $"{Environment.NewLine}{ex.GetBaseException()}";
         }
 
         // Assert

@@ -1,6 +1,6 @@
 ﻿using Xiletrade.Library.Models.Application.Configuration.DTO;
 
-namespace Xiletrade.Test.Serialization;
+namespace Xiletrade.Test.Exploratory.Serialization;
 
 /// <summary>
 /// Unit test used to show incorrect Serialization made by System.Text.Json (.NET8) compared to Utf8Json.
@@ -15,7 +15,8 @@ public class UnitTestGems : UnitTest<GemData>
 
     }
 
-    [Fact]
+    [Fact(Explicit = true)]
+    [Trait("Type", "Exploratory")]
     public void _00_EN_SerializeWithNET()
     {
         var net = NETSerializer.Serialize<GemData>(Serializable.GetValueOrDefault(Culture[0]));
@@ -23,66 +24,80 @@ public class UnitTestGems : UnitTest<GemData>
         Assert.Equal(Jsons.GetValueOrDefault(Culture[0]), net);
     }
 
-    [Fact]
+    [Fact(Explicit = true)]
+    [Trait("Type", "Exploratory")]
     public void _01_KR_SerializeWithNET()
     {
         var net = NETSerializer.Serialize<GemData>(Serializable.GetValueOrDefault(Culture[1]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[1]), net);
     }
 
-    [Fact]
+    [Fact(Explicit = true)]
+    [Trait("Type", "Exploratory")]
     public void _02_FR_SerializeWithNET()
     {
         var net = NETSerializer.Serialize<GemData>(Serializable.GetValueOrDefault(Culture[2]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[2]), net);
     }
 
-    [Fact]
+    [Fact(Explicit = true)]
+    [Trait("Type", "Exploratory")]
     public void _03_ES_SerializeWithNET()
     {
         var net = NETSerializer.Serialize<GemData>(Serializable.GetValueOrDefault(Culture[3]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[3]), net);
     }
 
-    [Fact]
+    [Fact(Explicit = true)]
+    [Trait("Type", "Exploratory")]
     public void _04_DE_SerializeWithNET()
     {
         var net = NETSerializer.Serialize<GemData>(Serializable.GetValueOrDefault(Culture[4]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[4]), net);
     }
 
-    [Fact]
+    [Fact(Explicit = true)]
+    [Trait("Type", "Exploratory")]
     public void _05_BR_SerializeWithNET()
     {
         var net = NETSerializer.Serialize<GemData>(Serializable.GetValueOrDefault(Culture[5]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[5]), net);
     }
 
-    [Fact]
+    [Fact(Explicit = true)]
+    [Trait("Type", "Exploratory")]
     public void _06_RU_SerializeWithNET()
     {
         var net = NETSerializer.Serialize<GemData>(Serializable.GetValueOrDefault(Culture[6]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[6]), net);
     }
-    [Fact]
+
+    [Fact(Explicit = true)]
+    [Trait("Type", "Exploratory")]
     public void _07_TH_SerializeWithNET()
     {
         var net = NETSerializer.Serialize<GemData>(Serializable.GetValueOrDefault(Culture[7]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[7]), net);
     }
-    [Fact]
+
+    [Fact(Explicit = true)]
+    [Trait("Type", "Exploratory")]
     public void _08_TW_SerializeWithNET()
     {
         var net = NETSerializer.Serialize<GemData>(Serializable.GetValueOrDefault(Culture[8]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[8]), net);
     }
-    [Fact]
+
+    [Fact(Explicit = true)]
+    [Trait("Type", "Exploratory")]
     public void _09_CN_SerializeWithNET()
     {
         var net = NETSerializer.Serialize<GemData>(Serializable.GetValueOrDefault(Culture[9]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[9]), net);
     }
-    [Fact]
+
+    [Fact(Explicit = true)]
+    [Trait("Type", "Exploratory")]
     public void _10_JP_SerializeWithNET()
     {
         var net = NETSerializer.Serialize<GemData>(Serializable.GetValueOrDefault(Culture[10]));

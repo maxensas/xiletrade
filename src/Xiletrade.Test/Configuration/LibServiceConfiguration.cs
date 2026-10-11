@@ -5,7 +5,7 @@ using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Views;
 
-namespace Xiletrade.Test.Common;
+namespace Xiletrade.Test.Configuration;
 
 public class LibServiceConfiguration : ServiceConfigurationBase
 {

@@ -4,9 +4,10 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Moq;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Views;
+using Xiletrade.Test.Configuration;
 using Xiletrade.UI.WPF.Services;
 
-namespace Xiletrade.Test.Common;
+namespace Xiletrade.Test.CI.Service;
 
 public class WpfServiceConfigurationTests : ServiceConfigurationBase
 {

@@ -2,8 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Xiletrade.Library.ViewModels;
+using Xiletrade.Test.Configuration;
 
-namespace Xiletrade.Test.Common;
+namespace Xiletrade.Test.CI.Service;
 
 public class LibServiceConfigurationTests : LibServiceConfiguration
 {

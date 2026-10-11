@@ -1,4 +1,4 @@
-﻿namespace Xiletrade.Test.Fuzzy;
+﻿namespace Xiletrade.Test.Exploratory.ParsingStrategy;
 
 public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
 {
@@ -8,37 +8,37 @@ public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
     private const int LEVENSHTEIN_DISTANCE_DIVIDER = 4; // Actual xiletrade value is 8
 
     // TODO, add more use cases based on difference between GGG filters and IN-GAME item description mods (strings).
-    public static IEnumerable<object[]> XiletradeTestCases()
+    public static IEnumerable<string[]> XiletradeTestCases()
     {
-        yield return new object[]
+        yield return new string[]
         {
             "en-US",
             "Spark fires 3 additional Projectiles",
             "Spark fires an additional Projectile"
         };
 
-        yield return new object[]
+        yield return new string[]
         {
             "ko-KR",
             "전기불꽃이 투사체 3개 추가 발사",
             "전기불꽃이 투사체 1개 추가 발사"
         };
 
-        yield return new object[]
+        yield return new string[]
         {
             "fr-FR",
             "Étincelle tire 3 Projectiles supplémentaires",
             "Étincelle tire un Projectile supplémentaire"
         };
 
-        yield return new object[]
+        yield return new string[]
         {
             "es-ES",
             "Chispa dispara 3 Proyectiles adicionales",
             "Chispa dispara un Proyectil adicional"
         };
 
-        yield return new object[]
+        yield return new string[]
         {
             "de-DE",
             "'Funken' feuert 3 zusätzliche Projektile",
@@ -47,21 +47,21 @@ public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
 
         // Example that clearly show limits of 'closest' match with lev distance algo usage.
         // That's why manual parser rules are mandatory before using fuzz or lev distance.
-        yield return new object[]
+        yield return new string[]
         {
             "pt-BR",
             "Fagulha dispara 3 Projéteis adicionais",
             "Centelha atira um Projétil adicional"
         };
 
-        yield return new object[]
+        yield return new string[]
         {
             "ru-RU",
             "Искра выпускает дополнительных снарядов: 3",
             "Искра выпускает дополнительный снаряд"
         };
 
-        yield return new object[]
+        yield return new string[]
         {
             "th-TH",
             "ประกายสายฟ้า (Spark) ยิงโพรเจกไทล์ เพิ่มเติม 3 ลูก",
@@ -70,14 +70,14 @@ public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
 
         // Result : 法術發射 1 個額外投射物
         // Another concrete example that show limits of closest match.
-        yield return new object[]
+        yield return new string[]
         {
             "zh-TW",
             "電球發射 3 個額外投射物",
             "電球發射一個額外投射物"
         };
 
-        yield return new object[]
+        yield return new string[]
         {
             "ja-JP",
             "スパークは投射物を追加で3個放つ",
@@ -85,11 +85,11 @@ public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
         };
     }
 
-    public static IEnumerable<object[]> TestCultures()
+    public static IEnumerable<string[]> TestCultures()
     {
         foreach (var tc in XiletradeTestCases())
         {
-            yield return new object[] { tc[0] };
+            yield return new string[] { tc[0] };
         }
     }
 
@@ -103,7 +103,7 @@ public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
         return maxDistance;
     }
 
-    [Theory]
+    [Theory(Explicit = true)]
     [Trait("Type", "Exploratory")]
     [MemberData(nameof(TestCultures))]
     public void _00_Base_List_Count(string culture)
@@ -115,7 +115,7 @@ public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
     }
 
     #region Levenshtein.Distance
-    [Fact]
+    [Fact(Explicit = true)]
     [Trait("Type", "Exploratory")]
     public void _01_Fastenshtein_Distance_ParserRules()
     {
@@ -131,7 +131,7 @@ public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
         Assert.True(true);
     }
 
-    [Fact]
+    [Fact(Explicit = true)]
     [Trait("Type", "Exploratory")]
     public void _01_Raffinert_Levenshtein_Distance_ParserRules()
     {
@@ -147,7 +147,7 @@ public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
         Assert.True(true);
     }
 
-    [Theory]
+    [Theory(Explicit = true)]
     [Trait("Type", "Exploratory")]
     [MemberData(nameof(XiletradeTestCases))]
     public void _02_Fastenshtein_Distance(string culture, string source, string expected)
@@ -159,7 +159,7 @@ public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
         Assert.True(idxCulture >= 0);
     }
 
-    [Theory]
+    [Theory(Explicit = true)]
     [Trait("Type", "Exploratory")]
     [MemberData(nameof(XiletradeTestCases))]
     public void _02_Raffinert_Levenshtein_Distance(string culture, string source, string expected)
@@ -272,7 +272,7 @@ public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
         Assert.Equal(result, expected);
     }
     */
-    [Theory]
+    [Theory(Explicit = true)]
     [MemberData(nameof(XiletradeTestCases))]
     public void _05_Fastenshtein_DistanceFrom_Closest(string culture, string source, string expected)
     {
@@ -296,7 +296,7 @@ public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
         Assert.Equal(result, expected);
     }
 
-    [Theory]
+    [Theory(Explicit = true)]
     [MemberData(nameof(XiletradeTestCases))]
     public void _05_Raffinert_Levenshtein_DistanceFrom_Closest(string culture, string source, string expected)
     {
@@ -320,7 +320,7 @@ public class UnitTestLevDistance(ITestOutputHelper output) : UnitTest(output)
         Assert.Equal(result, expected);
     }
 
-    [Theory]
+    [Theory(Explicit = true)]
     [MemberData(nameof(XiletradeTestCases))]
     public void _06_Raffinert_Levenshtein_DistanceFrom_Closest_NoLinq(string culture, string source, string expected)
     {
