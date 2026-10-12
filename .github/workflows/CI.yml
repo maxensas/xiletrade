@@ -17,4 +17,5 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Test
+        working-directory: src
         run: dotnet test -c Release
