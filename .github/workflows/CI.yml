@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+  workflow_call:   # allows the release to reuse it
+
+jobs:
+  test:
+    runs-on: windows-latest
+
+    env:
+      TEST_PROJECT_PATH: src/Xiletrade.Test/Xiletrade.Test.csproj
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore "${{ env.TEST_PROJECT_PATH }}"
+
+      - name: Build
+        run: dotnet build "${{ env.TEST_PROJECT_PATH }}" -c Release --no-restore
+
+      - name: Run tests
+        run: >
+          dotnet test "${{ env.TEST_PROJECT_PATH }}"
+          -c Release --no-build
+          --logger "trx;LogFileName=test-results.trx"
+          --results-directory TestResults
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: TestResults/*.trx
