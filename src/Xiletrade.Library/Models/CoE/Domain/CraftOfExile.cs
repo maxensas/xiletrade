@@ -13,7 +13,7 @@ internal sealed class CraftOfExile
 
     internal CraftOfExile(string ClipboardText)
     {
-        StringBuilder url = new(Strings.UrlCraftOfExile);
+        StringBuilder url = new(Strings.Url.CraftOfExile);
         Link = url.Append(Uri.EscapeDataString(ClipboardText)).ToString();
     }
 }

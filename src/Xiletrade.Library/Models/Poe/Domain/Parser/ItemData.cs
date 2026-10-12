@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain.Extension;
+using Xiletrade.Library.Models.Poe.Domain.Parser.Flag;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -14,7 +14,7 @@ namespace Xiletrade.Library.Models.Poe.Domain.Parser;
 /// <summary>
 /// Representative model of a fully parsed PoE 1/2 item.
 /// </summary>
-internal sealed class ItemData
+public sealed class ItemData
 {
     // immutable, init with constructor
     private readonly DataManagerService _dm;
@@ -24,6 +24,7 @@ internal sealed class ItemData
 
     internal List<ModLine> ModList { get; }
     internal ItemFlag Flag { get; }
+    internal ItemRule Rule { get; }
     internal ItemState State { get; }
     internal ItemOption Options { get; }
     internal ItemDamage Damage { get; }
@@ -49,11 +50,11 @@ internal sealed class ItemData
     {
         get
         {
-            if (Flag.Unidentified)
+            if (Flag.Tag.Unidentified)
             {
                 return string.Empty;
             }
-            if (Flag.Chart && _dm.Items.FindEntryByText(Name) is var item && !string.IsNullOrEmpty(item?.Type))
+            if (Flag.Map.Chart && _dm.Items.FindEntryByText(Name) is var item && !string.IsNullOrEmpty(item?.Type))
             {
                 return item.Type;
             }
@@ -113,12 +114,13 @@ internal sealed class ItemData
 
         var header = new ItemHeader(infoDesc);
         Rarity = header.Rarity;
-        Flag = new ItemFlag(infoDesc, header);
-        (Type, TypeEn) = GetTypes(Flag, infoDesc, header.Type);
+        Flag = new(infoDesc, header);
+        Rule = new(Flag);
+        (Type, TypeEn) = GetTypes(Flag, Rule, infoDesc, header.Type);
         (Id, IdCurrency) = GetItemIds(Flag, Type);
 
         Options = new();
-        if (Flag.Parseable)
+        if (Rule.Parseable)
         {
             ModList = GetModList(Options, Flag, infoDesc);
         }
@@ -126,18 +128,18 @@ internal sealed class ItemData
         Name = GetName(Options, Flag, infoDesc, header.Name, IsPoe2);
         NameEn = Lang is Lang.English ? Name : GetEnglishdName(Flag, Name);
 
-        Stats = new(_dm, Flag, ModList, Lang, IsPoe2);
-        State = new(_dm, Flag, ModList, Type);
-        Damage = new(Flag, Stats, Options, Lang);
+        Stats = new(_dm, Flag, Rule, ModList, Lang, IsPoe2);
+        State = new(_dm, Flag, Rule, ModList, Type);
+        Damage = new(Flag, Rule, Stats, Options, Lang);
     }
 
     internal string GetDetails(InfoDescription infodesc)
     {
         string details;
-        if (Flag.Incubator || Flag.Gems || Flag.Pieces) // || is_essences
+        if (Flag.Incubator || Flag.Gem.IsGem || Flag.Pieces) // || is_essences
         {
-            int i = Flag.Gems ? 3 : 1;
-            details = infodesc.Item.Length > 2 ? (Flag.Gems ?
+            int i = Flag.Gem.IsGem ? 3 : 1;
+            details = infodesc.Item.Length > 2 ? (Flag.Gem.IsGem ?
                 infodesc.Item[i] : string.Empty) + infodesc.Item[i + 1] : string.Empty;
         }
         else
@@ -149,7 +151,7 @@ internal sealed class ItemData
             {
                 int v = infodesc.Item[i - 1].TrimStart().IndexOf("Apply: ", StringComparison.Ordinal);
                 details += v > -1 ? string.Empty + Strings.LF + Strings.LF + infodesc.Item[i - 1].TrimStart().Split(Strings.LF)[v == 0 ? 0 : 1].TrimEnd() : string.Empty;
-                if (Flag.SanctumResearch && infodesc.Item.Length >= 5)
+                if (Flag.Area.SanctumResearch && infodesc.Item.Length >= 5)
                 {
                     details += infodesc.Item[3] + infodesc.Item[4];
                 }
@@ -165,419 +167,10 @@ internal sealed class ItemData
         return details;
     }
 
-    internal Dictionary<StatPanel, MinMaxModel> GetMinMax()
-    {
-        var minMax = MinMaxModel.CreateDictionary();
-
-        if (!IsPoe2)
-        {
-            var intangibility = Options.Intangibility;
-            if (!string.IsNullOrEmpty(intangibility))
-            {
-                minMax[StatPanel.CommonIntangibility].Min = intangibility;
-            }
-            if (Flag.ItemSocketable || Flag.Jewellery)
-            {
-                minMax[StatPanel.CommonMemoryStrand].Min = Options.MemoryStrands;
-            }
-            if (Flag.Blueprints)
-            {
-                if (Options.HeistWings is var wings && wings.Length is 2)
-                {
-                    minMax[StatPanel.HeistRevealedWings].Selected = true;
-                    minMax[StatPanel.HeistRevealedWings].Min = wings[0];
-                    minMax[StatPanel.HeistTotalWings].Min = wings[1];
-                }
-                if (Options.HeistEscapeRoutes is var escape && escape.Length is 2)
-                {
-                    minMax[StatPanel.HeistRevealedEscapeRoutes].Selected = true;
-                    minMax[StatPanel.HeistRevealedEscapeRoutes].Min = escape[0];
-                    minMax[StatPanel.HeistTotalEscapeRoutes].Min = escape[1];
-                }
-                if (Options.HeistRewardRooms is var reward && reward.Length is 2)
-                {
-                    minMax[StatPanel.HeistRevealedRewardRooms].Selected = true;
-                    minMax[StatPanel.HeistRevealedRewardRooms].Min = reward[0];
-                    minMax[StatPanel.HeistTotalRewardRooms].Min = reward[1];
-                }
-            }
-            if (Flag.Blueprints || Flag.Contracts)
-            {
-                if (Options.HeistLockpicking is var lockpick && !string.IsNullOrEmpty(lockpick))
-                {
-                    minMax[StatPanel.HeistLockpicking].Selected = true;
-                    minMax[StatPanel.HeistLockpicking].Min = lockpick;
-                }
-                if (Options.HeistDemolition is var demolition && !string.IsNullOrEmpty(demolition))
-                {
-                    minMax[StatPanel.HeistDemolition].Selected = true;
-                    minMax[StatPanel.HeistDemolition].Min = demolition;
-                }
-                if (Options.HeistCounterThaumaturgy is var counter && !string.IsNullOrEmpty(counter))
-                {
-                    minMax[StatPanel.HeistCounterThaumaturgy].Selected = true;
-                    minMax[StatPanel.HeistCounterThaumaturgy].Min = counter;
-                }
-                if (Options.HeistTrapDisarmament is var trap && !string.IsNullOrEmpty(trap))
-                {
-                    minMax[StatPanel.HeistTrapDisarmament].Selected = true;
-                    minMax[StatPanel.HeistTrapDisarmament].Min = trap;
-                }
-                if (Options.HeistAgility is var agility && !string.IsNullOrEmpty(agility))
-                {
-                    minMax[StatPanel.HeistAgility].Selected = true;
-                    minMax[StatPanel.HeistAgility].Min = agility;
-                }
-                if (Options.HeistEngineering is var engineering && !string.IsNullOrEmpty(engineering))
-                {
-                    minMax[StatPanel.HeistEngineering].Selected = true;
-                    minMax[StatPanel.HeistEngineering].Min = engineering;
-                }
-                if (Options.HeistBruteForce is var bruteForce && !string.IsNullOrEmpty(bruteForce))
-                {
-                    minMax[StatPanel.HeistBruteForce].Selected = true;
-                    minMax[StatPanel.HeistBruteForce].Min = bruteForce;
-                }
-                if (Options.HeistPerception is var perception && !string.IsNullOrEmpty(perception))
-                {
-                    minMax[StatPanel.HeistPerception].Selected = true;
-                    minMax[StatPanel.HeistPerception].Min = perception;
-                }
-                if (Options.HeistDeception is var deception && !string.IsNullOrEmpty(deception))
-                {
-                    minMax[StatPanel.HeistDeception].Selected = true;
-                    minMax[StatPanel.HeistDeception].Min = deception;
-                }
-            }
-        }
-
-        if (Flag.SanctumResearch)
-        {
-            if (Options.Resolve is var resolve && resolve.Length is 2)
-            {
-                minMax[StatPanel.SanctumResolve].Min = resolve[0];
-                minMax[StatPanel.SanctumMaxResolve].Max = resolve[1];
-            }
-            minMax[StatPanel.SanctumInspiration].Min = Options.Inspiration;
-            minMax[StatPanel.SanctumAureus].Min = Options.Aureus;
-        }
-
-        var preferTier = _dm.Config.Options.AutoSelectMinTierValue && !Flag.Mirrored && !Flag.Corrupted;
-        if (!Flag.Map && !Flag.Flask && Stats.Resistance)
-        {
-            var res = minMax[StatPanel.TotalElemResistance];
-            res.Min = Stats.GetResistance(preferTier);
-            if (_dm.Config.Options.AutoSelectRes
-                && (res.Min.ToDoubleDefault() >= 36 || Flag.Jewel))
-            {
-                res.Selected = true;
-            }
-        }
-        if (Stats.Life)
-        {
-            var life = minMax[StatPanel.TotalLife];
-            life.Min = Stats.GetLife(preferTier);
-            if (_dm.Config.Options.AutoSelectLife
-                && (life.Min.ToDoubleDefault() >= 40 || Flag.Jewel))
-            {
-                life.Selected = true;
-            }
-        }
-        if (Stats.EnergyShield)
-        {
-            var globalEs = minMax[StatPanel.TotalGlobalEs];
-            globalEs.Min = !Flag.ArmourPiece ? Stats.GetEnergyShield(preferTier) : string.Empty;
-            if (!Flag.ArmourPiece && (_dm.Config.Options.AutoSelectGlobalEs
-                && (globalEs.Min.ToDoubleDefault() >= 38 || Flag.Jewel)))
-            {
-                globalEs.Selected = true;
-            }
-        }
-        if (Stats.Attribute)
-        {
-            var attribute = minMax[StatPanel.TotalAttribute];
-            attribute.Min = Stats.GetAttribute(preferTier);
-            if (_dm.Config.Options.AutoSelectAttr && attribute.Min.ToDoubleDefault() >= 20)
-            {
-                attribute.Selected = true;
-            }
-        }
-
-        if (Flag.ItemSocketable)
-        {
-            var socket = minMax[StatPanel.CommonSocket];
-            if (socket.Min is "6" && State.ImmutableSockets)
-            {
-                socket.Selected = true;
-            }
-            var link = minMax[StatPanel.CommonLink];
-            if (link.Min is "6")
-            {
-                link.Selected = true;
-            }
-        }
-
-        var level = minMax[StatPanel.CommonItemLevel];
-
-        if (Flag.UncutGem || Flag.Wombgift || Flag.UltimatumPoe2 || Flag.TrialCoins)
-        {
-            level.Min = Options.ItemLevel;
-            level.Selected = true;
-        }
-
-        var qual = minMax[StatPanel.CommonQuality];
-        if (!Flag.Unique && (Flag.Flask || Flag.Tincture || (Flag.Normal && IsPoe2)))
-        {
-            var iLvl = Options.ItemLevel;
-            var baseLevelMin = IsPoe2 ? 82 : 84;
-            if (int.TryParse(iLvl, out int result) && result >= baseLevelMin)
-            {
-                qual.Selected = Options.Quality.Length > 0
-                    && int.Parse(Options.Quality, CultureInfo.InvariantCulture) > 14; // Glassblower is now valuable
-            }
-        }
-
-        if (!State.ExchangeCurrency)
-        {
-            level.Min = Flag.Gems ? Options.Level : Options.ItemLevel;
-            qual.Min = Options.Quality;
-
-            if (Flag.ArmourPiece || Flag.Weapon || Flag.Jewellery || Flag.Flask || Flag.Charm)
-            {
-                var lv = Options.Level;
-                var req = Options.Requires;
-                minMax[StatPanel.CommonRequiresLevel].Min = lv.Length > 0 ? lv : req;
-            }
-
-            if (Flag.MercenaryWarrant)
-            {
-                level.Min = Options.MercenaryLevel;
-                level.Selected = true;
-            }
-
-            if (Flag.Map)
-            {
-                level.Min = level.Max = Options.MapTier;
-                level.Text = Resources.Resources.Main094_lbTier;
-                level.Selected = true;
-
-                var mapQuant = minMax[StatPanel.MapQuantity];
-                mapQuant.Min = Options.ItemQuantity;
-                var mapRarity = minMax[StatPanel.MapRarity];
-                mapRarity.Min = Options.ItemRarity;
-                var mapPackSize = minMax[StatPanel.MapPackSize];
-                mapPackSize.Min = Options.MonsterPackSize;
-                var mapScarab = minMax[StatPanel.MapMoreScarab];
-                mapScarab.Min = Options.MoreScarabs;
-                var mapCurrency = minMax[StatPanel.MapMoreCurrency];
-                mapCurrency.Min = Options.MoreCurrency;
-                var mapDivCard = minMax[StatPanel.MapMoreDivCard];
-                mapDivCard.Min = Options.MoreDiv;
-                var mapMoreMap = minMax[StatPanel.MapMoreMap];
-                mapMoreMap.Min = Options.MoreMaps;
-
-                // new auto select behaviour
-                if (mapQuant.Min.ToDoubleDefault() >= 100
-                    && mapRarity.Min.ToDoubleDefault() >= 90
-                    && mapPackSize.Min.ToDoubleDefault() >= 40)
-                {
-                    mapQuant.Selected = mapRarity.Selected = mapPackSize.Selected = true;
-                    if (mapScarab.Min.ToDoubleDefault() >= 70)
-                    {
-                        mapScarab.Selected = true;
-                    }
-                    if (mapCurrency.Min.ToDoubleDefault() >= 70)
-                    {
-                        mapCurrency.Selected = true;
-                    }
-                    if (mapDivCard.Min.ToDoubleDefault() >= 70)
-                    {
-                        mapDivCard.Selected = true;
-                    }
-                    if (mapMoreMap.Min.ToDoubleDefault() >= 100)
-                    {
-                        mapMoreMap.Selected = true;
-                    }
-                }
-            }
-            if (Flag.Chart)
-            {
-                level.Text = Resources.Resources.General067_AreaLevel;
-                var area = Options.AreaLevel;
-                level.Min = area.Length > 0 ? area : Options.AreaLevelBis;
-                level.Selected = true;
-
-                var mapQuant = minMax[StatPanel.MapQuantity];
-                mapQuant.Min = Options.ItemQuantity;
-                var mapRarity = minMax[StatPanel.MapRarity];
-                mapRarity.Min = Options.ItemRarity;
-                var mapPackSize = minMax[StatPanel.MapPackSize];
-                mapPackSize.Min = Options.MonsterPackSize;
-                var goldFound = minMax[StatPanel.GoldFound];
-                goldFound.Min = Options.GoldFound;
-                var deadSulphur = minMax[StatPanel.DeadSulphur];
-                deadSulphur.Min = Options.DeadSulphur;
-
-                // auto select behaviour to be refined
-                if (mapQuant.Min.ToDoubleDefault() >= 100)
-                {
-                    mapQuant.Selected = true;
-                }
-                if (mapRarity.Min.ToDoubleDefault() >= 40)
-                {
-                    mapRarity.Selected = true;
-                }
-                if (mapPackSize.Min.ToDoubleDefault() >= 30)
-                {
-                    mapPackSize.Selected = true;
-                }
-                if (goldFound.Min.ToDoubleDefault() >= 100)
-                {
-                    goldFound.Selected = true;
-                }
-                if (deadSulphur.Min.ToDoubleDefault() >= 100)
-                {
-                    deadSulphur.Selected = true;
-                }
-            }
-            else if (Flag.Waystones)
-            {
-                level.Min = level.Max = Options.WaystoneTier;
-                level.Text = Resources.Resources.Main094_lbTier;
-
-                minMax[StatPanel.WaystoneRevives].Max = Options.RevivesAvailable;
-
-                var drop = Options.WaystoneDrop;
-                minMax[StatPanel.WaystoneDrop].Min = drop;
-                minMax[StatPanel.WaystoneDrop].Selected = drop.ToDoubleDefault() >= 100;
-
-                var itemRarity = Options.ItemRarity;
-                minMax[StatPanel.WaystoneRarity].Min = itemRarity;
-                minMax[StatPanel.WaystoneRarity].Selected = itemRarity.ToDoubleDefault() >= 20;
-
-                var packSize = Options.WaystonePackSize;
-                minMax[StatPanel.WaystonePackSize].Min = packSize;
-                minMax[StatPanel.WaystonePackSize].Selected = packSize.ToDoubleDefault() >= 15;
-
-                var monsterRarity = Options.MonsterRarity;
-                minMax[StatPanel.WaystoneMonsterRarity].Min = monsterRarity;
-                minMax[StatPanel.WaystoneMonsterRarity].Selected = monsterRarity.ToDoubleDefault() >= 20;
-
-                var effectiveness = Options.MonsterEffectiveness;
-                minMax[StatPanel.WaystoneMonsterEffectiveness].Min = effectiveness;
-                minMax[StatPanel.WaystoneMonsterEffectiveness].Selected = effectiveness.ToDoubleDefault() >= 20;
-            }
-            else if (Flag.Gems)
-            {
-                level.Selected = true;
-                minMax[StatPanel.CommonQuality].Selected = Options.Quality.Length > 0
-                    && int.Parse(Options.Quality, CultureInfo.InvariantCulture) > 12;
-            }
-            else if (Flag.ByType && (Flag.Normal || (Flag.Magic && IsPoe2)))
-            {
-                level.Selected = level.Min.Length > 0
-                    && int.Parse(level.Min, CultureInfo.InvariantCulture) >= (IsPoe2 ? 82 : 83);
-            }
-            else if (!Flag.Unique && Flag.Cluster)
-            {
-                level.Selected = level.Min.Length > 0
-                    && int.Parse(level.Min, CultureInfo.InvariantCulture) >= 78;
-                if (level.Min.Length > 0)
-                {
-                    int minVal = int.Parse(level.Min, CultureInfo.InvariantCulture);
-                    level.Min = minVal >= 84 ? "84" : minVal >= 78 ? "78" : level.Min;
-                }
-            }
-        }
-
-        if (Flag.Logbook || Flag.Corpses || Flag.SanctumResearch
-            || Flag.Chronicle || Flag.MirroredTablet
-            || Flag.TrialCoins || (Flag.Ultimatum && IsPoe2)
-            || (Flag.Flask || Flag.Tincture) && !Flag.Unique)
-        {
-            level.Selected = true;
-        }
-
-        if (Flag.Chronicle || Flag.Ultimatum || Flag.MirroredTablet
-            || Flag.SanctumResearch || Flag.TrialCoins || Flag.Logbook)
-        {
-            level.Text = Resources.Resources.General067_AreaLevel;
-            var area = Options.AreaLevel;
-            level.Min = area.Length > 0 ? area : Options.AreaLevelBis;
-        }
-
-        if (level.Text.Length is 0)
-        {
-            level.Text = Resources.Resources.Main065_tbiLevel;
-        }
-
-        if (Flag.ArmourPiece && !Flag.Unidentified)
-        {
-            var armour = Options.Armour;
-            var energy = Options.Energy;
-            var evasion = Options.Evasion;
-            var ward = Options.Ward;
-            var runicWard = Options.RunicWard;
-
-            if (armour.Length > 0)
-            {
-                var ar = minMax[StatPanel.DefenseArmour];
-                if (_dm.Config.Options.AutoSelectArEsEva) ar.Selected = true;
-                ar.Min = armour;
-            }
-            if (energy.Length > 0)
-            {
-                var es = minMax[StatPanel.DefenseEnergy];
-                if (_dm.Config.Options.AutoSelectArEsEva) es.Selected = true;
-                es.Min = energy;
-            }
-            if (evasion.Length > 0)
-            {
-                var eva = minMax[StatPanel.DefenseEvasion];
-                if (_dm.Config.Options.AutoSelectArEsEva) eva.Selected = true;
-                eva.Min = evasion;
-            }
-            if (ward.Length > 0) // poe1
-            {
-                var wrd = minMax[StatPanel.DefenseWard];
-                if (_dm.Config.Options.AutoSelectArEsEva) wrd.Selected = true;
-                wrd.Min = ward;
-            }
-            if (runicWard.Length > 0) // poe2
-            {
-                var wrd = minMax[StatPanel.DefenseRunicWard];
-                if (_dm.Config.Options.AutoSelectArEsEva) wrd.Selected = true;
-                wrd.Min = runicWard;
-            }
-        }
-
-        if (Flag.Weapon && !Flag.Unidentified)
-        {
-            if (_dm.Config.Options.AutoSelectDps && Damage.Total > 100)
-            {
-                minMax[StatPanel.DamageTotal].Selected = true;
-            }
-            if (Damage.TotalMin.Length > 0)
-            {
-                minMax[StatPanel.DamageTotal].Min = Damage.TotalMin;
-            }
-            if (Damage.PysicalMin.Length > 0)
-            {
-                minMax[StatPanel.DamagePhysical].Min = Damage.PysicalMin;
-            }
-            if (Damage.ElementalMin.Length > 0)
-            {
-                minMax[StatPanel.DamageElemental].Min = Damage.ElementalMin;
-            }
-        }
-
-        return minMax;
-    }
-
     //private
     private (string Id, string IdCurrency) GetItemIds(ItemFlag flag, ReadOnlySpan<char> type)
     {
-        if (flag.Currency || flag.Divcard || flag.MapFragment || flag.Breachstone || (flag.SupportGems && IsPoe2))
+        if (flag.Currency || flag.Divcard || flag.Map.Fragment || flag.Breachstone || (flag.Gem.Support && IsPoe2))
         {
             var (Entry, GroupId) = _dm.Currencies.FindEntryAndGroupIdByType(type, image: false);
             if (Entry is not null)
@@ -589,39 +182,39 @@ internal sealed class ItemData
             findBase.Id : string.Empty, string.Empty);
     }
 
-    private (string Type, string TypeEn) GetTypes(ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> inputType)
+    private (string Type, string TypeEn) GetTypes(ItemFlag flag, ItemRule rule, InfoDescription infoDesc, ReadOnlySpan<char> inputType)
     {
         var type = string.Empty;
         var typeEn = string.Empty;
-        if (flag.Unidentified || flag.Normal || flag.Synthesised || flag.MapBlight || flag.MapBlightRavaged)
+        if (flag.Tag.Unidentified || flag.Rarity.Normal || flag.Tag.Synthesised || flag.Map.Blight || flag.Map.BlightRavaged)
         {
             var rm = Resources.Resources.ResourceManager;
-            if (flag.Unidentified || flag.Normal)
+            if (flag.Tag.Unidentified || flag.Rarity.Normal)
             {
                 var higher = Resources.Resources.General030_Higher.Split('/');
                 var exceptional = Resources.Resources.General159_Exceptional.Split('/');
                 type = inputType.RemoveStringFromArrayDesc(higher).RemoveStringFromArrayDesc(exceptional);
                 typeEn = _dm.Bases.FindBaseByName(type)?.NameEn ?? typeEn;
             }
-            if (flag.Synthesised)
+            if (flag.Tag.Synthesised)
             {
                 var synth = rm.GetEnglish(nameof(Resources.Resources.General048_Synthesised)).Split('/');
                 type = inputType.RemoveStringFromArrayDesc(synth);
             }
-            if (flag.MapBlight)
+            if (flag.Map.Blight)
             {
                 var blight = rm.GetEnglish(nameof(Resources.Resources.General040_Blighted));
                 type = inputType.StartWith(blight)
                     ? inputType[blight.Length..].Trim().ToString() : inputType.Trim().ToString();
             }
-            if (flag.MapBlightRavaged)
+            if (flag.Map.BlightRavaged)
             {
                 var ravaged = rm.GetEnglish(nameof(Resources.Resources.General100_BlightRavaged));
                 type = inputType.StartWith(ravaged)
                     ? inputType[ravaged.Length..].Trim().ToString() : inputType.Trim().ToString();
             }
         }
-        if (!flag.Unidentified && !flag.Map && flag.Magic)
+        if (!flag.Tag.Unidentified && !flag.Map.IsMap && flag.Rarity.Magic)
         {
             string longestName = _dm.Bases.GetLongestMatchingName(inputType);
             if (!string.IsNullOrEmpty(longestName))
@@ -630,7 +223,7 @@ internal sealed class ItemData
                 typeEn = _dm.Bases.FindBaseByName(type)?.NameEn ?? typeEn;
             }
         }
-        if ((flag.Map || flag.Waystones) && !flag.Unidentified && flag.Magic)
+        if ((flag.Map.IsMap || flag.Waystones) && !flag.Tag.Unidentified && flag.Rarity.Magic)
         {
             var affixes = _dm.Mods.GetMatchingAffixesList(inputType);
             if (affixes.Count > 0)
@@ -647,12 +240,12 @@ internal sealed class ItemData
         
         if (string.IsNullOrEmpty(type))
         {
-            var checkVestigial = !IsPoe2 && (flag.Unique || (flag.Rare && flag.Corrupted));
+            var checkVestigial = !IsPoe2 && (flag.Rarity.Unique || (flag.Rarity.Rare && flag.Tag.Corrupted));
             type = !checkVestigial ? inputType.ToString()
                 : inputType.RemoveStringFromArrayDesc(Resources.Resources.General213_Vestigial.Split('/'));
         }
 
-        if (flag.CapturedBeast)
+        if (flag.Tag.CapturedBeast)
         {
             var monster = _dm.Monsters.FindMonsterByName(type, nospirit: true);
             if (!string.IsNullOrEmpty(monster?.Name))
@@ -666,9 +259,9 @@ internal sealed class ItemData
             typeEn = _dm.Bases.FindBaseByName(type)?.NameEn ?? typeEn;
         }
 
-        if (flag.ShowDetail || flag.Waystones)
+        if (rule.ShowDetail || flag.Waystones)
         {
-            if (flag.Currency || flag.Breachstone || flag.Divcard || flag.MapFragment || flag.Waystones)
+            if (flag.Currency || flag.Breachstone || flag.Divcard || flag.Map.Fragment || flag.Waystones)
             {
                 var currency = _dm.Currencies.FindEntryByType(type);
                 if (!string.IsNullOrEmpty(currency?.Id))
@@ -676,7 +269,7 @@ internal sealed class ItemData
                     typeEn = _dm.CurrenciesEn.FindEntryById(currency.Id)?.Text ?? typeEn;
                 }
             }
-            if (flag.VaalSkillGems)
+            if (flag.Tag.VaalSkillGems)
             {
                 var vaalName = GetVaalGemName(infoDesc);
                 if (!string.IsNullOrEmpty(vaalName))
@@ -685,7 +278,7 @@ internal sealed class ItemData
                     typeEn = _dm.Bases.FindBaseByName(type)?.NameEn ?? typeEn;
                 }
             }
-            if (flag.Transfigured && string.IsNullOrEmpty(type))
+            if (flag.Tag.Transfigured && string.IsNullOrEmpty(type))
             {
                 type = _dm.Gems.FindGemByNameEn(typeEn)?.Name ?? type;
             }
@@ -728,18 +321,18 @@ internal sealed class ItemData
 
     private string GetName(ItemOption options, ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> dataName, bool isPoe2)
     {
-        if (flag.CapturedBeast || (flag.Currency && !flag.ScryingOrb) || flag.Divcard 
-            || (flag.MapFragment && !flag.MercenaryWarrant)
-            || (flag.Gems && !(flag.Transfigured && flag.VaalSkillGems)))
+        if (flag.Tag.CapturedBeast || (flag.Currency && !flag.ScryingOrb) || flag.Divcard 
+            || (flag.Map.Fragment && !flag.MercenaryWarrant)
+            || (flag.Gem.IsGem && !(flag.Tag.Transfigured && flag.Tag.VaalSkillGems)))
             return string.Empty;
 
-        if (!isPoe2 && flag.Unique)
+        if (!isPoe2 && flag.Rarity.Unique)
         {
             return dataName.RemoveStringFromArrayDesc(Resources.Resources.General166_Foulborn.Split('/'));
         }
-        if (flag.Chart || flag.MercenaryWarrant || flag.ScryingOrb)
+        if (flag.Map.Chart || flag.MercenaryWarrant || flag.ScryingOrb)
         {
-            var variant = flag.Chart ? infoDesc.SecondHeader 
+            var variant = flag.Map.Chart ? infoDesc.SecondHeader 
                 : flag.ScryingOrb ? options.MapArea
                 : options.MercenaryBuild;
             if (!string.IsNullOrEmpty(variant))
@@ -752,12 +345,12 @@ internal sealed class ItemData
 
     private static bool FindContinuePoint(ItemFlag flag, ReadOnlySpan<char> data, bool BelowMaxMods)
     {
-        if (flag.Gems)
+        if (flag.Gem.IsGem)
         {
-            return !flag.Imbued;
+            return !flag.Tag.Imbued;
         }
 
-        var cond = (flag.ItemLevel || flag.AreaLevel) && BelowMaxMods;
+        var cond = (flag.Tag.ItemLevel || flag.Tag.AreaLevel) && BelowMaxMods;
         if (!cond || flag.Corpses || SkipBetweenParenthesis(data, flag))
         {
             return true;
@@ -854,7 +447,7 @@ internal sealed class ItemData
 
     private static bool SkipBetweenParenthesis(ReadOnlySpan<char> data, ItemFlag flag)
     {
-        if (flag.Ultimatum)
+        if (flag.Area.Ultimatum)
         {
             return data.StartsWith('(') || data.EndsWith(')');
         }
@@ -873,7 +466,7 @@ internal sealed class ItemData
         {
             var data = GetDataAndParseSanctumDelirium(options, flag, infoDesc, idx);
             var lSubMods = GetModsFromData(options, flag, data);
-            if ((flag.Flask || flag.Charm) && idx is 1)
+            if ((flag.Slot.Flask || flag.Slot.Charm) && idx is 1)
             {
                 continue;
             }
@@ -965,7 +558,7 @@ internal sealed class ItemData
             data = [.. data.Distinct()];
         }
 
-        if (flag.SanctumResearch && infoIndex == infoDesc.Item.Length - 1) // at the last loop
+        if (flag.Area.SanctumResearch && infoIndex == infoDesc.Item.Length - 1) // at the last loop
         {
             var sanctumMods = GetSanctumMods(options);
             if (sanctumMods.Length > 0)
@@ -985,7 +578,7 @@ internal sealed class ItemData
             return string.Empty;
         }
 
-        if (flag.Chart || flag.ScryingOrb)
+        if (flag.Map.Chart || flag.ScryingOrb)
         {
             var entry = _dm.Items.FindEntryByText(name);
             if (!string.IsNullOrEmpty(entry?.Type)) 
@@ -1008,7 +601,7 @@ internal sealed class ItemData
         }
 
         // Handle magic
-        if (!flag.Unidentified && flag.Magic)
+        if (!flag.Tag.Unidentified && flag.Rarity.Magic)
         {
             // TODO with dm.Mods & dm.Bases
         }

@@ -52,7 +52,7 @@ public static class Localization
     {
         if (Design.IsDesignMode && _designLocalization is null)
         {
-            _designLocalization = new(null);
+            _designLocalization = new(null, null);
         }
         var locService = _designLocalization ?? _serviceProvider.GetRequiredService<LocalizationService>();
 

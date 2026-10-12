@@ -1,23 +1,25 @@
-using Avalonia.Input;
+using System;
+using Xiletrade.Library.Views;
 
 namespace Xiletrade.UI.Avalonia.Views;
 
-public partial class StartView : ViewBase
+public partial class StartView : ViewBase, IStartView
 {
     public StartView()
     {
         InitializeComponent();
+        Closed += OnClosed;
     }
 
     public StartView(object vm) : this()
     {
         DataContext = vm;
-        PointerPressed += Window_PointerPressed;
     }
 
-    private void Window_PointerPressed(object sender, PointerPressedEventArgs e)
+    private void OnClosed(object sender, EventArgs e)
     {
-        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-            BeginMoveDrag(e);
+        Closed -= OnClosed;
+        Content = null;
+        DataContext = null;
     }
 }

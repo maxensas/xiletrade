@@ -2,7 +2,6 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Whisper;assembly=Xiletrade.Library"
         xmlns:view="clr-namespace:Xiletrade.UI.WPF.Views"
@@ -48,8 +47,8 @@
         <Grid>
             <!-- <Slider x:Name="slideVal" d:DataContext="{d:DesignInstance Type=t:WhisperViewModel}" Value="{Binding Path=GetAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="110,52,0,0" VerticalAlignment="Top" Width="80" IsSnapToTickEnabled="True" ValueChanged="SliderValueChanged"/>-->
             <TextBlock Text="{ext:Localization Whisper004_lblSt}" HorizontalAlignment="Left" Margin="100,0,0,41" VerticalAlignment="Bottom" Width="100" FontFamily="{StaticResource FontinSmallCaps}" FontSize="12" Foreground="#FFB2B0B0" TextAlignment="Center"/>
-            <Button Content="{ext:Localization Whisper005_btnSend}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="43,89,0,10"  Width="90" Height="27" FontWeight="Bold" Command="{Binding Commands.SendWhisperCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
-            <Button Content="{ext:Localization Whisper006_btnCancel}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="167,89,0,10" Width="90" Height="27" FontWeight="Bold" Command="{Binding Commands.CloseWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+            <Button Content="{ext:Localization Whisper005_btnSend}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="43,89,0,10"  Width="90" Height="27" FontWeight="Bold" Command="{Binding SendWhisperCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+            <Button Content="{ext:Localization Whisper006_btnCancel}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="167,89,0,10" Width="90" Height="27" FontWeight="Bold" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
             <!-- Click="CloseWindow"-->
             <TextBlock Text="{Binding Path=LabelAccount}" d:Text="{ext:Localization Whisper001_lblAccount}" HorizontalAlignment="Left" Margin="2,4,0,0" VerticalAlignment="Top" Width="292" FontSize="10" TextAlignment="Center"/>
             <TextBlock Text="{ext:Localization Whisper002_lblGet}" HorizontalAlignment="Left" Margin="-1,20,0,0" VerticalAlignment="Top" Width="130" FontSize="15" TextAlignment="Center" FontFamily="{StaticResource FontinSmallCaps}" />
@@ -74,13 +73,7 @@
                         <DataTemplate DataType="{x:Type t:WhisperOfferViewModel}">
                             <Grid>
                                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,11,0,0" Width="100" Height="30" Orientation="Vertical">
-                                    <Slider d:Value="5" d:Maximum="10" Value="{Binding Path=GetAmount}" Minimum="{Binding Path=MinimumValue}" Maximum="{Binding Path=SellerStock}" SmallChange="{Binding Path=SellerAmount}" LargeChange="{Binding Path=SellerAmount}" TickFrequency="{Binding Path=SellerAmount}" Visibility="{Binding Path=SliderVisible, Converter={StaticResource bool2VisibilityConverter}}" VerticalAlignment="center" Width="80" IsSnapToTickEnabled="True">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="ValueChanged">
-                                                <i:InvokeCommandAction Command="{Binding SlideValueChange}"/>
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </Slider>
+                                    <Slider d:Value="5" d:Maximum="10" Value="{Binding Path=GetAmount}" Minimum="{Binding Path=MinimumValue}" Maximum="{Binding Path=SellerStock}" SmallChange="{Binding Path=SellerAmount}" LargeChange="{Binding Path=SellerAmount}" TickFrequency="{Binding Path=SellerAmount}" Visibility="{Binding Path=SliderVisible, Converter={StaticResource bool2VisibilityConverter}}" VerticalAlignment="center" Width="80" IsSnapToTickEnabled="True"/>
                                     <TextBlock d:Text="1524" Text="{Binding Path=SellerStock}" Margin="0,0,0,0" HorizontalAlignment="Center" Width="100" FontFamily="{StaticResource FontinSmallCaps}" TextAlignment="Center" FontSize="12"/>
                                 </StackPanel>
 

@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ namespace Xiletrade.Library.ViewModels.Main.Form.Search;
 
 public partial class SuggestionSearchViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly CustomSearchViewModel _cVm;
 
     private readonly ConcurrentDictionary<string, Levenshtein> _levCache = new();
 
@@ -34,9 +33,9 @@ public partial class SuggestionSearchViewModel : ViewModelBase
     [ObservableProperty]
     private bool isDropdownOpen;
 
-    public SuggestionSearchViewModel(IServiceProvider serviceProvider, IEnumerable<(string, bool)> sourceList)
+    public SuggestionSearchViewModel(CustomSearchViewModel cVm, IEnumerable<(string, bool)> sourceList)
     {
-        _serviceProvider = serviceProvider;
+        _cVm = cVm;
         _sourceData = sourceList;
 
         PropertyChanged += async (_, e) =>
@@ -66,8 +65,7 @@ public partial class SuggestionSearchViewModel : ViewModelBase
 
         Suggestions.Clear();
 
-        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
-        vm.LaunchCustomSearch();
+        _cVm.LaunchCustomSearchAsync();
     }
 
     private async Task UpdateSuggestionsAsync()

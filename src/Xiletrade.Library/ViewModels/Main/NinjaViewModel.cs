@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
@@ -13,12 +12,14 @@ using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.ViewModels.Main;
 
-public sealed partial class NinjaViewModel : ViewModelBase
+[ViewModelCreation(ViewModelCreation.Container)]
+public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNinjaService ninja,
+    MainViewModel vm, DataManagerService dm) : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
-    private readonly MainViewModel _vm;
-    private readonly DataManagerService _dm;
-    private readonly PoeNinjaService _ninja;
+    private readonly ILogger<NinjaViewModel> _logger = logger;
+    private readonly MainViewModel _vm = vm;
+    private readonly DataManagerService _dm = dm;
+    private readonly PoeNinjaService _ninja = ninja;
 
     [ObservableProperty]
     private string price;
@@ -30,14 +31,6 @@ public sealed partial class NinjaViewModel : ViewModelBase
     private NinjaDetail detail;
 
     private NinjaInfoBase NinjaInfoBase { get; set; }
-
-    public NinjaViewModel(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-        _vm = _serviceProvider.GetRequiredService<MainViewModel>();
-        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        _ninja = _serviceProvider.GetRequiredService<PoeNinjaService>();
-    }
 
     /// <summary>
     /// Get the generated poeninja URL of the item.
@@ -53,10 +46,10 @@ public sealed partial class NinjaViewModel : ViewModelBase
     {
         try
         {
-            NinjaInfoBase = _vm.Item.IsPoe2 ? !_vm.Item.Flag.Unique ? 
-                new NinjaInfoExchangeTwo(_serviceProvider) : new NinjaInfoTwo(_serviceProvider) 
+            NinjaInfoBase = _vm.Item.IsPoe2 ? !_vm.Item.Flag.Rarity.Unique ? 
+                new NinjaInfoExchangeTwo(_dm, _ninja, _vm) : new NinjaInfoTwo(_dm, _ninja, _vm) 
                 : _vm.Item.State.ExchangeCurrency ? 
-                new NinjaInfoExchange(_serviceProvider) : new NinjaInfo(_serviceProvider);
+                new NinjaInfoExchange(_dm, _ninja, _vm) : new NinjaInfo(_dm, _ninja, _vm);
 
             if (NinjaInfoBase is null || !NinjaInfoBase.VerifiedLink)
                 return;
@@ -95,12 +88,10 @@ public sealed partial class NinjaViewModel : ViewModelBase
                 UpdateUniqueListIcons();
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-#if DEBUG
-            var logger = _serviceProvider.GetRequiredService<ILogger<NinjaViewModel>>();
-            logger.LogInformation("Exception raised : {Message}", ex.Message);
-#endif
+            if (_logger.IsEnabled(LogLevel.Debug))
+                _logger.LogDebug("Exception raised : {Message}", ex.Message);
         }
     }
 
@@ -121,7 +112,7 @@ public sealed partial class NinjaViewModel : ViewModelBase
         }
 
         var isCurrency = type is Strings.NinjaTypeOne.Currency or Strings.NinjaTypeOne.Fragment;
-        var api = isCurrency ? Strings.ApiNinjaExchangeOverview : Strings.ApiNinjaItem;
+        var api = isCurrency ? Strings.Api.NinjaExchangeOverview : Strings.Api.NinjaItem;
         var urlNinja = api + league + "&type=" + type;
 
         if (isCurrency)

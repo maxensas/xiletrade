@@ -1,12 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
-using Xiletrade.Library.Models.Poe.Contract;
-using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
@@ -20,10 +17,14 @@ using Xiletrade.Library.ViewModels.Main.Form.Search;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
-public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
+[ViewModelCreation(ViewModelCreation.Factory)]
+public sealed partial class FormViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly IViewManager _view;
+    private readonly IKeyboardAdapterService _keyboard;
+    private readonly IMessageAdapterService _message;
     private readonly DataManagerService _dm;
+    private readonly MainViewModel _vm;
 
     [ObservableProperty]
     private string itemName = string.Empty;
@@ -32,14 +33,13 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private string itemNameColor = string.Empty;
 
     [ObservableProperty]
-    private string itemBaseType = useBulk ? Resources.Resources.Main247_CustomSearch + " / "
-        + Resources.Resources.Main032_cbTotalExchange : string.Empty;
+    private string itemBaseType;
 
     [ObservableProperty]
-    private string itemBaseTypeColor = useBulk ? Strings.Color.Moccasin : string.Empty;
+    private string itemBaseTypeColor;
 
     [ObservableProperty]
-    private double baseTypeFontSize = useBulk ? 16 : 12; // FontSize cannot be equal to 0
+    private double baseTypeFontSize;
 
     [ObservableProperty]
     private string dps = string.Empty;
@@ -69,67 +69,67 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private AsyncObservableCollection<ModLineViewModel> modList;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> fractured = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> fractured = GetNewOptions();
 
     [ObservableProperty]
     private int fracturedIndex;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> split = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> split = GetNewOptions();
 
     [ObservableProperty]
     private int splitIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> mirrored = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> mirrored = GetNewOptions();
 
     [ObservableProperty]
     private int mirroredIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> identified = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> identified = GetNewOptions();
 
     [ObservableProperty]
     private int identifiedIndex;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> corruption = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> corruption = GetNewOptions();
 
     [ObservableProperty]
     private int corruptedIndex;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> doubleCorruption = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> doubleCorruption = GetNewOptions();
 
     [ObservableProperty]
     private int doubleCorruptedIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> crafted = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> crafted = GetNewOptions();
 
     [ObservableProperty]
     private int craftedIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> mutated = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> mutated = GetNewOptions();
 
     [ObservableProperty]
     private int mutatedIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> desecrated = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> desecrated = GetNewOptions();
 
     [ObservableProperty]
     private int desecratedIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> veiled = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> veiled = GetNewOptions();
 
     [ObservableProperty]
     private int veiledIndex = 0;
 
     [ObservableProperty]
-    private AsyncObservableCollection<string> sanctified = new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
+    private AsyncObservableCollection<string> sanctified = GetNewOptions();
 
     [ObservableProperty]
     private int sanctifiedIndex = 0;
@@ -165,10 +165,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
     private VisibilityViewModel visible;
 
     [ObservableProperty]
-    private BulkViewModel bulk;
-
-    [ObservableProperty]
-    private ShopViewModel shop;
+    private BulkItemExchangeViewModel itemExchange;
 
     [ObservableProperty]
     private CustomSearchViewModel customSearch;
@@ -230,34 +227,42 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         {
             return;
         }
-        _serviceProvider.GetRequiredService<INavigationService>().ClearKeyboardFocus();
-        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
-        vm.Result.InitData();
+        _view.ClearFocus();
+
+        _vm.Result.InitData();
         if (_dm.Config.Options.Gateway is not 8 and not 9)
         {
-            vm.TaskManager.NinjaTask = vm.Ninja.TryUpdateNinjaTask();
+            _vm.TaskManager.NinjaTask = _vm.Ninja.TryUpdateNinjaTask();
         }
-        vm.UpdateResultWithPoeApi(minimumStock: 0);
+        _vm.Result.UpdateAsync(minimumStock: 0);
     }
 
-    public FormViewModel(IServiceProvider serviceProvider, bool useCustomOrBulk) : this(useCustomOrBulk)
+    public FormViewModel(DataManagerService dm, MainViewModel vm,
+        IViewManager view, IKeyboardAdapterService keyboard,
+        IMessageAdapterService message, bool useCustomOrBulk)
     {
-        _serviceProvider = serviceProvider;
-        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        
-        bulk = new(_serviceProvider); // mandatory (auto select currency item on price check)
+        _dm = dm;
+        _vm = vm;
+        _view = view;
+        _keyboard = keyboard;
+        _message = message;
+
+        itemBaseType = useCustomOrBulk ? Resources.Resources.Main247_CustomSearch + " / "
+            + Resources.Resources.Main032_cbTotalExchange : string.Empty;
+        itemBaseTypeColor = useCustomOrBulk ? Strings.Color.Moccasin : string.Empty;
+        baseTypeFontSize = useCustomOrBulk ? 16 : 12; // FontSize cannot be equal to 0
+        itemExchange = new(_dm, _vm, _view, _message, useCustomOrBulk);
         if (useCustomOrBulk)
         {
             visible = new();
             rarity = new();
             tab = new(this);
-            shop = new(_serviceProvider);
-            customSearch = new(_serviceProvider);
+            customSearch = new(_dm, _vm, _view, _message);
         }
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
 
-        market = new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.any };
+        market = new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.Word.any };
         marketIndex = _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
 
         autoClose = _dm.Config.Options.Autoclose;
@@ -267,7 +272,10 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         league = _dm.GetLeagueAsyncCollection();
     }
 
-    internal FormViewModel(IServiceProvider serviceProvider, ItemData item, InfoDescription infoDesc, bool showMinMax) : this(serviceProvider, useCustomOrBulk: false)
+    public FormViewModel(DataManagerService dm, MainViewModel vm, 
+        IViewManager view, IKeyboardAdapterService keyboard, IMessageAdapterService message,
+        ItemData item, InfoDescription infoDesc, bool showMinMax) 
+        : this(dm, vm, view, keyboard, message, useCustomOrBulk: false)
     {
         var flag = item.Flag;
         if (item.ModList?.Count > 0)
@@ -279,16 +287,16 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
             modList = modListVm;
         }
-        if (flag.ShowDetail)
+        if (item.Rule.ShowDetail)
         {
             detail = item.GetDetails(infoDesc);
         }
-        if (flag.Weapon && !flag.Unidentified)
+        if (flag.Weapon.IsWeapon && !flag.Tag.Unidentified)
         {
             dps = item.Damage.TotalString;
             dpsTip = item.Damage.Tip;
         }
-        if (flag.Unidentified && flag.Unique)
+        if (flag.Tag.Unidentified && flag.Rarity.Unique)
         {
             unique = GetUniqueList(item);
             if (unique.Count > 0)
@@ -297,28 +305,28 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
             }
         }
 
-        identifiedIndex = flag.Unidentified ? 1 : 0;
-        fracturedIndex = flag.Cluster && !flag.Fractured && !flag.Corrupted ? 1 : 0;
-        corruptedIndex = !flag.Corrupted && (flag.Gems || (!flag.Unique
-            && (flag.Map || flag.Waystones || flag.Invitation || flag.Logbook))) ? 1
-            : flag.Corrupted && _dm.Config.Options.AutoSelectCorrupt ? 2
-            : (flag.Normal || (isPoeTwo && flag.Unique)) ? 1 : 0;
-        doubleCorruptedIndex = flag.TwiceCorrupted && _dm.Config.Options.AutoSelectCorrupt ? 2 : 0; // to refine
+        identifiedIndex = flag.Tag.Unidentified ? 1 : 0;
+        fracturedIndex = flag.Jewel.Cluster && !flag.Tag.Fractured && !flag.Tag.Corrupted ? 1 : 0;
+        corruptedIndex = !flag.Tag.Corrupted && (flag.Gem.IsGem || (!flag.Rarity.Unique
+            && (flag.Map.IsMap || flag.Waystones || flag.Invitation || flag.Area.Logbook))) ? 1
+            : flag.Tag.Corrupted && _dm.Config.Options.AutoSelectCorrupt ? 2
+            : (flag.Rarity.Normal || (isPoeTwo && flag.Rarity.Unique)) ? 1 : 0;
+        doubleCorruptedIndex = flag.Tag.TwiceCorrupted && _dm.Config.Options.AutoSelectCorrupt ? 2 : 0; // to refine
 
-        var poe2SkillWeapon = item.IsPoe2 && (flag.Wand || flag.Stave || flag.Sceptre);
-        byBase = item.State.SpecialBase || _dm.Config.Options.SearchByType || flag.ByBase || poe2SkillWeapon;
+        var poe2SkillWeapon = item.IsPoe2 && (flag.Weapon.Wand || flag.Weapon.IsStave || flag.Weapon.Sceptre);
+        byBase = item.State.SpecialBase || _dm.Config.Options.SearchByType || item.Rule.ByBase || poe2SkillWeapon;
         itemName = item.Name;
         itemBaseType = item.Type;
 
-        itemNameColor = flag.Magic ? Strings.Color.DeepSkyBlue :
-            flag.Rare ? Strings.Color.Gold :
-            flag.FoilVariant ? Strings.Color.Green :
-            flag.Unique ? Strings.Color.Peru : string.Empty;
+        itemNameColor = flag.Rarity.Magic ? Strings.Color.DeepSkyBlue :
+            flag.Rarity.Rare ? Strings.Color.Gold :
+            flag.Tag.FoilVariant ? Strings.Color.Green :
+            flag.Rarity.Unique ? Strings.Color.Peru : string.Empty;
 
-        itemBaseTypeColor = flag.Gems ? Strings.Color.Teal :
-            item.State.ExchangeCurrency || flag.CapturedBeast ? Strings.Color.Moccasin : string.Empty;
+        itemBaseTypeColor = flag.Gem.IsGem ? Strings.Color.Teal :
+            item.State.ExchangeCurrency || flag.Tag.CapturedBeast ? Strings.Color.Moccasin : string.Empty;
 
-        var minMax = item.GetMinMax();
+        var minMax = MinMaxModel.GetMinMax(_dm, item);
         dustValue = GetDustValue(_dm, item, minMax);
         var showDust = dustValue.Length > 0;
 
@@ -327,30 +335,49 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         rarity = new(item);
         tab = new(this, item);
         condition = new(item, panel.Sockets);
-        influence = new(item.Flag);
+        influence = new(item.Flag.Tag);
         checkComboCondition = new(condition);
         checkComboInfluence = new(influence);
     }
 
-    internal void ClearLists()
+    [RelayCommand]
+    private void CheckAllMods(object commandParameter) // quick view
     {
-        ModList?.Clear();
-        Panel?.StatList?.Clear();
-        CustomSearch?.MinMaxList?.Clear();
-    }
-
-    internal void UpdateMarket(bool useBulk)
-    {
-        Market = useBulk ? new() { Strings.Status.Online, Strings.any }
-            : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.any };
-        MarketIndex = !useBulk && _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
-    }
-
-    internal void SetModCurrent(ItemData item, bool clear = true)
-    {
-        if (item is not null)
+        if (ModList is null || ModList.Count is 0)
         {
-            UpdateStats(item);
+            return;
+        }
+        foreach (var mod in ModList)
+        {
+            mod.Selected = AllCheck;
+        }
+    }
+
+    [RelayCommand]
+    private void ShowMinMaxMods(object commandParameter) // quick view
+    {
+        if (ModList is null || ModList.Count is 0)
+        {
+            return;
+        }
+        foreach (var mod in ModList)
+        {
+            if (mod.Min.Length > 0)
+            {
+                mod.PreferMinMax = _vm.ShowMinMax;
+            }
+        }
+    }
+
+    [RelayCommand]
+    private void ClearFocus(object commandParameter) => _view.ClearFocus();
+
+    [RelayCommand]
+    private void SetModCurrent(object commandParameter) // quick view
+    {
+        if (_vm.Item is not null)
+        {
+            UpdateStats(_vm.Item);
         }
 
         if (ModList is null || ModList.Count <= 0)
@@ -374,7 +401,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
 
         foreach (bool same in sameText) remove &= same;
-        if (!remove || !clear)
+        if (!remove)
         {
             return;
         }
@@ -387,11 +414,12 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
     }
 
-    internal void SetModTier(ItemData item)
+    [RelayCommand]
+    private void SetModTier(object commandParameter) // quick view
     {
-        if (item is not null)
+        if (_vm.Item is not null)
         {
-            UpdateStats(item, useTier: true);
+            UpdateStats(_vm.Item, useTier: true);
         }
 
         if (ModList is null || ModList.Count <= 0)
@@ -431,7 +459,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
                 if (range[1].Length > 0 && !range[1].Contain('+'))
                 {
                     mod.Min = "-" + range[1];
-                    mod.SlideValue = - range[1].ToDoubleEmptyField();
+                    mod.SlideValue = -range[1].ToDoubleEmptyField();
                     continue;
                 }
             }
@@ -440,157 +468,56 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
     }
 
-    internal string GetExchangeCurrencyTag(ExchangeType exchange) // get: true, pay: false
+    [RelayCommand]
+    public void CheckCondition(object commandParameter) => CheckComboCondition = new(Condition);
+
+    [RelayCommand]
+    public void CheckInfluence(object commandParameter) => CheckComboInfluence = new(Influence);
+
+    [RelayCommand]
+    private void RefreshSearch(object commandParameter) // quick and detail views
     {
-        var exVm = exchange is ExchangeType.Get ? Bulk.Get :
-            exchange is ExchangeType.Pay ? Bulk.Pay :
-            exchange is ExchangeType.Shop ? Shop.Exchange : null;
-        if (exVm is null)
+        try
         {
-            return string.Empty;
-        }
+            _view.ClearFocus();
+            _vm.Result.InitData();
 
-        string category = exVm.Category.Count > 0 && exVm.CategoryIndex > -1 ?
-                exVm.Category[exVm.CategoryIndex] : string.Empty;
-        string currency = exVm.Currency.Count > 0 && exVm.CurrencyIndex > -1 ?
-            exVm.Currency[exVm.CurrencyIndex] : string.Empty;
-        string tier = exVm.Tier.Count > 0 && exVm.TierIndex > -1 ?
-            exVm.Tier[exVm.TierIndex] : string.Empty;
-
-        var mapKind = string.Empty;
-        if (category is Strings.Maps)
-        {
-            mapKind = tier.Replace("T", string.Empty);
-            mapKind = mapKind is Strings.Blight or Strings.Ravaged ?
-                Strings.CurrencyTypePoe1.MapsBlighted : Strings.CurrencyTypePoe1.Maps;
+            if (Tab.QuickSelected || Tab.DetailSelected)
+            {
+                _vm.Result.UpdateAsync(minimumStock: 1);
+            }
         }
-        var res = _dm.Currencies.FindEntryByTypeAndPossibleMapKind(currency, mapKind);
-        if (res is not null)
+        catch (Exception ex)
         {
-            return res.Id;
+            _message.Show(ex.GetFormated(), Resources.Resources.Error009_XSearchRefresh, MessageStatus.Error);
         }
-        return null;
     }
 
-    internal async Task SelectExchangeCurrency(string args, string currency, string tier = null)
+    internal void ClearLists()
     {
-        var arg = args.Split('/');
-        //bool search = false;
-        if (arg[0] is not "pay" and not "get" and not "shop")
-        {
-            return;
-        }
-
-        CurrencyEntrie entry;
-        string curClass;
-        if (arg.Length > 1 && arg[1] is "contains")
-        {
-            var curKeys = currency.ToLowerInvariant().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            (entry, curClass) = _dm.Currencies.FindEntryAndGroupIdByTypeOrId(curKeys);
-        }
-        else
-        {
-            (entry, curClass) = _dm.Currencies.FindEntryAndGroupIdByType(currency, image: false);
-        }
-
-        if (entry is null || curClass.Length is 0)
-        {
-            return;
-        }
-
-        string selectedTier = string.Empty;
-        string selectedCategory = Strings.GetBulkCategory(curClass, entry.Id);
-
-        if (selectedCategory.Length is 0)
-        {
-            return;
-        }
-
-        if (selectedCategory == Resources.Resources.Main055_Divination)
-        {
-            var tmpDiv = _dm.DivTiers.FindDivTierByTag(entry.Id);
-            selectedTier = tmpDiv != null ? "T" + tmpDiv.Tier : Resources.Resources.Main016_TierNothing;
-        }
-        if (selectedCategory == Resources.Resources.Main056_Maps
-            || selectedCategory == Resources.Resources.Main179_UniqueMaps
-            || selectedCategory == Resources.Resources.Main217_BlightedMaps)
-        {
-            if (tier?.Length > 0)
-            {
-                selectedTier = "T" + tier;
-            }
-            else
-            {
-                var match = RegexUtil.DecimalNoPlusPattern().Matches(entry.Text);
-                if (match.Count is 1)
-                {
-                    selectedTier = "T" + match[0].Value.ToString();
-                }
-            }
-        }
-        var isTier = selectedTier.Length > 0;
-
-        var bulk = arg[0] is "pay" ? Bulk.Pay
-            : arg[0] is "get" ? Bulk.Get
-            : arg[0] is "shop" ? Shop.Exchange
-            : null;
-
-        int idxCat = bulk.Category.IndexOf(selectedCategory);
-        if (idxCat > -1)
-        {
-            bulk.CategoryIndex = idxCat;
-        }
-        
-        if (isTier)
-        {
-            int idxTier = bulk.Tier.IndexOf(selectedTier);
-            if (idxTier > -1 && selectedTier.Length > 0)
-            {
-                bulk.TierIndex = idxTier;
-            }
-        }
-
-        // TO FIX, tier selection for maps/divcard not working properly
-        int watchdog = 0;
-        // 2 seconds max
-        while (bulk.Currency.Count is 0 && watchdog < 10)
-        {
-            bulk.CategoryIndex = -1;
-            await Task.Delay(100);
-            bulk.CategoryIndex = idxCat;
-            await Task.Delay(100);
-            watchdog++;
-        }
-
-        int idxCur = bulk.Currency.IndexOf(entry.Text);
-        if (idxCur > -1)
-        {
-            bulk.CurrencyIndex = idxCur;
-        }
-        /*
-        if (!search)
-        {
-            IsSelectionEnabled = false;
-            Command.MainCommand.SelectBulk("pay");
-        }
-        int idxCur = bulk.Currency.IndexOf(selectedCurrency);
-        if (idxCur > -1)
-        {
-            bulk.CurrencyIndex = idxCur;
-        }
-        if (!search)
-        {
-            Command.MainCommand.Change("pay");
-            IsSelectionEnabled = true;
-        }
-        */
+        ModList?.Clear();
+        Panel?.StatList?.Clear();
+        CustomSearch?.MinMaxList?.Clear();
     }
 
-    //private
+    internal void UpdateMarket(bool useBulk)
+    {
+        Market = useBulk ? new() { Strings.Status.Online, Strings.Word.any }
+            : new() { Strings.Status.Available, Strings.Status.Online, Strings.Status.Securable, Strings.Word.any };
+        MarketIndex = !useBulk && _dm.Config.Options.AsyncMarketDefault ? 2 : 0;
+    }
+
+    internal string GetUniqueName()
+    {
+        var check = UnidentifiedUnique && UniqueIndex > -1
+            && UniqueIndex < Unique.Count && Unique[UniqueIndex].Name?.Length > 0;
+        return check ? Unique[UniqueIndex].Name : string.Empty;
+    }
+
     private static string GetDustValue(DataManagerService dm, ItemData item, Dictionary<StatPanel, MinMaxModel> minMax)
     {
         var flag = item.Flag;
-        if (!item.IsPoe2 && flag.Unique && !flag.Unidentified && !flag.Map
+        if (!item.IsPoe2 && flag.Rarity.Unique && !flag.Tag.Unidentified && !flag.Map.IsMap
             && dm.DustLevel.FindDustByName(item.NameEn) is var dust && dust is not null)
         {
             var level = minMax[StatPanel.CommonItemLevel];
@@ -626,13 +553,6 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
     }
 
-    internal string GetUniqueName()
-    {
-        var check = UnidentifiedUnique && UniqueIndex > -1
-            && UniqueIndex < Unique.Count && Unique[UniqueIndex].Name?.Length > 0;
-        return check ? Unique[UniqueIndex].Name : string.Empty;
-    }
-
     private AsyncObservableCollection<UniqueItem> GetUniqueList(ItemData item)
     {
         var uniqueList = _dm.Items.SelectMany(cat => cat.Entries)
@@ -644,4 +564,7 @@ public sealed partial class FormViewModel(bool useBulk) : ViewModelBase
         }
         return unique;
     }
+
+    private static AsyncObservableCollection<string> GetNewOptions() =>
+        new() { Resources.Resources.Main033_Any, Resources.Resources.Main034_No, Resources.Resources.Main035_Yes };
 }

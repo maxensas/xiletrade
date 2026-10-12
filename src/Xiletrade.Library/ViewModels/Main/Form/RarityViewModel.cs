@@ -32,7 +32,7 @@ public sealed partial class RarityViewModel : ViewModelBase
     internal RarityViewModel(ItemData itemData)
     {
         var flag = itemData.Flag;
-        item = flag.FoilVariant ? Resources.Resources.General110_FoilUnique
+        item = flag.Tag.FoilVariant ? Resources.Resources.General110_FoilUnique
             : CanSelectAnyNonUnique(itemData) ? Resources.Resources.General010_AnyNU
             : CanSelectAny(itemData) ? Resources.Resources.General005_Any
             : string.IsNullOrEmpty(itemData.Rarity) ? Resources.Resources.General005_Any
@@ -44,14 +44,14 @@ public sealed partial class RarityViewModel : ViewModelBase
     private static bool CanSelectAnyNonUnique(ItemData itemData)
     {
         var flag = itemData.Flag;
-        return (flag.Map || flag.Waystones || flag.Invitation ||
-             flag.Logbook || flag.Voidstone) && !flag.Unique;
+        return (flag.Map.IsMap || flag.Waystones || flag.Invitation ||
+             flag.Area.Logbook || flag.Voidstone) && !flag.Rarity.Unique;
     }
 
     private static bool CanSelectAny(ItemData itemData)
     {
         var flag = itemData.Flag;
         return !flag.Waystones &&
-              (flag.MapFragment || flag.MiscMapItems || itemData.State.ExchangeCurrency || flag.Currency);
+              (flag.Map.Fragment || flag.Map.Misc || itemData.State.ExchangeCurrency || flag.Currency);
     }
 }

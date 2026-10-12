@@ -1,13 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
-using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
+using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main.Form.Panel;
@@ -16,7 +17,10 @@ namespace Xiletrade.Library.ViewModels.Main.Form.Search;
 
 public sealed partial class CustomSearchViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly IViewManager _view;
+    private readonly IMessageAdapterService _message;
+    private readonly DataManagerService _dm;
+    private readonly MainViewModel _vm;
 
     [ObservableProperty]
     private SuggestionSearchViewModel search;
@@ -33,22 +37,25 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     [ObservableProperty]
     private int unidUniquesIndex;
 
-    public CustomSearchViewModel(IServiceProvider serviceProvider)
+    public CustomSearchViewModel(DataManagerService dm, MainViewModel vm,
+        IViewManager view, IMessageAdapterService message)
     {
-        _serviceProvider = serviceProvider;
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        _vm = vm;
+        _dm = dm;
+        _view = view;
+        _message = message;
 
         var searchList = dm.Items.SelectMany(cat => cat.Entries)
             .Select(x => ( Value: x.Text ?? x.Type, IsUnique: x.Text is not null)).ToList();
 
-        search = new(serviceProvider, searchList);
+        search = new(this, searchList);
 
         //stat = new(serviceProvider, dm.Filter.EnumerateTextEntries());
 
-        var vm = _serviceProvider.GetRequiredService<MainViewModel>();
-        vm.Result.Rate.ShowMin = false;
-        vm.Result.Quick.RightString = Resources.Resources.Main245_SearchPreset;
-        vm.Result.Quick.LeftString = string.Empty;
+
+        _vm.Result.Rate.ShowMin = false;
+        _vm.Result.Quick.RightString = Resources.Resources.Main245_SearchPreset;
+        _vm.Result.Quick.LeftString = string.Empty;
 
         // to finish
 
@@ -103,6 +110,61 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
 
     private readonly StatPanel[] _statPoe2 = [StatPanel.CommonSocketRune, StatPanel.CommonSocketGem, StatPanel.DefenseRunicWard];
 
+    partial void OnUnidUniquesIndexChanged(int value)
+    {
+        if (value < 0)
+        {
+            return;
+        }
+        _view.ClearFocus();
+
+        Search.SearchQuery = string.Empty;
+
+        if (UnidUniquesIndex is 0)
+        {
+            return;
+        }
+
+        if (UnidUniquesIndex > 0)
+        {
+            _vm.Form.IdentifiedIndex = 1;
+            _vm.Form.CorruptedIndex = 0;
+            _vm.Form.Rarity.Index = 4;
+
+            LaunchCustomSearchAsync();
+        }
+    }
+
+    [RelayCommand]
+    private void ResetCustomSearch(object commandParameter)
+    {
+        Search.SearchQuery = string.Empty;
+
+        foreach (var minMax in MinMaxList)
+        {
+            minMax.Selected = false;
+            minMax.Min = string.Empty;
+            minMax.Max = string.Empty;
+        }
+
+        UnidUniquesIndex = _vm.Form.Rarity.Index = _vm.Form.CorruptedIndex
+            = _vm.Form.IdentifiedIndex = _vm.Form.MirroredIndex = _vm.Form.FracturedIndex
+            = _vm.Form.SplitIndex = _vm.Form.CraftedIndex = _vm.Form.MutatedIndex = 0;
+    }
+
+    [RelayCommand]
+    private void CustomSearch(object commandParameter)
+    {
+        UnidUniquesIndex = 0;
+        LaunchCustomSearchAsync();
+    }
+
+    [RelayCommand]
+    private void StatSearch(object commandParameter)
+    {
+
+    }
+
     private AsyncObservableCollection<MinMaxViewModel> GetMinMaxList(Dictionary<StatPanel, MinMaxModel> minMaxDic, bool isPoe2)
     {
         AsyncObservableCollection<MinMaxViewModel> minMaxList = new();
@@ -121,5 +183,36 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         }
 
         return minMaxList;
+    }
+
+    internal async void LaunchCustomSearchAsync()
+    {
+        if (!_vm.Form.Tab.CustomSearchSelected ||
+            (string.IsNullOrEmpty(_vm.Form.CustomSearch.Search.SearchQuery) 
+            && _vm.Form.CustomSearch.UnidUniquesIndex is 0))
+        {
+            return;
+        }
+
+        try
+        {
+            _view.ClearFocus();
+
+            _vm.Result.InitData();
+            _vm.Result.DetailList.Clear();
+
+            var json = _vm.GetSerialized(_vm.Form.Market[_vm.Form.MarketIndex], customSearch: true);
+            var maxFetch = (int)_dm.Config.Options.SearchFetchDetail;
+
+            var priceInfo = new PricingInfo([new() { json }, null], _vm.Form.League[_vm.Form.LeagueIndex]
+                , _vm.Form.Market[_vm.Form.MarketIndex], minimumStock: 1, maxFetch
+                , _vm.Form.SameUser, _vm.Form.Tab.BulkSelected);
+
+            var result = await _vm.Result.UpdateWithApi(priceInfo); // result bar not used in custom search
+        }
+        catch (Exception ex)
+        {
+            _message.Show(ex.GetFormated(), Resources.Resources.Error013_XCustomSearch, MessageStatus.Error);
+        }
     }
 }

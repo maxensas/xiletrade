@@ -1,4 +1,4 @@
-using Avalonia.Input;
+using System;
 
 namespace Xiletrade.UI.Avalonia.Views;
 
@@ -7,17 +7,18 @@ public partial class WhisperListView : ViewBase
     public WhisperListView()
     {
         InitializeComponent();
+        Closed += OnClosed;
     }
 
     public WhisperListView(object vm) : this()
     {
         DataContext = vm;
-        PointerPressed += Window_PointerPressed;
     }
 
-    private void Window_PointerPressed(object sender, PointerPressedEventArgs e)
+    private void OnClosed(object sender, EventArgs e)
     {
-        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-            BeginMoveDrag(e);
+        Closed -= OnClosed;
+        Content = null;
+        DataContext = null;
     }
 }

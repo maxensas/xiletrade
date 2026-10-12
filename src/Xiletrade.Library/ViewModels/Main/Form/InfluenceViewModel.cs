@@ -1,28 +1,28 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
-using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Models.Poe.Domain.Parser.Flag;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
-public sealed partial class InfluenceViewModel(ItemFlag flag) : ViewModelBase
+public sealed partial class InfluenceViewModel(ItemFlagTag tag) : ViewModelBase
 {
     [ObservableProperty]
-    private bool shaper = flag.InfluenceShaper;
+    private bool shaper = tag.InfluenceShaper;
 
     [ObservableProperty]
-    private bool elder = flag.InfluenceElder;
+    private bool elder = tag.InfluenceElder;
 
     [ObservableProperty]
-    private bool crusader = flag.InfluenceCrusader;
+    private bool crusader = tag.InfluenceCrusader;
 
     [ObservableProperty]
-    private bool redeemer = flag.InfluenceRedeemer;
+    private bool redeemer = tag.InfluenceRedeemer;
 
     [ObservableProperty]
-    private bool hunter = flag.InfluenceHunter;
+    private bool hunter = tag.InfluenceHunter;
 
     [ObservableProperty]
-    private bool warlord = flag.InfluenceWarlord;
+    private bool warlord = tag.InfluenceWarlord;
 
     [ObservableProperty]
     private string shaperText = Resources.Resources.Main037_Shaper;

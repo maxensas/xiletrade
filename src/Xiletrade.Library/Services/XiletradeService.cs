@@ -1,30 +1,23 @@
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.ViewModels.Main;
+using Xiletrade.Library.Views;
 
 namespace Xiletrade.Library.Services;
 
 /// <summary>Main service used to launch Xiletrade application.</summary>
-/// <remarks>Initialize all services.</remarks>
+/// <remarks>Bootstraps the application and initializes its services.</remarks>
 public sealed class XiletradeService
 {
-    private static IServiceProvider _serviceProvider;
-    private static string _args;
-    private bool _started;
-
-    // public members
-    public static SynchronizationContext UiThreadContext { get; } = SynchronizationContext.Current;
-    public nint MainHwnd { get; set; }
-
-    public XiletradeService(IServiceProvider serviceProvider, string args)
+    public XiletradeService(ILogger<XiletradeService> logger, DataManagerService dm,
+        IDataUpdaterService dataUpdater, IViewManager view, 
+        IMessageAdapterService message, IAutoUpdaterService updater,
+        // Instantiate singletons : 
+        IInputService input, IProtocolHandlerService protocol, IMainView main, ITaskbar taskbar)
     {
-        _serviceProvider = serviceProvider;
-        _args = args;
+        _ = StartAsync(logger, dm, dataUpdater, view, message, updater);
     }
 
     /// <summary>
@@ -32,57 +25,29 @@ public sealed class XiletradeService
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public async Task Start()
+    private static async Task StartAsync(ILogger<XiletradeService> logger, DataManagerService dm,
+        IDataUpdaterService dataUpdater, IViewManager view, 
+        IMessageAdapterService message, IAutoUpdaterService appUpdater)
     {
-        if (_started)
-        {
-            throw new Exception(Resources.Resources.Main188_Alreadystarted);
-        }
         try
         {
 #if DEBUG
-            var logger = _serviceProvider.GetRequiredService<ILogger<XiletradeService>>();
             logger.LogInformation("Launching Xiletrade service");
-#endif
-            var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-            dm.TryInit();
-            
-            // MainWindow need to be instantiated before StartWindow.
-            var nav = _serviceProvider.GetRequiredService<INavigationService>();
-            nav.InstantiateMainView();
-            if (!dm.Config.Options.DisableStartupMessage)
+#endif           
+            var options = dm.Config.Options;
+            if (!options.DisableStartupMessage)
             {
-                await nav.ShowStartView();
+                await view.ShowStartView();
+            }
+            if (options.CheckFilters)
+            {
+                _ = dataUpdater.UpdateAsync();
+            }
+            if (options.CheckUpdates)
+            {
+                _ = appUpdater.CheckForUpdateAsync();
             }
 
-            // Tokens initialization on first call.
-            RefreshAuthenticationState();
-
-            _ = _serviceProvider.GetRequiredService<PoeNinjaService>().InitLeaguesAsync();
-            if (dm.Config.Options.CheckFilters)
-            {
-                _ = _serviceProvider.GetRequiredService<DataUpdaterService>().UpdateAsync();
-            }
-            if (dm.Config.Options.CheckUpdates)
-            {
-                _ = _serviceProvider.GetRequiredService<IAutoUpdaterService>().CheckUpdateAsync();
-            }
-
-            _serviceProvider.GetRequiredService<HotKeyService>().StartAutoRegister();
-            _serviceProvider.GetRequiredService<ClipboardService>();
-
-            // Automatically register or update the custom protocol handler in the registry
-            _serviceProvider.GetRequiredService<IProtocolRegisterService>().RegisterOrUpdateProtocol();
-
-            // Starts pipe server.
-            var phs = _serviceProvider.GetRequiredService<IProtocolHandlerService>();
-            phs.StartListening();
-
-            // If a protocol URL was passed on first launch, handle it now
-            if (!string.IsNullOrEmpty(_args))
-            {
-                phs.HandleUrl(_args);
-            }
             Shared.Common.CollectGarbage();
 #if DEBUG
             logger.LogInformation("Xiletrade launched");
@@ -90,35 +55,13 @@ public sealed class XiletradeService
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            var message = $"Xiletrade will shutdown shortly.\n\n{ex.Message}";
+            var strMessage = $"{Resources.Resources.Error031_ShutdownShortly}\n\n{ex.Message}";
             if (ex.InnerException?.Message.Length > 0)
             {
-                message += $"\n\n{ex.InnerException.Message}";
+                strMessage += $"\n\n{ex.InnerException.Message}";
             }
-            await ms.ShowResultAsync(message, "Failed to launch Xiletrade", MessageStatus.Exclamation);
-            _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade(1);
-        }
-        finally
-        {
-            _started = true;
+            await message.ShowResultAsync(strMessage, Resources.Resources.Error032_XFailedLaunch, MessageStatus.Exclamation);
+            view.ShutDownNativeApp(1);
         }
     }
-
-    // TO REDO
-    public void RefreshAuthenticationState()
-    {
-        var token = _serviceProvider.GetRequiredService<ITokenService>();
-        token.LoadTokens();
-
-        var mvm = _serviceProvider.GetRequiredService<MainViewModel>();
-        mvm.Authenticated = token.CacheToken is not null;
-
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        mvm.Authentication = !string.IsNullOrEmpty(dm.Config.Options.Secret);
-    }
-
-    // Not used for now
-    public void DelegateToUi(Action action) => UiThreadContext.Send(_ => action(), null);
-    public void DelegateToUiASync(Action action) => UiThreadContext.Post(_ => action(), null);
 }

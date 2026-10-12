@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Text;
@@ -15,11 +15,12 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services;
 
-/// <summary>Service (singleton) handling all serializable data in memory for Xiletrade.</summary>
+/// <summary>Service handling all serializable data in memory for Xiletrade.</summary>
 /// <remarks></remarks>
 public sealed class DataManagerService
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly IMessageAdapterService _message;
+    private readonly IViewManager _view;
 
     internal JsonHelper Json { get; private set; }
 
@@ -48,9 +49,16 @@ public sealed class DataManagerService
     internal BaseResultData[] BasesGateway { get; private set; }
     internal CurrencyResultData[] CurrenciesGateway { get; private set; }
 
-    public DataManagerService(IServiceProvider serviceProvider)
+    public DataManagerService(ILogger<DataManagerService> logger,
+        IMessageAdapterService message, IViewManager view)
     {
-        _serviceProvider = serviceProvider;
+        _message = message;
+        _view = view;
+
+        TryInit();
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
     }
 
     /// <summary>
@@ -64,10 +72,9 @@ public sealed class DataManagerService
         }
         catch (Exception ex) 
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(Resources.Resources.Main118_Closing + "\n" + ex.InnerException.Message
+            _message.Show(Resources.Resources.Main118_Closing + "\n" + ex.InnerException.Message
                 , Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
-            _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade(1);
+            _view.ShutDownNativeApp(1);
         }
     }
 
@@ -102,7 +109,7 @@ public sealed class DataManagerService
         }
         var isPoe2 = Config.Options.GameVersion is 1;
         var gateway = Config.Options.Gateway;
-        Strings.Initialize(isPoe2, gateway);
+        Strings.InitializeGameContext(isPoe2, gateway);
     }
     
     private void InitLeague(int gateway)
@@ -118,7 +125,7 @@ public sealed class DataManagerService
         {
             if (Json is null)
             {
-                Json = new(_serviceProvider);
+                Json = new(useCache: true);
             }
             else
             {
@@ -403,9 +410,8 @@ public sealed class DataManagerService
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), Resources.Resources.Main118_Closing, MessageStatus.Exclamation);
-            _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade();
+            _message.Show(ex.GetFormated(), Resources.Resources.Main118_Closing, MessageStatus.Exclamation);
+            _view.ShutDownNativeApp();
             return null;
         }
         return config;
@@ -420,8 +426,7 @@ public sealed class DataManagerService
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Error: file cannot be saved", MessageStatus.Exclamation);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error024_XSaveFile, MessageStatus.Exclamation);
             return false;
         }
     }
@@ -457,8 +462,7 @@ public sealed class DataManagerService
             {
                 //ignore
             }
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Error while saving configuration", MessageStatus.Exclamation);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error007_XSaveConfig, MessageStatus.Exclamation);
         }
         return false;
     }

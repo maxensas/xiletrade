@@ -5,6 +5,7 @@ using System.Linq;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Models.Poe.Domain.Parser.Flag;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
@@ -158,7 +159,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         selected = GetModSelection(dm, item, modLine, affix);
         if (selected)
         {
-            if (item.Flag.Unique)
+            if (item.Flag.Rarity.Unique)
             {
                 affixCanBeEnabled = false;
             }
@@ -245,14 +246,14 @@ public sealed partial class ModLineViewModel : ViewModelBase
             is var enEntry && enEntry is not null ? enEntry.Text : modLine.Mod;
 
         bool condLife = opt.AutoSelectLife
-            && !flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Life)
-            && !englishMod.ToLowerInvariant().Contain(Strings.Words.ToStrength);
+            && !flag.Rarity.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Life)
+            && !englishMod.ToLowerInvariant().Contain(Strings.Word.ToStrength);
         bool condEs = opt.AutoSelectGlobalEs
-            && !flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Es) && !flag.ArmourPiece;
+            && !flag.Rarity.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Es) && !flag.Armour.IsArmour;
         bool condRes = opt.AutoSelectRes && !selAffix.IsImplicitEnch
-            && !flag.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Resist);
+            && !flag.Rarity.Unique && Strings.StatTotal.IsTotalStat(englishMod, Stat.Resist);
         bool condAttr = opt.AutoSelectAttr && item.IsPoe2 && !selAffix.IsImplicitEnch
-            && !flag.Unique && Strings.StatPoe2.IsAttribute(englishMod);
+            && !flag.Rarity.Unique && Strings.StatPoe2.IsAttribute(englishMod);
 
         if (selAffix.IsImplicitRegular || selAffix.IsImplicitCorruption || selAffix.IsImplicitEnch)
         {
@@ -260,9 +261,9 @@ public sealed partial class ModLineViewModel : ViewModelBase
             bool condCorruptAuto = opt.AutoCheckCorruptions && selAffix.IsImplicitCorruption;
             bool condEnchAuto = opt.AutoCheckEnchants && selAffix.IsImplicitEnch;
 
-            bool specialImp = Strings.Stat.lSpecialImplicits.Contains(selAffix.ID)
-                    || ((flag.Amulets || flag.Rings)
-                    && Strings.Stat.lMagnitudeImplicits.Contains(selAffix.ID));
+            bool specialImp = Strings.StatPoe1.lSpecialImplicits.Contains(selAffix.ID)
+                    || ((flag.Jewellery.Amulets || flag.Jewellery.Rings)
+                    && Strings.StatPoe1.lMagnitudeImplicits.Contains(selAffix.ID));
 
             if ((condImpAuto || condCorruptAuto || condEnchAuto)
                 && !condLife && !condEs && !condRes && !condAttr
@@ -272,39 +273,39 @@ public sealed partial class ModLineViewModel : ViewModelBase
             }
         }
 
-        if (opt.AutoCheckUniques && flag.Unique || opt.AutoCheckNonUniques && !flag.Unique)
+        if (opt.AutoCheckUniques && flag.Rarity.Unique || opt.AutoCheckNonUniques && !flag.Rarity.Unique)
         {
-            bool unselectLogbook = flag.Logbook && !IsLogbookRareMod(modLine.ItemFilter.Id);
+            bool unselectLogbook = flag.Area.Logbook && !IsLogbookRareMod(modLine.ItemFilter.Id);
             bool unselectPoe2Face = item.IsPoe2 && modLine.ItemFilter.Id.Equal(Strings.StatPoe2.BossFaceBroken);
-            bool isPoe1Crafted = !item.IsPoe2 && (modLine.ItemFilter.Id.Contain(Strings.Stat.Generic.Crafted)
+            bool isPoe1Crafted = !item.IsPoe2 && (modLine.ItemFilter.Id.Contain(Strings.StatPoe1.Generic.Crafted)
                 || selAffix.IsExplicitCrafted && !opt.AutoCheckCrafted);
             if (unselectPoe2Face || isPoe1Crafted || unselectLogbook)
             {
                 selected = false;
             }
-            else if (!flag.Invitation && !flag.Map && !flag.Chart && !flag.Waystones
+            else if (!flag.Invitation && !flag.Map.IsMap && !flag.Map.Chart && !flag.Waystones
                 && !isPoe1Crafted && !condLife && !condEs && !condRes && !condAttr)
             {
-                bool isChronicleRare = flag.Chronicle && IsChronicleRoom(firstAffix.ID);
-                bool isTabletRare = flag.MirroredTablet && IsTabletRoom(firstAffix.ID);
+                bool isChronicleRare = flag.Area.Chronicle && IsChronicleRoom(firstAffix.ID);
+                bool isTabletRare = flag.Area.MirroredTablet && IsTabletRoom(firstAffix.ID);
                 bool unselectPoe2Mod = item.IsPoe2 && ShouldUnselectPoe2Mods(dm, flag, firstAffix.ID);
 
                 if (!selAffix.IsImplicitRegular && !selAffix.IsImplicitCorruption
                     && !selAffix.IsImplicitEnch && !selAffix.IsImplicitScourge
                     && !selAffix.IsImplicitAugment && !unselectPoe2Mod
-                    && (!flag.Chronicle && !flag.Ultimatum && !flag.MirroredTablet
+                    && (!flag.Area.Chronicle && !flag.Area.Ultimatum && !flag.Area.MirroredTablet
                     || isChronicleRare || isTabletRare))
                 {
                     selected = true;
                 }
                 // temp: Maligaro fix until GGG add filter for shock duration
-                if (unselectPoe2Mod || flag.Unique && flag.Belts && firstAffix.ID is Strings.Stat.StunOnYou)
+                if (unselectPoe2Mod || flag.Rarity.Unique && flag.Jewellery.Belts && firstAffix.ID is Strings.StatPoe1.StunOnYou)
                 {
                     selected = false;
                 }
             }
         }
-        if (!flag.Unique && opt.AutoUnSelectBelowModLevel && modLine.Level > 0 && modLine.Level < opt.ModLevel)
+        if (!flag.Rarity.Unique && opt.AutoUnSelectBelowModLevel && modLine.Level > 0 && modLine.Level < opt.ModLevel)
         {
             selected = false;
         }
@@ -322,34 +323,34 @@ public sealed partial class ModLineViewModel : ViewModelBase
         var idSplit = id.Split('.');
         if (idSplit.Length < 2) return false;
 
-        return (opt.AutoSelectArEsEva && flag.ArmourPiece && Strings.StatPoe2.lDefenceMods.Contains(idSplit[1]))
-            || (opt.AutoSelectDps && flag.Weapon && Strings.StatPoe2.lWeaponMods.Contains(idSplit[1]));
+        return (opt.AutoSelectArEsEva && flag.Armour.IsArmour && Strings.StatPoe2.lDefenceMods.Contains(idSplit[1]))
+            || (opt.AutoSelectDps && flag.Weapon.IsWeapon && Strings.StatPoe2.lWeaponMods.Contains(idSplit[1]));
     }
 
     private static bool IsInfluenced(ReadOnlySpan<char> filterId)
     {
-        return filterId.StartWith(Strings.Stat.Option.MapOccupConq)
-            || filterId.StartWith(Strings.Stat.Option.MapOccupElder)
-            || filterId.StartWith(Strings.Stat.Option.AreaInflu)
-            || filterId.StartWith(Strings.Stat.AreaInfluOrigin);
+        return filterId.StartWith(Strings.StatPoe1.Option.MapOccupConq)
+            || filterId.StartWith(Strings.StatPoe1.Option.MapOccupElder)
+            || filterId.StartWith(Strings.StatPoe1.Option.AreaInflu)
+            || filterId.StartWith(Strings.StatPoe1.AreaInfluOrigin);
     }
 
     private static bool IsLogbookRareMod(ReadOnlySpan<char> id)
     {
-        return id.Contain(Strings.Stat.Generic.LogbookBoss)
-            || id.Contain(Strings.Stat.Generic.LogbookArea)
-            || id.Contain(Strings.Stat.Generic.LogbookTwice);
+        return id.Contain(Strings.StatPoe1.Generic.LogbookBoss)
+            || id.Contain(Strings.StatPoe1.Generic.LogbookArea)
+            || id.Contain(Strings.StatPoe1.Generic.LogbookTwice);
     }
 
     private static bool IsChronicleRoom(ReadOnlySpan<char> id) =>
-        id.Contain(Strings.Stat.Temple.Room01) // Apex of Atzoatl
-        || id.Contain(Strings.Stat.Temple.Room11) // Doryani's Institute
-        || id.Contain(Strings.Stat.Temple.Room15) // Apex of Ascension
-        || id.Contain(Strings.Stat.Temple.Room17); // Locus of Corruption
+        id.Contain(Strings.StatPoe1.Temple.Room01) // Apex of Atzoatl
+        || id.Contain(Strings.StatPoe1.Temple.Room11) // Doryani's Institute
+        || id.Contain(Strings.StatPoe1.Temple.Room15) // Apex of Ascension
+        || id.Contain(Strings.StatPoe1.Temple.Room17); // Locus of Corruption
 
     private static bool IsTabletRoom(ReadOnlySpan<char> id) =>
-        id.Contain(Strings.Stat.Lake.Tablet01) // Paradise
-        || id.Contain(Strings.Stat.Lake.Tablet02) // Kalandra
-        || id.Contain(Strings.Stat.Lake.Tablet03) // the Sun
-        || id.Contain(Strings.Stat.Lake.Tablet04); // Angling
+        id.Contain(Strings.StatPoe1.Lake.Tablet01) // Paradise
+        || id.Contain(Strings.StatPoe1.Lake.Tablet02) // Kalandra
+        || id.Contain(Strings.StatPoe1.Lake.Tablet03) // the Sun
+        || id.Contain(Strings.StatPoe1.Lake.Tablet04); // Angling
 }

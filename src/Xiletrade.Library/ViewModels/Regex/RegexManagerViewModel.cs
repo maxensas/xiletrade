@@ -10,15 +10,19 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Views;
 
 namespace Xiletrade.Library.ViewModels.Regex;
 
+[ViewModelCreation(ViewModelCreation.Container)]
 public sealed partial class RegexManagerViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
-    private const int MAX_REGEX = 20;
-
+    private readonly IServiceProvider _sp;
+    private readonly IMessageAdapterService _message;
     private readonly DataManagerService _dm;
+
+    private RegexViewModel GetNewRegex => _sp.GetRequiredService<RegexViewModel>();
+    private const int MAX_REGEX = 20;
 
     [ObservableProperty]
     private AsyncObservableCollection<RegexViewModel> regexList = new();
@@ -32,10 +36,13 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
     // members
     private ConfigData Config { get; set; }
 
-    public RegexManagerViewModel(IServiceProvider serviceProvider)
+    public RegexManagerViewModel(IServiceProvider sp, DataManagerService dm, 
+        IMessageAdapterService message)
     {
-        _serviceProvider = serviceProvider;
-        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        _sp = sp;
+        _dm = dm;
+        _message = message;
+
         viewScale = _dm.Config.Options.Scale;
         idLang = _dm.Config.Options.Language;
         var cfg = _dm.LoadConfiguration(Strings.File.Config);
@@ -43,7 +50,11 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
 
         foreach (var regex in Config.RegularExpressions)
         {
-            RegexViewModel vm = new(_serviceProvider) { Id = regex.Id, Name = regex.Name, Regex = regex.Regex };
+            RegexViewModel vm = GetNewRegex;
+            vm.Id = regex.Id;
+            vm.Name = regex.Name;
+            vm.Regex = regex.Regex;
+
             regexList.Add(vm);
         }
     }
@@ -53,7 +64,10 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
     {
         if (RegexList.Count <= MAX_REGEX)
         {
-            RegexViewModel vm = new(_serviceProvider) { Id = RegexList.Count - 1, Name = string.Empty, Regex = string.Empty };
+            RegexViewModel vm = GetNewRegex;
+            vm.Id = RegexList.Count - 1;
+            vm.Name = string.Empty;
+            vm.Regex = string.Empty;
             RegexList.Add(vm);
         }
     }
@@ -80,18 +94,17 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
     [RelayCommand]
     private void OpenPoeRegex(object commandParameter)
     {
-        var url = IdLang is 1 ? Strings.UrlPoeRegexKr 
-            : IdLang is 6 ? Strings.UrlPoeRegexRu
-            : IdLang is 10 ? Strings.UrlPoeRegexJp
-            : Strings.UrlPoeRegex;
+        var url = IdLang is 1 ? Strings.Url.PoeRegexKr 
+            : IdLang is 6 ? Strings.Url.PoeRegexRu
+            : IdLang is 10 ? Strings.Url.PoeRegexJp
+            : Strings.Url.PoeRegex;
         try
         {
             Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(), "Failed to redirect to Poe Regex website", MessageStatus.Warning);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error025_XRedirection, MessageStatus.Warning);
         }
     }
 }

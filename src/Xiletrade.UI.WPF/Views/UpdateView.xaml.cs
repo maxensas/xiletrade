@@ -1,21 +1,31 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 
-namespace Xiletrade.UI.WPF.Views
+namespace Xiletrade.UI.WPF.Views;
+
+/// <summary>
+/// Logique d'interaction pour UpdateView.xaml
+/// </summary>
+public partial class UpdateView : ViewBase
 {
-    /// <summary>
-    /// Logique d'interaction pour UpdateView.xaml
-    /// </summary>
-    public partial class UpdateView : ViewBase
+    public UpdateView(object vm)
     {
-        public UpdateView()
-        {
-            InitializeComponent();
-            MouseLeftButtonDown += Window_DragWindow;
-        }
+        InitializeComponent();
+        DataContext = vm;
+        MouseLeftButtonDown += Window_DragWindow;
+        Closed += OnClosed;
+    }
 
-        private void Window_DragWindow(object sender, MouseButtonEventArgs e)
-        {
-            this.DragMove();
-        }
+    private void Window_DragWindow(object sender, MouseButtonEventArgs e)
+    {
+        this.DragMove();
+    }
+
+    private void OnClosed(object sender, EventArgs e)
+    {
+        MouseLeftButtonDown -= Window_DragWindow;
+        Closed -= OnClosed;
+        Content = null;
+        DataContext = null;
     }
 }

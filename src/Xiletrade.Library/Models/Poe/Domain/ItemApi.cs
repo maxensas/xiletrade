@@ -37,10 +37,10 @@ public class ItemApi
         if (Magnitudes?.Count is 1)
         {
             var id = Magnitudes[0].Hash;
-            TagLife = id is Strings.Stat.MaxLife;
-            TagFire = id is Strings.Stat.FireResist;
-            TagCold = id is Strings.Stat.ColdResist;
-            TagLightning = id is Strings.Stat.LightningResist;
+            TagLife = id is Strings.StatPoe1.MaxLife;
+            TagFire = id is Strings.StatPoe1.FireResist;
+            TagCold = id is Strings.StatPoe1.ColdResist;
+            TagLightning = id is Strings.StatPoe1.LightningResist;
         }
         if (isDesecrated)
         {

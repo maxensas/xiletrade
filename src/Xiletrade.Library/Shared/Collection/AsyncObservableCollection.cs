@@ -8,7 +8,7 @@ namespace Xiletrade.Library.Shared.Collection;
 public sealed class AsyncObservableCollection<T> : ObservableCollection<T>
 {
     private readonly SynchronizationContext _synchronizationContext 
-        = SynchronizationContext.Current ?? Services.XiletradeService.UiThreadContext ;
+        = SynchronizationContext.Current ?? Services.UIService.UiThreadContext;
 
     public AsyncObservableCollection() { }
     public AsyncObservableCollection(IEnumerable<T> list) : base(list) { }

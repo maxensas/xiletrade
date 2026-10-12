@@ -13,13 +13,10 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Models.Poe.Domain;
 
-internal sealed class JsonDataTwoFactory
+internal sealed class JsonDataTwoFactory : JsonDataFactoryBase<JsonDataTwo>
 {
-    private readonly DataManagerService _dm;
-
-    internal JsonDataTwoFactory(DataManagerService dm)
+    internal JsonDataTwoFactory(DataManagerService dm) : base(dm)
     {
-        _dm = dm;
     }
 
     /// <summary>
@@ -30,7 +27,7 @@ internal sealed class JsonDataTwoFactory
     /// <param name="market"></param>
     /// <param name="search"></param>
     /// <returns></returns>
-    internal JsonDataTwo Create(XiletradeItem xItem, UniqueUnidentified unid, string market, string search)
+    internal override JsonDataTwo Create(XiletradeItem xItem, UniqueUnidentified unid, string market, string search)
     {
         var json = new JsonDataTwo(market);
 
@@ -62,7 +59,7 @@ internal sealed class JsonDataTwoFactory
     /// <param name="useSaleType"></param>
     /// <param name="market"></param>
     /// <returns></returns>
-    internal JsonDataTwo Create(XiletradeItem xItem, ItemData item, bool useSaleType, string market)
+    internal override JsonDataTwo Create(XiletradeItem xItem, ItemData item, bool useSaleType, string market)
     {
         var json = new JsonDataTwo(market);
 
@@ -71,7 +68,7 @@ internal sealed class JsonDataTwoFactory
         var type = item.TypeGateway;
 
         bool simpleMode = xItem.ByType || name.Length is 0
-            || (!item.Flag.Unique && !item.Flag.FoilVariant);
+            || (!item.Flag.Rarity.Unique && !item.Flag.Tag.FoilVariant);
 
         if (!simpleMode)
         {
@@ -92,7 +89,7 @@ internal sealed class JsonDataTwoFactory
         json.Query.Filters.Type = GetTypeFilters(xItem, item);
 
         // Stats
-        json.Query.Stats = GetStatsFilters(_dm.Filter, xItem, item.Flag.Weapon);
+        json.Query.Stats = GetStatsFilters(_dm.Filter, xItem, item.Flag.Weapon.IsWeapon);
 
         return json;
     }
@@ -100,7 +97,7 @@ internal sealed class JsonDataTwoFactory
     private static TypeTwo GetTypeFilters(XiletradeItem xItem)
     {
         var rarityEn = GetEnglishRarity(xItem.Rarity);
-        var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.any;
+        var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.Word.any;
 
         if (!(isRarity || xItem.Lvl.Enable || xItem.Quality.Enable))
         {
@@ -130,12 +127,12 @@ internal sealed class JsonDataTwoFactory
     private static TypeTwo GetTypeFilters(XiletradeItem xItem, ItemData item)
     {
         var rarityEn = GetEnglishRarity(xItem.Rarity);
-        var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.any;
+        var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.Word.any;
 
         var category = item.Flag.GetItemCategoryApi();
         var isCategory = category.Length > 0;
 
-        if (!(isRarity || isCategory || xItem.Quality.Enable || (xItem.Lvl.Enable && !item.Flag.Gems)))
+        if (!(isRarity || isCategory || xItem.Quality.Enable || (xItem.Lvl.Enable && !item.Flag.Gem.IsGem)))
         {
             return null;
         }
@@ -154,7 +151,7 @@ internal sealed class JsonDataTwoFactory
         {
             type.Filters.Quality = new() { Min = xItem.Quality.Min, Max = xItem.Quality.Max };
         }
-        if (xItem.Lvl.Enable && !item.Flag.Gems)
+        if (xItem.Lvl.Enable && !item.Flag.Gem.IsGem)
         {
             type.Filters.ItemLevel = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
         }
@@ -233,8 +230,8 @@ internal sealed class JsonDataTwoFactory
 
     private static MiscTwo GetMiscFilters(XiletradeItem xItem, ItemData item)
     {
-        var checkCond = xItem.Lvl.Enable && (item.Flag.Gems || item.Flag.Area)
-            || xItem.GemSockets.Enable && item.Flag.Gems;
+        var checkCond = xItem.Lvl.Enable && (item.Flag.Gem.IsGem || item.Flag.Area.IsArea)
+            || xItem.GemSockets.Enable && item.Flag.Gem.IsGem;
         var checkForm = xItem.Corrupted is not DefaultOption.Any
             || xItem.TwiceCorrupted is not DefaultOption.Any
             || xItem.Identified is not DefaultOption.Any
@@ -252,7 +249,7 @@ internal sealed class JsonDataTwoFactory
         }
 
         MiscTwo misc = new();
-        if (item.Flag.Gems)
+        if (item.Flag.Gem.IsGem)
         {
             if (xItem.Lvl.Enable)
             {
@@ -263,7 +260,7 @@ internal sealed class JsonDataTwoFactory
                 misc.Filters.GemSockets = new() { Min = xItem.GemSockets.Min, Max = xItem.GemSockets.Max };
             }
         }
-        if (item.Flag.Area && xItem.Lvl.Enable)
+        if (item.Flag.Area.IsArea && xItem.Lvl.Enable)
         {
             misc.Filters.AreaLevel = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
         }
@@ -597,51 +594,6 @@ internal sealed class JsonDataTwoFactory
         }
 
         return stats;
-    }
-
-    // Utility
-
-    private static OptionTxt GetOptionTrue() => new("true");
-
-    private static OptionTxt GetOptionFalse() => new("false");
-
-    private static string BeforeDayToString(int day)
-    {
-        if (day < 3) return "1day";
-        if (day < 7) return "3days";
-        if (day < 14) return "1week";
-        return "2weeks";
-    }
-
-    private static string GetEnglishRarity(string rarityLang)
-    {
-        var rm = Resources.Resources.ResourceManager;
-        var rarity = rarityLang == Resources.Resources.General005_Any ? rm.GetEnglish(nameof(Resources.Resources.General005_Any))
-            : rarityLang == Resources.Resources.General110_FoilUnique ? rm.GetEnglish(nameof(Resources.Resources.General110_FoilUnique))
-            : rarityLang == Resources.Resources.General006_Unique ? rm.GetEnglish(nameof(Resources.Resources.General006_Unique))
-            : rarityLang == Resources.Resources.General007_Rare ? rm.GetEnglish(nameof(Resources.Resources.General007_Rare))
-            : rarityLang == Resources.Resources.General008_Magic ? rm.GetEnglish(nameof(Resources.Resources.General008_Magic))
-            : rarityLang == Resources.Resources.General009_Normal ? rm.GetEnglish(nameof(Resources.Resources.General009_Normal))
-            : rarityLang == Resources.Resources.General010_AnyNU ? rm.GetEnglish(nameof(Resources.Resources.General010_AnyNU)) 
-            : string.Empty;
-
-        return rarity is "Any N-U" ? "nonunique"
-            : rarity is "Foil Unique" ? "uniquefoil"
-            : rarity.ToLowerInvariant();
-    }
-
-    private static string GetAffixType(string inputType)
-    {
-        return inputType is "pseudo" ? Resources.Resources.General014_Pseudo :
-            inputType is "explicit" ? Resources.Resources.General015_Explicit :
-            inputType is "implicit" ? Resources.Resources.General013_Implicit :
-            inputType is "enchant" ? Resources.Resources.General011_Enchant :
-            inputType is "augment" ? Resources.Resources.General145_Augment :
-            inputType is "sanctum" ? Resources.Resources.General111_Sanctum :
-            inputType is "desecrated" ? Resources.Resources.General158_Desecrated :
-            inputType is "fractured" ? Resources.Resources.General016_Fractured :
-            inputType is "crafted" ? Resources.Resources.General012_Crafted :
-            inputType is "skill" ? Resources.Resources.General144_Skill : string.Empty;
     }
 
     // DOESNT WORK WITH API : BAD REQUEST

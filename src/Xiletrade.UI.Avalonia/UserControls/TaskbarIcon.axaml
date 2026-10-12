@@ -1,20 +1,20 @@
 <UserControl x:Class="Xiletrade.UI.Avalonia.UserControls.TaskbarIcon"
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
+             xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.TaskBar;assembly=Xiletrade.Library"
              xmlns:u="clr-namespace:Xiletrade.UI.Avalonia.Util"
-             Background="Black" x:DataType="t:MainViewModel">
+             Background="Black" x:DataType="t:TaskBarViewModel">
     <TrayIcons>
         <TrayIcon Icon="/Assets/AppIcon.ico" ToolTipText="{Binding NotifyName}">
             <TrayIcon.Menu>
                 <NativeMenu>
                     <!-- Tooltips does not work with NativeMenuItem -->
-                    <NativeMenuItem u:Localization.Key="Main242_NotAuthenticated" u:Localization.KeyTip="Main243_AuthenticateTip" Icon="{StaticResource ImgShield}" Command="{Binding TrayCommands.AuthenticateApplicationCommand}" CommandParameter="authenticate" IsVisible="{Binding Authenticated}"/><!-- , Converter={StaticResource InverseBooleanConverter} -->
+                    <NativeMenuItem u:Localization.Key="Main242_NotAuthenticated" u:Localization.KeyTip="Main243_AuthenticateTip" Icon="{StaticResource ImgShield}" Command="{Binding AuthenticateApplicationCommand}" CommandParameter="authenticate" IsVisible="{Binding Authenticated}"/><!-- , Converter={StaticResource InverseBooleanConverter} -->
                     <!--<NativeMenuItemSeparator />-->
-                    <NativeMenuItem u:Localization.Key="Main199_CheckUpdate" Icon="{StaticResource ImgUpdate}" Command="{Binding TrayCommands.CheckUpdateCommand}"/>
-                    <NativeMenuItem u:Localization.Key="Main146_TrayAbout" Icon="{StaticResource ImgInfo}" Command="{Binding TrayCommands.OpenAboutCommand}"/>
-                    <NativeMenuItem u:Localization.Key="Main147_TraySettings" Icon="{StaticResource ImgSettings}" Command="{Binding TrayCommands.OpenConfigCommand}"/>
-                    <NativeMenuItem u:Localization.Key="Main148_TrayClose" Icon="{StaticResource ImgClose}" Command="{Binding TrayCommands.CloseApplicationCommand}" CommandParameter="terminate"/>
+                    <NativeMenuItem u:Localization.Key="Main199_CheckUpdate" Icon="{StaticResource ImgUpdate}" Command="{Binding CheckUpdateCommand}"/>
+                    <NativeMenuItem u:Localization.Key="Main146_TrayAbout" Icon="{StaticResource ImgInfo}" Command="{Binding OpenAboutCommand}"/>
+                    <NativeMenuItem u:Localization.Key="Main147_TraySettings" Icon="{StaticResource ImgSettings}" Command="{Binding OpenConfigCommand}"/>
+                    <NativeMenuItem u:Localization.Key="Main148_TrayClose" Icon="{StaticResource ImgClose}" Command="{Binding CloseApplicationCommand}" CommandParameter="terminate"/>
                 </NativeMenu>
             </TrayIcon.Menu>
         </TrayIcon>

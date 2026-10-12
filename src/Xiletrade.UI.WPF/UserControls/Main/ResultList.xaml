@@ -111,7 +111,7 @@
                         <TextBlock FontSize="14" d:Text="20" Text="{Binding Info.QualityOrCount}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
                         <TextBlock FontSize="14" d:Text="5" Text="{Binding Info.Age}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
                         <TextBlock FontSize="14" d:Text="days" Text="{Binding Info.AgeLabel}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Left" Margin="8,0,0,0" VerticalAlignment="Bottom"/>
-                        <Button Grid.Row="0" Grid.Column="6" Height="14" Width="18" Command="{Binding DataContext.Commands.TravelToHideoutCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding Info}" ToolTip="Travel to hideout" VerticalAlignment="Bottom" Cursor="Hand">
+                        <Button Grid.Row="0" Grid.Column="6" Height="14" Width="18" Command="{Binding DataContext.Result.TravelToHideoutCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding Info}" ToolTip="Travel to hideout" VerticalAlignment="Bottom" Cursor="Hand">
                             <Viewbox Width="10" Height="10" Cursor="">
                                 <Path Style="{StaticResource HouseIcon}"/>
                             </Viewbox>

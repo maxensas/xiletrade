@@ -71,16 +71,10 @@
     </view:ViewBase.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Command="{Binding Commands.WindowLoadedCommand}"/>
-        </i:EventTrigger>
-        <i:EventTrigger EventName="Closed">
-            <i:InvokeCommandAction Command="{Binding Commands.WindowClosedCommand}"/>
+            <i:InvokeCommandAction CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Command="{Binding ViewLoadedCommand}"/>
         </i:EventTrigger>
         <i:EventTrigger EventName="Deactivated">
-            <i:InvokeCommandAction Command="{Binding Commands.WindowDeactivatedCommand}"/>
-        </i:EventTrigger>
-        <i:EventTrigger EventName="Activated">
-            <i:InvokeCommandAction Command="{Binding Commands.WindowActivatedCommand}"/>
+            <i:InvokeCommandAction Command="{Binding ViewDeactivatedCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Border Style="{StaticResource mainBorder}">
@@ -90,8 +84,6 @@
             </TransformGroup>
         </Border.LayoutTransform>
         <Grid x:Name="gridMain">
-            <!-- Taskbar -->
-            <uc:TaskbarIcon/>
             <!-- Header -->
             <uc:Header/>
             
@@ -219,7 +211,7 @@
                 </TabControl>
                 
                 <!-- Footer -->
-                <Button x:Name="btnSearch" Content="{ext:Localization Main098_btnSearch}" HorizontalAlignment="Left" Margin="10,487,0,5"  Width="177" Height="35" d:IsEnabled="True" Command="{Binding Commands.OpenSearchCommand}" FontSize="16" ToolTip="{ext:Localization Main107_btnSearchTip}">
+                <Button x:Name="btnSearch" Content="{ext:Localization Main098_btnSearch}" HorizontalAlignment="Left" Margin="10,487,0,5"  Width="177" Height="35" d:IsEnabled="True" Command="{Binding OpenSearchCommand}" FontSize="16" ToolTip="{ext:Localization Main107_btnSearchTip}">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                             <Setter Property="IsEnabled" Value="False"/>
@@ -257,7 +249,7 @@
                     </Button.Style>
                 </Button>
 
-                <Button x:Name="btnClose" Content="{ext:Localization Main100_btnClose}" HorizontalAlignment="Left" Margin="378,487,0,5" Width="130" Height="35" FontSize="16" ToolTip="{ext:Localization Main109_btnCloseTip}" Command="{Binding TrayCommands.CloseApplicationCommand}"/>
+                <Button x:Name="btnClose" Content="{ext:Localization Main100_btnClose}" HorizontalAlignment="Left" Margin="378,487,0,5" Width="130" Height="35" FontSize="16" ToolTip="{ext:Localization Main109_btnCloseTip}" Command="{Binding CloseViewCommand}"/>
             </Grid>
         </Grid>
     </Border>

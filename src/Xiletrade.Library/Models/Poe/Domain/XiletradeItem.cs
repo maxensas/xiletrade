@@ -264,13 +264,13 @@ internal record class XiletradeItem
 
         var pseudos = new[]
         {
-            (StatPanel.TotalElemResistance, Strings.Stat.Pseudo.TotalElemResistance),
-            (StatPanel.TotalLife, Strings.Stat.Pseudo.TotalLife),
-            (StatPanel.TotalAttribute, Strings.Stat.Pseudo.TotalAttribute),
-            (StatPanel.TotalGlobalEs, Strings.Stat.Pseudo.TotalEs),
-            (StatPanel.MapMoreScarab, Strings.Stat.Pseudo.MoreScarab),
-            (StatPanel.MapMoreCurrency, Strings.Stat.Pseudo.MoreCurrency),
-            (StatPanel.MapMoreDivCard, Strings.Stat.Pseudo.MoreDivCard)
+            (StatPanel.TotalElemResistance, Strings.StatPoe1.Pseudo.TotalElemResistance),
+            (StatPanel.TotalLife, Strings.StatPoe1.Pseudo.TotalLife),
+            (StatPanel.TotalAttribute, Strings.StatPoe1.Pseudo.TotalAttribute),
+            (StatPanel.TotalGlobalEs, Strings.StatPoe1.Pseudo.TotalEs),
+            (StatPanel.MapMoreScarab, Strings.StatPoe1.Pseudo.MoreScarab),
+            (StatPanel.MapMoreCurrency, Strings.StatPoe1.Pseudo.MoreCurrency),
+            (StatPanel.MapMoreDivCard, Strings.StatPoe1.Pseudo.MoreDivCard)
             //(StatPanel.MapMoreMap, "pseudo.pseudo_map_more_map_drops")
         };
 
@@ -293,7 +293,7 @@ internal record class XiletradeItem
         {
             if (form.Condition.FreePrefix)
             {
-                var filter = new ItemFilter(dm.Filter, Strings.Stat.Pseudo.EmmptyPrefix, 1, ModFilter.EMPTYFIELD);
+                var filter = new ItemFilter(dm.Filter, Strings.StatPoe1.Pseudo.EmmptyPrefix, 1, ModFilter.EMPTYFIELD);
                 if (filter.Id.Length > 0)
                 {
                     ItemFilters.Add(filter);
@@ -302,7 +302,7 @@ internal record class XiletradeItem
 
             if (form.Condition.FreeSuffix)
             {
-                var filter = new ItemFilter(dm.Filter, Strings.Stat.Pseudo.EmptySuffix, 1, ModFilter.EMPTYFIELD);
+                var filter = new ItemFilter(dm.Filter, Strings.StatPoe1.Pseudo.EmptySuffix, 1, ModFilter.EMPTYFIELD);
                 if (filter.Id.Length > 0)
                 {
                     ItemFilters.Add(filter);
@@ -314,27 +314,27 @@ internal record class XiletradeItem
 
         if (InfShaper)
         {
-            listInfluence.Add(Strings.Stat.Influence.Shaper);
+            listInfluence.Add(Strings.StatPoe1.Influence.Shaper);
         }
         if (InfElder)
         {
-            listInfluence.Add(Strings.Stat.Influence.Elder);
+            listInfluence.Add(Strings.StatPoe1.Influence.Elder);
         }
         if (InfCrusader)
         {
-            listInfluence.Add(Strings.Stat.Influence.Crusader);
+            listInfluence.Add(Strings.StatPoe1.Influence.Crusader);
         }
         if (InfRedeemer)
         {
-            listInfluence.Add(Strings.Stat.Influence.Redeemer);
+            listInfluence.Add(Strings.StatPoe1.Influence.Redeemer);
         }
         if (InfHunter)
         {
-            listInfluence.Add(Strings.Stat.Influence.Hunter);
+            listInfluence.Add(Strings.StatPoe1.Influence.Hunter);
         }
         if (InfWarlord)
         {
-            listInfluence.Add(Strings.Stat.Influence.Warlord);
+            listInfluence.Add(Strings.StatPoe1.Influence.Warlord);
         }
 
         if (listInfluence.Count > 0)

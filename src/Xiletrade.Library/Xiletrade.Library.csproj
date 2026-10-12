@@ -21,6 +21,7 @@
     <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
     <PackageTags>xiletrade c# .net multiplatform library</PackageTags>
     <PackageId>Xiletrade.Library</PackageId>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks> <!-- invokes -->
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <!-- MOCKs to COMMENT / UNCOMMENT -->

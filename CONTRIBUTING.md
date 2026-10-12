@@ -34,15 +34,16 @@ cd Xiletrade
 
 ## 📁 Project Structure
 ```bash
+                              Description                .cs/.xaml (2026)
 src/
 │
-├── Xiletrade.Library/        # Project Library
-├── Xiletrade.UI.WPF/         # Main WPF App
-├── Xiletrade.UI.Avalonia/    # Avalonia App
-├── Xiletrade.Updater/        # Avalonia App
-├── Xiletrade.Json/           # Console App
-├── Xiletrade.Benchmark/      # Benchmarks Project
-├── Xiletrade.Test/           # Unit Tests Project
+├── Xiletrade.Library/        # Project Library          ~ 40k
+├── Xiletrade.UI.WPF/         # Main WPF App             ~ 14k
+├── Xiletrade.UI.Avalonia/    # Avalonia App             ~  2k
+├── Xiletrade.Updater/        # Avalonia App             <  1k
+├── Xiletrade.Json/           # Console App              ~  2k
+├── Xiletrade.Benchmark/      # Benchmarks Project       ~  1k
+├── Xiletrade.Test/           # Unit Tests Project       ~  2k
 ├── Xiletrade.sln             # Visual Studio Solution
 ```
 ## 🧪 Load and Unload projects

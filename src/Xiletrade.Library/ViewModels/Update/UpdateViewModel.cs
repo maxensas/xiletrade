@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -12,39 +11,30 @@ using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Views;
 
 namespace Xiletrade.Library.ViewModels.Update;
 
-public sealed partial class UpdateViewModel : ViewModelBase
+[ViewModelCreation(ViewModelCreation.Activator)]
+public sealed partial class UpdateViewModel(IUpdateDownloader downloader, 
+    IMessageAdapterService message, IViewManager view, GitHubRelease release) : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
-    private readonly GitHubRelease _release;
-    private readonly IUpdateDownloader _downloader;
-    private readonly IMessageAdapterService _message;
+    private readonly IUpdateDownloader _downloader = downloader;
+    private readonly IMessageAdapterService _message = message;
+    private readonly GitHubRelease _release = release;
+    private readonly IViewManager _view = view;
 
     [ObservableProperty]
-    private string releaseName;
+    private string releaseName = $"{Resources.Resources.Update001_NewVersion} : {release.TagName}";
 
     [ObservableProperty]
-    private string releaseNotes;
+    private string releaseNotes = release.Body;
 
     [ObservableProperty]
-    private string releaseNotesUrl;
+    private string releaseNotesUrl = release.HtmlUrl ?? "https://github.com";
 
     [ObservableProperty]
     private DownloadStatusViewModel status = new();
-
-    public UpdateViewModel(GitHubRelease release, IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-        _downloader = _serviceProvider.GetRequiredService<IUpdateDownloader>();
-        _message = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-        _release = release;
-
-        releaseName = $"{Resources.Resources.Update001_NewVersion} : {release.TagName}"; //: {release.Name}
-        releaseNotes = release.Body; // can be used if webview2 ask too much ressources
-        releaseNotesUrl = release.HtmlUrl ?? "https://github.com"; // fallback
-    }
 
     [RelayCommand]
     private static void Skip(object commandParameter)
@@ -67,7 +57,7 @@ public sealed partial class UpdateViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            _message.Show(ex.GetFormated(), "Failed to update", MessageStatus.Error);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error026_XUpdate, MessageStatus.Error);
         }
     }
 
@@ -75,13 +65,13 @@ public sealed partial class UpdateViewModel : ViewModelBase
     {
         if (_downloader.DownloadPath is null || archiveFile is null)
         {
-            _message.Show("No update asset found.", "Update", MessageStatus.Error);
+            _message.Show("No update asset found.", Resources.Resources.Error004_XError, MessageStatus.Error);
             return;
         }
         var exe = Directory.GetFiles(_downloader.DownloadPath, _downloader.ListUpdaterFiles[0], SearchOption.AllDirectories).FirstOrDefault();
         if (exe is null)
         {
-            _message.Show("Update extracted, but no .exe found.", "Update", MessageStatus.Warning);
+            _message.Show("Update extracted, but no .exe found.", Resources.Resources.Error004_XError, MessageStatus.Warning);
             return;
         }
 
@@ -136,7 +126,7 @@ public sealed partial class UpdateViewModel : ViewModelBase
             {
                 view.Close();
             }
-            _serviceProvider.GetRequiredService<INavigationService>().ShutDownXiletrade();
+            _view.ShutDownNativeApp();
         }
     }
 }

@@ -120,7 +120,7 @@
                           Style="{StaticResource CorruptedComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -134,7 +134,7 @@
                           Style="{StaticResource CorruptedComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -147,7 +147,7 @@
                           ToolTip="{Binding Form.CheckComboInfluence.ToolTip}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ComboBox.Style>
@@ -173,7 +173,7 @@
                             <ToggleButton Content="{Binding Form.Influence.ShaperText}" 
                                           d:Content="{ext:Localization Main037_Shaper}" 
                                           IsChecked="{Binding Form.Influence.Shaper}" 
-                                          Command="{Binding Commands.CheckInfluenceCommand}"
+                                          Command="{Binding Form.CheckInfluenceCommand}"
                                           Style="{StaticResource ToggleSwitchContentSmall}" 
                                           HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
@@ -187,7 +187,7 @@
                             <ToggleButton Content="{Binding Form.Influence.ElderText}" 
                                           d:Content="{ext:Localization Main038_Elder}" 
                                           IsChecked="{Binding Form.Influence.Elder}" 
-                                          Command="{Binding Commands.CheckInfluenceCommand}" 
+                                          Command="{Binding Form.CheckInfluenceCommand}" 
                                           Style="{StaticResource ToggleSwitchContentSmall}" 
                                           HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
@@ -201,7 +201,7 @@
                             <ToggleButton Content="{Binding Form.Influence.CrusaderText}" 
                                           d:Content="{ext:Localization Main039_Crusader}" 
                                           IsChecked="{Binding Form.Influence.Crusader}" 
-                                          Command="{Binding Commands.CheckInfluenceCommand}" 
+                                          Command="{Binding Form.CheckInfluenceCommand}" 
                                           Style="{StaticResource ToggleSwitchContentSmall}" 
                                           HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
@@ -215,7 +215,7 @@
                             <ToggleButton Content="{Binding Form.Influence.RedeemerText}" 
                                           d:Content="{ext:Localization Main040_Redeemer}" 
                                           IsChecked="{Binding Form.Influence.Redeemer}" 
-                                          Command="{Binding Commands.CheckInfluenceCommand}" 
+                                          Command="{Binding Form.CheckInfluenceCommand}" 
                                           Style="{StaticResource ToggleSwitchContentSmall}" 
                                           HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
@@ -229,7 +229,7 @@
                             <ToggleButton Content="{Binding Form.Influence.HunterText}" 
                                           d:Content="{ext:Localization Main041_Hunter}" 
                                           IsChecked="{Binding Form.Influence.Hunter}" 
-                                          Command="{Binding Commands.CheckInfluenceCommand}" 
+                                          Command="{Binding Form.CheckInfluenceCommand}" 
                                           Style="{StaticResource ToggleSwitchContentSmall}" 
                                           HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
@@ -243,7 +243,7 @@
                             <ToggleButton Content="{Binding Form.Influence.WarlordText}" 
                                           d:Content="{ext:Localization Main042_Warlord}" 
                                           IsChecked="{Binding Form.Influence.Warlord}" 
-                                          Command="{Binding Commands.CheckInfluenceCommand}" 
+                                          Command="{Binding Form.CheckInfluenceCommand}" 
                                           Style="{StaticResource ToggleSwitchContentSmall}" 
                                           HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
@@ -262,7 +262,7 @@
                           ToolTip="{Binding Form.CheckComboCondition.ToolTip}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <ComboBox.Style>
@@ -287,7 +287,7 @@
                                           ToolTip="{Binding Form.Condition.FreePrefixToolTip}" 
                                           d:ToolTip="{ext:Localization Main175_cbFreePrefixTip}" 
                                           IsChecked="{Binding Form.Condition.FreePrefix}" 
-                                          Command="{Binding Commands.CheckConditionCommand}" 
+                                          Command="{Binding Form.CheckConditionCommand}" 
                                           Style="{StaticResource ToggleSwitchContentSmall}" 
                                           HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
@@ -303,7 +303,7 @@
                                           d:ToolTip="{ext:Localization Main177_cbFreeSuffixTip}" 
                                           ToolTip="{Binding Form.Condition.FreeSuffixToolTip}" 
                                           IsChecked="{Binding Form.Condition.FreeSuffix}" 
-                                          Command="{Binding Commands.CheckConditionCommand}" 
+                                          Command="{Binding Form.CheckConditionCommand}" 
                                           Style="{StaticResource ToggleSwitchContentSmall}" 
                                           HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
@@ -319,7 +319,7 @@
                                           d:ToolTip="{ext:Localization Main210_cbSocketColorsTip}" 
                                           ToolTip="{Binding Form.Condition.SocketColorsToolTip}" 
                                           IsChecked="{Binding Form.Condition.SocketColors}" 
-                                          Command="{Binding Commands.CheckConditionCommand}" 
+                                          Command="{Binding Form.CheckConditionCommand}" 
                                           Style="{StaticResource ToggleSwitchContentSmall}" 
                                           HorizontalAlignment="Left" VerticalAlignment="Top">
                                 <ToggleButton.LayoutTransform>
@@ -336,7 +336,7 @@
                 <ComboBox SelectedIndex="{Binding Form.IdentifiedIndex}" ItemsSource="{Binding Form.Identified}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -347,7 +347,7 @@
                 <ComboBox SelectedIndex="{Binding Form.MirroredIndex}" ItemsSource="{Binding Form.Mirrored}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -358,7 +358,7 @@
                 <ComboBox SelectedIndex="{Binding Form.FracturedIndex}" ItemsSource="{Binding Form.Fractured}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -369,7 +369,7 @@
                 <ComboBox SelectedIndex="{Binding Form.CraftedIndex}" ItemsSource="{Binding Form.Crafted}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -380,7 +380,7 @@
                 <ComboBox SelectedIndex="{Binding Form.MutatedIndex}" ItemsSource="{Binding Form.Mutated}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -391,7 +391,7 @@
                 <ComboBox SelectedIndex="{Binding Form.SplitIndex}" ItemsSource="{Binding Form.Split}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -402,7 +402,7 @@
                 <ComboBox SelectedIndex="{Binding Form.DesecratedIndex}" ItemsSource="{Binding Form.Desecrated}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -413,7 +413,7 @@
                 <ComboBox SelectedIndex="{Binding Form.VeiledIndex}" ItemsSource="{Binding Form.Veiled}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
@@ -424,7 +424,7 @@
                 <ComboBox SelectedIndex="{Binding Form.SanctifiedIndex}" ItemsSource="{Binding Form.Sanctified}" Style="{StaticResource SimpleComboStyle}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="DropDownClosed">
-                            <i:InvokeCommandAction Command="{Binding Commands.ClearFocusCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>

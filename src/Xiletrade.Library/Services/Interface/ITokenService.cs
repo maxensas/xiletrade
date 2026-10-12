@@ -3,13 +3,16 @@ using Xiletrade.Library.Models.Poe.Domain;
 
 namespace Xiletrade.Library.Services.Interface;
 
+/// <summary>
+/// Manages token storage, retrieval, and lifecycle.
+/// </summary>
 public interface ITokenService
 {
-    public OAuthToken CacheToken { get; }
-    public OAuthToken CustomToken { get; }
+    OAuthToken CacheToken { get; }
+    OAuthToken CustomToken { get; }
 
-    public bool TryInitToken(ReadOnlySpan<char> query, bool useCustom = false);
-    public bool TryGetToken(out string token, bool useCustom = false);
-    public void LoadTokens();
-    public void ClearTokens();
+    bool TryInitToken(ReadOnlySpan<char> query, bool useCustom = false);
+    bool TryGetToken(out string token, bool useCustom = false);
+    void LoadTokens();
+    void ClearTokens();
 }

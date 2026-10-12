@@ -1,27 +1,34 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+using Microsoft.Extensions.Logging;
 using System.Globalization;
 using System.Resources;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Services;
 
+/// <summary>
+/// Provides access to localized resources and manages the current UI culture.
+/// </summary>
+/// <param name="dm"></param>
 public partial class LocalizationService : ObservableObject
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly DataManagerService _dm;
+    private readonly ResourceManager _rm;
 
-    private readonly ResourceManager _rm = Resources.Resources.ResourceManager;
-    
+    public LocalizationService(ILogger<LocalizationService> logger, DataManagerService dm)
+    {
+        _dm = dm;
+        _rm = Resources.Resources.ResourceManager;
+
+#if DEBUG
+        logger?.LogInformation("Service launched");
+#endif
+    }
+
     [ObservableProperty]
     private CultureInfo currentCulture = CultureInfo.CurrentUICulture;
 
     partial void OnCurrentCultureChanged(CultureInfo value) => OnPropertyChanged(string.Empty); // "Item[]"
-
-    public LocalizationService(IServiceProvider service)
-    {
-        _serviceProvider = service;
-    }
 
     public string this[string key] => _rm.GetString(key, CurrentCulture) ?? $"!{key}!";
 
@@ -36,8 +43,7 @@ public partial class LocalizationService : ObservableObject
             return;
         }
         
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        var indexCulture = culture < 0 ? dm.Config.Options.Language : culture;
+        var indexCulture = culture < 0 ? _dm.Config.Options.Language : culture;
         var cultureRefresh = CultureInfo.CreateSpecificCulture(Strings.Culture[indexCulture]);
         CultureInfo.CurrentCulture = cultureRefresh;
         CultureInfo.CurrentUICulture = cultureRefresh;

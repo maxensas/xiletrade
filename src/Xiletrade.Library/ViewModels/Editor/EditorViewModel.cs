@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +13,17 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.ViewModels.Main;
+using Xiletrade.Library.ViewModels.TaskBar;
 
 namespace Xiletrade.Library.ViewModels.Editor;
 
+[ViewModelCreation(ViewModelCreation.Container)]
 public sealed partial class EditorViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly ITokenService _tokenService;
+    private readonly IMessageAdapterService _message;
     private readonly DataManagerService _dm;
+    private readonly TaskBarViewModel _taskBarVm;
 
     [ObservableProperty]
     private AsyncObservableCollection<ConfigMods> dangerousMods = new();
@@ -56,10 +58,14 @@ public sealed partial class EditorViewModel : ViewModelBase
     [ObservableProperty]
     private string poeSessId;
 
-    public EditorViewModel(IServiceProvider serviceProvider)
+    public EditorViewModel(ITokenService tokenService, IMessageAdapterService message,
+        DataManagerService dm, TaskBarViewModel taskBarVm)
     {
-        _serviceProvider = serviceProvider;
-        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        _dm = dm;
+        _tokenService = tokenService;
+        _message = message;
+        _taskBarVm = taskBarVm;
+
         viewScale = _dm.Config.Options.Scale;
         string dataPath = System.IO.Path.GetFullPath("Data\\");
         
@@ -91,34 +97,30 @@ public sealed partial class EditorViewModel : ViewModelBase
     [RelayCommand]
     private void AddPoeId(object commandParameter)
     {
-        var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
         if (RegexUtil.MD5().IsMatch(PoeSessId))
         {
-            _serviceProvider.GetRequiredService<ITokenService>().TryInitToken(PoeSessId, useCustom: true);
-            _serviceProvider.GetRequiredService<XiletradeService>().RefreshAuthenticationState();
+            _tokenService.TryInitToken(PoeSessId, useCustom: true);
+            _taskBarVm.RefreshAuthenticationState();
 
-            var validity = _serviceProvider.GetRequiredService<ITokenService>().CustomToken is not null;
+            var validity = _tokenService.CustomToken is not null;
             if (validity)
             {
-                ms.Show("You entered a valid token.\n\n You need to restart the application to take effect.", "Token validation", MessageStatus.Information);
+                _message.Show("You entered a valid token.\n\n You need to restart the application to take effect.", "Token validation", MessageStatus.Information);
                 return;
             }
         }
-        ms.Show("You entered an invalid token.", "Token validation", MessageStatus.Error);
+        _message.Show("You entered an invalid token.", "Token validation", MessageStatus.Error);
         PoeSessId = string.Empty;
     }
 
     [RelayCommand]
     private void RemovePoeId(object commandParameter)
     {
-        var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-        var tokenService = _serviceProvider.GetRequiredService<ITokenService>();
-
-        var auth = tokenService.CacheToken is not null ? "\n0Auth token removed." : string.Empty;
-        var poeid = tokenService.CustomToken is not null ? "\nPOESESSID token removed." : string.Empty;
-        tokenService.ClearTokens();
-
-        ms.Show(string.Format("All tokens are now removed from your device.\n{0}{1}", auth, poeid)
+        var auth = _tokenService.CacheToken is not null ? "\n0Auth token removed." : string.Empty;
+        var poeid = _tokenService.CustomToken is not null ? "\nPOESESSID token removed." : string.Empty;
+        _tokenService.ClearTokens();
+        
+        _message.Show(string.Format("All tokens are now removed from your device.\n{0}{1}", auth, poeid)
             , "Token removal", MessageStatus.Information);
 
         PoeSessId = string.Empty;
@@ -127,8 +129,9 @@ public sealed partial class EditorViewModel : ViewModelBase
     [RelayCommand]
     private async Task Test(object commandParameter)
     {
+        /*
         var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-        var mvm = _serviceProvider.GetRequiredService<MainViewModel>();
+        var mvm = _serviceProvider.GetRequiredService<TaskBarViewModel>();
         if (!mvm.Authenticated)
         {
             ms.Show("You are not authenticated", "Test command", MessageStatus.Information);
@@ -148,6 +151,7 @@ public sealed partial class EditorViewModel : ViewModelBase
         {
             ms.Show(ex.GetFormated(), "Test error", MessageStatus.Error);
         }
+        */
     }
 
     private static long GetPreviousHourUnixTimestamp()
@@ -277,8 +281,8 @@ public sealed partial class EditorViewModel : ViewModelBase
             }
         }
         catch (Exception ex) 
-        { 
-
+        {
+            _message.Show(ex.Message, Resources.Resources.Error004_XError, MessageStatus.Error);
         }
     }
 }

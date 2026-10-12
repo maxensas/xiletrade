@@ -164,7 +164,7 @@ public sealed record InfoDescription
         {
             ReadOnlySpan<char> lastLine = finalSpan[(lastPos + Strings.ItemInfoDelimiter.Length)..];
             
-            if (lastLine.Contain(Strings.bo) || lastLine.Contain(Strings.price))
+            if (lastLine.Contain(Strings.Word.bo) || lastLine.Contain(Strings.Word.price))
             {
                 finalSpan = finalSpan[..lastPos];
             }

@@ -78,89 +78,18 @@
                     <DataTemplate>
                         <TextBlock Text="{Binding Content}" ToolTip="{Binding ToolTip}" Tag="{Binding Tag}">
                             <TextBlock.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.SelectBulkIndexCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
-                                <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.ShowBulkWhisperCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                                <MouseBinding MouseAction="LeftClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Form.ItemExchange.Bulk.SelectBulkIndexCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                                <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Form.ItemExchange.Bulk.ShowBulkWhisperCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
                             </TextBlock.InputBindings>
                         </TextBlock>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-
-<!--
-            <ListBox x:Name="liPriceBulk" FontFamily="Consolas" Margin="0,0,0,2" BorderThickness="1" ItemsSource="{Binding Path=Result.BulkList}" d:ItemsSource="{d:SampleData ItemCount=20}"
-                 VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" HorizontalContentAlignment="Stretch" SelectedIndex="{Binding Result.SelectedIndex.Bulk}" AlternationCount="2">
-                <ListBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="3"/>
-                    </Style>
-                </ListBox.Resources>
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem" x:Name="lbItemStyle">
-                        <Setter Property="BorderThickness" Value="0,0,0,0" />
-                    </Style>
-                </ListBox.ItemContainerStyle>
-
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <ListBoxItem Content="{Binding Content}" ToolTip="{Binding ToolTip}" Tag="{Binding Tag}">
-                            <ListBoxItem.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.SelectBulkIndexCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
-                                <MouseBinding MouseAction="LeftDoubleClick" CommandParameter="{Binding Index}" Command="{Binding Path=DataContext.Commands.ShowBulkWhisperCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
-                            </ListBoxItem.InputBindings>
-                            <ListBoxItem.Style>
-                                <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                                    <Setter Property="Foreground" Value="White"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding FgColor}" Value="Red">
-                                            <Setter Property="Foreground" Value="Red"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding FgColor}" Value="YellowGreen">
-                                            <Setter Property="Foreground" Value="YellowGreen"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding FgColor}" Value="LimeGreen">
-                                            <Setter Property="Foreground" Value="LimeGreen"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding FgColor}" Value="Yellow">
-                                            <Setter Property="Foreground" Value="Yellow"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding FgColor}" Value="DeepSkyBlue">
-                                            <Setter Property="Foreground" Value="DeepSkyBlue"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding FgColor}" Value="DarkRed">
-                                            <Setter Property="Foreground" Value="DarkRed"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding FgColor}" Value="LightGray">
-                                            <Setter Property="Foreground" Value="LightGray"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding FgColor}" Value="Azure">
-                                            <Setter Property="Foreground" Value="Azure"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding FgColor}" Value="Gray">
-                                            <Setter Property="Foreground" Value="Gray"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ListBoxItem.Style>
-                        </ListBoxItem>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            -->
             <ListBox x:Name="liWhisper" Visibility="Hidden" ItemsSource="{Binding Path=Result.BulkList}"/>
         </Grid>
         <Grid x:Name="gridBulk" Margin="0,286,0,0" VerticalAlignment="Top" Height="92">
             <ComboBox x:Name="cbBulkPay1" HorizontalAlignment="Left" Margin="299,31,0,0" VerticalAlignment="Top" MaxDropDownHeight="190" Width="130" Height="24" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                  VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Pay.Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Pay.CategoryIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="pay" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+                  VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.ItemExchange.Bulk.Pay.Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.ItemExchange.Bulk.Pay.CategoryIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
                         <Style.Triggers>
@@ -181,7 +110,7 @@
                     <Style TargetType="{x:Type Grid}">
                         <Setter Property="Visibility" Value="Collapsed"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Form.Bulk.Pay.Search}" Value="">
+                            <DataTrigger Binding="{Binding Form.ItemExchange.Bulk.Pay.Search}" Value="">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -199,9 +128,9 @@
                     </Rectangle.RenderTransform>
                 </Rectangle>
             </Grid>
-            <TextBox x:Name="tbPay" Margin="382,5,62,0" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}"   ToolTip="{ext:Localization Main116_Keywords}" VerticalAlignment="Top" IsEnabled="True"  Text="{Binding Form.Bulk.Pay.Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox x:Name="tbPay" Margin="382,5,62,0" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}"   ToolTip="{ext:Localization Main116_Keywords}" VerticalAlignment="Top" IsEnabled="True"  Text="{Binding Form.ItemExchange.Bulk.Pay.Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.InputBindings>
-                    <KeyBinding Key="Return" Command="{Binding Commands.SearchCurrencyCommand}" CommandParameter="pay" />
+                    <KeyBinding Key="Return" Command="{Binding Form.ItemExchange.Bulk.Pay.SearchCurrencyCommand}" CommandParameter="pay" />
                 </TextBox.InputBindings>
             </TextBox>
             <Grid Margin="291,3,128,65" ToolTip="{ext:Localization Main093_lbPay}">
@@ -213,9 +142,9 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="lbPay" Text="{ext:Localization Main093_lbPay}" Grid.Column="1" HorizontalAlignment="Center" FontSize="14" Style="{StaticResource TextBlockSubTitle}" Margin="0,3,0,0"/>
-                <Image x:Name="imgPayLoad" Grid.Column="3" Height="24" Width="24" d:Source="{StaticResource ImgExalt}" Source="{Binding Form.Bulk.Pay.Image, Converter={StaticResource imageSourceConverter}}"/>
+                <Image x:Name="imgPayLoad" Grid.Column="3" Height="24" Width="24" d:Source="{StaticResource ImgExalt}" Source="{Binding Form.ItemExchange.Bulk.Pay.Image, Converter={StaticResource imageSourceConverter}}"/>
             </Grid>
-            <TextBlock x:Name="lbTierPay" Text="{ext:Localization Main094_lbTier}"  Margin="421,65,25,11" Width="42" FontSize="10" Style="{StaticResource TextBlockSubTitle}" TextAlignment="Center" Visibility="{Binding Form.Bulk.Pay.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
+            <TextBlock x:Name="lbTierPay" Text="{ext:Localization Main094_lbTier}"  Margin="421,65,25,11" Width="42" FontSize="10" Style="{StaticResource TextBlockSubTitle}" TextAlignment="Center" Visibility="{Binding Form.ItemExchange.Bulk.Pay.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
                 <TextBlock.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -226,29 +155,15 @@
                 </TextBlock.RenderTransform>
             </TextBlock>
             <ComboBox x:Name="cbTierPay" HorizontalAlignment="Left" Margin="444,31,0,0" VerticalAlignment="Top" MaxDropDownHeight="190" Width="55" Height="24" FontFamily="{StaticResource FontinSmallCaps}"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                  VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Pay.Tier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Pay.TierIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.Bulk.Pay.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
-
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="pay/tier" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-
-            </ComboBox>
+                  VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.ItemExchange.Bulk.Pay.Tier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.ItemExchange.Bulk.Pay.TierIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.ItemExchange.Bulk.Pay.TierVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
             <ComboBox x:Name="cbBulkPay2" HorizontalAlignment="Left" Margin="299,62,0,0" VerticalAlignment="Top" MaxDropDownHeight="160" Width="200" Height="24" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                  VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Pay.Currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Pay.CurrencyIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.Bulk.Pay.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="pay" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </ComboBox>
+                  VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.ItemExchange.Bulk.Pay.Currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.ItemExchange.Bulk.Pay.CurrencyIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.ItemExchange.Bulk.Pay.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
             <Image x:Name="imgPayChaos" Margin="450,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}">
                 <Image.Style>
                     <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ChaosImage}"/>
                 </Image.Style>
                 <Image.InputBindings>
-                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="paychaos" MouseAction="LeftClick"/>
+                    <MouseBinding Command="{Binding Form.ItemExchange.Bulk.Pay.UpdateWithCurrencyCommand}" CommandParameter="chaos" MouseAction="LeftClick"/>
                 </Image.InputBindings>
             </Image>
             <Image x:Name="imgPayExalt" Margin="450,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
@@ -256,7 +171,7 @@
                     <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ExaltImage}"/>
                 </Image.Style>
                 <Image.InputBindings>
-                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="payexalted" MouseAction="LeftClick"/>
+                    <MouseBinding Command="{Binding Form.ItemExchange.Bulk.Pay.UpdateWithCurrencyCommand}" CommandParameter="exalted" MouseAction="LeftClick"/>
                 </Image.InputBindings>
             </Image>
             <Image x:Name="imgPayDivine" Margin="469,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
@@ -264,7 +179,7 @@
                     <Style TargetType="{x:Type Image}" BasedOn="{StaticResource DivineImage}"/>
                 </Image.Style>
                 <Image.InputBindings>
-                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="paydivine" MouseAction="LeftClick"/>
+                    <MouseBinding Command="{Binding Form.ItemExchange.Bulk.Pay.UpdateWithCurrencyCommand}" CommandParameter="divine" MouseAction="LeftClick"/>
                 </Image.InputBindings>
             </Image>
             <Image x:Name="imgPayNothing" Margin="486,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
@@ -272,7 +187,7 @@
                     <Style TargetType="{x:Type Image}" BasedOn="{StaticResource NothingImage}"/>
                 </Image.Style>
                 <Image.InputBindings>
-                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="paynothing" MouseAction="LeftClick"/>
+                    <MouseBinding Command="{Binding Form.ItemExchange.Bulk.Pay.UpdateWithCurrencyCommand}" CommandParameter="nothing" MouseAction="LeftClick"/>
                 </Image.InputBindings>
             </Image>
 
@@ -294,15 +209,10 @@
             </Button.Style>
         </Button>
         -->
-            <Button x:Name="btnInvert" Content="{ext:Localization Main096_btnInvert}"  HorizontalAlignment="Left" Height="20" Margin="216,64,0,0" VerticalAlignment="Top" Width="71" FontSize="12" Command="{Binding Commands.InvertBulkCommand}" ToolTip="{ext:Localization Main115_btnInvertTip}"/>
+            <Button x:Name="btnInvert" Content="{ext:Localization Main096_btnInvert}"  HorizontalAlignment="Left" Height="20" Margin="216,64,0,0" VerticalAlignment="Top" Width="71" FontSize="12" Command="{Binding Form.ItemExchange.Bulk.InvertBulkCommand}" ToolTip="{ext:Localization Main115_btnInvertTip}"/>
             <Border x:Name="borderBulk2" BorderBrush="{StaticResource WindowBackgroundBrush}" BorderThickness="1" HorizontalAlignment="Left" Height="82" Margin="291,5,0,0" VerticalAlignment="Top" Width="1" RenderTransformOrigin="0.5,0.5" />
             <ComboBox x:Name="cbBulkGet1" HorizontalAlignment="Left" Margin="5,31,0,0" VerticalAlignment="Top" MaxDropDownHeight="190" Width="130" Height="24" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                  VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Get.Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Get.CategoryIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="get" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+                  VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.ItemExchange.Bulk.Get.Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.ItemExchange.Bulk.Get.CategoryIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
                         <Style.Triggers>
@@ -327,9 +237,9 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="lbGet" Text="{ext:Localization Main092_lbGet}" Grid.Column="1" HorizontalAlignment="Center" FontSize="14" Style="{StaticResource TextBlockSubTitle}" Margin="0,3,0,2"/>
-                <Image x:Name="imgGetLoad" Grid.Column="3" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding Form.Bulk.Get.Image, Converter={StaticResource imageSourceConverter}}"/>
+                <Image x:Name="imgGetLoad" Grid.Column="3" Height="24" Width="24" d:Source="{StaticResource ImgChaos}" Source="{Binding Form.ItemExchange.Bulk.Get.Image, Converter={StaticResource imageSourceConverter}}"/>
             </Grid>
-            <TextBlock x:Name="lbTierGet" Text="{ext:Localization Main094_lbTier}"  Margin="128,65,320,11" Width="42" FontSize="10" Style="{StaticResource TextBlockSubTitle}" TextAlignment="Center" Visibility="{Binding Form.Bulk.Get.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
+            <TextBlock x:Name="lbTierGet" Text="{ext:Localization Main094_lbTier}"  Margin="128,65,320,11" Width="42" FontSize="10" Style="{StaticResource TextBlockSubTitle}" TextAlignment="Center" Visibility="{Binding Form.ItemExchange.Bulk.Get.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
                 <TextBlock.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -341,31 +251,17 @@
             </TextBlock>
 
             <ComboBox x:Name="cbTierGet" HorizontalAlignment="Left" Margin="150,31,0,0" VerticalAlignment="Top" MaxDropDownHeight="190" Width="55" Height="24" FontFamily="{StaticResource FontinSmallCaps}"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                  VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Get.Tier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Get.TierIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.Bulk.Get.TierVisible, Converter={StaticResource bool2VisibilityConverter}}">
-
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.SelectBulkCommand}" CommandParameter="get/tier" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-
-            </ComboBox>
+                  VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.ItemExchange.Bulk.Get.Tier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.ItemExchange.Bulk.Get.TierIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.ItemExchange.Bulk.Get.TierVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
             <ComboBox x:Name="cbBulkGet2" HorizontalAlignment="Left" Margin="5,62,0,0" VerticalAlignment="Top" MaxDropDownHeight="160" Width="200" Height="24" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal"   HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-                  VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.Bulk.Get.Currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.Bulk.Get.CurrencyIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.Bulk.Get.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding Commands.ChangeCommand}" CommandParameter="get" IsEnabled="{Binding Form.IsSelectionEnabled}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </ComboBox>
-            <TextBlock x:Name="lbMinStock" Text="{ext:Localization Main097_lbMinStock}"  Margin="230,20,236,59" FontSize="10" Style="{StaticResource TextBlockSubTitle}" TextAlignment="Center" Visibility="{Binding Form.Bulk.Get.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
-            <TextBox x:Name="tbMinStock" Margin="230,-6,0,0" d:Text="1" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Center" FontFamily="{StaticResource FontinSmallCaps}" ToolTip="{ext:Localization Main114_tbMinStockTip}" Visibility="{Binding Form.Bulk.Get.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}" Text="{Binding Form.Bulk.Stock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="44"/>
+                  VirtualizingStackPanel.IsVirtualizing="False" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.ItemExchange.Bulk.Get.Currency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding Form.ItemExchange.Bulk.Get.CurrencyIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Form.ItemExchange.Bulk.Get.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <TextBlock x:Name="lbMinStock" Text="{ext:Localization Main097_lbMinStock}"  Margin="230,20,236,59" FontSize="10" Style="{StaticResource TextBlockSubTitle}" TextAlignment="Center" Visibility="{Binding Form.ItemExchange.Bulk.Get.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <TextBox x:Name="tbMinStock" Margin="230,-6,0,0" d:Text="1" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Center" FontFamily="{StaticResource FontinSmallCaps}" ToolTip="{ext:Localization Main114_tbMinStockTip}" Visibility="{Binding Form.ItemExchange.Bulk.Get.CurrencyVisible, Converter={StaticResource bool2VisibilityConverter}}" Text="{Binding Form.ItemExchange.Bulk.Stock, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="44"/>
             <Grid x:Name="scopeGet" Margin="86,5,355,68" Panel.ZIndex="1" d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
                 <Grid.Style>
                     <Style TargetType="{x:Type Grid}">
                         <Setter Property="Visibility" Value="Collapsed"/>
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Form.Bulk.Get.Search}" Value="">
+                            <DataTrigger Binding="{Binding Form.ItemExchange.Bulk.Get.Search}" Value="">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -383,9 +279,9 @@
                     </Rectangle.RenderTransform>
                 </Rectangle>
             </Grid>
-            <TextBox x:Name="tbGet" Margin="86,5,355,0" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}"   ToolTip="{ext:Localization Main116_Keywords}" VerticalAlignment="Top" IsEnabled="True"  Text="{Binding Form.Bulk.Get.Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox x:Name="tbGet" Margin="86,5,355,0" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}"   ToolTip="{ext:Localization Main116_Keywords}" VerticalAlignment="Top" IsEnabled="True"  Text="{Binding Form.ItemExchange.Bulk.Get.Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.InputBindings>
-                    <KeyBinding Key="Return" Command="{Binding Commands.SearchCurrencyCommand}" CommandParameter="get" />
+                    <KeyBinding Key="Return" Command="{Binding Form.ItemExchange.Bulk.Get.SearchCurrencyCommand}" CommandParameter="get" />
                 </TextBox.InputBindings>
             </TextBox>
             <Image x:Name="imgGetChaos" Margin="156,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}">
@@ -393,7 +289,7 @@
                     <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ChaosImage}"/>
                 </Image.Style>
                 <Image.InputBindings>
-                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="getchaos" MouseAction="LeftClick"/>
+                    <MouseBinding Command="{Binding Form.ItemExchange.Bulk.Get.UpdateWithCurrencyCommand}" CommandParameter="chaos" MouseAction="LeftClick"/>
                 </Image.InputBindings>
             </Image>
             <Image x:Name="imgGetExalt" Margin="156,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="18" Width="18" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
@@ -401,7 +297,7 @@
                     <Style TargetType="{x:Type Image}" BasedOn="{StaticResource ExaltImage}"/>
                 </Image.Style>
                 <Image.InputBindings>
-                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="getexalted" MouseAction="LeftClick"/>
+                    <MouseBinding Command="{Binding Form.ItemExchange.Bulk.Get.UpdateWithCurrencyCommand}" CommandParameter="exalted" MouseAction="LeftClick"/>
                 </Image.InputBindings>
             </Image>
             <Image x:Name="imgGetDivine" Margin="175,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
@@ -409,7 +305,7 @@
                     <Style TargetType="{x:Type Image}" BasedOn="{StaticResource DivineImage}"/>
                 </Image.Style>
                 <Image.InputBindings>
-                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="getdivine" MouseAction="LeftClick"/>
+                    <MouseBinding Command="{Binding Form.ItemExchange.Bulk.Get.UpdateWithCurrencyCommand}" CommandParameter="divine" MouseAction="LeftClick"/>
                 </Image.InputBindings>
             </Image>
             <Image x:Name="imgGetNothing" Margin="192,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16">
@@ -417,7 +313,7 @@
                     <Style TargetType="{x:Type Image}" BasedOn="{StaticResource NothingImage}"/>
                 </Image.Style>
                 <Image.InputBindings>
-                    <MouseBinding Command="{Binding Commands.ResetBulkImageCommand}" CommandParameter="getnothing" MouseAction="LeftClick"/>
+                    <MouseBinding Command="{Binding Form.ItemExchange.Bulk.Get.UpdateWithCurrencyCommand}" CommandParameter="nothing" MouseAction="LeftClick"/>
                 </Image.InputBindings>
             </Image>
         </Grid>
@@ -427,8 +323,8 @@
                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderResult}"/>
             </Border.Style>
             <Border.InputBindings>
-                <MouseBinding Command="{Binding Commands.RefreshSearchCommand}" MouseAction="LeftClick"/>
-                <MouseBinding Command="{Binding Commands.SwitchTabCommand}" CommandParameter="bulk" MouseAction="RightClick"/>
+                <MouseBinding Command="{Binding Form.ItemExchange.Bulk.RefreshBulkCommand}" MouseAction="LeftClick"/>
+                <MouseBinding Command="{Binding Form.Tab.SwitchTabCommand}" CommandParameter="bulk" MouseAction="RightClick"/>
             </Border.InputBindings>
             <Grid Margin="0,0,0,0" Cursor="Hand">
                 <TextBlock x:Name="tkPriceBulkBis" d:Text="" Cursor="Hand" Height="43" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="2" Margin="8,5,0,0" Text="{Binding Result.Bulk.LeftString}" Opacity="0.5" FontSize="12" LineHeight="14" LineStackingStrategy="BlockLineHeight">

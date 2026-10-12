@@ -1,0 +1,75 @@
+﻿using Microsoft.Extensions.Logging;
+using System.Threading;
+using System.Windows;
+using Xiletrade.Library.Models.Application.Adapter;
+
+namespace Xiletrade.UI.WPF.Services;
+
+/// <summary>
+/// Service used to access System.Windows.Clipboard with STA constraint.
+/// </summary>
+/// <remarks>
+/// Not used anymore
+/// </remarks>
+internal sealed class ClipboardAdapter : IClipboardAdapter
+{
+    private static readonly Lock _clipboardLock = new();
+
+    public ClipboardAdapter(ILogger<ClipboardAdapter> logger)
+    {
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
+    }
+
+    public bool ContainsTextData()
+    {
+        lock (_clipboardLock)
+        {
+            return Clipboard.ContainsData(DataFormats.Text);
+        }
+    }
+
+    public bool ContainsUnicodeTextData()
+    {
+        lock (_clipboardLock)
+        {
+            return Clipboard.ContainsData(DataFormats.UnicodeText);
+        }
+    }
+
+    public void Clear()
+    {
+        lock (_clipboardLock)
+        {
+            Clipboard.Clear();
+        }
+    }
+
+    public void SetClipboard(string data)
+    {
+        lock (_clipboardLock)
+        {
+            Clipboard.SetText(data);
+        }
+    }
+
+    public string GetClipboard(bool clear)
+    {
+        lock (_clipboardLock)
+        {
+            IDataObject iData = Clipboard.GetDataObject();
+
+            string cb = Clipboard.ContainsData(DataFormats.UnicodeText)
+                ? (string)iData.GetData(DataFormats.UnicodeText)
+                : (string)iData.GetData(DataFormats.Text);
+
+            if (clear)
+            {
+                Clipboard.Clear();
+            }
+
+            return cb;
+        }
+    }
+}

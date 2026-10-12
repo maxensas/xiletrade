@@ -129,7 +129,7 @@ internal static class CurrencyResultDataExtensions
 
             foreach (var entry in curData.Entries)
             {
-                if (entry.Id is Strings.sep)
+                if (entry.Id is Strings.Word.sep)
                 {
                     continue;
                 }
@@ -156,7 +156,7 @@ internal static class CurrencyResultDataExtensions
 
             foreach (var entry in curData.Entries)
             {
-                if (entry.Id is Strings.sep)
+                if (entry.Id is Strings.Word.sep)
                     continue;
 
                 bool allWordsMatch = true;
@@ -253,7 +253,7 @@ internal static class CurrencyResultDataExtensions
 
             foreach (var entry in currencie.Entries)
             {
-                if (entry.Text.Length is 0 || entry.Id is Strings.sep)
+                if (entry.Text.Length is 0 || entry.Id is Strings.Word.sep)
                     continue;
 
                 bool addItem = false;
@@ -264,7 +264,7 @@ internal static class CurrencyResultDataExtensions
                 {
                     if (exchangeTier.Length > 0)
                     {
-                        string tier = Strings.tierPrefix + exchangeTier.Replace("T", string.Empty);
+                        string tier = Strings.Word.tierPrefix + exchangeTier.Replace("T", string.Empty);
                         addItem = entry.Id.EndWith(tier);
                     }
                 }
@@ -290,8 +290,8 @@ internal static class CurrencyResultDataExtensions
                 }
                 else if (searchKind is Strings.CurrencyTypePoe1.Currency)
                 {
-                    bool is_mainCur = Strings.dicMainCur.TryGetValue(entry.Id, out string curVal2);
-                    bool is_exoticCur = Strings.dicExoticCur.TryGetValue(entry.Id, out string curVal3);
+                    bool is_mainCur = Strings.Collection.dicMainCur.TryGetValue(entry.Id, out string curVal2);
+                    bool is_exoticCur = Strings.Collection.dicExoticCur.TryGetValue(entry.Id, out string curVal3);
                     addItem = selValue == Resources.Resources.Main044_MainCur ? is_mainCur && !is_exoticCur
                             : selValue == Resources.Resources.Main207_ExoticCurrency ? !is_mainCur && is_exoticCur
                             : selValue == Resources.Resources.Main045_OtherCur ? !is_mainCur && !is_exoticCur
@@ -299,8 +299,8 @@ internal static class CurrencyResultDataExtensions
                 }
                 else if (searchKind is Strings.CurrencyTypePoe1.Fragments)
                 {
-                    bool is_scarab = entry.Id.Contain(Strings.scarab);
-                    bool is_stone = Strings.dicStones.TryGetValue(entry.Id, out string stoneVal);
+                    bool is_scarab = entry.Id.Contain(Strings.Word.scarab);
+                    bool is_stone = Strings.Collection.dicStones.TryGetValue(entry.Id, out string stoneVal);
                     addItem = selValue == Resources.Resources.Main047_Stones ? (is_stone && !is_scarab)
                             : selValue == Resources.Resources.Main046_MapFrag ? (!is_stone && !is_scarab)
                             : selValue == Resources.Resources.Main052_Scarabs ? (!is_stone && is_scarab)

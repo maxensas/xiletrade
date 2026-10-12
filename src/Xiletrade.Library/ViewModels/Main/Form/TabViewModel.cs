@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
@@ -79,7 +80,7 @@ public sealed partial class TabViewModel : ViewModelBase
         _form = form;
 
         var flag = item.Flag;
-        if (item.State.ExchangeCurrency && (!flag.Unique || flag.Map))
+        if (item.State.ExchangeCurrency && (!flag.Rarity.Unique || flag.Map.IsMap))
         {
             bulkEnable = true;
         }
@@ -88,13 +89,51 @@ public sealed partial class TabViewModel : ViewModelBase
         quickSelected = true;
 
         // Open Xiletrade with Quick or Detail view tab
-        var selectDetail = !(flag.Map && flag.Corrupted) && (flag.StackableCurrency
-            || flag.Map || flag.Gems || flag.CapturedBeast || flag.UltimatumPoe2
-            || flag.UncutGem || flag.Wombgift || flag.TrialCoins || flag.SanctumResearch
+        var selectDetail = !(flag.Map.IsMap && flag.Tag.Corrupted) && (flag.StackableCurrency
+            || flag.Map.IsMap || flag.Gem.IsGem || flag.Tag.CapturedBeast || flag.UltimatumPoe2
+            || flag.Gem.Uncut || flag.Wombgift || flag.Area.TrialCoins || flag.Area.SanctumResearch
             || item.State.ExchangeCurrency);
         detailSelected = selectDetail;
         quickSelected = !selectDetail;
 
-        if (flag.Rare && !flag.Map && !flag.CapturedBeast) poePriceEnable = true;
+        if (flag.Rarity.Rare && !flag.Map.IsMap && !flag.Tag.CapturedBeast) poePriceEnable = true;
+    }
+
+    [RelayCommand]
+    private void SwitchTab(object commandParameter)
+    {
+        if (commandParameter is string tab)
+        {
+            if (tab is "quick" && DetailEnable)
+            {
+                DetailSelected = true;
+            }
+            if (tab is "detail")
+            {
+                if (BulkEnable)
+                {
+                    BulkSelected = true;
+                    return;
+                }
+                QuickSelected = true;
+            }
+            if (tab is "bulk")
+            {
+                ShopSelected = true;
+            }
+            if (tab is "shop")
+            {
+                if (QuickEnable)
+                {
+                    QuickSelected = true;
+                    return;
+                }
+                CustomSearchSelected = true;
+            }
+            if (tab is "custom")
+            {
+                BulkSelected = true;
+            }
+        }
     }
 }

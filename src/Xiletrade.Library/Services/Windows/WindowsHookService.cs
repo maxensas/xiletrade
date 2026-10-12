@@ -1,32 +1,55 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.Shared.Interop.Windows;
 
 namespace Xiletrade.Library.Services.Windows;
 
-public sealed class WindowsHookService : IHookService
+/// <summary>
+/// Provides a native Windows window for receiving system messages.
+/// </summary>
+[SupportedOSPlatform("windows")]
+public sealed class WindowsHookService : IHookService, IDisposable
 {
     public nint Hwnd { get; private set; }
 
+    private readonly string _className = $"SpongeWindowClass_{Guid.NewGuid():N}";
+
+    // Kept in a field so the GC never collects the delegate while Windows holds its function pointer.
     private readonly Native.WndProcDelegate _wndProcDelegate;
 
     private event EventHandler<NativeMessage> WndProcCalled;
+
+    private bool _disposed;
 
     public WindowsHookService(Action<int, nint> action)
     {
         _wndProcDelegate = WndProc;
 
-        var wc = new Native.WNDCLASS
+        nint classNamePtr = Marshal.StringToHGlobalUni(_className);
+        try
         {
-            lpfnWndProc = _wndProcDelegate,
-            lpszClassName = "SpongeWindowClass"
-        };
+            var wc = new Native.WNDCLASS
+            {
+                lpfnWndProc = Marshal.GetFunctionPointerForDelegate(_wndProcDelegate),
+                lpszClassName = classNamePtr
+            };
 
-        Native.RegisterClass(ref wc);
+            if (Native.RegisterClass(in wc) is 0)
+            {
+                throw new Win32Exception(Marshal.GetLastWin32Error());
+            }
+        }
+        finally
+        {
+            // RegisterClass copies the class name, the buffer can be freed.
+            Marshal.FreeHGlobal(classNamePtr);
+        }
 
-        Hwnd = Native.CreateWindowEx(0, wc.lpszClassName, "", 0, 0, 0, 0, 0,
-            IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero
-        );
+        Hwnd = Native.CreateWindowEx(0, _className, "", 0, 0, 0, 0, 0,
+            nint.Zero, nint.Zero, nint.Zero, nint.Zero);
 
         //Native.AddClipboardFormatListener(Hwnd);
 
@@ -34,7 +57,7 @@ public sealed class WindowsHookService : IHookService
         WndProcCalled += (s, e) => action(e.Msg, e.WParam);
     }
 
-    private IntPtr WndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
+    private nint WndProc(nint hWnd, uint msg, nint wParam, nint lParam)
     {
         WndProcCalled?.Invoke(this, new NativeMessage
         {
@@ -47,19 +70,36 @@ public sealed class WindowsHookService : IHookService
         return Native.DefWindowProc(hWnd, msg, wParam, lParam);
     }
 
-    ~WindowsHookService()
+    ~WindowsHookService() => DisposeHook();
+
+    public void Dispose()
     {
-        //Native.RemoveClipboardFormatListener(Hwnd);
-        Native.DestroyWindow(Hwnd);
+        DisposeHook();
+        GC.SuppressFinalize(this);
+    }
+
+    private void DisposeHook()
+    {
+        if (_disposed) return;
+        _disposed = true;
+
+        if (Hwnd != nint.Zero)
+        {
+            // Only succeeds if called from the creating thread
+            Native.DestroyWindow(Hwnd);
+            Hwnd = nint.Zero;
+        }
+
+        Native.UnregisterClass(_className, nint.Zero);
     }
 
     // Message struct
-    internal class NativeMessage : EventArgs
+    private class NativeMessage : EventArgs
     {
-        public IntPtr HWnd { get; set; }
+        public nint HWnd { get; set; }
         public int Msg { get; set; }
-        public IntPtr WParam { get; set; }
-        public IntPtr LParam { get; set; }
+        public nint WParam { get; set; }
+        public nint LParam { get; set; }
     }
 }
 

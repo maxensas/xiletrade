@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -11,42 +11,51 @@ namespace Xiletrade.Library.Services;
 
 public sealed class AutoUpdaterService : IAutoUpdaterService
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly IViewManager _view;
+    private readonly IMessageAdapterService _message;
+    private readonly INetService _net;
+
+    public AutoUpdaterService(ILogger<AutoUpdaterService> logger, IViewManager view,
+        IMessageAdapterService message, INetService net)
+    {
+        _view = view;
+        _message = message;
+        _net = net;
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
+    }
 
     private const string ASSETNAME = "Xiletrade_win-x64.7z";
 
-    public AutoUpdaterService(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
-
-    public async Task CheckUpdateAsync(bool manualCheck = false)
+    public async Task CheckForUpdateAsync(bool manualCheck = false)
     {
         try
         {
-            var release = await CheckForUpdateAsync(manualCheck);
+            var release = await GetAvailableUpdateAsync(manualCheck);
             if (release is not null)
             {
-                _serviceProvider.GetRequiredService<INavigationService>().ShowUpdateView(release);
+                _view.ShowUpdateView(release);
             }
         }
         catch (Exception ex)
         {
-            var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-            ms.Show(ex.GetFormated(),"Failed to check for Xiletrade updates", MessageStatus.Exclamation);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error020_XUpdateCheck, MessageStatus.Exclamation);
         }
     }
 
-    private static async Task<GitHubRelease> CheckForUpdateAsync(bool manualCheck)
+    /// <summary>
+    /// Gets the latest compatible update if a newer version is available.
+    /// </summary>
+    private async Task<GitHubRelease> GetAvailableUpdateAsync(bool manualCheck)
     {
-        var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
-        var net = _serviceProvider.GetRequiredService<NetService>();
-        var release = await net.GetFromJsonAsync<GitHubRelease>(Strings.GitHubApiLatestRelease, Client.GitHub);
+        var release = await _net.GetFromJsonAsync<GitHubRelease>(Strings.Github.ApiLatestRelease, Client.GitHub);
         if (release is null)
         {
             if (manualCheck)
             {
-                ms.Show($@"{Resources.Resources.Update006_Error}",
+                _message.Show($@"{Resources.Resources.Update006_Error}",
                     $@"{Resources.Resources.Update009_TitleError}", MessageStatus.Error);
             }
             return null;
@@ -66,12 +75,12 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
         {
             if (manualCheck)
             {
-                ms.Show($@"{Resources.Resources.Update006_Error}",
+                _message.Show($@"{Resources.Resources.Update006_Error}",
                     $@"{Resources.Resources.Update009_TitleError}", MessageStatus.Error);
             }
             return null;
         }
-
+        
         var latestVersionStr = release.TagName.StartsWith('v') ? release.TagName[1..] : release.TagName;
         if (Version.TryParse(latestVersionStr, out var latestVersion))
         {
@@ -82,7 +91,7 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
             }
             if (manualCheck)
             {
-                ms.Show($@"{Resources.Resources.Update005_NoUpdate}",
+                _message.Show($@"{Resources.Resources.Update005_NoUpdate}",
                     $@"{Resources.Resources.Update008_TitleNoUpdate}", MessageStatus.Information);
             }
             return null;
@@ -90,7 +99,7 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
 
         if (manualCheck)
         {
-            ms.Show($@"{Resources.Resources.Update006_Error}",
+            _message.Show($@"{Resources.Resources.Update006_Error}",
                 $@"{Resources.Resources.Update009_TitleError}", MessageStatus.Error);
         }
         return null;

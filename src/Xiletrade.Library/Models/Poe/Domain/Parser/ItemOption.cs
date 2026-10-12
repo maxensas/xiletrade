@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Xiletrade.Library.Models.Poe.Domain.Parser.Flag;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Poe.Domain.Parser;

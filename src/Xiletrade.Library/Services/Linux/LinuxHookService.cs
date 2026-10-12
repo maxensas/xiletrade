@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Runtime.Versioning;
 using Xiletrade.Library.Services.Interface;
 
 namespace Xiletrade.Library.Services.Linux;
 
 //TODO
+[SupportedOSPlatform("linux")]
 public sealed class LinuxHookService : IHookService
 {
     public nint Hwnd => IntPtr.Zero;

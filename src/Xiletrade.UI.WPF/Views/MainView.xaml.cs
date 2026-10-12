@@ -3,16 +3,16 @@ using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Shapes;
-using Xiletrade.Library.Services;
-using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared.Interop.Windows;
+using Xiletrade.Library.Views;
 
 namespace Xiletrade.UI.WPF.Views;
 
 /// <summary>
 /// Xiletrade Form : MainWindow.xaml
 /// </summary>
-public partial class MainView : ViewBase
+public partial class MainView : ViewBase, IMainView
 {
     //internal static readonly DependencyProperty CommandParameterProperty = ButtonBase.CommandParameterProperty.AddOwner(typeof(CommandSlider));
 
@@ -36,8 +36,7 @@ public partial class MainView : ViewBase
 
     private void Window_DragMove(object sender, MouseButtonEventArgs e)
     {
-        var mainHwnd = App.Services.GetRequiredService<XiletradeService>().MainHwnd;
-
+        var mainHwnd = App.Services.GetRequiredService<IViewManager>().MainHandle;
         if (!Native.GetForegroundWindow().Equals(mainHwnd))
         {
             return;
@@ -48,9 +47,7 @@ public partial class MainView : ViewBase
         }
         catch (Exception)
         {
-#if DEBUG
-            Trace.WriteLine("Exception with Window.DragMove : ");
-#endif
+            Debug.WriteLine("Exception raised with Window.DragMove");
         }
     }
 }

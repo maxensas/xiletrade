@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using Xiletrade.Library.Shared;
-using Xiletrade.Library.Shared.Interop;
+using Xiletrade.Library.Shared.Interop.Windows;
 
 namespace Xiletrade.UI.WPF.Views;
 
@@ -11,12 +11,14 @@ namespace Xiletrade.UI.WPF.Views;
 /// </summary>
 public partial class WhisperListView : ViewBase
 {
-    public WhisperListView()
+    public WhisperListView(object vm)
     {
         InitializeComponent();
+        DataContext = vm;
         Name = Strings.WindowName.Whisper;
         Loaded += Window_Loaded;
         MouseLeftButtonDown += Window_DragWindow;
+        Closed += OnClosed;
         this.Show();
     }
 
@@ -31,6 +33,15 @@ public partial class WhisperListView : ViewBase
     private void Window_DragWindow(object sender, MouseButtonEventArgs e)
     {
         this.DragMove();
+    }
+
+    private void OnClosed(object sender, EventArgs e)
+    {
+        Loaded -= Window_Loaded;
+        MouseLeftButtonDown -= Window_DragWindow;
+        Closed -= OnClosed;
+        Content = null;
+        DataContext = null;
     }
 
     private static float GetDisplayScaleFactor(string windowName)

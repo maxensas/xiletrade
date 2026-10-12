@@ -15,7 +15,8 @@
         <TextBox Margin="28,2,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" Text="{Binding Hotkey, Mode=TwoWay}" IsEnabled="{Binding IsEnable}" Width="106" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Center" IsReadOnly="True">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PreviewKeyDown">
-                    <c:AdvancedInvokeCommandAction Command="{Binding CheckHotkeyCommand}" CommandParameter="{Binding}" PassEventArgsToCommand="True" />
+                    <c:AdvancedInvokeCommandAction Command="{Binding CheckHotkeyCommand}" CommandParameter="{Binding}"
+                                                   EventArgsConverter="{StaticResource keyEventArgsToKeyboardInputConverter}" MarkEventHandled="True" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <TextBox.Style>

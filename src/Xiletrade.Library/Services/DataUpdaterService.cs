@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Logging;
+using Notification.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,29 +9,40 @@ using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Config;
-using Notification.Core;
 
 namespace Xiletrade.Library.Services;
 
 /// <summary>Service used to update all JSON local data files used by Xiletrade.</summary>
 /// <remarks>Retrieve source data from Xiletrade Github repository and GGG server.</remarks>
-public sealed class DataUpdaterService
+public sealed class DataUpdaterService : IDataUpdaterService
 {
-    private static IServiceProvider _serviceProvider;
-    private static string ErrorMsg { get; set; } = string.Empty;
-
+    private readonly INotificationService _notif;
+    private readonly IMessageAdapterService _message;
     private readonly DataManagerService _dm;
+    private readonly INetService _net;
 
-    public DataUpdaterService(IServiceProvider serviceProvider)
+    public DataUpdaterService(ILogger<DataUpdaterService> logger, DataManagerService dm,
+        IMessageAdapterService message, INetService net,
+        // external service :
+        INotificationService notif)
     {
-        _serviceProvider = serviceProvider;
-        _dm = _serviceProvider.GetRequiredService<DataManagerService>();
+        _notif = notif;
+        _message = message;
+        _dm = dm;
+        _net = net;
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
     }
 
-    internal async Task UpdateAsync(GeneralViewModel cfgVm = null, bool allLanguages = false, bool updateGenerated = true)
+    private static string ErrorMsg { get; set; } = string.Empty;
+
+    public async Task UpdateAsync(GeneralViewModel cfgVm = null, bool allLanguages = false, bool updateGenerated = true)
     {
         List<Task> taskList = new();
 
@@ -39,10 +51,9 @@ public sealed class DataUpdaterService
             cfgVm.BtnUpdateEnable = false;
         }
 
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
         var cult = cfgVm is null || allLanguages ? string.Empty : " (" + Strings.Culture[cfgVm.LanguageIndex] + ")";
-        var cultStart = cfgVm is not null ? allLanguages ? 0 : cfgVm.LanguageIndex : dm.Config.Options.Language;
-        var cultStop = allLanguages ? Strings.Culture.Length : (cfgVm is not null ? cfgVm.LanguageIndex : dm.Config.Options.Language) + 1;
+        var cultStart = cfgVm is not null ? allLanguages ? 0 : cfgVm.LanguageIndex : _dm.Config.Options.Language;
+        var cultStop = allLanguages ? Strings.Culture.Length : (cfgVm is not null ? cfgVm.LanguageIndex : _dm.Config.Options.Language) + 1;
         var timeoutSecond = allLanguages ? 50 : 3;
 
         bool aborted = false;
@@ -99,7 +110,7 @@ public sealed class DataUpdaterService
         bool isNoError = ErrorMsg.Length is 0;
         if (isNoError)
         {
-            dm.TryInit();
+            _dm.TryInit();
             cfgVm?.InitLeagueList();
         }
         var title = isNoError ? "Xiletrade : " + (aborted ? Resources.Resources.Main193_DownloadKo : Resources.Resources.Main192_DownloadOk)
@@ -108,30 +119,27 @@ public sealed class DataUpdaterService
         : cult + Resources.Resources.Main191_FiltersKo + Strings.LF + ErrorMsg;
         ErrorMsg = string.Empty;
         var type = !isNoError || aborted ? NotificationType.Error : NotificationType.Success;
-        _serviceProvider.GetRequiredService<INotificationService>()
-            .Show(new() { Title = title, Message = msg, Type = type, ShowCloseButton = false });
+        _notif.Show(new() { Title = title, Message = msg, Type = type, ShowCloseButton = false });
     }
 
-    internal async Task<SettingsData> GetAppSettings()
+    public async Task<SettingsData> GetAppSettings()
     {
-        var ms = _serviceProvider.GetRequiredService<Interface.IMessageAdapterService>();
         try
         {
-            if (Uri.TryCreate(Strings.UrlGithubData, UriKind.Absolute, out _))
+            if (Uri.TryCreate(Strings.Url.GithubData, UriKind.Absolute, out _))
             {
-                var net = _serviceProvider.GetRequiredService<NetService>();
-                var json = await net.SendHTTP(Strings.UrlGithubData + Strings.File.AppSettings, Client.GitHub);
+                var json = await _net.SendHTTP(Strings.Url.GithubData + Strings.File.AppSettings, Client.GitHub);
                 var settings = _dm.Json.Deserialize<SettingsData>(json);
                 if (settings is not null)
                 {
                     return settings;
                 }
-                ms.Show("Empty settings", "Can not load app settings", MessageStatus.Information);
+                _message.Show(Resources.Resources.Error003_EmptySettings, Resources.Resources.Error028_XLoadSettings, MessageStatus.Information);
             }
         }
         catch (Exception ex)
         {
-            ms.Show(ex.GetFormated(), "Can not load app settings from GitHub", MessageStatus.Information);
+            _message.Show(ex.GetFormated(), Resources.Resources.Error028_XLoadSettings, MessageStatus.Information);
         }
         return null;
     }
@@ -139,14 +147,13 @@ public sealed class DataUpdaterService
     // all private methods
     private async Task FilterDataUpdates(int idxLang)
     {
-        string urlStats = Strings.GetUpdateApi(idxLang) + "stats";
+        string urlStats = Strings.Api.GetUpdate(idxLang) + "stats";
         try
         {
             string path = Path.GetFullPath("Data\\Lang\\");
-            if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
+            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
             {
-                var service = _serviceProvider.GetRequiredService<NetService>();
-                string sResult = await service.SendHTTP(urlStats, Client.Update);
+                string sResult = await _net.SendHTTP(urlStats, Client.Update);
 
                 if (sResult.Length > 0)
                 {
@@ -179,14 +186,13 @@ public sealed class DataUpdaterService
 
     private async Task LeaguesUpdate(int idxLang)
     {
-        string urlStats = Strings.GetUpdateApi(idxLang) + "leagues";
+        string urlStats = Strings.Api.GetUpdate(idxLang) + "leagues";
         try
         {
             string path = Path.GetFullPath("Data\\Lang\\");
-            if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
+            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
             {
-                var service = _serviceProvider.GetRequiredService<NetService>();
-                string sResult = await service.SendHTTP(urlStats, Client.Update);
+                string sResult = await _net.SendHTTP(urlStats, Client.Update);
 
                 if (sResult.Length > 0)
                 {
@@ -222,15 +228,13 @@ public sealed class DataUpdaterService
 
     private async Task CurrencyUpdate(int idxLang)
     {
-        string urlStats = Strings.GetUpdateApi(idxLang) + "static";
+        string urlStats = Strings.Api.GetUpdate(idxLang) + "static";
         try
         {
             string path = Path.GetFullPath("Data\\Lang\\");
-            if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
+            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
             {
-                var service = _serviceProvider.GetRequiredService<NetService>();
-                string sResult = await service.SendHTTP(urlStats, Client.Update);
-
+                string sResult = await _net.SendHTTP(urlStats, Client.Update);
                 SaveJsonToFile<CurrencyResult>(sResult, path, Strings.File.Currency, idxLang);
             }
         }
@@ -243,15 +247,13 @@ public sealed class DataUpdaterService
 
     private async Task ItemTypeUpdate(int idxLang)
     {
-        string urlItems = Strings.GetUpdateApi(idxLang) + "items";
+        string urlItems = Strings.Api.GetUpdate(idxLang) + "items";
         try
         {
             string path = Path.GetFullPath("Data\\Lang\\");
-            if (Uri.TryCreate(Strings.GetUpdateApi(idxLang), UriKind.Absolute, out Uri res)) // res not used
+            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
             {
-                var service = _serviceProvider.GetRequiredService<NetService>();
-                string sResult = await service.SendHTTP(urlItems, Client.Update);
-
+                string sResult = await _net.SendHTTP(urlItems, Client.Update);
                 SaveJsonToFile<ItemTypeResult>(sResult, path, Strings.File.Items, idxLang);
             }
         }
@@ -265,15 +267,13 @@ public sealed class DataUpdaterService
     private async Task GithubUpdate<T>(string fileName, int idxLang = -1) where T : class
     {
         string preffix = idxLang < 0 ? string.Empty : "Lang/" + Strings.Culture[idxLang] + "/";
-        string urlStats = Strings.UrlGithubData + preffix + fileName;
+        string urlStats = Strings.Url.GithubData + preffix + fileName;
         try
         {
             string path = idxLang < 0 ? Path.GetFullPath("Data\\") : Path.GetFullPath("Data\\Lang\\");
-            if (Uri.TryCreate(Strings.UrlGithubData, UriKind.Absolute, out _))
+            if (Uri.TryCreate(Strings.Url.GithubData, UriKind.Absolute, out _))
             {
-                var service = _serviceProvider.GetRequiredService<NetService>();
-                string json = await service.SendHTTP(urlStats, Client.GitHub);
-
+                string json = await _net.SendHTTP(urlStats, Client.GitHub);
                 SaveJsonToFile<T>(json, path, fileName, idxLang);
             }
         }

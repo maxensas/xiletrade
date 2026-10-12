@@ -5,12 +5,15 @@ using Xiletrade.Library.ViewModels.Update;
 
 namespace Xiletrade.Library.Services.Interface;
 
+/// <summary>
+/// Provides operations for downloading and extracting application updates.
+/// </summary>
 public interface IUpdateDownloader
 {
-    public string DownloadPath { get; }
-    public string InstallationPath { get; }
-    public List<string> ListUpdaterFiles { get; }
+    string DownloadPath { get; }
+    string InstallationPath { get; }
+    List<string> ListUpdaterFiles { get; }
 
-    public Task<string> DownloadAndExtractUpdateAsync(GitHubRelease release, DownloadStatusViewModel status);
-    public string ExtractUpdate(GitHubRelease release);
+    Task<string> DownloadAndExtractUpdateAsync(GitHubRelease release, DownloadStatusViewModel status);
+    string ExtractUpdate(GitHubRelease release);
 }

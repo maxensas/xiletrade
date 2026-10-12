@@ -1,14 +1,12 @@
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using Microsoft.Extensions.DependencyInjection;
-using MsBox.Avalonia;
-using MsBox.Avalonia.Enums;
 using Notification.Core;
 using System;
+using Xiletrade.Library.Views;
 
 namespace Xiletrade.UI.Avalonia.Views;
 
-public partial class MainView : ViewBase
+public partial class MainView : ViewBase, IMainView
 {
     private static IServiceProvider _serviceProvider;
 
@@ -23,13 +21,6 @@ public partial class MainView : ViewBase
         DataContext = vm;
         //Application.Current.MainWindow = this;
         Closing += Window_Closing;
-        Loaded += MainView_Loaded;
-        PointerPressed += Window_PointerPressed;
-    }
-
-    private void MainView_Loaded(object sender, global::Avalonia.Interactivity.RoutedEventArgs e)
-    {
-        //IsVisible = false;
     }
 
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -38,12 +29,6 @@ public partial class MainView : ViewBase
         //Keyboard.ClearFocus();
         IsVisible = false;
         GC.Collect();
-    }
-
-    private void Window_PointerPressed(object sender, PointerPressedEventArgs e)
-    {
-        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-            BeginMoveDrag(e);
     }
 
     // TEMP : ONLY FOR UI TESTS
@@ -56,13 +41,5 @@ public partial class MainView : ViewBase
             Type = NotificationType.Success, 
             ShowCloseButton = false };
         _serviceProvider.GetRequiredService<INotificationService>().Show(notif);
-    }
-
-    private async void OnTestMessage(object sender, RoutedEventArgs e)
-    {
-        var box = MessageBoxManager
-            .GetMessageBoxStandard("Title", "Hello from Avalonia!", ButtonEnum.Ok);
-
-        await box.ShowAsync();
     }
 }

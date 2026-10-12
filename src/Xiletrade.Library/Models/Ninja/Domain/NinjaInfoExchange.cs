@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Ninja.Contract;
 using Xiletrade.Library.Models.Ninja.Contract.Exchange;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
+using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Ninja.Domain;
 
@@ -12,15 +13,15 @@ internal sealed record class NinjaInfoExchange : NinjaInfoBase
 {
     internal string Id { get; private set; }
 
-    internal NinjaInfoExchange(IServiceProvider serviceProvider) : base(serviceProvider)
+    internal NinjaInfoExchange(DataManagerService dm, PoeNinjaService ninja, MainViewModel vm) : base(dm, ninja, vm)
     {
         var item = _vm.Item;
         Id = item.Id;
         League = _vm.Form.League[_vm.Form.LeagueIndex];
         Type = GetType(item);
         var urlSuffix = League.Replace(" ", "+") + "&type=" + Type;
-        Url = Strings.ApiNinjaExchangeOverview + urlSuffix;
-        UrlDetails = Strings.ApiNinjaExchangeDetails + urlSuffix + "&id=" + Normalize(item.TypeEn);
+        Url = Strings.Api.NinjaExchangeOverview + urlSuffix;
+        UrlDetails = Strings.Api.NinjaExchangeDetails + urlSuffix + "&id=" + Normalize(item.TypeEn);
         Link = GetLink() + "/" + Normalize(item.TypeEn);
         VerifiedLink = League.Length > 0 && Type.Length > 0;
     }
@@ -74,7 +75,7 @@ internal sealed record class NinjaInfoExchange : NinjaInfoBase
             }
         }
 
-        return Strings.UrlPoeNinja + ninjaLeague + GetWebCategory();
+        return Strings.Url.PoeNinja + ninjaLeague + GetWebCategory();
     }
 
     private string GetWebCategory()

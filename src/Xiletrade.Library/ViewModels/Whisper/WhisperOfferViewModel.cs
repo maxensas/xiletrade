@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using System;
 
 namespace Xiletrade.Library.ViewModels.Whisper;
@@ -30,6 +29,15 @@ public sealed partial class WhisperOfferViewModel : ViewModelBase
     [ObservableProperty]
     private double getAmount;
 
+    partial void OnGetAmountChanged(double value)
+    {
+        if (value < 0)
+        {
+            return;
+        }
+        PayAmount = Math.Round(GetAmount / SellerAmount * BuyerAmount, 2, MidpointRounding.ToEven);
+    }
+
     [ObservableProperty]
     private double payAmount;
 
@@ -50,10 +58,4 @@ public sealed partial class WhisperOfferViewModel : ViewModelBase
 
     [ObservableProperty]
     private double minimumValue;
-
-    [RelayCommand]
-    private void SlideValueChange(object commandParameter)
-    {
-        PayAmount = Math.Round(GetAmount / SellerAmount * BuyerAmount, 2, MidpointRounding.ToEven);
-    }
 }

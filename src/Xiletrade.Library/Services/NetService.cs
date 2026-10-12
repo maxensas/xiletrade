@@ -1,7 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Logging;
 using System;
-using System.Globalization;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -9,19 +7,22 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Poe.Contract;
+using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services;
 
-/// <summary>Service used to handle http requests and responses for Xiletrade.</summary>
-internal class NetService
+public class NetService : INetService
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly ITokenService _token;
+    private readonly DataManagerService _dm;
 
     private const string USERAGENT = "User-Agent";
     private const int MAX_CONCURRENT_REQUEST = 5;
+
+    public TradeCooldownHandler TradeCooldown { get; }
 
     private readonly HttpClient _default = new(new SocketsHttpHandler
     {
@@ -67,9 +68,13 @@ internal class NetService
 
     private readonly SemaphoreSlim _throttle = new(MAX_CONCURRENT_REQUEST);
 
-    internal NetService(IServiceProvider service)
+    public NetService(ILogger<NetService> logger, ITokenService token, 
+        DataManagerService dm, IUIService ui)
     {
-        _serviceProvider = service;
+        _token = token;
+        _dm = dm;
+
+        //TradeCooldown = new(ui); // disabled for now
 
         _default.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
         _update.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
@@ -77,11 +82,14 @@ internal class NetService
         _ninja.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
         _gitHub.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
 
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        InitTradeClient(dm.Config.Options.TimeoutTradeApi);
+        InitTradeClient(_dm.Config.Options.TimeoutTradeApi);
+
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
     }
 
-    internal void InitTradeClient(int timeout)
+    public void InitTradeClient(int timeout)
     {
         if (timeout >= 5 && timeout <= 120)
         {
@@ -96,10 +104,9 @@ internal class NetService
         }
     }
 
-    private static bool TryAddCookie(SocketsHttpHandler handler)
+    private bool TryAddCookie(SocketsHttpHandler handler)
     {
-        if (_serviceProvider.GetRequiredService<ITokenService>()
-            .TryGetToken(out var token, useCustom: true) && RegexUtil.MD5().IsMatch(token))
+        if (_token.TryGetToken(out var token, useCustom: true) && RegexUtil.MD5().IsMatch(token))
         {
             var cookie = new CookieContainer();
             cookie.Add(new Uri("https://www.pathofexile.com"), new Cookie("POESESSID", token));
@@ -116,7 +123,7 @@ internal class NetService
     /// <param name="urlString"></param>
     /// <param name="idClient"></param>
     /// <returns></returns>
-    internal virtual Task<string> SendHTTP(string urlString, Client idClient)
+    public virtual Task<string> SendHTTP(string urlString, Client idClient)
         => SendHTTP(null, urlString, idClient);
 
     /// <summary>
@@ -126,12 +133,16 @@ internal class NetService
     /// <param name="urlString"></param>
     /// <param name="idClient"></param>
     /// <returns></returns>
-    internal virtual async Task<string> SendHTTP(string entity, string urlString, Client idClient, bool isXml = false)
+    public virtual async Task<string> SendHTTP(string entity, string urlString, Client idClient, bool isXml = false)
     {
         var result = string.Empty;
         var client = GetClient(idClient);
         var isTrade = client == Trade;
-
+        if (isTrade && !isXml)
+        {
+            TradeCooldown?.ApplyCooldown();
+        }
+        
         await _throttle.WaitAsync();
         try
         {
@@ -151,8 +162,7 @@ internal class NetService
             {
                 request.Headers.Add("X-Requested-With", "XMLHttpRequest");
             }
-            if (idClient is Client.Xiletrade
-                && _serviceProvider.GetRequiredService<ITokenService>().TryGetToken(out var token))
+            if (idClient is Client.Xiletrade && _token.TryGetToken(out var token))
             {
                 request.Headers.Authorization = new("Bearer", token);
             }
@@ -164,7 +174,7 @@ internal class NetService
             }
             if (isTrade)
             {
-                HandleTradeRateLimit(response);
+                TradeCooldown?.HandleTradeRateLimit(response);
             }
             response.EnsureSuccessStatusCode(); // throw HttpRequestException if response failed.
         }
@@ -172,8 +182,7 @@ internal class NetService
         {
             if (isTrade && !string.IsNullOrEmpty(result))
             {
-                var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-                var message = dm.Json.Deserialize<NetResponse>(result)?.Error?.Message;
+                var message = _dm.Json.Deserialize<NetResponse>(result)?.Error?.Message;
                 if (!string.IsNullOrEmpty(message))
                 {
                     throw new HttpRequestException(message, ex, ex.StatusCode);
@@ -201,7 +210,7 @@ internal class NetService
         return result;
     }
 
-    internal HttpClient GetClient(Client idClient)
+    public HttpClient GetClient(Client idClient)
     {
         return idClient switch
         {
@@ -215,176 +224,13 @@ internal class NetService
         };
     }
 
-    internal async Task<T> GetFromJsonAsync<T>(string urlString, Client idClient) where T : class, new()
+    public async Task<T> GetFromJsonAsync<T>(string urlString, Client idClient) where T : class, new()
     {
         var result = await SendHTTP(urlString, idClient);
         if (!string.IsNullOrEmpty(result))
         {
-            return _serviceProvider.GetRequiredService<DataManagerService>()
-                .Json.Deserialize<T>(result);
+            return _dm.Json.Deserialize<T>(result);
         }
         return null;
-    }
-
-    private static void HandleTradeRateLimit(HttpResponseMessage response)
-    {
-        if (response is null)
-        {
-            return;
-        }
-
-        foreach (var header in response.Headers)
-        {
-            if (header.Key.AsSpan().SequenceEqual(Strings.Net.XrateLimitPolicy))
-            {
-                var timeout = GetResponseTimeouts(response, header.Value.First());
-                _serviceProvider?.GetRequiredService<PoeApiService>()?.UpdateCooldown(timeout);
-                break;
-            }
-        }
-    }
-
-    private static int[] GetResponseTimeouts(HttpResponseMessage response, ReadOnlySpan<char> policy) // return 'Retry After' in seconds or 0
-    {
-        int retrySeconds = 0, cdSearch = -1, cdFetch = -1, cdBulk = -1;
-        var headers = response.Headers;
-
-        bool isTradeSearch = policy.SequenceEqual(Strings.Net.TradeSearchRequestLimit);
-        bool isTradeFetch = policy.SequenceEqual(Strings.Net.TradeFetchRequestLimit);
-        bool isTradeBulk = policy.SequenceEqual(Strings.Net.TradeExchangeRequestLimit);
-
-        if (!isTradeSearch && !isTradeFetch && !isTradeBulk)
-            return [retrySeconds, cdSearch, cdFetch, cdBulk];
-
-        string rule = null;
-        string state = null;
-        var filled = false;
-
-        foreach ((var ruleStr, var stateStr) in Strings.Net.XRateRules)
-        {
-            foreach (var header in headers)
-            {
-                if (rule is null && header.Key.AsSpan().SequenceEqual(ruleStr))
-                {
-                    rule = header.Value.First();
-                    continue;
-                }
-                if (state is null && header.Key.AsSpan().SequenceEqual(stateStr))
-                {
-                    state = header.Value.First();
-                    continue;
-                }
-
-                if (rule is not null && state is not null)
-                {
-                    filled = true;
-                    break;
-                }
-            }
-            if (filled)
-                break;
-        }
-
-        if (!filled)
-            return [retrySeconds, cdSearch, cdFetch, cdBulk];
-
-        if (TryGetCooldown(rule, state, out int cooldown))
-        {
-            if (isTradeSearch) cdSearch = cooldown;
-            if (isTradeFetch) cdFetch = cooldown;
-            if (isTradeBulk) cdBulk = cooldown;
-        }
-
-        string retryAfters = null;
-        foreach (var header in headers)
-        {
-            if (retryAfters is null && header.Key.AsSpan().SequenceEqual(Strings.Net.RetryAfter))
-            {
-                retryAfters = header.Value.First();
-                break;
-            }
-        }
-        if (int.TryParse(retryAfters, NumberStyles.Any, CultureInfo.InvariantCulture, out int retry))
-        {
-            retrySeconds = retry; // Time to wait (in seconds) until the rate limit expires.
-        }
-
-        return [retrySeconds, cdSearch, cdFetch, cdBulk];
-    }
-
-    private static bool TryGetCooldown(ReadOnlySpan<char> rule, ReadOnlySpan<char> state, out int cooldown)
-    {
-        cooldown = 0;
-
-        if (!VerifyRates(rule, state))
-            return false;
-
-        int ruleStart = 0;
-        int stateStart = 0;
-
-        for (int i = 0; i <= rule.Length; i++)
-        {
-            if (i < rule.Length && rule[i] is not ',')
-                continue;
-
-            var rulePart = rule[ruleStart..i];
-
-            int stateRelativeEnd = state[stateStart..].IndexOf(',');
-            int stateEnd = stateRelativeEnd >= 0 ? stateStart + stateRelativeEnd : state.Length;
-
-            var statePart = state[stateStart..stateEnd];
-
-            int ruleColon = rulePart.IndexOf(':');
-            int stateColon = statePart.IndexOf(':');
-
-            if (ruleColon < 0 || stateColon < 0)
-                return false;
-
-            _ = int.TryParse(rulePart[..ruleColon], NumberStyles.Any, CultureInfo.InvariantCulture, out int rLimit);
-
-            _ = int.TryParse(statePart[..stateColon], NumberStyles.Any, CultureInfo.InvariantCulture, out int rState);
-
-            if (rLimit > 0 && rState >= rLimit)
-            {
-                var ruleAfterColon = rulePart[(ruleColon + 1)..];
-
-                int secondColon = ruleAfterColon.IndexOf(':');
-
-                var ruleCooldown = secondColon >= 0 ? ruleAfterColon[..secondColon] : ruleAfterColon;
-
-                _ = int.TryParse(ruleCooldown, NumberStyles.Any, CultureInfo.InvariantCulture, out int cdLimit);
-
-                if (cdLimit > cooldown)
-                    cooldown = cdLimit;
-            }
-
-            if (i == rule.Length)
-                break;
-
-            ruleStart = i + 1;
-            stateStart = stateEnd + 1;
-        }
-
-        return true;
-    }
-
-    private static bool VerifyRates(ReadOnlySpan<char> rule, ReadOnlySpan<char> state)
-    {
-        int ruleCount = 1;
-        int stateCount = 1;
-
-        for (int i = 0; i < rule.Length; i++)
-        {
-            if (rule[i] is ',')
-                ruleCount++;
-        }
-
-        for (int i = 0; i < state.Length; i++)
-        {
-            if (state[i] is ',')
-                stateCount++;
-        }
-
-        return ruleCount == stateCount;
     }
 }

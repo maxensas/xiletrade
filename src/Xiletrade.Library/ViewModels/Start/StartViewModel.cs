@@ -1,20 +1,20 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using Xiletrade.Library.Models.Application.Configuration.Domain;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Services;
-using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.Views;
 
 namespace Xiletrade.Library.ViewModels.Start;
 
+[ViewModelCreation(ViewModelCreation.Container)]
 public sealed partial class StartViewModel : ViewModelBase
 {
-    private static IServiceProvider _serviceProvider;
+    private readonly DataManagerService _dm;
+    private readonly LocalizationService _localization;
 
     //property
     [ObservableProperty]
@@ -22,9 +22,31 @@ public sealed partial class StartViewModel : ViewModelBase
 
     [ObservableProperty]
     private int languageIndex;
+    
+    partial void OnLanguageIndexChanged(int value) 
+    {
+        if (value < 0)
+        {
+            return;
+        }
+
+        Config.Options.Gateway = LanguageIndex;
+        UpdateLanguage();
+    }
 
     [ObservableProperty]
     private int gameIndex;
+    
+    partial void OnGameIndexChanged(int value) 
+    {
+        if (value < 0)
+        {
+            return;
+        }
+
+        Config.Options.GameVersion = GameIndex;
+        UpdateConfig();
+    }
 
     [ObservableProperty]
     private double viewScale;
@@ -33,13 +55,14 @@ public sealed partial class StartViewModel : ViewModelBase
     private ConfigData Config { get; set; }
     private string ConfigBackup { get; set; }
 
-    public StartViewModel(IServiceProvider serviceProvider)
+    public StartViewModel(DataManagerService dm, LocalizationService localization)
     {
-        _serviceProvider = serviceProvider;
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        viewScale = dm.Config.Options.Scale;
-        ConfigBackup = dm.LoadConfiguration(Strings.File.Config);
-        Config = dm.Json.Deserialize<ConfigData>(ConfigBackup);
+        _dm = dm;
+        _localization = localization;
+
+        viewScale = _dm.Config.Options.Scale;
+        ConfigBackup = _dm.LoadConfiguration(Strings.File.Config);
+        Config = _dm.Json.Deserialize<ConfigData>(ConfigBackup);
 
         language = new()
         {
@@ -58,7 +81,7 @@ public sealed partial class StartViewModel : ViewModelBase
         languageIndex = Config.Options.Language;
         gameIndex = Config.Options.GameVersion;
 
-        _serviceProvider.GetRequiredService<LocalizationService>().RefreshCurrentCulture(init: true);
+        _localization.RefreshCurrentCulture(init: true);
     }
 
     [RelayCommand]
@@ -66,36 +89,23 @@ public sealed partial class StartViewModel : ViewModelBase
     {
         if (commandParameter is IViewBase view)
         {
-            UpdateLanguage(null);
+            UpdateLanguage();
             view.Close();
         }
     }
 
-    [RelayCommand]
-    private void UpdateLanguage(object commandParameter)
+    private void UpdateLanguage()
     {
-        if (commandParameter is bool updateGateway && updateGateway)
-        {
-            Config.Options.Gateway = LanguageIndex;
-        }
         Config.Options.Language = LanguageIndex;
 
-        _serviceProvider.GetRequiredService<LocalizationService>().RefreshCurrentCulture(LanguageIndex);
-        UpdateConfig();
-    }
-
-    [RelayCommand]
-    private void UpdateGameVersion(object commandParameter)
-    {
-        Config.Options.GameVersion = GameIndex;
+        _localization.RefreshCurrentCulture(LanguageIndex);
         UpdateConfig();
     }
 
     private void UpdateConfig()
     {
-        var dm = _serviceProvider.GetRequiredService<DataManagerService>();
-        var configToSave = dm.Json.Serialize<ConfigData>(Config);
-        dm.SaveConfiguration(configToSave);
-        dm.TryInit();
+        var configToSave = _dm.Json.Serialize<ConfigData>(Config);
+        _dm.SaveConfiguration(configToSave);
+        _dm.TryInit();
     }
 }

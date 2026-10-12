@@ -14,13 +14,10 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Models.Poe.Domain;
 
-internal sealed class JsonDataFactory
+internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
 {
-    private readonly DataManagerService _dm;
-
-    internal JsonDataFactory(DataManagerService dm)
+    internal JsonDataFactory(DataManagerService dm) : base(dm)
     {
-        _dm = dm;
     }
 
     /// <summary>
@@ -31,7 +28,7 @@ internal sealed class JsonDataFactory
     /// <param name="market"></param>
     /// <param name="search"></param>
     /// <returns></returns>
-    internal JsonData Create(XiletradeItem xItem, UniqueUnidentified unid, string market, string search)
+    internal override JsonData Create(XiletradeItem xItem, UniqueUnidentified unid, string market, string search)
     {
         var json = new JsonData(market);
 
@@ -62,7 +59,7 @@ internal sealed class JsonDataFactory
     /// <param name="useSaleType"></param>
     /// <param name="market"></param>
     /// <returns></returns>
-    internal JsonData Create(XiletradeItem xItem, ItemData item, bool useSaleType, string market)
+    internal override JsonData Create(XiletradeItem xItem, ItemData item, bool useSaleType, string market)
     {
         var json = new JsonData(market);
 
@@ -71,14 +68,14 @@ internal sealed class JsonDataFactory
         var type = item.TypeGateway;
         
         bool simpleMode = xItem.ByType || name.Length is 0
-            || (!item.Flag.Unique && !item.Flag.FoilVariant);
+            || (!item.Flag.Rarity.Unique && !item.Flag.Tag.FoilVariant);
 
         if (!simpleMode)
         {
             json.Query.Name = name;
             json.Query.Type = type;
         }
-        else if (item.Flag.Chart)
+        else if (item.Flag.Map.Chart)
         {
             json.Query.Type = new OptionTxt(name, GetChartDiscriminator(item.TypeEn));
         }
@@ -92,7 +89,7 @@ internal sealed class JsonDataFactory
         }
         else if (!xItem.ByType)
         {
-            json.Query.Type = item.Flag.Transfigured ? GetTransfiguredGem(name, type) : type;
+            json.Query.Type = item.Flag.Tag.Transfigured ? GetTransfiguredGem(name, type) : type;
         }
 
         // Filters
@@ -122,7 +119,7 @@ internal sealed class JsonDataFactory
     private static TypeF GetTypeFilters(XiletradeItem xItem)
     {
         var rarityEn = GetEnglishRarity(xItem.Rarity);
-        if (rarityEn.Length > 0 && rarityEn is not Strings.any)
+        if (rarityEn.Length > 0 && rarityEn is not Strings.Word.any)
         {
             TypeF type = new();
             type.Filters.Rarity = new(rarityEn);
@@ -137,7 +134,7 @@ internal sealed class JsonDataFactory
         var isCategory = category.Length > 0;
 
         var rarityEn = GetEnglishRarity(xItem.Rarity);
-        var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.any;
+        var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.Word.any;
 
         if (!(isRarity || isCategory))
         {
@@ -197,7 +194,7 @@ internal sealed class JsonDataFactory
 
     private static Map GetMapFilters(XiletradeItem xItem, ItemData item)
     {
-        var enable = item.Flag.Map || item.Flag.Chart || item.Flag.SanctumResearch || item.Flag.Logbook;
+        var enable = item.Flag.Map.IsMap || item.Flag.Map.Chart || item.Flag.Area.SanctumResearch || item.Flag.Area.Logbook;
         if (!enable)
         {
             return null;
@@ -207,17 +204,17 @@ internal sealed class JsonDataFactory
 
         if (xItem.Lvl.Enable)
         {
-            if (item.Flag.Map)
+            if (item.Flag.Map.IsMap)
             {
                 map.Filters.Tier = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
             }
-            if (item.Flag.SanctumResearch || item.Flag.Logbook || item.Flag.Chart)
+            if (item.Flag.Area.SanctumResearch || item.Flag.Area.Logbook || item.Flag.Map.Chart)
             {
                 map.Filters.Area = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
             }
         }
 
-        if (item.Flag.Map || item.Flag.Chart)
+        if (item.Flag.Map.IsMap || item.Flag.Map.Chart)
         {
             if (xItem.InfShaper)
             {
@@ -343,16 +340,16 @@ internal sealed class JsonDataFactory
             misc.Filters.StoredExp = new() { Min = xItem.FacetorExp.Min, Max = xItem.FacetorExp.Max };
         }
 
-        if (!(!xItem.Lvl.Enable || item.Flag.Gems || item.Flag.Map
-            || item.Flag.MiscMapItems || item.Flag.SanctumResearch || item.Flag.Logbook))
+        if (!(!xItem.Lvl.Enable || item.Flag.Gem.IsGem || item.Flag.Map.IsMap
+            || item.Flag.Map.Misc || item.Flag.Area.SanctumResearch || item.Flag.Area.Logbook))
         {
-            if (!item.Flag.SanctumResearch)
+            if (!item.Flag.Area.SanctumResearch)
             {
                 misc.Filters.Ilvl = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
             }
         }
 
-        if (xItem.Lvl.Enable && item.Flag.Gems)
+        if (xItem.Lvl.Enable && item.Flag.Gem.IsGem)
         {
             misc.Filters.Gem_level = new() { Min = xItem.Lvl.Min, Max = xItem.Lvl.Max };
         }
@@ -398,7 +395,7 @@ internal sealed class JsonDataFactory
             || misc.Filters.Split is not null;
 
         var enable = (activeFilter || xItem.FacetorExp.Enable || xItem.Quality.Enable 
-            || xItem.MemoryStrand.Enable || xItem.Intangibility.Enable || !item.Flag.Map && 
+            || xItem.MemoryStrand.Enable || xItem.Intangibility.Enable || !item.Flag.Map.IsMap && 
             (xItem.Lvl.Enable || xItem.IsInfluenced 
             || xItem.SynthesisBlight || xItem.BlightRavaged)
         );
@@ -653,15 +650,15 @@ internal sealed class JsonDataFactory
         }
 
         bool isTimeLessJewel = false;
-        if (item.Flag.Unique && item.Flag.Jewel)
+        if (item.Flag.Rarity.Unique && item.Flag.Jewel.IsJewel)
         {
-            var listFilters = xItem.ItemFilters.Where(x => x.Id.StartWith(Strings.Stat.TimelessJewel)).FirstOrDefault();
+            var listFilters = xItem.ItemFilters.Where(x => x.Id.StartWith(Strings.StatPoe1.TimelessJewel)).FirstOrDefault();
             if (listFilters is not null)
             {
                 isTimeLessJewel = true;
                 var value = listFilters.Min;
                 xItem.ItemFilters.Clear();
-                var filters = filterData.GetEntryStartsWith(Strings.Stat.TimelessJewel);
+                var filters = filterData.GetEntryStartsWith(Strings.StatPoe1.TimelessJewel);
                 foreach (var filter in filters)
                 {
                     var itemFilter = new ItemFilter(filterData, filter.ID, value, value);
@@ -690,8 +687,8 @@ internal sealed class JsonDataFactory
         int idx = 0;
         for (int i = 0; i < xItem.ItemFilters.Count; i++)
         {
-            if ((item.Flag.Rings || item.Flag.Amulets)
-                && Strings.Stat.lMagnitudeImplicits.Contains(xItem.ItemFilters[i].Id))
+            if ((item.Flag.Jewellery.Rings || item.Flag.Jewellery.Amulets)
+                && Strings.StatPoe1.lMagnitudeImplicits.Contains(xItem.ItemFilters[i].Id))
             {
                 highValueBase = true;
             }
@@ -717,7 +714,7 @@ internal sealed class JsonDataFactory
                 var pseudo = Resources.Resources.ResourceManager
                     .GetEnglish(nameof(Resources.Resources.General014_Pseudo));
 
-                if (type_name == pseudo && item.Flag.Weapon && RegexUtil.AddsDamagePattern().IsMatch(id))
+                if (type_name == pseudo && item.Flag.Weapon.IsWeapon && RegexUtil.AddsDamagePattern().IsMatch(id))
                 {
                     id += "_to_attacks";
                 }
@@ -756,12 +753,12 @@ internal sealed class JsonDataFactory
         }
         if (highValueBase)
         {
-            if (!item.Flag.Mirrored)
+            if (!item.Flag.Tag.Mirrored)
             {
                 miscFilter.Disabled = false;
                 miscFilter.Filters.Mirrored = GetOptionFalse();
             }
-            if (!item.Flag.Split)
+            if (!item.Flag.Tag.Split)
             {
                 miscFilter.Disabled = false;
                 miscFilter.Filters.Split = GetOptionFalse();
@@ -780,7 +777,7 @@ internal sealed class JsonDataFactory
 
         List<Stats> stats = new();
         List<StatsFilters> statsFilters = new();
-        var t = 0;
+        
         for (int i = 0; i < xItem.ItemFilters.Count; i++)
         {
             if (xItem.ItemFilters[i] is null 
@@ -831,63 +828,7 @@ internal sealed class JsonDataFactory
             }
         }
 
-        throw new Exception(
-            $"{errorCount} Mod error(s) detected:\r\n\r\nMod lines : {errors}\r\n\r\n");
-    }
-
-    // Utility
-
-    private static OptionTxt GetOptionTrue() => new("true");
-
-    private static OptionTxt GetOptionFalse() => new("false");
-
-    private static string BeforeDayToString(int day)
-    {
-        if (day < 3) return "1day";
-        if (day < 7) return "3days";
-        if (day < 14) return "1week";
-        return "2weeks";
-    }
-
-    private static string GetEnglishRarity(string rarityLang)
-    {
-        var rm = Resources.Resources.ResourceManager;
-        var returnVal = rarityLang == Resources.Resources.General005_Any ? rm.GetEnglish(nameof(Resources.Resources.General005_Any)) 
-            : rarityLang == Resources.Resources.General110_FoilUnique ? rm.GetEnglish(nameof(Resources.Resources.General110_FoilUnique))
-            : rarityLang == Resources.Resources.General006_Unique ? rm.GetEnglish(nameof(Resources.Resources.General006_Unique))
-            : rarityLang == Resources.Resources.General007_Rare ? rm.GetEnglish(nameof(Resources.Resources.General007_Rare))
-            : rarityLang == Resources.Resources.General008_Magic ? rm.GetEnglish(nameof(Resources.Resources.General008_Magic))
-            : rarityLang == Resources.Resources.General009_Normal ? rm.GetEnglish(nameof(Resources.Resources.General009_Normal))
-            : rarityLang == Resources.Resources.General010_AnyNU ? rm.GetEnglish(nameof(Resources.Resources.General010_AnyNU)) 
-            : string.Empty;
-        if (returnVal.Length > 0)
-        {
-            returnVal = returnVal is "Any N-U" ? "nonunique"
-                : returnVal is "Foil Unique" ? "uniquefoil"
-                : returnVal.ToLowerInvariant();
-        }
-        return returnVal;
-    }
-
-    private static string GetAffixType(string inputType)
-    {
-        return inputType is "pseudo" ? Resources.Resources.General014_Pseudo :
-            inputType is "explicit" ? Resources.Resources.General015_Explicit :
-            inputType is "fractured" ? Resources.Resources.General016_Fractured :
-            inputType is "crafted" ? Resources.Resources.General012_Crafted :
-            inputType is "implicit" ? Resources.Resources.General013_Implicit :
-            inputType is "enchant" ? Resources.Resources.General011_Enchant :
-            inputType is "monster" ? Resources.Resources.General018_Monster :
-            inputType is "veiled" ? Resources.Resources.General019_Veiled :
-            inputType is "delve" ? Resources.Resources.General020_Delve :
-            inputType is "ultimatum" ? Resources.Resources.General069_Ultimatum :
-            inputType is "scourge" ? Resources.Resources.General099_Scourge :
-            inputType is "crucible" ? Resources.Resources.General112_Crucible :
-            inputType is "necropolis" ? Resources.Resources.General131_Necropolis :
-            inputType is "sanctum" ? Resources.Resources.General111_Sanctum : 
-            inputType is "imbued" ? Resources.Resources.General197_ImbuedFilter :
-            inputType is "mercenary" ? Resources.Resources.General243_Mercenary :
-            string.Empty;
+        throw new Exception($"{errorCount} Mod error(s) detected:\r\n\r\nMod lines : {errors}\r\n\r\n");
     }
 
     private GemTransfigured GetTransfiguredGem(ReadOnlySpan<char> vaalGemName, string type)
@@ -926,14 +867,5 @@ internal sealed class JsonDataFactory
 
         return string.Concat(lastWord.ToString().ToLowerInvariant(), "_", 
             remaining.ToString().Replace(' ', '_').ToLowerInvariant());
-    }
-
-    private string GetTradeIdentifier(ReadOnlySpan<char> text)
-    {
-        if (text.Length is 0)
-            return string.Empty;
-
-        var entry = _dm.Items.FindEntryByText(text);
-        return !string.IsNullOrEmpty(entry.Type) ? entry.Type : string.Empty;
     }
 }

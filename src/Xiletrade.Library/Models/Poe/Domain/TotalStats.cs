@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Models.Poe.Domain.Parser.Flag;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
@@ -49,9 +50,9 @@ internal sealed record TotalStats
 
     internal double TotalPhysicalIncrease { get; }
 
-    internal TotalStats(DataManagerService dm, ItemFlag flag, List<ModLine> modLineList, Lang lang, bool isPoe2)
+    internal TotalStats(DataManagerService dm, ItemFlag flag, ItemRule rule, List<ModLine> modLineList, Lang lang, bool isPoe2)
     {
-        if (!flag.Parseable || flag.Unique || flag.Jewel)
+        if (!rule.Parseable || flag.Rarity.Unique || flag.Jewel.IsJewel)
         {
             return;
         }
@@ -71,7 +72,7 @@ internal sealed record TotalStats
                 _currentResistance = _currentResistance > 0 ? _currentResistance + totResist : totResist;
                 if (tierValue.IsNotEmpty())
                 {
-                    bool isAll = modEnglish.Contains(Strings.Words.ToAllResist, StringComparison.OrdinalIgnoreCase);
+                    bool isAll = modEnglish.Contains(Strings.Word.ToAllResist, StringComparison.OrdinalIgnoreCase);
                     var tierVal = isAll ? tierValue * 3 : tierValue;
                     _tierResistance = _tierResistance > 0 ? _tierResistance + tierVal : tierVal;
                 }
@@ -82,7 +83,7 @@ internal sealed record TotalStats
                 _currentLife = _currentLife > 0 ? _currentLife + totLife : totLife;
                 if (tierValue.IsNotEmpty())
                 {
-                    var isStrength = modEnglish.Contains(Strings.Words.ToStrength, StringComparison.OrdinalIgnoreCase);
+                    var isStrength = modEnglish.Contains(Strings.Word.ToStrength, StringComparison.OrdinalIgnoreCase);
                     var tierVal = isStrength ? isPoe2 ? tierValue * 2 : Math.Truncate(tierValue / 2) : tierValue;
                     _tierLife = _tierLife > 0 ? _tierLife + tierVal : tierVal;
                 }
@@ -107,7 +108,7 @@ internal sealed record TotalStats
             }
 
             var minFilter = modLine.ItemFilter.Min;
-            if (modLine.ItemFilter.Id.Contain(Strings.Stat.Generic.IncPhys)
+            if (modLine.ItemFilter.Id.Contain(Strings.StatPoe1.Generic.IncPhys)
                 && minFilter > 0 && minFilter < 9999)
             {
                 TotalPhysicalIncrease += minFilter;
@@ -130,19 +131,19 @@ internal sealed record TotalStats
 
         if (double.TryParse(currentReplaced, out double currentVal))
         {
-            if (modEn.Contains(Strings.Words.ToAllResist, StringComparison.OrdinalIgnoreCase))
+            if (modEn.Contains(Strings.Word.ToAllResist, StringComparison.OrdinalIgnoreCase))
             {
                 return Convert.ToInt32(currentVal) * 3;
             }
-            if (modEn.Contains(Strings.Words.Fire, StringComparison.OrdinalIgnoreCase))
+            if (modEn.Contains(Strings.Word.Fire, StringComparison.OrdinalIgnoreCase))
             {
                 returnVal = Convert.ToInt32(currentVal);
             }
-            if (modEn.Contains(Strings.Words.Cold, StringComparison.OrdinalIgnoreCase))
+            if (modEn.Contains(Strings.Word.Cold, StringComparison.OrdinalIgnoreCase))
             {
                 returnVal += Convert.ToInt32(currentVal);
             }
-            if (modEn.Contains(Strings.Words.Lightning, StringComparison.OrdinalIgnoreCase))
+            if (modEn.Contains(Strings.Word.Lightning, StringComparison.OrdinalIgnoreCase))
             {
                 returnVal += Convert.ToInt32(currentVal);
             }
@@ -163,7 +164,7 @@ internal sealed record TotalStats
         }
         if (double.TryParse(currentReplaced, out double currentVal))
         {
-            var cond = modEn.Contains(Strings.Words.ToStrength, StringComparison.OrdinalIgnoreCase);
+            var cond = modEn.Contains(Strings.Word.ToStrength, StringComparison.OrdinalIgnoreCase);
             return cond ? isPoe2 ? currentVal * 2 : Math.Truncate(currentVal / 2) : currentVal;
         }
         return 0;

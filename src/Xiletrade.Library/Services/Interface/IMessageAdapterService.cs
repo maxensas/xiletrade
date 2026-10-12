@@ -3,6 +3,9 @@ using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services.Interface;
 
+/// <summary>
+/// Provides a platform-independent interface for displaying user messages and dialogs.
+/// </summary>
 public interface IMessageAdapterService
 {
     /// <summary>
