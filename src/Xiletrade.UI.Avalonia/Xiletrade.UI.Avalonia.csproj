@@ -17,7 +17,6 @@
     <Authors>maxensas</Authors>
     <Company>Toolcaps</Company>
     <ApplicationIcon>Assets/AppIcon.ico</ApplicationIcon>
-    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -29,25 +28,17 @@
   </PropertyGroup>
   <!-- Publish/Release setup -->
   <PropertyGroup Condition="'$(Configuration)' != 'Debug'">
-    <PublishSingleFile>true</PublishSingleFile>
-    <PublishProtocol>FileSystem</PublishProtocol>
-    <PublishReadyToRun>false</PublishReadyToRun>
-    <PublishAot>true</PublishAot>
-    <PublishTrimmed>true</PublishTrimmed>
-    <TrimMode>link</TrimMode>
-    <IlcTrimMetadata>true</IlcTrimMetadata>
-    <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>
-    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-    <SelfContained>true</SelfContained>
-    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
-    <OptimizationPreference>size</OptimizationPreference>
-    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <IlcInstructionSet>native</IlcInstructionSet>
-    <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishTrimmed>true</PublishTrimmed>
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <PublishAot>true</PublishAot>
+    <IncludeNativeLibrariesForSelfExtract Condition="'$(PublishAot)' == 'False'">true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile Condition="'$(PublishAot)' == 'False'">true</EnableCompressionInSingleFile>
+    <OptimizationPreference Condition="'$(PublishAot)' == 'True'">size</OptimizationPreference>
+    <IlcFoldIdenticalMethodBodies Condition="'$(PublishAot)' == 'True'">true</IlcFoldIdenticalMethodBodies>
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
@@ -66,6 +57,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
     <PackageReference Include="MessageBox.Avalonia" />
+    <!--<PackageReference Include="StaticLink.Avalonia" Condition="'$(PublishAot)' == 'True'" />-->
     <!--
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.12" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.12" />

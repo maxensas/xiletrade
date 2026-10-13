@@ -2,18 +2,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Xiletrade.Updater.ViewModels"
         Width="400" Height="100"
+        xmlns:i="using:Avalonia.Xaml.Interactivity"
+        xmlns:ic="clr-namespace:Xiletrade.Updater.Util.Command"
         x:Class="Xiletrade.Updater.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         Icon="/Assets/app-icon.ico" Title="Xiletrade updater" RequestedThemeVariant="Dark"
         WindowStartupLocation="CenterScreen" CanResize="False">
-    <Interaction.Behaviors>
-        <EventTriggerBehavior EventName="Opened">
-            <InvokeCommandAction Command="{Binding LaunchCommand}" />
-        </EventTriggerBehavior>
-        <EventTriggerBehavior EventName="Closing">
-            <InvokeCommandAction Command="{Binding CloseCommand}" />
-        </EventTriggerBehavior>
-    </Interaction.Behaviors>
+    <i:Interaction.Behaviors>
+        <ic:WindowOpenedCommandBehavior Command="{Binding LaunchCommand}" />
+        <ic:WindowClosingCommandBehavior Command="{Binding CloseCommand}" />
+    </i:Interaction.Behaviors>
     <Grid x:Name="MainGrid">
         <StackPanel Margin="20">
           <TextBlock Text="{Binding InstallText}" HorizontalAlignment="Left" VerticalAlignment="Center"/>

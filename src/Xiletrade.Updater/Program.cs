@@ -1,8 +1,5 @@
 ﻿using Avalonia;
 using System;
-using System.Globalization;
-using System.IO;
-using System.Reflection;
 
 namespace Xiletrade.Updater
 {
@@ -20,7 +17,6 @@ namespace Xiletrade.Updater
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
-                .WithInterFont()
                 .LogToTrace();
     }
 }

@@ -79,11 +79,19 @@ jobs:
         run: |
           Remove-Item "${{ env.PUBLISH_DIR }}/Documentation" -Recurse -Force -ErrorAction SilentlyContinue
 
-      - name: Compute SHA256 of executable
+      - name: Compute SHA256 of Xiletrade
         if: steps.check_release.outputs.status != '200'
         id: hash
         run: |
           $exe = Get-ChildItem -Path "${{ env.PUBLISH_DIR }}" -Filter Xiletrade.exe -Recurse | Select-Object -First 1
+          $hash = Get-FileHash -Path $exe.FullName -Algorithm SHA256
+          echo "sha256=$($hash.Hash)" >> $env:GITHUB_OUTPUT
+
+      - name: Compute SHA256 of Updater
+        if: steps.check_release.outputs.status != '200'
+        id: updater_hash
+        run: |
+          $exe = Get-ChildItem -Path "${{ env.PUBLISH_DIR }}" -Filter Update.exe -Recurse | Select-Object -First 1
           $hash = Get-FileHash -Path $exe.FullName -Algorithm SHA256
           echo "sha256=$($hash.Hash)" >> $env:GITHUB_OUTPUT
 
@@ -110,7 +118,10 @@ jobs:
 
             `Release info`
             - Related PR : ${{ github.event.pull_request.html_url }}
-            - Xiletrade SHA256 : ${{ steps.hash.outputs.sha256 }}
+  
+            `SHA256 Checksums`
+            - Xiletrade : ${{ steps.hash.outputs.sha256 }}
+            - Update    : ${{ steps.updater_hash.outputs.sha256 }}
           files: "${{ env.ARCHIVE }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_DEPLOY }}
