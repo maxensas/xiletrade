@@ -2660,5 +2660,14 @@ Garena 서버 : 중국어 번체.</value>
   </data>
   <data name="Error033_NotAdmin" xml:space="preserve">
     <value>Xiletrade가 관리자 모드로 실행되고 있지 않습니다!</value>
+  </data>  
+  <data name="Error034_XCrashReport" xml:space="preserve">
+	<value>충돌 보고서</value>
+  </data>
+  <data name="Error035_ReportOnGithub" xml:space="preserve">
+	<value>이전 세션 중 Xiletrade가 예기치 않게 종료되었습니다.
+
+GitHub에서 미리 작성된 버그 보고서를 여시겠습니까?
+데이터는 자동으로 전송되지 않습니다. 제출하기 전에 보고서를 검토하고 수정할 수 있습니다.</value>
   </data>
 </root>

@@ -74,17 +74,17 @@
     <AdditionalProbingPath Include="$(TargetDir)bin" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="EventBinder" Version="2.5.3" />
-    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.8" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.8" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.8" />
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.142" />
-    <PackageReference Include="Notification.Wpf" Version="10.1.0" />
+    <PackageReference Include="EventBinder" />
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" />
+    <PackageReference Include="Notification.Wpf" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="WPF-UI.Markdown" />
+    <PackageReference Include="OxyPlot.WPF" />
     <!--<PackageReference Include="System.Private.Uri" Version="4.3.2" />-->
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="WPF-UI.Markdown" Version="4.0.2" />
-    <PackageReference Include="OxyPlot.WPF" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />

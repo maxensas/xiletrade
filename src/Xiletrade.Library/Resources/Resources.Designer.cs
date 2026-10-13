@@ -7672,5 +7672,23 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("Error033_NotAdmin", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Crash report
+        /// </summary>
+        public static string Error034_XCrashReport {
+            get {
+                return ResourceManager.GetString("Error034_XCrashReport", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => ...
+        /// </summary>
+        public static string Error035_ReportOnGithub {
+            get {
+                return ResourceManager.GetString("Error035_ReportOnGithub", resourceCulture);
+            }
+        }
     }
 }

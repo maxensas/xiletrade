@@ -44,6 +44,7 @@ public static class ServiceCollectionExtensions
             .AddSingleton<PoeNinjaService>()
             .AddSingleton<LocalizationService>()
             .AddSingleton<FeatureProvider>()
+            .AddSingleton<CrashReportService>()
             .AddSingleton<IUIService, UIService>()
             .AddSingleton<IKeyboardAdapterService, KeyboardAdapterService>()
             .AddSingleton<IDataUpdaterService, DataUpdaterService>()

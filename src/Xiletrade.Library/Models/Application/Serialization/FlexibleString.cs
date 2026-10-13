@@ -1,4 +1,4 @@
-﻿namespace Xiletrade.Library.Models.Poe.Contract;
+﻿namespace Xiletrade.Library.Models.Application.Serialization;
 
 public sealed class FlexibleString
 {

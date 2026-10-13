@@ -11,13 +11,18 @@ namespace Xiletrade.Library.Services;
 /// <remarks>Bootstraps the application and initializes its services.</remarks>
 public sealed class XiletradeService
 {
-    public XiletradeService(ILogger<XiletradeService> logger, DataManagerService dm,
+    public XiletradeService(ILogger<XiletradeService> logger, 
+        DataManagerService dm, CrashReportService report,
         IDataUpdaterService dataUpdater, IViewManager view, 
         IMessageAdapterService message, IAutoUpdaterService updater,
         // Instantiate singletons : 
         IInputService input, IProtocolHandlerService protocol, IMainView main, ITaskbar taskbar)
     {
-        _ = StartAsync(logger, dm, dataUpdater, view, message, updater);
+#if DEBUG
+        logger.LogInformation("Launching Xiletrade service");
+#endif
+
+        _ = StartAsync(logger, dm, report, dataUpdater, view, message, updater);
     }
 
     /// <summary>
@@ -25,15 +30,15 @@ public sealed class XiletradeService
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    private static async Task StartAsync(ILogger<XiletradeService> logger, DataManagerService dm,
+    private static async Task StartAsync(ILogger<XiletradeService> logger, 
+        DataManagerService dm, CrashReportService report,
         IDataUpdaterService dataUpdater, IViewManager view, 
         IMessageAdapterService message, IAutoUpdaterService appUpdater)
     {
         try
         {
-#if DEBUG
-            logger.LogInformation("Launching Xiletrade service");
-#endif           
+            report.OfferPendingReport();
+
             var options = dm.Config.Options;
             if (!options.DisableStartupMessage)
             {

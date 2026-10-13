@@ -2733,5 +2733,14 @@ Garena服務器：繁體中文。</value>
   </data>
   <data name="Error033_NotAdmin" xml:space="preserve">
     <value>Xiletrade 未以系統管理員模式執行！</value>
+  </data>  
+  <data name="Error034_XCrashReport" xml:space="preserve">
+	<value>當機報告</value>
+  </data>
+  <data name="Error035_ReportOnGithub" xml:space="preserve">
+	<value>Xiletrade 在上一次工作階段中意外關閉。
+
+您要在 GitHub 上開啟一份已預先填寫內容的錯誤回報嗎？
+不會自動傳送任何資料：您可以在提交前檢查並編輯回報內容。</value>
   </data>
 </root>

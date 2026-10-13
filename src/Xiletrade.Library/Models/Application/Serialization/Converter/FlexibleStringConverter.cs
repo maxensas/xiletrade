@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Xiletrade.Library.Models.Poe.Contract;
 
 namespace Xiletrade.Library.Models.Application.Serialization.Converter;
 

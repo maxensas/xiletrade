@@ -10,6 +10,7 @@ public static partial class Strings
         internal const string GithubData = "https://raw.githubusercontent.com/maxensas/xiletrade/master/Xiletrade/Data/";
         internal const string XiletradeAuth = "https://maxensas.github.io/xiletrade-oauth/poe";
         internal const string Changelog = "https://github.com/maxensas/xiletrade/releases";
+        internal const string Issues = "https://github.com/maxensas/xiletrade/issues/new";
         internal const string PoeRegex = "https://poe.re";
         internal const string PoeRegexKr = "https://poeregexkr.web.app";
         internal const string PoeRegexJp = "https://ochi3.github.io/poe-jp-regex";

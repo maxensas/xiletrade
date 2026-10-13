@@ -3193,4 +3193,13 @@ Garena server : Traditional Chinese.</comment>
   <data name="Error033_NotAdmin" xml:space="preserve">
     <value>Xiletradeは管理者モードで実行されていません！</value>
   </data>
+  <data name="Error034_XCrashReport" xml:space="preserve">
+	<value>クラッシュレポート</value>
+  </data>
+  <data name="Error035_ReportOnGithub" xml:space="preserve">
+	<value>前回のセッション中にXiletradeが予期せず終了しました。
+
+GitHubで事前入力済みのバグレポートを開きますか？
+データが自動的に送信されることはありません。送信する前にレポートを確認・編集できます。</value>
+  </data>
 </root>
