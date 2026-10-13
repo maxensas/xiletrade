@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.UI.Avalonia.Services;
@@ -110,12 +111,9 @@ internal sealed class Program
 
     private static void RunException(Exception ex)
     {
-        AppHost.Services.GetRequiredService<IFileLoggerService>().Log(ex);
-        if (ex.InnerException is not null)
-        {
-            RunException(ex.InnerException);
-            return;
-        }
+        var logger = AppHost.Services.GetRequiredService<IFileLoggerService>();
+        for (var e = ex; e is not null; e = e.InnerException) logger.Log(e);
+        AppHost.Services.GetRequiredService<CrashReportService>().SaveReport(ex);
         Environment.Exit(2);
     }
 }

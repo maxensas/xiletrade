@@ -2656,5 +2656,14 @@
   </data>
   <data name="Error033_NotAdmin" xml:space="preserve">
     <value>Xiletrade не запущен в режиме администратора!</value>
+  </data>  
+  <data name="Error034_XCrashReport" xml:space="preserve">
+	<value>Отчёт о сбое</value>
+  </data>
+  <data name="Error035_ReportOnGithub" xml:space="preserve">
+	<value>Во время предыдущего сеанса Xiletrade неожиданно завершил работу.
+
+Хотите открыть предварительно заполненный отчёт об ошибке на GitHub?
+Ничего не отправляется автоматически: перед отправкой вы можете проверить и отредактировать отчёт.</value>
   </data>
 </root>

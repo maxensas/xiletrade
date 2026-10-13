@@ -1,0 +1,34 @@
+name: Crash report
+description: Report a crash of Xiletrade (usually pre-filled by the application)
+title: "[Crash] "
+labels: ["bug", "crash"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting this crash.
+        **Please review the content below before submitting** and remove anything you do not want to share.
+        The report is not sent automatically: you are the one submitting it.
+  - type: input
+    id: version
+    attributes:
+      label: Xiletrade version
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+  - type: textarea
+    id: stacktrace
+    attributes:
+      label: Exception details
+      description: Pre-filled by the application. Attach Xiletrade.log if the report was truncated.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: What were you doing when it crashed?
+      description: Optional, but it helps to reproduce the problem.

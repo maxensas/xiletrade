@@ -2661,5 +2661,14 @@ Servidor Garena: Chinês tradicional.</value>
   </data>
   <data name="Error033_NotAdmin" xml:space="preserve">
     <value>O Xiletrade não está sendo executado no modo administrador!</value>
+  </data>  
+  <data name="Error034_XCrashReport" xml:space="preserve">
+	<value>Relatório de falha</value>
+  </data>
+  <data name="Error035_ReportOnGithub" xml:space="preserve">
+	<value>O Xiletrade foi fechado inesperadamente durante a última sessão.
+
+Deseja abrir um relatório de erro pré-preenchido no GitHub?
+Nada é enviado automaticamente: pode rever e editar o relatório antes de o submeter.</value>
   </data>
 </root>

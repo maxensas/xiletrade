@@ -70,7 +70,7 @@ public partial class App : Application, IDisposable
 
         // Subscribe to global exception handler
         Current.DispatcherUnhandledException += AppDispatcherUnhandledException;
-
+        
         // Starts Xiletrade application.
         _serviceProvider.GetRequiredService<XiletradeService>();
 
@@ -107,12 +107,9 @@ public partial class App : Application, IDisposable
 
     private void RunException(Exception ex)
     {
-        _serviceProvider.GetRequiredService<IFileLoggerService>().Log(ex);
-        if (ex.InnerException is not null)
-        {
-            RunException(ex.InnerException);
-            return;
-        }
+        var logger = _serviceProvider.GetRequiredService<IFileLoggerService>();
+        for (var e = ex; e is not null; e = e.InnerException) logger.Log(e);
+        _serviceProvider.GetRequiredService<CrashReportService>().SaveReport(ex);
         Current.Shutdown();
     }
 

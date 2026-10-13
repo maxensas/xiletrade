@@ -59,6 +59,7 @@ public abstract class ServiceConfigurationBase
         typeof(PoeNinjaService),
         typeof(LocalizationService),
         typeof(FeatureProvider),
+        typeof(CrashReportService),
         typeof(IUIService),
         typeof(IDataUpdaterService),
         typeof(IAutoUpdaterService),

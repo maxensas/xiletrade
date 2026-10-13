@@ -2618,5 +2618,14 @@
   </data>
   <data name="Error033_NotAdmin" xml:space="preserve">
     <value>Xiletrade ไม่ได้ทำงานในโหมดผู้ดูแลระบบ!</value>
+  </data>  
+  <data name="Error034_XCrashReport" xml:space="preserve">
+	<value>รายงานข้อขัดข้อง</value>
+  </data>
+  <data name="Error035_ReportOnGithub" xml:space="preserve">
+	<value>Xiletrade ปิดตัวลงโดยไม่คาดคิดในเซสชันล่าสุด
+
+คุณต้องการเปิดรายงานข้อผิดพลาดที่กรอกข้อมูลไว้ล่วงหน้าบน GitHub หรือไม่?
+ไม่มีการส่งข้อมูลโดยอัตโนมัติ คุณสามารถตรวจสอบและแก้ไขรายงานก่อนส่งได้</value>
   </data>
 </root>
