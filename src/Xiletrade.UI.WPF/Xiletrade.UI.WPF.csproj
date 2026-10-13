@@ -25,7 +25,6 @@
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <PublishProtocol>FileSystem</PublishProtocol>
     <TrimMode>link</TrimMode>
-    <!-- <PublishTrimmed>true</PublishTrimmed> --> <!-- WinForms not supported -->
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -59,15 +58,6 @@
     <Resource Include="Assets\**" />
   </ItemGroup>
   <ItemGroup>
-    <!--
-    <TrimmerRootAssembly Include="AutoUpdater.NET" />
-    -->
-    <!--
-    <ProjectReference Include="..\AutoUpdater.NET\AutoUpdater.NET.csproj">
-      <Project>{fb9e7e6b-b19f-4f37-a708-2996190cef13}</Project>
-      <Name>AutoUpdater.NET</Name>
-    </ProjectReference>
-    -->
     <ProjectReference Include="..\Xiletrade.Library\Xiletrade.Library.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -84,7 +74,6 @@
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="WPF-UI.Markdown" />
     <PackageReference Include="OxyPlot.WPF" />
-    <!--<PackageReference Include="System.Private.Uri" Version="4.3.2" />-->
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
@@ -110,18 +99,25 @@
     <Delete Files="$(PublishDir)\Microsoft.Web.WebView2.WinForms.xml" />
     <Delete Files="$(PublishDir)\Microsoft.Web.WebView2.Wpf.xml" />
   </Target>
-
-  <ItemGroup>
-    <_CustomSourceFiles Include="..\Xiletrade.Updater\Native\win-x64\*.*" />
-  </ItemGroup>
-
   <ItemGroup>
     <Compile Update="UserControls\Main\Search.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
-  <Target Name="CopyFiles" AfterTargets="Publish">
-    <Copy SourceFiles="@(_CustomSourceFiles)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="true" />
+  <Target Name="PublishUpdater" AfterTargets="Publish">
+    <PropertyGroup>
+      <UpdaterProject>$(MSBuildThisFileDirectory)..\Xiletrade.Updater\Xiletrade.Updater.csproj</UpdaterProject>
+      <UpdaterPublishDir>$(MSBuildProjectDirectory)\obj\updater-publish\</UpdaterPublishDir>
+    </PropertyGroup>
+    <RemoveDir Directories="$(UpdaterPublishDir)" />
+    <MSBuild
+      Projects="$(UpdaterProject)"
+      Targets="Publish"
+      Properties="Configuration=$(Configuration);RuntimeIdentifier=win-x64;PublishDir=$(UpdaterPublishDir);SelfContained=$(SelfContained);Version=$(Version)"
+      BuildInParallel="false" />
+    <Copy
+      SourceFiles="$(UpdaterPublishDir)Xiletrade.Updater.exe"
+      DestinationFiles="$(PublishDir)Update.exe" />
   </Target>
 </Project>
 

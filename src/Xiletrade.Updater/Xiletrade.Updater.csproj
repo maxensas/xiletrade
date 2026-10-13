@@ -1,27 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>0.1.1</Version>
     <OutputType>WinExe</OutputType>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <TargetFramework>net10.0</TargetFramework>
-    <PublishAot Condition="'$(Configuration)' != 'Debug'">false</PublishAot>
-    <OptimizationPreference>size</OptimizationPreference>
-    <IlcInstructionSet>native</IlcInstructionSet>
-    <InvariantGlobalization>true</InvariantGlobalization>
-    <IlcFoldIdenticalMethodBodies>true</IlcFoldIdenticalMethodBodies>
-    <!-- <IlcTrimMetadata>true</IlcTrimMetadata>-->
-    <!-- <IlcGenerateStackTraceData>false</IlcGenerateStackTraceData>-->
-    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
-    <SelfContained>true</SelfContained>
-    <PublishSingleFile>true</PublishSingleFile>
-    <PublishTrimmed>true</PublishTrimmed>
-    <!--<TrimMode>copyused/link</TrimMode>-->
     <Nullable>enable</Nullable>
-    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <PublishReadyToRun>false</PublishReadyToRun>
     <Copyright>Copyright © 2026 maxensas</Copyright>
     <Company>Toolcaps</Company>
     <Authors>maxensas</Authors>
@@ -31,7 +14,21 @@
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <ApplicationIcon>Assets\app-icon.ico</ApplicationIcon>
   </PropertyGroup>
-
+  <!-- Publish/Release setup -->
+  <PropertyGroup Condition="'$(Configuration)' != 'Debug'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishTrimmed>true</PublishTrimmed>
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <PublishAot>true</PublishAot>
+    <IncludeNativeLibrariesForSelfExtract Condition="'$(PublishAot)' == 'False'">true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile Condition="'$(PublishAot)' == 'False'">true</EnableCompressionInSingleFile>
+    <OptimizationPreference Condition="'$(PublishAot)' == 'True'">size</OptimizationPreference>
+    <IlcFoldIdenticalMethodBodies Condition="'$(PublishAot)' == 'True'">true</IlcFoldIdenticalMethodBodies>
+  </PropertyGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
@@ -46,91 +43,12 @@
     <PackageReference Include="Avalonia" />
     <PackageReference Include="Avalonia.Desktop" />
     <PackageReference Include="Avalonia.Themes.Fluent" />
-    <PackageReference Include="Avalonia.Fonts.Inter" />
-    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Condition="'$(Configuration)' != 'Release'" />
     <PackageReference Include="Xaml.Behaviors.Avalonia" />
     <PackageReference Include="MessageBox.Avalonia" />
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="SharpCompress" />
+    <PackageReference Include="StaticLink.Avalonia" Condition="'$(PublishAot)' == 'True'" />
   </ItemGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <DebugType>none</DebugType>
-    <DebugSymbols>false</DebugSymbols>
-    <NoWarn>IL2026;IL2057</NoWarn>
-  </PropertyGroup>
-
-  <ItemGroup><!--
-    <Reference Include="SharpCompress">
-      <HintPath>SharpCompress.dll</HintPath>
-    </Reference>
-    -->
-    <!--
-    <Reference Include="libSkiaSharp">
-      <HintPath>libSkiaSharp.dll</HintPath>
-    </Reference>
-        <Reference Include="libHarfBuzzSharp">
-      <HintPath>libHarfBuzzSharp.dll</HintPath>
-    </Reference>
-        <Reference Include="av_libglesv2">
-      <HintPath>av_libglesv2.dll</HintPath>
-    </Reference>
-    -->
-    <!--
-    <DirectPInvoke Include="libSkiaSharp" />
-    <DirectPInvoke Include="libHarfBuzzSharp" />
-    <DirectPInvoke Include="av_libglesv2" />
-    <LinkerArg Include="libSkiaSharp.dll"/>
-    <LinkerArg Include="libHarfBuzzSharp.dll"/>
-    <LinkerArg Include="av_libglesv2.dll"/>
-    -->
-  
-    
-  </ItemGroup>
-  
-  <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <!--
-    <Content Include="$(MSBuildThisFileDirectory)libSkiaSharp.dll" Visible="False" />
-    <Content Include="$(MSBuildThisFileDirectory)libHarfBuzzSharp.dll" Visible="False" />
-    <Content Include="$(MSBuildThisFileDirectory)av_libglesv2.dll" Visible="False" />
-    -->
-    <!--
-    <_NativeFile1 Include="$(MSBuildThisFileDirectory)libSkiaSharp.dll"/>
-    <None Include="@(_NativeFile1)">
-      <Link>%(Dir)%(Filename)%(Extension)</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-    </None>
-    <_NativeFile2 Include="$(MSBuildThisFileDirectory)libHarfBuzzSharp.dll"/>
-    <None Include="@(_NativeFile2)">
-      <Link>%(Dir)%(Filename)%(Extension)</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-    </None>
-    <_NativeFile3 Include="$(MSBuildThisFileDirectory)av_libglesv2.dll"/>
-    <None Include="@(_NativeFile3)">
-      <Link>%(Dir)%(Filename)%(Extension)</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Pack>true</Pack>
-    </None>
-    -->
-  </ItemGroup>
-  <!-- libHarfBuzzSharp
-  <ItemGroup>
-    <TrimmerRootAssembly Include="System.Reflection" />
-  </ItemGroup>
-  -->
-  <!--
-  <Target Name="RemovePdbGenerated" AfterTargets="Publish">
-    <Message Text="Deleting unwanted generated files..." Importance="high" />
-    <Delete Files="$(PublishDir)\Updater.pdb" />
-  </Target>
-  -->
-
-  <!--
-  <Target Name="TestValue" AfterTargets="build">
-    <Message Text="@(none)" Importance="high"/>
-  </Target>
-  -->
 </Project>
 
