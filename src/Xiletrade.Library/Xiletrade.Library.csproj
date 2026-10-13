@@ -45,13 +45,13 @@
     <DefineConstants>$(DefineConstants);Linux</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.8" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.8" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.8" />
-    <PackageReference Include="SharpCompress" Version="0.48.1" />
-    <PackageReference Include="Raffinert.FuzzySharp" Version="3.0.7" />
-    <PackageReference Include="Notification.CoreUI" Version="10.1.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
+    <PackageReference Include="SharpCompress" />
+    <PackageReference Include="Raffinert.FuzzySharp" />
+    <PackageReference Include="Notification.CoreUI" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\**">

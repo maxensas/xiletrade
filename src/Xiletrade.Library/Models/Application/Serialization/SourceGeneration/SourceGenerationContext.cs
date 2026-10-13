@@ -149,6 +149,7 @@ namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
 [JsonSerializable(typeof(NetError))]
 [JsonSerializable(typeof(MercenarySkill))]
 [JsonSerializable(typeof(MercenarySupport))]
+[JsonSerializable(typeof(QueryType))]
 public partial class SourceGenerationContext : JsonSerializerContext
 {
     internal JsonTypeInfo<T> GetTypeGenerated<T>() where T : class

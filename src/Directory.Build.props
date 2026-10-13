@@ -1,6 +1,65 @@
 <Project>
   <PropertyGroup>
-    <Nullable>enable</Nullable>
-    <AvaloniaVersion>11.0.2</AvaloniaVersion>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
+  <ItemGroup>
+    <!-- DI/MVVM -->
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="10.0.12" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Debug" Version="10.0.12" />
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    
+    <!-- WPF -->
+    <PackageVersion Include="EventBinder" Version="2.5.3" />
+    <PackageVersion Include="Hardcodet.NotifyIcon.Wpf" Version="2.0.1" />
+    <PackageVersion Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.161" />
+    <PackageVersion Include="Notification.Wpf" Version="10.1.0" />
+    <PackageVersion Include="WPF-UI.Markdown" Version="4.3.0" />
+    <PackageVersion Include="OxyPlot.WPF" Version="2.2.0" />
+    
+    <!-- Avalonia -->
+    <PackageVersion Include="Avalonia" Version="12.1.4" />
+    <PackageVersion Include="Avalonia.Desktop" Version="12.1.4" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="12.1.4" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="12.1.4" />
+    <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
+    <PackageVersion Include="Xaml.Behaviors.Avalonia" Version="12.0.7" />
+    <PackageVersion Include="Notification.AvaloniaUI" Version="10.1.0" />
+    <PackageVersion Include="MessageBox.Avalonia" Version="12.0.0" />
+    
+    <!-- Lib/Tests/Bench -->
+    <PackageVersion Include="Raffinert.FuzzySharp" Version="3.0.7" />
+    <PackageVersion Include="Notification.CoreUI" Version="10.1.0" />
+    
+    <!-- Lib/Updater -->
+    <PackageVersion Include="SharpCompress" Version="0.50.5" />
+    
+    <!-- JSON Generator -->
+    <PackageVersion Include="CsvHelper" Version="33.1.0" />
+    <PackageVersion Include="Cryptisk.Utf8Json" Version="1.4.0" />
+    <PackageVersion Include="LibGGPK3.LibBundledGGPK3" Version="2.7.5" />
+    <PackageVersion Include="System.Private.Uri" Version="4.3.2" /> <!-- transitive -->
+    
+    <!-- Tests -->
+    <PackageVersion Include="coverlet.collector" Version="10.1.0" />
+    <PackageVersion Include="FluentAssertions" Version="8.11.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.10.1" />
+    <PackageVersion Include="Moq" Version="4.21.0" />
+    <PackageVersion Include="NetArchTest.Rules" Version="1.3.2" />
+    <PackageVersion Include="Xunit.StaFact" Version="4.0.24" />
+    <PackageVersion Include="xunit.v3" Version="4.0.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.1" />
+    
+    <!-- Tests / Bench -->
+    <PackageVersion Include="FuzzySharp" Version="2.0.2" />
+    <PackageVersion Include="Fastenshtein" Version="1.0.11" />
+    <PackageVersion Include="Utf8Json" Version="1.3.7" />
+    
+    <!-- Bench -->
+    <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
+    <PackageVersion Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
+    <PackageVersion Include="Quickenshtein" Version="1.5.1" />
+  </ItemGroup>
 </Project>

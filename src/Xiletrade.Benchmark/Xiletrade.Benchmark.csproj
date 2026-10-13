@@ -8,13 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
-    <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" Version="0.15.8" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.8" />
-    <PackageReference Include="Quickenshtein" Version="1.5.1" />
-    <PackageReference Include="Utf8Json" Version="1.3.7" />
-    <PackageReference Include="Raffinert.FuzzySharp" Version="3.0.7" />
-    <PackageReference Include="Fastenshtein" Version="1.0.11" />
+    <PackageReference Include="BenchmarkDotNet" />
+    <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows"/>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Quickenshtein" />
+    <PackageReference Include="Utf8Json" />
+    <PackageReference Include="Raffinert.FuzzySharp" />
+    <PackageReference Include="Fastenshtein" />
   </ItemGroup>
 
   <ItemGroup>
