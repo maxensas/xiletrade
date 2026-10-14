@@ -24,6 +24,7 @@ public sealed partial class EditorViewModel : ViewModelBase
     private readonly IMessageAdapterService _message;
     private readonly DataManagerService _dm;
     private readonly TaskBarViewModel _taskBarVm;
+    private readonly INotificationService _notif;
 
     [ObservableProperty]
     private AsyncObservableCollection<ConfigMods> dangerousMods = new();
@@ -59,12 +60,13 @@ public sealed partial class EditorViewModel : ViewModelBase
     private string poeSessId;
 
     public EditorViewModel(ITokenService tokenService, IMessageAdapterService message,
-        DataManagerService dm, TaskBarViewModel taskBarVm)
+        DataManagerService dm, TaskBarViewModel taskBarVm, INotificationService notif)
     {
         _dm = dm;
         _tokenService = tokenService;
         _message = message;
         _taskBarVm = taskBarVm;
+        _notif = notif;
 
         viewScale = _dm.Config.Options.Scale;
         string dataPath = System.IO.Path.GetFullPath("Data\\");
@@ -284,5 +286,13 @@ public sealed partial class EditorViewModel : ViewModelBase
         {
             _message.Show(ex.Message, Resources.Resources.Error004_XError, MessageStatus.Error);
         }
+    }
+
+    // Temp
+    [RelayCommand]
+    private void TestNotif(object commandParameter)
+    {
+        var msg = new Models.Application.Notification.ToastNotification(title: "titre", message: "message");
+        _notif.Show(msg);
     }
 }

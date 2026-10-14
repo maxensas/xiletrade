@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Notification.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.Application.Notification;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
@@ -45,17 +45,17 @@ public sealed class DataUpdaterService : IDataUpdaterService
     public async Task UpdateAsync(GeneralViewModel cfgVm = null, bool allLanguages = false, bool updateGenerated = true)
     {
         List<Task> taskList = new();
-
+        
         if (cfgVm is not null)
         {
             cfgVm.BtnUpdateEnable = false;
         }
-
+        
         var cult = cfgVm is null || allLanguages ? string.Empty : " (" + Strings.Culture[cfgVm.LanguageIndex] + ")";
         var cultStart = cfgVm is not null ? allLanguages ? 0 : cfgVm.LanguageIndex : _dm.Config.Options.Language;
         var cultStop = allLanguages ? Strings.Culture.Length : (cfgVm is not null ? cfgVm.LanguageIndex : _dm.Config.Options.Language) + 1;
         var timeoutSecond = allLanguages ? 50 : 3;
-
+        
         bool aborted = false;
         try
         {
@@ -106,7 +106,7 @@ public sealed class DataUpdaterService : IDataUpdaterService
         {
             cfgVm.BtnUpdateEnable = true;
         }
-
+        
         bool isNoError = ErrorMsg.Length is 0;
         if (isNoError)
         {
@@ -118,8 +118,9 @@ public sealed class DataUpdaterService : IDataUpdaterService
         var msg = isNoError ? aborted ? Resources.Resources.Main191_FiltersKo : Resources.Resources.Main190_FiltersOk
         : cult + Resources.Resources.Main191_FiltersKo + Strings.LF + ErrorMsg;
         ErrorMsg = string.Empty;
-        var type = !isNoError || aborted ? NotificationType.Error : NotificationType.Success;
-        _notif.Show(new() { Title = title, Message = msg, Type = type, ShowCloseButton = false });
+        var type = !isNoError || aborted ? NotificationStatus.Error : NotificationStatus.Success;
+        var message = new ToastNotification(title: title, message: msg, status: type);
+        _notif.Show(message);
     }
 
     public async Task<SettingsData> GetAppSettings()

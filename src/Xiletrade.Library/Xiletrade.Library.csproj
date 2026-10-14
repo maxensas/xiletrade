@@ -51,7 +51,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
     <PackageReference Include="SharpCompress" />
     <PackageReference Include="Raffinert.FuzzySharp" />
-    <PackageReference Include="Notification.CoreUI" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\**">

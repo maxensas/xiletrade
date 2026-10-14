@@ -70,7 +70,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" />
-    <PackageReference Include="Notification.Wpf" />
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="WPF-UI.Markdown" />
     <PackageReference Include="OxyPlot.WPF" />

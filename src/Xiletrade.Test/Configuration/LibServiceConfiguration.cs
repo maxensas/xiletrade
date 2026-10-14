@@ -17,6 +17,7 @@ public class LibServiceConfiguration : ServiceConfigurationBase
         services
             // ui
             .Replace(ServiceDescriptor.Singleton(Mock.Of<IViewManager>())) // null object
+            .Replace(ServiceDescriptor.Singleton(Mock.Of<INotificationService>()))
             .Replace(ServiceDescriptor.Singleton(Mock.Of<ITaskbar>()))
             .Replace(ServiceDescriptor.Singleton(Mock.Of<IMainView>()))
             // lib

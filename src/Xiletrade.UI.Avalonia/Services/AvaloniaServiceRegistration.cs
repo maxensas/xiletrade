@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Notification.Avalonia;
-using Notification.Core;
-using System;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels.Config;
@@ -12,6 +10,7 @@ using Xiletrade.Library.ViewModels.Start;
 using Xiletrade.Library.ViewModels.TaskBar;
 using Xiletrade.Library.Views;
 using Xiletrade.UI.Avalonia.UserControls;
+using Xiletrade.UI.Avalonia.Util;
 using Xiletrade.UI.Avalonia.Views;
 
 namespace Xiletrade.UI.Avalonia.Services;
@@ -29,14 +28,8 @@ public static class AvaloniaServiceRegistration
         // Avalonia imp
         sc.AddSingleton<IViewManager, ViewManager>()
             .AddSingleton<IMessageAdapterService, MessageAdapterService>()
-            .AddAvaloniaNotifications(cfg => // TO TEST
-            {
-                cfg.SuccessBackgroundColor = NotificationColor.FromHex("#FF252525");
-                cfg.ErrorBackgroundColor = NotificationColor.FromHex("#FF252525");
-                cfg.SuccessIconColor = NotificationColor.LimeGreen;
-                cfg.ErrorIconColor = NotificationColor.OrangeRed;
-                cfg.DefaultExpirationTime = TimeSpan.FromSeconds(5);
-            })
+            .AddSingleton<INotificationService>(sp => new NotificationService(dismiss 
+                => new NotificationHost(sp.GetRequiredService<IUIService>(), dismiss)))
             // views
             .AddSingleton<IMainView>(sp => new MainView(sp, sp.GetRequiredService<MainViewModel>()))
             .AddSingleton<ITaskbar>(sp => new TaskbarIcon(sp.GetRequiredService<TaskBarViewModel>()))
