@@ -4,6 +4,7 @@ using Moq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Xiletrade.Library.Models.Application;
+using Xiletrade.Library.Models.Application.Notification;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels;
@@ -31,7 +32,6 @@ public abstract class ServiceConfigurationBase
     [
         // framework imp
         typeof(IViewManager),
-        //INotifications
         typeof(IMainView),
         typeof(ITaskbar),
         typeof(IConfigView),
@@ -44,6 +44,7 @@ public abstract class ServiceConfigurationBase
     protected virtual IEnumerable<Type> LibRequiredServices =>
     [
         // platform imp
+        typeof(INotificationService),
         typeof(IMessageAdapterService),
         typeof(IClipboardService),
         typeof(IInputService),
