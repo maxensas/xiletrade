@@ -2,8 +2,9 @@
 layout: default
 title: Xiletrade
 lang: ja-JP
-minidesc: POE オーバーレイと価格チェッカー
-description: Path of Exile 1 と Path of Exile 2 のアイテム価格確認を簡単にするツール
+locale: ja_JP
+minidesc: PoE・PoE2 相場チェック＆オーバーレイ
+description: Path of Exile・Path of Exile 2向けアイテム価格チェックツール＆オーバーレイ
 strings:
   maintained: プロジェクトは以下によって保守されています
   generated: このページは以下によって生成されました
@@ -32,12 +33,18 @@ strings:
 
 ### {% include direction.svg %} クイック紹介
 
-<h2 class="keywords"><strong>Xiletrade は、Path of Exile と最適に統合されるミニマリスト インターフェースを提供します。</strong></h2>
+<h2 class="keywords"><strong>Xiletradeは、『Path of Exile』および『Path of Exile 2』を最適にプレイできるよう、軽量なオーバーレイを提供します。</strong></h2>
 <section class="intro">
   <p>その機能により、トレードリーグでのプレイ中に生活の質が向上し、スムーズな体験を保証します。</p>
   <p>オープンソースとして、そのコードベースは最適化されたツールを提供するために細心の注意が払われています。 
   以下に、POE のアイテム価格チェックに関するカスタマイズ可能な動作の完全なリストがあります。</p>
 </section>
+
+### {% include knife.svg %} 主な情報
+
+- 対応プラットフォーム： **Windows** 64ビット、ポータブル版（インストール不要）。
+- 料金とライセンス： 無料・オープンソース（GPLv3）、[GitHub のソースコード]({{ site.github.repository_url }})。
+- 対応ゲーム： Path of Exile、Path of Exile 2。
 
 ### {% include pokeball.svg %} 主な機能
 
@@ -60,7 +67,6 @@ strings:
 ### {% include install.svg %} インストールとセットアップ
 
 1. 最新バージョンを[**ダウンロード**]({% include download.html %})し、**`.7zip`** アーカイブを目的のディレクトリに**解凍**します。
-Xiletrade は**ポータブル アプリケーション**であり、起動時に追加のものをインストールしません。
 2. システム トレイ アイコンを**右クリック**して、プログラムを構成または終了します。
 3. スタートアップまたは設定ウィンドウで、必要な**ゲーム バージョン**、**言語**、**リーグ**を選択します。
 4. 各機能に**マウスをホバー**すると、ツールチップが表示されて詳しい説明が表示されます。  

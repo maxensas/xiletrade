@@ -1,60 +1,179 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" 
-xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-	<url>
-	  <loc>https://maxensas.github.io/xiletrade/</loc>
-	  <lastmod>2025-03-04T18:59:14+00:00</lastmod>
-	  <priority>1.00</priority>
-	</url>
-	<url>
-	  <loc>https://maxensas.github.io/xiletrade/kr/</loc>
-	  <lastmod>2025-03-04T18:59:14+00:00</lastmod>
-	  <priority>0.80</priority>
-	</url>
-	<url>
-	  <loc>https://maxensas.github.io/xiletrade/fr/</loc>
-	  <lastmod>2025-03-04T18:59:14+00:00</lastmod>
-	  <priority>0.80</priority>
-	</url>
-	<url>
-	  <loc>https://maxensas.github.io/xiletrade/es/</loc>
-	  <lastmod>2025-03-04T18:59:14+00:00</lastmod>
-	  <priority>0.80</priority>
-	</url>
-	<url>
-	  <loc>https://maxensas.github.io/xiletrade/de/</loc>
-	  <lastmod>2025-03-04T18:59:14+00:00</lastmod>
-	  <priority>0.80</priority>
-	</url>
-	<url>
-	  <loc>https://maxensas.github.io/xiletrade/pt/</loc>
-	  <lastmod>2025-03-04T18:59:14+00:00</lastmod>
-	  <priority>0.80</priority>
-	</url>
-	<url>
-	  <loc>https://maxensas.github.io/xiletrade/ru/</loc>
-	  <lastmod>2025-03-04T18:59:14+00:00</lastmod>
-	  <priority>0.80</priority>
-	</url>
-	<url>
-	  <loc>https://maxensas.github.io/xiletrade/th/</loc>
-	  <lastmod>2025-03-04T18:59:14+00:00</lastmod>
-	  <priority>0.80</priority>
-	</url>
-	<url>
-	  <loc>https://maxensas.github.io/xiletrade/tw/</loc>
-	  <lastmod>2025-03-04T18:59:14+00:00</lastmod>
-	  <priority>0.80</priority>
-	</url>
-	<url>
-	  <loc>https://maxensas.github.io/xiletrade/cn/</loc>
-	  <lastmod>2025-03-04T18:59:14+00:00</lastmod>
-	  <priority>0.80</priority>
-	</url>
-	<url>
-	  <loc>https://maxensas.github.io/xiletrade/jp/</loc>
-	  <lastmod>2025-03-04T18:59:14+00:00</lastmod>
-	  <priority>0.80</priority>
-	</url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://maxensas.github.io/xiletrade/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://maxensas.github.io/xiletrade/kr/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://maxensas.github.io/xiletrade/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://maxensas.github.io/xiletrade/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://maxensas.github.io/xiletrade/de/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://maxensas.github.io/xiletrade/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maxensas.github.io/xiletrade/ru/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://maxensas.github.io/xiletrade/th/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://maxensas.github.io/xiletrade/tw/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://maxensas.github.io/xiletrade/cn/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://maxensas.github.io/xiletrade/jp/"/>
+  </url>
+  <url>
+    <loc>https://maxensas.github.io/xiletrade/kr/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://maxensas.github.io/xiletrade/kr/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://maxensas.github.io/xiletrade/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://maxensas.github.io/xiletrade/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://maxensas.github.io/xiletrade/de/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://maxensas.github.io/xiletrade/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maxensas.github.io/xiletrade/ru/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://maxensas.github.io/xiletrade/th/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://maxensas.github.io/xiletrade/tw/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://maxensas.github.io/xiletrade/cn/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://maxensas.github.io/xiletrade/jp/"/>
+  </url>
+  <url>
+    <loc>https://maxensas.github.io/xiletrade/fr/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://maxensas.github.io/xiletrade/kr/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://maxensas.github.io/xiletrade/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://maxensas.github.io/xiletrade/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://maxensas.github.io/xiletrade/de/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://maxensas.github.io/xiletrade/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maxensas.github.io/xiletrade/ru/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://maxensas.github.io/xiletrade/th/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://maxensas.github.io/xiletrade/tw/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://maxensas.github.io/xiletrade/cn/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://maxensas.github.io/xiletrade/jp/"/>
+  </url>
+  <url>
+    <loc>https://maxensas.github.io/xiletrade/es/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://maxensas.github.io/xiletrade/kr/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://maxensas.github.io/xiletrade/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://maxensas.github.io/xiletrade/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://maxensas.github.io/xiletrade/de/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://maxensas.github.io/xiletrade/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maxensas.github.io/xiletrade/ru/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://maxensas.github.io/xiletrade/th/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://maxensas.github.io/xiletrade/tw/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://maxensas.github.io/xiletrade/cn/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://maxensas.github.io/xiletrade/jp/"/>
+  </url>
+  <url>
+    <loc>https://maxensas.github.io/xiletrade/de/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://maxensas.github.io/xiletrade/kr/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://maxensas.github.io/xiletrade/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://maxensas.github.io/xiletrade/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://maxensas.github.io/xiletrade/de/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://maxensas.github.io/xiletrade/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maxensas.github.io/xiletrade/ru/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://maxensas.github.io/xiletrade/th/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://maxensas.github.io/xiletrade/tw/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://maxensas.github.io/xiletrade/cn/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://maxensas.github.io/xiletrade/jp/"/>
+  </url>
+  <url>
+    <loc>https://maxensas.github.io/xiletrade/pt/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://maxensas.github.io/xiletrade/kr/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://maxensas.github.io/xiletrade/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://maxensas.github.io/xiletrade/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://maxensas.github.io/xiletrade/de/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://maxensas.github.io/xiletrade/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maxensas.github.io/xiletrade/ru/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://maxensas.github.io/xiletrade/th/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://maxensas.github.io/xiletrade/tw/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://maxensas.github.io/xiletrade/cn/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://maxensas.github.io/xiletrade/jp/"/>
+  </url>
+  <url>
+    <loc>https://maxensas.github.io/xiletrade/ru/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://maxensas.github.io/xiletrade/kr/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://maxensas.github.io/xiletrade/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://maxensas.github.io/xiletrade/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://maxensas.github.io/xiletrade/de/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://maxensas.github.io/xiletrade/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maxensas.github.io/xiletrade/ru/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://maxensas.github.io/xiletrade/th/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://maxensas.github.io/xiletrade/tw/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://maxensas.github.io/xiletrade/cn/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://maxensas.github.io/xiletrade/jp/"/>
+  </url>
+  <url>
+    <loc>https://maxensas.github.io/xiletrade/th/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://maxensas.github.io/xiletrade/kr/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://maxensas.github.io/xiletrade/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://maxensas.github.io/xiletrade/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://maxensas.github.io/xiletrade/de/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://maxensas.github.io/xiletrade/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maxensas.github.io/xiletrade/ru/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://maxensas.github.io/xiletrade/th/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://maxensas.github.io/xiletrade/tw/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://maxensas.github.io/xiletrade/cn/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://maxensas.github.io/xiletrade/jp/"/>
+  </url>
+  <url>
+    <loc>https://maxensas.github.io/xiletrade/tw/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://maxensas.github.io/xiletrade/kr/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://maxensas.github.io/xiletrade/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://maxensas.github.io/xiletrade/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://maxensas.github.io/xiletrade/de/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://maxensas.github.io/xiletrade/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maxensas.github.io/xiletrade/ru/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://maxensas.github.io/xiletrade/th/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://maxensas.github.io/xiletrade/tw/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://maxensas.github.io/xiletrade/cn/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://maxensas.github.io/xiletrade/jp/"/>
+  </url>
+  <url>
+    <loc>https://maxensas.github.io/xiletrade/cn/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://maxensas.github.io/xiletrade/kr/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://maxensas.github.io/xiletrade/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://maxensas.github.io/xiletrade/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://maxensas.github.io/xiletrade/de/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://maxensas.github.io/xiletrade/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maxensas.github.io/xiletrade/ru/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://maxensas.github.io/xiletrade/th/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://maxensas.github.io/xiletrade/tw/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://maxensas.github.io/xiletrade/cn/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://maxensas.github.io/xiletrade/jp/"/>
+  </url>
+  <url>
+    <loc>https://maxensas.github.io/xiletrade/jp/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://maxensas.github.io/xiletrade/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://maxensas.github.io/xiletrade/kr/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://maxensas.github.io/xiletrade/fr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://maxensas.github.io/xiletrade/es/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://maxensas.github.io/xiletrade/de/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://maxensas.github.io/xiletrade/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://maxensas.github.io/xiletrade/ru/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://maxensas.github.io/xiletrade/th/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://maxensas.github.io/xiletrade/tw/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://maxensas.github.io/xiletrade/cn/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://maxensas.github.io/xiletrade/jp/"/>
+  </url>
 </urlset>

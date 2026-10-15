@@ -5,12 +5,12 @@ layout: default
 ## One-action price check
 
 <h2 class="keywords"><i>🔍 Find instantly the best price range.</i></h2>
-<h2 class="keywords"><i>⚡ Setup behaviors on the fly.</i></h2>
-<h2 class="keywords"><i>🎮 Play smoother, trade quicker !</i></h2>
+<h2 class="keywords"><i>⚡ Set up behaviors on the fly.</i></h2>
+<h2 class="keywords"><i>🎮 Play smoother, trade quicker!</i></h2>
 
 #### {% include youtube.svg %} &nbsp; [Watch overview](https://youtu.be/NygCZvZyUX0)<br>
 
-Low CPU usasge.  
+Low CPU usage.  
 Uses max ***250 MB of RAM***, no spikes.  
 ***No data*** written in the background.  
 
@@ -19,12 +19,18 @@ Uses max ***250 MB of RAM***, no spikes.
 
 ### {% include direction.svg %} Quick introduction
 
-<h2 class="keywords"><strong>Xiletrade offers a minimalist interface for optimal integration with Path of Exile 1 and 2.</strong></h2>
+<h2 class="keywords"><strong>Xiletrade offers a lightweight overlay for an optimal use on Path of Exile and Path of Exile 2</strong></h2>
 <section class="intro">
   <p>Thanks to its features, it will enhance your quality of life while playing in trade leagues, guaranteeing a smooth experience.</p>
   <p>As open source, its code base receives meticulous attention to provide you with the most optimized tool possible. 
   Below you will find the complete list of customizable behaviors regarding item price check on POE.</p>
 </section>
+
+### {% include knife.svg %} Key facts
+
+- Platform: **Windows** 64-bit, **portable** (no installation required).
+- Cost and license: **free** and **open source** (GPLv3), [source code on GitHub]({{ site.github.repository_url }}).
+- Games supported: Path of Exile and Path of Exile 2.
 
 ### {% include pokeball.svg %} Main features
 
@@ -48,10 +54,9 @@ such as fast travel to **hideouts** or **trading** actions.
 ### {% include install.svg %} Installation and Setup
 
 1. [**Download**]({% include download.html %}) the latest version and **extract** **`.7zip`** archive in desired directory.  
-Xiletrade is a **portable application** and does not install anything additional upon launch.
 2. **Right click** on system tray icon to configure or close the program.  
 3. Select desired **game version**, **language** and **league** under startup or settings window.
-4. **Mouse hover** on each feature until a tooltip appears to get a deep explain.   
+4. **Mouse hover** on each feature until a tooltip appears for a detailed explanation.   
 <br>
 {% include settings.html %}
 <br>
@@ -64,8 +69,8 @@ Xiletrade is a **portable application** and does not install anything additional
 > Once Xiletrade is launched and setup, you can now **price check** following this process :
 >    1. Place your mouse **over an item** in game and press ***CTRL+D*** *(default)*
 >    2. It will copy **item info descriptions** from game and open Xiletrade window.
->    3. The window will display **estimated prices** if the search return matching results.
->    4. Prices displayed are based from the **official trade websites** [PoE 1](https://www.pathofexile.com/trade/search/) and [PoE 2](https://www.pathofexile.com/trade2/search/poe2/).
+>    3. The window will display **estimated prices** if the search returns matching results.
+>    4. Prices displayed are based on the **official trade websites** [PoE 1](https://www.pathofexile.com/trade/search/) and [PoE 2](https://www.pathofexile.com/trade2/search/poe2/).
 <p class="accordion"><b>Check details about price checking</b></p>
 <div class="panel"> Remember that the game must have focus, otherwise the keyboard shortcut won't work.
 <br><br> For example, if you leave the Xiletrade window open, click on it (so that Xiletrade has focus), and then try another price check, it will never work. However, you can check the price of multiple items consecutively if you don't click on the Xiletrade window.
@@ -79,9 +84,9 @@ Xiletrade is a **portable application** and does not install anything additional
 * Search by **current** item values or by **minimum value** in tier range.
 * Change numeric values with **mouse wheel** (min/max)
 	* Hold **CTRL** or **SHIFT** key for decimal values.
-* Adjust **opacity** and **auto-close** when window lose the focus.
+* Adjust **opacity** and **auto-close** when the window loses the focus.
 	* Click on the **upper left corner** icon of the main window.
-* **Highlight** for **expensive** and **dangeours mods** in maps (in config file).
+* **Highlight** for **expensive** and **dangerous mods** in maps (in config file).
 * **Auto paste** whisper trades in-game from external websites.  
 
 
@@ -93,17 +98,17 @@ in order to avoid abuses with limited data recovery and requests over time.
 
 ### {% include finger.svg %} FAQ
 
-<p class="accordion"><b>Does the application support all languages ?</b></p>   
+<p class="accordion"><b>Does the application support all languages?</b></p>   
 <div class="panel">
 <b>Yes</b>, It was designed to support all Path of Exile client languages.
 </div>
 
-<p class="accordion"><b>Is it safe to download the application from other website ?</b></p>
+<p class="accordion"><b>Is it safe to download the application from another website?</b></p>
 <div class="panel">
 For obvious security reasons, it is strongly recommended to download Xiletrade from the main repository or github.io website associated.
 </div>
 
-<p class="accordion"><b>I know that using a third party app can result in a ban from a game.<br>Is this the case for Path of Exile with Xiletrade ?</b></p>
+<p class="accordion"><b>I know that using a third party app can result in a ban from a game.<br>Is this the case for Path of Exile with Xiletrade?</b></p>
 <div class="panel">
 <b>No</b>, Xiletrade was first released in 2020 and as long as you use the version published on this site, you will never risk getting banned as long as GGG policy allows the use of tools like this.  
 <br>Note that the game publisher will never guarantee a third-party tool.
@@ -111,8 +116,8 @@ It is up to the project maintainer to ensure that the proposed tool complies wit
 <br>I invite you to read the <a target="_blank" rel="noopener noreferrer" href="https://www.pathofexile.com/developer/docs#policy">terms of use</a> in order to cross-reference the information.
 </div>
 
-<p class="accordion"><b>Why is the software free ?</b></p>
+<p class="accordion"><b>Why is the software free?</b></p>
 <div class="panel">
-Xiletrade is a <b>standalone software</b> and is not intended to be used for profit by integrating advertisements as is customary. However, it is possible to make <a target="_blank" rel="noopener noreferrer" href="{{ site.github.paypal_url }}">donations</a> at your discretion. Contribution are appreciated if you like the project and thank you for that 😊.
+Xiletrade is a <b>standalone software</b> and is not intended to be used for profit by integrating advertisements as is customary. However, it is possible to make <a target="_blank" rel="noopener noreferrer" href="{{ site.github.paypal_url }}">donations</a> at your discretion. Contributions are appreciated if you like the project and thank you for that 😊.
 </div>
 
