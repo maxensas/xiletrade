@@ -2,8 +2,9 @@
 layout: default
 title: Xiletrade
 lang: es-ES
-minidesc: Superposición de Path Of Exile y verificador de precios
-description: Una herramienta que simplifica la verificación de precios de objetos en Path of Exile 1 y Path of Exile 2
+locale: es_ES
+minidesc: PoE y PoE2 Consulta de precios
+description: Herramienta de consulta de precios de objetos y overlay para Path of Exile y Path of Exile 2
 strings:
   maintained: proyecto es mantenido por
   generated: Esta página fue generada por
@@ -39,6 +40,12 @@ No se escriben datos en segundo plano.
   A continuación encontrarás la lista completa de comportamientos personalizables respecto a la comprobación de precios de objetos en POE.</p>
 </section>
 
+### {% include knife.svg %} Datos clave
+
+- Plataforma: **Windows** 64 bits, portable (no requiere instalación).
+- Coste y licencia: **gratis** y de **código abierto** (GPLv3), [código fuente en GitHub]({{ site.github.repository_url }}).
+- Juegos compatibles: Path of Exile y Path of Exile 2.
+
 ### {% include pokeball.svg %} Características principales
 
 - **Verificador de precios** rápido para todos los artículos usando el atajo definido ***CTRL+D*** *defecto*.
@@ -61,7 +68,6 @@ como viaje rápido a **escondites** o acciones de **intercambio**.
 ### {% include install.svg %} Instalación y configuración
 
 1. [**Descarga**]({% include download.html %}) la última versión y **extrae** el archivo **`.7zip`** en el directorio deseado.
-Xiletrade es una **aplicación portátil** y no instala nada adicional al iniciarse.
 2. **Haz clic derecho** en el ícono de la bandeja del sistema para configurar o cerrar el programa.
 3. Selecciona la **versión del juego**, el **idioma** y la **liga** que desees en la ventana de inicio o configuración.
 4. **Pasa el mouse por encima** de cada función hasta que aparezca una información sobre herramientas para obtener una explicación detallada.  

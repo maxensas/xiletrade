@@ -2,8 +2,9 @@
 layout: default
 title: Xiletrade
 lang: de-DE
-minidesc: Path of Exile Overlay und Preisprüfer
-description: Ein Werkzeug, das die Überprüfung von Gegenstandspreisen in Path of Exile 1 und Path of Exile 2 vereinfacht
+locale: de_DE
+minidesc: PoE & PoE2 Preischeck und Overlay
+description: Item-Preisprüfer und Overlay für Path of Exile und Path of Exile 2
 strings:
   maintained: projekt wird gepflegt von
   generated: Diese Seite wurde generiert von
@@ -39,6 +40,12 @@ Keine Daten werden im Hintergrund geschrieben.
   Unten finden Sie die vollständige Liste der anpassbaren Verhaltensweisen zur Preisprüfung von Gegenständen in POE.</p>
 </section>
 
+### {% include knife.svg %} Wichtigste Fakten
+
+- Plattform: **Windows** 64-Bit, portabel (keine Installation erforderlich).
+- Kosten und Lizenz: kostenlos und Open Source (GPLv3), [Quellcode auf GitHub]({{ site.github.repository_url }}).
+- Unterstützte Spiele: Path of Exile und Path of Exile 2.
+
 ### {% include pokeball.svg %} Hauptfunktionen
 
 - Schneller **Preisprüfer** für alle Artikel mit der definierten Tastenkombination ***STRG+D*** *standardmäßig*.
@@ -60,7 +67,6 @@ Keine Daten werden im Hintergrund geschrieben.
 ### {% include install.svg %} Installation und Einrichtung
 
 1. [**Laden Sie**]({% include download.html %}) die neueste Version herunter und **entpacken** Sie das **`.7zip`**-Archiv in das gewünschte Verzeichnis.
-Xiletrade ist eine **portable Anwendung** und installiert beim Start nichts zusätzlich.
 2. **Rechtsklick** auf das Taskleistensymbol, um das Programm zu konfigurieren oder zu schließen.
 3. Wählen Sie im Start- oder Einstellungsfenster die gewünschte **Spielversion**, **Sprache** und **Liga** aus.
 4. Bewegen Sie den Mauszeiger über jede Funktion, bis ein Tooltip erscheint, um eine ausführliche Erklärung zu erhalten.  

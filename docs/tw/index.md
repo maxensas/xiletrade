@@ -2,8 +2,9 @@
 layout: default
 title: Xiletrade
 lang: zh-TW
-minidesc: 《流亡黯道Path of Exile》價格查詢
-description: 開源工具，可以輕鬆查看《流亡黯道PoE 1和PoE 2》中的物品價格。
+locale: zh_TW
+minidesc: PoE 與 PoE2 物價查詢與遊戲內覆蓋層
+description: 適用於 Path of Exile 與 Path of Exile 2 的價格查詢覆蓋層，快速查詢物品價格
 strings:
   maintained: 專案由
   generated: 此頁面由
@@ -33,12 +34,18 @@ strings:
 
 ### {% include direction.svg %} 快速介紹
 
-<h2 class="keywords"><strong>Xiletrade 提供簡約介面，以實現與 Path of Exile 1 和 2 的最佳整合。</strong></h2>
+<h2 class="keywords"><strong>Xiletrade 提供輕量介面，旨在為《Path of Exile》和《Path of Exile 2》玩家帶來最便捷的體驗。</strong></h2>
 <section class="intro">
   <p>借助其功能，它將在貿易聯賽中提升您的遊戲體驗，確保操作流暢。</p>
   <p>作為開源軟體，其程式碼庫經過精心打磨，為您提供盡可能優化的工具。 
   下面您將找到關於 POE 物品價格檢查的完整可自訂行為列表。</p>
 </section>
+
+### {% include knife.svg %} 主要資訊
+
+- 平台： Windows 64 位元，可攜式版本（無需安裝）。
+- 費用與授權： 免費且開源（GPLv3），[GitHub 原始碼]({{ site.github.repository_url }})。
+- 支援的遊戲： Path of Exile 和 Path of Exile 2。
 
 ### {% include pokeball.svg %} 主要功能
 
@@ -61,7 +68,6 @@ strings:
 ### {% include install.svg %} 安裝與設定
 
 1. [**下載**]({% include download.html %})最新版本並**提取** **`.7zip`** 檔案至所需目錄。
-Xiletrade 是一款**便攜式應用程式**，啟動時不需要安裝任何其他東西。
 2. **右鍵單擊**系統托盤圖示來配置或關閉程式。
 3. 在啟動或設定視窗下選擇所需的**遊戲版本**、**語言**和**聯盟**。
 4. 將**滑鼠懸停**在每個功能上，直到出現工具提示以獲得深入的解釋。  

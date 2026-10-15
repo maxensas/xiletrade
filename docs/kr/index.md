@@ -2,8 +2,9 @@
 layout: default
 title: Xiletrade
 lang: ko-KR
-minidesc: POE 오버레이 및 가격 확인기
-description: Path of Exile 1 및 Path of Exile 2의 아이템 가격 확인을 간편하게 해주는 도구
+locale: ko_KR
+minidesc: PoE 및 PoE2용 가격 확인 및 오버레이 프로그램
+description: Path of Exile 및 Path of Exile 2 아이템 가격 확인 및 오버레이 프로그램
 strings:
   maintained: 프로젝트는 다음에 의해 유지 관리됨
   generated: 이 페이지는 다음에 의해 생성됨
@@ -33,12 +34,18 @@ strings:
 
 ### {% include direction.svg %} 빠른 소개
 
-<h2 class="keywords"><strong>Xiletrade는 Path of Exile 1 및 2와 최적의 통합을 위한 미니멀리스트 인터페이스를 제공합니다.</strong></h2>
+<h2 class="keywords"><strong>Xiletrade는 Path of Exile 및 Path of Exile 2를 최적으로 이용할 수 있도록 가벼운 오버레이를 제공합니다.</strong></h2>
 <section class="intro">
   <p>기능 덕분에 거래 리그를 플레이할 때 삶의 질을 향상시키며 원활한 경험을 보장합니다.</p>
   <p>오픈 소스로서 코드베이스는 가장 최적화된 도구를 제공하기 위해 세심한 주의를 기울입니다. 
   아래에서 POE에서 아이템 가격 확인과 관련된 모든 사용자 정의 가능한 동작 목록을 확인할 수 있습니다.</p>
 </section>
+
+### {% include knife.svg %} 주요 정보
+
+- 플랫폼: **Windows** 64비트, 포터블 버전(설치 불필요).
+- 비용 및 라이선스: 무료 및 오픈 소스(GPLv3), [GitHub 소스 코드]({{ site.github.repository_url }}).
+- 지원 게임: Path of Exile 및 Path of Exile 2.
 
 ### {% include pokeball.svg %} 주요 기능
 
@@ -61,7 +68,6 @@ strings:
 ### {% include install.svg %} 설치 및 설정
 
 1. 최신 버전을 [**다운로드**]({% include download.html %})하고 원하는 디렉토리에 **`.7zip`** 아카이브를 **추출**합니다.
-Xiletrade는 **휴대용 애플리케이션**이며 실행 시 추가로 아무것도 설치하지 않습니다.
 2. 시스템 트레이 아이콘을 **마우스 오른쪽 버튼으로 클릭**하여 프로그램을 구성하거나 닫습니다.
 3. 시작 또는 설정 창에서 원하는 **게임 버전**, **언어** 및 **리그**를 선택합니다.
 4. 각 기능에 **마우스를 올려놓으면 자세한 설명을 제공하는 도구 설명이 나타납니다.**  

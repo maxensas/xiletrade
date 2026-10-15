@@ -1,0 +1,32 @@
+{% comment %} Machine-readable description of the tool (schema.org). Rendered on every page, language follows page.lang. {% endcomment %}
+{% assign ld_page_url = site.github.base_url | append: page.url %}
+{% assign ld_base = site.github.base_url | append: page.url | append: "assets/images/screenshot.png" %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": {{ site.title | jsonify }},
+  "description": {{ page.description | default: site.description | jsonify }},
+  "url": {{ ld_page_url | jsonify }},
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Windows",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "downloadUrl": {{ site.github.direct_download_url | jsonify }},
+  "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+  "inLanguage": {{ page.lang | default: "en-US" | jsonify }},
+  "image": {{ site.github.base_url | append: "/assets/images/logo.png" | jsonify }},
+  "screenshot": {{ ld_base | jsonify }},
+  "author": { "@type": "Person", "name": {{ site.github.owner_name | jsonify }}, "url": {{ site.github.owner_url | jsonify }} },
+  "sameAs": [ {{ site.github.repository_url | jsonify }} ]{% unless page.lang %},
+  "featureList": [
+    "Price check of any item with a hotkey (Ctrl+D by default)",
+    "Settings window (Ctrl+R) to customize price check behaviors",
+    "Bulk item exchange for fast whisper trades",
+    "Addons linked to poe.prices, poe.ninja, PoE Wiki and poedb",
+    "Automatic update check and filter refresh on startup",
+    "Chat console hotkeys and mouse wheel binding (single action rule)",
+    "Regex manager utility"
+  ]{% endunless %}
+}
+</script>

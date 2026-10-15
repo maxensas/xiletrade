@@ -1,0 +1,46 @@
+# Xiletrade
+
+> Free, open-source price check overlay for Path of Exile (PoE 1) and Path of Exile 2, for Windows. Hover an item in game, press a hotkey (Ctrl+D by default) and Xiletrade shows estimated prices based on the official PoE trade websites.
+
+Key facts:
+- Platform: Windows 64-bit (win-x64 build). Portable .7z archive, nothing to install.
+- Games: Path of Exile 1 and Path of Exile 2.
+- Cost and license: free and open source (GPLv3).
+- Languages: supports all Path of Exile client languages. The website exists in 11 languages (en, fr, de, es, pt-BR, ru, th, ko, ja, zh-Hans, zh-Hant).
+- Footprint: low CPU usage, max 250 MB of RAM, no data written in the background.
+- Requirement: the game must run in windowed or borderless full screen mode.
+- First released in 2020, maintained by maxensas.
+
+## Main features
+- Price check of any item with a hotkey (Ctrl+D by default); settings window with Ctrl+R.
+- Bulk item exchange for fast whisper trades.
+- Addons linked to poe.prices, poe.ninja, PoE Wiki and poedb.
+- Update check and filter refresh on startup.
+- Hotkeys for chat console messages and mouse wheel / left click binding, following the single action rule of the PoE third-party policy as stated by the project.
+- Regex manager utility.
+- Designed to limit requests to the official trade website and warns when limits are approached.
+
+## Links
+- [Website](https://maxensas.github.io/xiletrade/): overview, installation, FAQ
+- [Download latest release (.7z)](https://github.com/maxensas/xiletrade/releases/latest/download/Xiletrade_win-x64.7z)
+- [All releases](https://github.com/maxensas/xiletrade/releases)
+- [Source code](https://github.com/maxensas/xiletrade)
+- [Issues and support](https://github.com/maxensas/xiletrade/issues)
+- [Discord](https://discord.gg/AXP5VntYgA)
+
+## FAQ
+- Is it safe to download from another site? Download only from the GitHub repository or this github.io website.
+- Can it get me banned? The maintainer states that the version published on this site complies with the game publisher's third-party policy; the publisher does not guarantee any third-party tool, so read the policy: https://www.pathofexile.com/developer/docs#policy
+- Why is it free? It is standalone software without advertisements; donations are optional.
+
+## Translations
+- [Français](https://maxensas.github.io/xiletrade/fr/)
+- [Deutsch](https://maxensas.github.io/xiletrade/de/)
+- [Español](https://maxensas.github.io/xiletrade/es/)
+- [Português (Brasil)](https://maxensas.github.io/xiletrade/pt/)
+- [Русский](https://maxensas.github.io/xiletrade/ru/)
+- [ไทย](https://maxensas.github.io/xiletrade/th/)
+- [한국어](https://maxensas.github.io/xiletrade/kr/)
+- [日本語](https://maxensas.github.io/xiletrade/jp/)
+- [简体中文](https://maxensas.github.io/xiletrade/cn/)
+- [繁體中文](https://maxensas.github.io/xiletrade/tw/)

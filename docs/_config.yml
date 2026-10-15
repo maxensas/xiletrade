@@ -1,6 +1,11 @@
 title: Xiletrade
-minidesc: POE overlay and price check
-description: A tool that simplifies checking item prices in Path of Exile 1 and Path of Exile 2
+minidesc: PoE & PoE2 Price Check Overlay
+tagline: Item price checker and overlay for Path of Exile and Path of Exile 2
+description: "Free, open-source price check overlay for Path of Exile 1 & 2 on Windows. Press a hotkey over an item to see estimated prices from the official trade site."
+image: /assets/images/banner.png
+logo: /assets/images/logo.png
+twitter:
+  card: summary_large_image
 show_downloads: true
 google_analytics: G-E4L4G91Y34
 remote_theme: lewismiddleton/cayman-dark
