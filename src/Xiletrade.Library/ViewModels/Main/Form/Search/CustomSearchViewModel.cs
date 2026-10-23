@@ -118,7 +118,10 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         }
         _view.ClearFocus();
 
-        Search.SearchQuery = string.Empty;
+        if (Search is not null)
+        {
+            Search.SearchQuery = string.Empty;
+        }
 
         if (UnidUniquesIndex is 0)
         {

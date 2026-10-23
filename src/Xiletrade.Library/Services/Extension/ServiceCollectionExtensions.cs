@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Runtime.Versioning;
 using Xiletrade.Library.Models.Application;
+using Xiletrade.Library.Models.Application.Adapter;
 using Xiletrade.Library.Models.Application.Diagnostic;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services.Linux;
@@ -36,6 +37,27 @@ public static class ServiceCollectionExtensions
     /// <param name="sc"></param>
     /// <returns></returns>
     public static IServiceCollection AddLibraryServices(this IServiceCollection sc, string args)
+    {
+        sc.AddCommonLibraryServices(args);
+
+        if (OperatingSystem.IsWindows())
+        {
+            sc.AddWindowsServices();
+            return sc;
+        }
+
+        if (OperatingSystem.IsLinux())
+        {
+            sc.AddLinuxServices();
+            return sc;
+        }
+        throw new PlatformNotSupportedException("Xiletrade is only supported on Windows and Linux.");
+    }
+
+    /// <summary>
+    /// Add the library services which do not depend on the platform.
+    /// </summary>
+    internal static IServiceCollection AddCommonLibraryServices(this IServiceCollection sc, string args)
     {
         sc.AddSingleton(new StartupArguments(args))
             .AddSingleton<XiletradeService>()
@@ -77,19 +99,7 @@ public static class ServiceCollectionExtensions
             .AddTransient<ResultViewModel>()
             .AddTransient<StartViewModel>();
 
-        if (OperatingSystem.IsWindows())
-        {
-            sc.AddWindowsServices();
-            return sc;
-        }
-
-        // TODO
-        if (OperatingSystem.IsLinux())
-        {
-            sc.AddLinuxServices();
-            return sc;
-        }
-        throw new PlatformNotSupportedException("Xiletrade is only supported on Windows.");
+        return sc;
     }
 
     [SupportedOSPlatform("windows")]
@@ -106,10 +116,20 @@ public static class ServiceCollectionExtensions
         return sc;
     }
 
+    /// <remarks>
+    /// Needs an X11 session or XWayland. Optional tools : xclip, xsel or wl-clipboard (clipboard),
+    /// zenity, kdialog or xmessage (message boxes, when the UI framework does not provide its own).
+    /// </remarks>
     [SupportedOSPlatform("linux")]
-    private static IServiceCollection AddLinuxServices(this IServiceCollection sc)
+    internal static IServiceCollection AddLinuxServices(this IServiceCollection sc)
     {
+        sc.TryAddSingleton<LinuxDesktopService>();
+        sc.TryAddSingleton<IMessageAdapterService, LinuxMessageAdapterService>();
+        sc.TryAddSingleton<IClipboardService, LinuxClipboardService>();
+        sc.TryAddSingleton<IInputService, LinuxInputService>();
+        sc.TryAddSingleton<IProtocolHandlerService, LinuxProtocolHandlerService>();
         sc.TryAddSingleton<IPoeActionService, LinuxPoeActionService>();
+        sc.TryAddSingleton<IShortcutDispatcher, LinuxShortcutDispatcher>();
         sc.TryAddSingleton<IHookService>(sp =>
             new LinuxHookService(sp.GetRequiredService<IShortcutDispatcher>().HandleMessage));
         return sc;
