@@ -8,7 +8,11 @@ namespace Xiletrade.Library.Services.Interface;
 /// <summary>Provides HTTP client management and request operations for Xiletrade.</summary>
 public interface INetService
 {
-    TradeCooldownHandler TradeCooldown { get; }
+    /// <summary>
+    /// Gets the last rate limit state received for a policy of the trade api.
+    /// </summary>
+    /// <returns>Null when no response has given it yet.</returns>
+    RateLimitInfo GetRateLimit(string policy);
 
     void InitTradeClient(int timeout);
 

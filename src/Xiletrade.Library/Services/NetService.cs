@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -22,7 +23,7 @@ public class NetService : INetService
     private const string USERAGENT = "User-Agent";
     private const int MAX_CONCURRENT_REQUEST = 5;
 
-    public TradeCooldownHandler TradeCooldown { get; }
+    private readonly ConcurrentDictionary<string, RateLimitInfo> _rateLimits = new(StringComparer.Ordinal);
 
     private readonly HttpClient _default = new(new SocketsHttpHandler
     {
@@ -104,6 +105,18 @@ public class NetService : INetService
         }
     }
 
+    public RateLimitInfo GetRateLimit(string policy)
+        => policy is not null && _rateLimits.TryGetValue(policy, out var info) ? info : null;
+
+    private void UpdateRateLimit(HttpResponseMessage response)
+    {
+        var info = RateLimitInfo.Read(response.Headers);
+        if (info is not null && RateLimitInfo.IsTradePolicy(info.Policy))
+        {
+            _rateLimits[info.Policy] = info;
+        }
+    }
+
     private bool TryAddCookie(SocketsHttpHandler handler)
     {
         if (_token.TryGetToken(out var token, useCustom: true) && RegexUtil.MD5().IsMatch(token))
@@ -138,10 +151,6 @@ public class NetService : INetService
         var result = string.Empty;
         var client = GetClient(idClient);
         var isTrade = client == Trade;
-        if (isTrade && !isXml)
-        {
-            TradeCooldown?.ApplyCooldown();
-        }
         
         await _throttle.WaitAsync();
         try
@@ -168,13 +177,13 @@ public class NetService : INetService
             }
 
             using var response = await client.SendAsync(request).ConfigureAwait(false);
+            if (isTrade)
+            {
+                UpdateRateLimit(response);
+            }
             if (response.Content is not null)
             {
                 result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            }
-            if (isTrade)
-            {
-                TradeCooldown?.HandleTradeRateLimit(response);
             }
             response.EnsureSuccessStatusCode(); // throw HttpRequestException if response failed.
         }

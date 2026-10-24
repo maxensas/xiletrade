@@ -16,15 +16,6 @@ internal sealed class GetItemInfoFeature(ILogger<GetItemInfoFeature> logger, INe
     {
         try
         {
-            if (net.TradeCooldown is not null && net.TradeCooldown.IsEnabled)
-            {
-                if (_shortcut.Fonction is Strings.Feature.run)
-                {
-                    view.ShowMainView();
-                }
-                return;
-            }
-
             vm.StopWatch.Restart();
 
             poe.CopyItemDetail();

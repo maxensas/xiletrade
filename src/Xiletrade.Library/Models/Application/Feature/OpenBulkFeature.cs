@@ -9,11 +9,6 @@ internal class OpenBulkFeature(IViewManager view, INetService net,
 {
     internal override void Launch()
     {
-        if (net.TradeCooldown is not null && net.TradeCooldown.IsEnabled)
-        {
-            view.ShowMainView();
-            return;
-        }
         vm.InitViewModels(useCustomOrBulk: true);
         view.ShowMainView();
     }
