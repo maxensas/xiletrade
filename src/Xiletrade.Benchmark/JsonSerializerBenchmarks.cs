@@ -2,6 +2,7 @@
 using BenchmarkDotNet.Order;
 using System;
 using System.IO;
+using System.Text;
 using Xiletrade.Library.Models.Application.Serialization;
 using Xiletrade.Library.Models.Poe.Contract;
 
@@ -19,7 +20,7 @@ namespace Xiletrade.Benchmark;
 [RankColumn]
 public class JsonSerializerBenchmarks
 {
-    public static string Json { get; private set; }
+    public static byte[] Json { get; private set; }
     public static FilterData Filter { get; private set; }
     public static IJsonSerializer Utf8Serializer { get; private set; } = new Utf8JsonSerializer();
     public static JsonHelper NETSerializer { get; private set; } = new();
@@ -41,11 +42,10 @@ public class JsonSerializerBenchmarks
             return;
         }
 
-        var fs = new FileStream(path, FileMode.Open);
-        using (StreamReader reader = new(fs))
+        Json = File.ReadAllBytes(path);
+        if (Json.AsSpan().StartsWith(Encoding.UTF8.Preamble))
         {
-            fs = null;
-            Json = reader.ReadToEnd();
+            Json = Json[Encoding.UTF8.Preamble.Length..];
         }
     }
 
@@ -76,6 +76,6 @@ public class JsonSerializerBenchmarks
     [Benchmark]
     public void SerializeWithNET()
     {
-        NETSerializer.Serialize<FilterData>(Filter);
+        NETSerializer.SerializeToUtf8<FilterData>(Filter);
     }
 }

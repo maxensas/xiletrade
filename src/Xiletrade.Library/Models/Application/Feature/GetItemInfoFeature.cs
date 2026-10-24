@@ -8,8 +8,9 @@ using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Application.Feature;
 
-internal sealed class GetItemInfoFeature(ILogger<GetItemInfoFeature> logger, IPoeActionService poe, 
-    IClipboardService clipboard, MainViewModel vm, ConfigShortcut shortcut) : BaseFeature(shortcut)
+internal sealed class GetItemInfoFeature(ILogger<GetItemInfoFeature> logger, 
+    IPoeActionService poe, IClipboardService clipboard,
+    MainViewModel vm, ConfigShortcut shortcut) : BaseFeature(shortcut)
 {
     internal override void Launch()
     {

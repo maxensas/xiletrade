@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Utf8Json;
+﻿using Utf8Json;
 using Utf8Json.Resolvers;
 
 namespace Xiletrade.Test.Exploratory.Serialization;
@@ -9,14 +8,13 @@ namespace Xiletrade.Test.Exploratory.Serialization;
 /// </summary>
 public sealed class Utf8JsonSerializer
 {
-    public string Serialize<T>(object obj) where T : class
+    public byte[] Serialize<T>(object obj) where T : class
     {
-        return JsonSerializer.ToJsonString((T)obj, StandardResolver.AllowPrivateExcludeNullSnakeCase);
+        return JsonSerializer.Serialize((T)obj, StandardResolver.AllowPrivateExcludeNullSnakeCase);
     }
 
-    public T Deserialize<T>(string strData) where T : class
+    public T Deserialize<T>(byte[] utf8Json) where T : class
     {
-        byte[] data = Encoding.UTF8.GetBytes(strData);
-        return JsonSerializer.Deserialize<T>(data, StandardResolver.AllowPrivateExcludeNullSnakeCase);
+        return JsonSerializer.Deserialize<T>(utf8Json, StandardResolver.AllowPrivateExcludeNullSnakeCase);
     }
 }

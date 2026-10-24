@@ -90,20 +90,20 @@ public sealed class PoeApiService
     }
 
     internal async Task<ResultBar> RunPriceTask(ResultViewModel rVm, PricingInfo pricingInfo,
-        string sEntity, string urlApi, CancellationToken token)
+        ReadOnlyMemory<byte> json, string urlApi, CancellationToken token)
     {
         try
         {
-            var sResult = await _net.SendHTTP(sEntity, urlApi + pricingInfo.League, Client.Trade); // use cooldown
+            var sResult = await _net.SendHTTPBytes(json, urlApi + pricingInfo.League, Client.Trade); // use cooldown
 
             token.ThrowIfCancellationRequested();
             if (sResult.Length > 0)
             {
-                if (sResult.Contain("total\":false"))
+                if (sResult.AsSpan().IndexOf("total\":false"u8) >= 0)
                 {
                     return new(state: ResultBarSate.BadLeague);
                 }
-                if (sResult.Contain("total\":0"))
+                if (sResult.AsSpan().IndexOf("total\":0"u8) >= 0)
                 {
                     return new(state: ResultBarSate.NoResult);
                 }
@@ -192,10 +192,10 @@ public sealed class PoeApiService
         }
 
         int count = Math.Clamp(limit.Spare, 1, pages.Count);
-        var requests = new Task<string>[count];
+        var requests = new Task<byte[]>[count];
         for (int i = 0; i < count; i++)
         {
-            requests[i] = _net.SendHTTP(pages[i].Url, Client.Trade); // use cooldown
+            requests[i] = _net.SendHTTPBytes(pages[i].Url, Client.Trade); // use cooldown
         }
         try
         {
@@ -214,14 +214,14 @@ public sealed class PoeApiService
 
         async Task FetchPageAsync(string url)
         {
-            string sResult = await _net.SendHTTP(url, Client.Trade); // use cooldown
+            var sResult = await _net.SendHTTPBytes(url, Client.Trade); // use cooldown
 #if DEBUG
             _logger.LogInformation("Recovered result from Fetch API..");
 #endif
             Fill(sResult);
         }
 
-        void Fill(string sResult)
+        void Fill(ReadOnlySpan<byte> sResult)
         {
             if (sResult.Length > 0)
             {
@@ -250,7 +250,7 @@ public sealed class PoeApiService
     }
 
     // TODO: move responsibility to a viewmodel dedicated to Quick and Detail
-    private CurrencyFetch FillDetailVm(ResultViewModel rVm, bool hideSameUser, ReadOnlySpan<char> sResult, CancellationToken token)
+    private CurrencyFetch FillDetailVm(ResultViewModel rVm, bool hideSameUser, ReadOnlySpan<byte> sResult, CancellationToken token)
     {
         var cur = new CurrencyFetch();
         var isPoe2 = _dm.Config.Options.GameVersion is 1;

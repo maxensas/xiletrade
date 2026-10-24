@@ -63,12 +63,12 @@ public sealed class DataUpdaterService : IDataUpdaterService
             {
                 if (i < 0 || i >= Strings.Culture.Length) continue;
 
-                taskList.Add(PoeApiUpdate<LeagueData>("leagues", Strings.File.Leagues, "Leagues", i,
+                taskList.Add(ApiUpdate<LeagueData>("leagues", Strings.File.Leagues, "Leagues", i,
                     arrange: RemoveDuplicateLeagues));
-                taskList.Add(PoeApiUpdate<FilterData>("stats", Strings.File.Filters, "FilterData", i,
+                taskList.Add(ApiUpdate<FilterData>("stats", Strings.File.Filters, "FilterData", i,
                     prepare: FixFilterJson, arrange: SortFilterEntries));
-                taskList.Add(PoeApiUpdate<CurrencyResult>("static", Strings.File.Currency, "Currency", i));
-                taskList.Add(PoeApiUpdate<ItemTypeResult>("items", Strings.File.Items, "Item type", i));
+                taskList.Add(ApiUpdate<CurrencyResult>("static", Strings.File.Currency, "Currency", i));
+                taskList.Add(ApiUpdate<ItemTypeResult>("items", Strings.File.Items, "Item type", i));
                 taskList.Add(GithubUpdate<ParserData>(Strings.File.ParsingRules, i));
 
                 if (updateGenerated)
@@ -131,7 +131,7 @@ public sealed class DataUpdaterService : IDataUpdaterService
         {
             if (Uri.TryCreate(Strings.Url.GithubData, UriKind.Absolute, out _))
             {
-                var json = await _net.SendHTTP(Strings.Url.GithubData + Strings.File.AppSettings, Client.GitHub);
+                var json = await _net.SendHTTPBytes(Strings.Url.GithubData + Strings.File.AppSettings, Client.GitHub);
                 var settings = _dm.Json.Deserialize<SettingsData>(json);
                 if (settings is not null)
                 {
@@ -148,6 +148,9 @@ public sealed class DataUpdaterService : IDataUpdaterService
     }
 
     // all private methods
+    /// <summary>Fixes the downloaded json, returns null when there is nothing to fix.</summary>
+    private delegate byte[] PrepareJson(ReadOnlySpan<byte> json, int idxLang);
+
     /// <summary>
     /// Downloads a data file from the game server (api), and saves it in the language folder.
     /// </summary>
@@ -157,8 +160,8 @@ public sealed class DataUpdaterService : IDataUpdaterService
     /// <param name="idxLang">Index of the language (and of the server).</param>
     /// <param name="prepare">Fixes the downloaded text before it is deserialized.</param>
     /// <param name="arrange">Arranges the deserialized data before it is saved, returns null to save nothing.</param>
-    private async Task PoeApiUpdate<T>(string endpoint, string fileName, string label, int idxLang,
-        Func<string, int, string> prepare = null, Func<T, T> arrange = null) where T : class
+    private async Task ApiUpdate<T>(string endpoint, string fileName, string label, int idxLang,
+        PrepareJson prepare = null, Func<T, T> arrange = null) where T : class
     {
         string url = Strings.Api.GetUpdate(idxLang) + endpoint;
         try
@@ -166,10 +169,10 @@ public sealed class DataUpdaterService : IDataUpdaterService
             string path = Path.Combine(DataManagerService.DataDirectory, "Lang");
             if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out _))
             {
-                string json = await _net.SendHTTP(url, Client.Update);
-                if (prepare is not null && !string.IsNullOrEmpty(json))
+                var json = await _net.SendHTTPBytes(url, Client.Update);
+                if (prepare is not null && json.Length > 0)
                 {
-                    json = prepare(json, idxLang);
+                    json = prepare(json, idxLang) ?? json;
                 }
                 SaveJsonToFile<T>(json, path, fileName, idxLang, arrange);
             }
@@ -181,10 +184,33 @@ public sealed class DataUpdaterService : IDataUpdaterService
         }
     }
 
-    private static string FixFilterJson(string json, int idxLang)
+    private static byte[] FixFilterJson(ReadOnlySpan<byte> json, int idxLang)
     {
         // remove line tabulation (portuguese)
-        return idxLang is 5 ? json.Replace("\\u000b", string.Empty) : json;
+        if (idxLang is not 5)
+        {
+            return null;
+        }
+
+        ReadOnlySpan<byte> tabulation = "\\u000b"u8;
+        int index = json.IndexOf(tabulation);
+        if (index < 0)
+        {
+            return null;
+        }
+
+        var result = new byte[json.Length];
+        int length = 0;
+        while (index >= 0)
+        {
+            json[..index].CopyTo(result.AsSpan(length));
+            length += index;
+            json = json[(index + tabulation.Length)..];
+            index = json.IndexOf(tabulation);
+        }
+        json.CopyTo(result.AsSpan(length));
+        length += json.Length;
+        return result.AsSpan(0, length).ToArray();
     }
 
     // needed for files comparison following leagues updates.
@@ -227,7 +253,7 @@ public sealed class DataUpdaterService : IDataUpdaterService
             string path = idxLang < 0 ? DataManagerService.DataDirectory : Path.Combine(DataManagerService.DataDirectory, "Lang");
             if (Uri.TryCreate(Strings.Url.GithubData, UriKind.Absolute, out _))
             {
-                string json = await _net.SendHTTP(urlStats, Client.GitHub);
+                var json = await _net.SendHTTPBytes(urlStats, Client.GitHub);
                 SaveJsonToFile<T>(json, path, fileName, idxLang);
             }
         }
@@ -246,7 +272,7 @@ public sealed class DataUpdaterService : IDataUpdaterService
         return idxLang is 9 ? "TENCENT" : idxLang is 8 ? "GARENA" : "GLOBAL";
     }
 
-    private void SaveJsonToFile<T>(ReadOnlySpan<char> json, string path, string fileName, 
+    private void SaveJsonToFile<T>(ReadOnlySpan<byte> json, string path, string fileName, 
         int idxLang = -1, Func<T, T> arrange = null) where T : class
     {
         if (json.IsEmpty)
@@ -280,7 +306,6 @@ public sealed class DataUpdaterService : IDataUpdaterService
         string filePath = Path.Combine(path, fileName);
 
         // Serialize and write the file
-        using StreamWriter writer = new(filePath, false, Encoding.UTF8);
-        writer.Write(_dm.Json.Serialize<T>(data));
+        DataManagerService.WriteJsonFile(filePath, _dm.Json.SerializeToUtf8<T>(data));
     }
 }

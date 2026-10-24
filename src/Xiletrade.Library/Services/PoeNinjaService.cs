@@ -105,12 +105,12 @@ public sealed class PoeNinjaService
 
             if (!cachedItem.IsCacheValid())
             {
-                string sResult = await FetchNinjaData(url);
+                var result = await FetchNinjaData(url);
 
-                if (string.IsNullOrEmpty(sResult))
+                if (result.Length is 0)
                     return null;
 
-                var json = _dm.Json.Deserialize<T>(sResult);
+                var json = _dm.Json.Deserialize<T>(result);
                 cachedItem.SetJson(json);
             }
             return cachedItem.GetJson();
@@ -127,7 +127,7 @@ public sealed class PoeNinjaService
     {
         try
         {
-            var result = await _net.SendHTTP(Strings.Api.NinjaLeague, Client.Ninja);
+            var result = await _net.SendHTTPBytes(Strings.Api.NinjaLeague, Client.Ninja);
             var ninjaState = _dm.Json.Deserialize<NinjaState>(result);
             return (ninjaState ?? GenerateCustomState(), null);
         }
@@ -163,7 +163,7 @@ public sealed class PoeNinjaService
     {
         try
         {
-            var result = await _net.SendHTTP(infoBase.UrlDetails, Client.Ninja);
+            var result = await _net.SendHTTPBytes(infoBase.UrlDetails, Client.Ninja);
             var json = _dm.Json.Deserialize<NinjaDetail>(result);
             if(json.Pairs?.Count > 1)
             {
@@ -271,7 +271,7 @@ public sealed class PoeNinjaService
         return Array.Empty<object>();
     }
 
-    private async Task<string> FetchNinjaData(string url) => await _net.SendHTTP(url, Client.Ninja);
+    private async Task<byte[]> FetchNinjaData(string url) => await _net.SendHTTPBytes(url, Client.Ninja);
 
     private void CheckInitNinjaLists()
     {

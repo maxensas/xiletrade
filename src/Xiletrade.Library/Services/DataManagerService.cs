@@ -22,7 +22,20 @@ public sealed class DataManagerService
     private readonly IMessageAdapterService _message;
     private readonly IViewManager _view;
 
-    // Deserialized files, kept as they are : the data below are read from them.
+    /// <summary>Folder of the data files, next to the application (whatever the current directory is).</summary>
+    internal static string DataDirectory => Path.Combine(AppContext.BaseDirectory, "Data");
+
+    internal JsonHelper Json { get; private set; }
+
+    internal ConfigData Config { get; private set; } // does not use StringCache
+
+    internal FilterData Filter { get; private set; }
+    internal FilterData FilterEn { get; private set; }
+    internal ParserData Parser { get; private set; }
+    internal LeagueData League { get; private set; }
+    internal SearchPresetData SearchPreset { get; private set; }
+
+    // Deserialized files, kept as they are : the data below are read from them (no copy in memory).
     private BaseData BaseData { get; set; }
     private BaseData MonsterData { get; set; }
     private ModData ModData { get; set; }
@@ -50,22 +63,10 @@ public sealed class DataManagerService
     internal DivTiersResult[] DivTiers => DivTiersData?.Result;
     internal DustLevel[] DustLevel => DustData?.Level;
 
-    //gateway
+    //temp
     internal WordResultData[] WordsGateway => WordDataGateway?.Result?[0].Data;
     internal BaseResultData[] BasesGateway => BaseDataGateway?.Result?[0].Data;
     internal CurrencyResultData[] CurrenciesGateway => CurrencyDataGateway?.Result;
-
-    internal FilterData Filter { get; private set; }
-    internal FilterData FilterEn { get; private set; }
-    internal ParserData Parser { get; private set; }
-    internal LeagueData League { get; private set; }
-    internal SearchPresetData SearchPreset { get; private set; }
-
-    internal ConfigData Config { get; private set; } // does not use StringCache
-    internal JsonHelper Json { get; private set; }
-
-    /// <summary>Folder of the data files, next to the application (whatever the current directory is).</summary>
-    internal static string DataDirectory => Path.Combine(AppContext.BaseDirectory, "Data");
 
     public DataManagerService(ILogger<DataManagerService> logger,
         IMessageAdapterService message, IViewManager view)
@@ -98,7 +99,7 @@ public sealed class DataManagerService
 
     private void InitConfig(int forceGameVersion)
     {
-        string configJson;
+        byte[] configJson;
         string path = DataDirectory;
         if (File.Exists(Path.Combine(path, Strings.File.Config)))
         {
@@ -133,8 +134,8 @@ public sealed class DataManagerService
     private void InitLeague(int gateway)
     {
         string langGateway = Path.Combine("Lang", Strings.Culture[gateway]);
-        string streamLeagues = LoadConfiguration(Path.Combine(langGateway, Strings.File.Leagues));
-        League = Json.Deserialize<LeagueData>(streamLeagues);
+        var leagues = LoadConfiguration(Path.Combine(langGateway, Strings.File.Leagues));
+        League = Json.Deserialize<LeagueData>(leagues);
     }
 
     private void Initialize(int forceGameVersion)
@@ -157,7 +158,7 @@ public sealed class DataManagerService
 
             DivTiersData = Load<DivTiersData>(Path.Combine(basePath, Strings.File.Divination));
             DustData = Load<DustData>(Path.Combine(basePath, Strings.File.DustLevel));
-            SearchPreset = Load<SearchPresetData>(Path.Combine(basePath, Strings.File.SearchPreset)) ?? new();
+            SearchPreset = Load<SearchPresetData>(Path.Combine(basePath, Strings.File.SearchPreset)) ?? new SearchPresetData();
 
             var filterPath = Path.Combine(basePath, lang);
             BaseData = Load<BaseData>(Path.Combine(filterPath, Strings.File.Bases));
@@ -165,10 +166,10 @@ public sealed class DataManagerService
             MonsterData = Load<BaseData>(Path.Combine(filterPath, Strings.File.Monsters));
             CurrencyData = Load<CurrencyResult>(Path.Combine(filterPath, Strings.File.Currency));
             ItemTypeData = Load<ItemTypeResult>(Path.Combine(filterPath, Strings.File.Items));
-            Filter = Load<FilterData>(Path.Combine(filterPath, Strings.File.Filters))?.ArrangeFilter(Config.Options.GameVersion) ?? new();            
+            Filter = Load<FilterData>(Path.Combine(filterPath, Strings.File.Filters))?.ArrangeFilter(Config.Options.GameVersion) ?? new FilterData();            
             WordData = Load<WordData>(Path.Combine(filterPath, Strings.File.Words));
             GemData = Load<GemData>(Path.Combine(filterPath, Strings.File.Gems));
-            Parser = Load<ParserData>(Path.Combine(filterPath, Strings.File.ParsingRules)) ?? new();
+            Parser = Load<ParserData>(Path.Combine(filterPath, Strings.File.ParsingRules)) ?? new ParserData();
 
             InitLeague(Config.Options.Gateway);
 
@@ -215,16 +216,16 @@ public sealed class DataManagerService
         }
     }
 
-    internal string LoadConfiguration(string configfile)
+    internal byte[] LoadConfiguration(string configfile)
     {
-        string config;
+        byte[] config;
         try
         {
             string pathFile = Path.Combine(DataDirectory, configfile);
             if (!File.Exists(pathFile))
                 throw new FileNotFoundException(pathFile);
 
-            config = File.ReadAllText(pathFile);
+            config = File.ReadAllBytes(pathFile);
         }
         catch (Exception ex)
         {
@@ -235,11 +236,25 @@ public sealed class DataManagerService
         return config;
     }
 
-    internal async Task<bool> SaveFileAsync(string content, string filePath)
+    private static readonly byte[] Utf8Preamble = Encoding.UTF8.GetPreamble();
+
+    /// <summary>
+    /// Writes a UTF-8 json file, with a byte order mark as the files saved by the application have always had.
+    /// </summary>
+    internal static void WriteJsonFile(string filePath, ReadOnlySpan<byte> json)
+    {
+        using var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read);
+        stream.Write(Encoding.UTF8.Preamble);
+        stream.Write(json);
+    }
+
+    internal async Task<bool> SaveFileAsync(ReadOnlyMemory<byte> json, string filePath)
     {
         try
         {
-            await File.WriteAllTextAsync(filePath, content, Encoding.UTF8);
+            await using var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read, 4096, useAsync: true);
+            await stream.WriteAsync(Utf8Preamble);
+            await stream.WriteAsync(json);
             return true;
         }
         catch (Exception ex)
@@ -249,21 +264,20 @@ public sealed class DataManagerService
         }
     }
 
-    internal bool SaveConfiguration(ReadOnlySpan<char> configToSave)
+    internal bool SaveConfiguration(ReadOnlySpan<byte> json)
     {
         string filePath = Path.Combine(DataDirectory, Strings.File.Config);
-        string configBackup = string.Empty;
+        byte[] configBackup = null;
         try
         {
             if (File.Exists(filePath))
             {
-                configBackup = File.ReadAllText(filePath, Encoding.UTF8);
+                configBackup = File.ReadAllBytes(filePath);
             }
 
-            var newConfig = Json.Deserialize<ConfigData>(configToSave);
-            var serialized = Json.Serialize<ConfigData>(newConfig);
+            var newConfig = Json.Deserialize<ConfigData>(json);
 
-            File.WriteAllText(filePath, serialized, Encoding.UTF8);
+            WriteJsonFile(filePath, Json.SerializeToUtf8<ConfigData>(newConfig));
             Config = newConfig;
 
             return true;
@@ -272,8 +286,8 @@ public sealed class DataManagerService
         {
             try
             {
-                if (configBackup.Length > 0)
-                    File.WriteAllText(filePath, configBackup, Encoding.UTF8);
+                if (configBackup is { Length: > 0 })
+                    File.WriteAllBytes(filePath, configBackup);
             }
             catch
             {

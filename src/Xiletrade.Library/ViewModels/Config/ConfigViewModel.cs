@@ -46,7 +46,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
 
     // members
     internal ConfigData Config { get; set; }
-    internal string ConfigBackup { get; set; }
+    internal byte[] ConfigBackup { get; set; }
 
     public ConfigViewModel(IMessageAdapterService message, IViewManager view,
         IKeyboardAdapterService keyboard, DataManagerService dm,
@@ -92,7 +92,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
     [RelayCommand]
     private void LoadDefaultConfig(object commandParameter)
     {
-        string configDefault = _dm.LoadConfiguration(Strings.File.DefaultConfig);
+        var configDefault = _dm.LoadConfiguration(Strings.File.DefaultConfig);
         Config = _dm.Json.Deserialize<ConfigData>(configDefault);
         Initialize(false);
 
@@ -292,7 +292,7 @@ public sealed partial class ConfigViewModel : ViewModelBase
             }
         }
 
-        var configToSave = _dm.Json.Serialize<ConfigData>(Config);
+        var configToSave = _dm.Json.SerializeToUtf8<ConfigData>(Config);
 
         _input.DisableHotkeys();
         _dm.SaveConfiguration(configToSave); // parentWindow

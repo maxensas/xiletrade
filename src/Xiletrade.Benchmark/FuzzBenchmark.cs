@@ -35,7 +35,7 @@ public class FuzzBenchmark
                 select filter.Text;
     }
 
-    public static string LoadFile()
+    public static byte[] LoadFile()
     {
         string path = Environment.CurrentDirectory.Replace("Benchmark", "Library");
         path = string.Concat(path.AsSpan(0, path.IndexOf("bin")), "Data\\Lang\\en-US\\Filters.json");
@@ -44,10 +44,7 @@ public class FuzzBenchmark
             throw new FileNotFoundException("File not found : " + path);
         }
 
-        var fs = new FileStream(path, FileMode.Open);
-        using StreamReader reader = new(fs);
-        fs = null;
-        return reader.ReadToEnd();
+        return File.ReadAllBytes(path);
     }
 
     private static void WriteConsoleAndThrow(string value)

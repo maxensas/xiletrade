@@ -207,9 +207,8 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
             var json = _vm.GetSerialized(_vm.Form.Market[_vm.Form.MarketIndex], customSearch: true);
             var maxFetch = (int)_dm.Config.Options.SearchFetchDetail;
 
-            var priceInfo = new PricingInfo([new() { json }, null], _vm.Form.League[_vm.Form.LeagueIndex]
-                , _vm.Form.Market[_vm.Form.MarketIndex], minimumStock: 1, maxFetch
-                , _vm.Form.SameUser, _vm.Form.Tab.BulkSelected);
+            var priceInfo = new PricingInfo(json, _vm.Form.League[_vm.Form.LeagueIndex]
+                , _vm.Form.Market[_vm.Form.MarketIndex], maxFetch, _vm.Form.SameUser);
 
             var result = await _vm.Result.UpdateWithApi(priceInfo); // result bar not used in custom search
         }

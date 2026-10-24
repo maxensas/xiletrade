@@ -22,6 +22,14 @@ namespace Xiletrade.Json
         internal static List<WordResultData>? Words { get; set; }
         internal static List<Identity>? Identity { get; set; }
 
+        // UTF-8 with byte order mark, as the files written by StreamWriter(Encoding.UTF8) always were
+        private static void WriteUtf8File(string path, ReadOnlySpan<byte> json)
+        {
+            using var stream = File.Create(path);
+            stream.Write(Encoding.UTF8.Preamble);
+            stream.Write(json);
+        }
+
         internal static JsonHelper Json { get; } = new();
 
         // not used atm, progam run once.
@@ -504,10 +512,7 @@ namespace Xiletrade.Json
 
                 outputJson = jsonPath + game.Names[game.BaseItemTypes];
 
-                using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
-                {
-                    writer.Write(Json.Serialize<BaseData>(bases));
-                }
+                WriteUtf8File(outputJson, Json.SerializeToUtf8<BaseData>(bases));
             }
             if (datName == game.MonsterVarieties)
             {
@@ -531,10 +536,7 @@ namespace Xiletrade.Json
                 }
 
                 outputJson = jsonPath + game.Names[game.MonsterVarieties];
-                using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
-                {
-                    writer.Write(Json.Serialize<BaseData>(monsters));
-                }
+                WriteUtf8File(outputJson, Json.SerializeToUtf8<BaseData>(monsters));
             }
             return outputJson;
         }
@@ -562,10 +564,7 @@ namespace Xiletrade.Json
                 }
 
                 outputJson = jsonPath + game.Names[game.Mods];
-                using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
-                {
-                    writer.Write(Json.Serialize<ModData>(mods));
-                }
+                WriteUtf8File(outputJson, Json.SerializeToUtf8<ModData>(mods));
             }
             return outputJson;
         }
@@ -583,10 +582,7 @@ namespace Xiletrade.Json
                 words.Result[0].Data = listWordResultData.ToArray();
 
                 outputJson = jsonPath + game.Names[game.Words];
-                using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
-                {
-                    writer.Write(Json.Serialize<WordData>(words));
-                }
+                WriteUtf8File(outputJson, Json.SerializeToUtf8<WordData>(words));
             }
             return outputJson;
         }
@@ -609,10 +605,7 @@ namespace Xiletrade.Json
                 }
 
                 outputJson = jsonPath + game.Names[game.Gems];
-                using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
-                {
-                    writer.Write(Json.Serialize<GemData>(gems));
-                }
+                WriteUtf8File(outputJson, Json.SerializeToUtf8<GemData>(gems));
             }
             return outputJson;
         }
@@ -632,10 +625,7 @@ namespace Xiletrade.Json
                 }
 
                 outputJson = jsonPath + game.Names[game.ItemClass];
-                using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
-                {
-                    writer.Write(Json.Serialize<ItemClassData>(itemClass));
-                }
+                WriteUtf8File(outputJson, Json.SerializeToUtf8<ItemClassData>(itemClass));
             }
             return outputJson;
         }
@@ -650,10 +640,7 @@ namespace Xiletrade.Json
                 unique.Unique = listUniques.ToArray();
 
                 outputJson = jsonPath + game.Names[game.UniquesLayout];
-                using (StreamWriter writer = new(outputJson, false, Encoding.UTF8))
-                {
-                    writer.Write(Json.Serialize<UniqueData>(unique));
-                }
+                WriteUtf8File(outputJson, Json.SerializeToUtf8<UniqueData>(unique));
             }
             return outputJson;
         }

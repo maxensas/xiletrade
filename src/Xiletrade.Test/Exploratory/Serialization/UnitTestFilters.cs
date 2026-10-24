@@ -28,7 +28,7 @@ public class UnitTestFilters : UnitTest<FilterData>
     [Trait("Type", "Exploratory")]
     public void _00_EN_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<FilterData>(Serializable.GetValueOrDefault(Culture[0]));
+        var net = NETSerializer.SerializeToUtf8<FilterData>(Serializable.GetValueOrDefault(Culture[0]));
 
         Assert.Equal(Jsons.GetValueOrDefault(Culture[0]), net);
     }
@@ -45,7 +45,7 @@ public class UnitTestFilters : UnitTest<FilterData>
     [Trait("Type", "Exploratory")]
     public void _00_EN_DeserializeWithNETCorruptOne()
     {
-        var jsonCorrupted = Jsons.GetValueOrDefault(Culture[0]).Replace("explicit", "tghfghf");
+        var jsonCorrupted = Replace(Jsons.GetValueOrDefault(Culture[0]), "explicit", "tghfghf");
         var net = NETSerializer.Deserialize<FilterData>(jsonCorrupted);
         Assert.NotEqual((FilterData)Serializable.GetValueOrDefault(Culture[0]), net, new FilterDataComparer());
     }
@@ -54,7 +54,7 @@ public class UnitTestFilters : UnitTest<FilterData>
     [Trait("Type", "Exploratory")]
     public void _00_EN_DeserializeWithNETCorruptTwo()
     {
-        var jsonCorrupted = Jsons.GetValueOrDefault(Culture[0]).Replace("crucible.mod_10387", "crucible.dom_10387");
+        var jsonCorrupted = Replace(Jsons.GetValueOrDefault(Culture[0]), "crucible.mod_10387", "crucible.dom_10387");
         var net = NETSerializer.Deserialize<FilterData>(jsonCorrupted);
         Assert.NotEqual((FilterData)Serializable.GetValueOrDefault(Culture[0]), net, new FilterDataComparer());
     }
@@ -71,7 +71,7 @@ public class UnitTestFilters : UnitTest<FilterData>
     [Trait("Type", "Exploratory")]
     public void _01_KR_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<FilterData>(Serializable.GetValueOrDefault(Culture[1]));
+        var net = NETSerializer.SerializeToUtf8<FilterData>(Serializable.GetValueOrDefault(Culture[1]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[1]), net);
     }
 
@@ -95,7 +95,7 @@ public class UnitTestFilters : UnitTest<FilterData>
     [Trait("Type", "Exploratory")]
     public void _02_FR_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<FilterData>(Serializable.GetValueOrDefault(Culture[2]));
+        var net = NETSerializer.SerializeToUtf8<FilterData>(Serializable.GetValueOrDefault(Culture[2]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[2]), net);
     }
 
@@ -119,7 +119,7 @@ public class UnitTestFilters : UnitTest<FilterData>
     [Trait("Type", "Exploratory")]
     public void _03_ES_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<FilterData>(Serializable.GetValueOrDefault(Culture[3]));
+        var net = NETSerializer.SerializeToUtf8<FilterData>(Serializable.GetValueOrDefault(Culture[3]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[3]), net);
     }
 
@@ -143,7 +143,7 @@ public class UnitTestFilters : UnitTest<FilterData>
     [Trait("Type", "Exploratory")]
     public void _04_DE_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<FilterData>(Serializable.GetValueOrDefault(Culture[4]));
+        var net = NETSerializer.SerializeToUtf8<FilterData>(Serializable.GetValueOrDefault(Culture[4]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[4]), net);
     }
 
@@ -167,7 +167,7 @@ public class UnitTestFilters : UnitTest<FilterData>
     [Trait("Type", "Exploratory")]
     public void _05_BR_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<FilterData>(Serializable.GetValueOrDefault(Culture[5]));
+        var net = NETSerializer.SerializeToUtf8<FilterData>(Serializable.GetValueOrDefault(Culture[5]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[5]), net);
     }
 
@@ -191,7 +191,7 @@ public class UnitTestFilters : UnitTest<FilterData>
     [Trait("Type", "Exploratory")]
     public void _06_RU_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<FilterData>(Serializable.GetValueOrDefault(Culture[6]));
+        var net = NETSerializer.SerializeToUtf8<FilterData>(Serializable.GetValueOrDefault(Culture[6]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[6]), net);
     }
 
@@ -215,7 +215,7 @@ public class UnitTestFilters : UnitTest<FilterData>
     [Trait("Type", "Exploratory")]
     public void _07_TH_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<FilterData>(Serializable.GetValueOrDefault(Culture[7]));
+        var net = NETSerializer.SerializeToUtf8<FilterData>(Serializable.GetValueOrDefault(Culture[7]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[7]), net);
     }
 
@@ -239,7 +239,7 @@ public class UnitTestFilters : UnitTest<FilterData>
     [Trait("Type", "Exploratory")]
     public void _08_TW_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<FilterData>(Serializable.GetValueOrDefault(Culture[8]));
+        var net = NETSerializer.SerializeToUtf8<FilterData>(Serializable.GetValueOrDefault(Culture[8]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[8]), net);
     }
 
@@ -263,7 +263,7 @@ public class UnitTestFilters : UnitTest<FilterData>
     [Trait("Type", "Exploratory")]
     public void _09_CN_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<FilterData>(Serializable.GetValueOrDefault(Culture[9]));
+        var net = NETSerializer.SerializeToUtf8<FilterData>(Serializable.GetValueOrDefault(Culture[9]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[9]), net);
     }
 
@@ -287,7 +287,7 @@ public class UnitTestFilters : UnitTest<FilterData>
     [Trait("Type", "Exploratory")]
     public void _10_JP_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<FilterData>(Serializable.GetValueOrDefault(Culture[10]));
+        var net = NETSerializer.SerializeToUtf8<FilterData>(Serializable.GetValueOrDefault(Culture[10]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[10]), net);
     }
 

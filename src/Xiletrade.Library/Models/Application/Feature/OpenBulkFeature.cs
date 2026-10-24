@@ -4,7 +4,8 @@ using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Application.Feature;
 
-internal class OpenBulkFeature(IViewManager view, MainViewModel vm, ConfigShortcut shortcut) : BaseFeature(shortcut)
+internal class OpenBulkFeature(IViewManager view, 
+    MainViewModel vm, ConfigShortcut shortcut) : BaseFeature(shortcut)
 {
     internal override void Launch()
     {

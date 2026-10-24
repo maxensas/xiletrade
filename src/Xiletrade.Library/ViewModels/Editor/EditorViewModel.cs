@@ -83,12 +83,12 @@ public sealed partial class EditorViewModel : ViewModelBase
     private async Task SaveChanges(object commandParameter)
     {
         _dm.Parser.Mods = [.. Parser.Where(x => x.Replace is "equals" or "contains" && x.Old.Length > 0 && x.New.Length > 0)];
-        var fileToSave = _dm.Json.Serialize<ParserData>(_dm.Parser);
+        var fileToSave = _dm.Json.SerializeToUtf8<ParserData>(_dm.Parser);
         await _dm.SaveFileAsync(fileToSave, ParserLocation);
 
         _dm.Config.DangerousMapMods = [.. DangerousMods.Where(x => x.Id.Length > 0 && x.Id.Contain("stat_"))];
         _dm.Config.RareItemMods = [.. RareMods.Where(x => x.Id.Length > 0 && x.Id.Contain("stat_"))];
-        fileToSave = _dm.Json.Serialize<ConfigData>(_dm.Config);
+        fileToSave = _dm.Json.SerializeToUtf8<ConfigData>(_dm.Config);
         await _dm.SaveFileAsync(fileToSave, ConfigLocation);
     }
 
@@ -139,8 +139,8 @@ public sealed partial class EditorViewModel : ViewModelBase
         {
             var service = _serviceProvider.GetRequiredService<NetService>();
             var idCur = "/" + GetPreviousHourUnixTimestamp();
-            var sResult = await service.SendHTTP(Strings.CurrencyExchangeApi + idCur, Client.Xiletrade);
-            //var sResult = await service.SendHTTP(Strings.ApiLeague, Client.Xiletrade);
+            var sResult = await service.SendHTTPBytes(Strings.CurrencyExchangeApi + idCur, Client.Xiletrade);
+            //var sResult = await service.SendHTTPBytes(Strings.ApiLeague, Client.Xiletrade);
             ms.Show(string.Format("Request sent with success \r\n\r\n Response lenght: {0}"
                 , sResult.Length), "Test command", MessageStatus.Information);
         }

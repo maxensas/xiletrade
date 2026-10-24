@@ -176,4 +176,36 @@ public static class Common
         int[] bits = decimal.GetBits(dec);
         return (bits[3] >> 16) & 0x7F;
     }
+
+    /// <summary>
+    /// Percent-encodes UTF-8 text as <see cref="Uri.EscapeDataString(string)"/> does, without building the text first.
+    /// </summary>
+    internal static string EscapeDataString(ReadOnlySpan<byte> utf8)
+    {
+        int length = 0;
+        foreach (var b in utf8)
+        {
+            length += IsUnreservedUrlByte(b) ? 1 : 3;
+        }
+
+        Span<char> buffer = length <= 1024 ? stackalloc char[length] : new char[length];
+        const string hexDigits = "0123456789ABCDEF";
+        int pos = 0;
+        foreach (var b in utf8)
+        {
+            if (IsUnreservedUrlByte(b))
+            {
+                buffer[pos++] = (char)b;
+                continue;
+            }
+            buffer[pos++] = '%';
+            buffer[pos++] = hexDigits[b >> 4];
+            buffer[pos++] = hexDigits[b & 0xF];
+        }
+        return new string(buffer);
+    }
+
+    private static bool IsUnreservedUrlByte(byte b)
+        => b is >= (byte)'A' and <= (byte)'Z' or >= (byte)'a' and <= (byte)'z' or >= (byte)'0' and <= (byte)'9'
+            or (byte)'-' or (byte)'.' or (byte)'_' or (byte)'~';
 }
