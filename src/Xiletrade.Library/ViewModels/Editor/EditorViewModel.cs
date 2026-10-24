@@ -69,16 +69,12 @@ public sealed partial class EditorViewModel : ViewModelBase
         _notif = notif;
 
         viewScale = _dm.Config.Options.Scale;
-        string dataPath = System.IO.Path.GetFullPath("Data\\");
-        
-        StringBuilder sb = new(dataPath);
-        sb.Append("Lang\\")
-          .Append(Strings.Culture[_dm.Config.Options.Language])
-          .Append("\\");
+        string dataPath = DataManagerService.DataDirectory;
+        string langPath = System.IO.Path.Combine(dataPath, "Lang", Strings.Culture[_dm.Config.Options.Language]);
 
-        configLocation = dataPath + Strings.File.Config;
-        parserLocation = sb.ToString() + Strings.File.ParsingRules;
-        filterLocation = sb.ToString() + Strings.File.Filters;
+        configLocation = System.IO.Path.Combine(dataPath, Strings.File.Config);
+        parserLocation = System.IO.Path.Combine(langPath, Strings.File.ParsingRules);
+        filterLocation = System.IO.Path.Combine(langPath, Strings.File.Filters);
 
         InitVm(null);
     }
@@ -127,11 +123,10 @@ public sealed partial class EditorViewModel : ViewModelBase
 
         PoeSessId = string.Empty;
     }
-
+    /*
     [RelayCommand]
     private async Task Test(object commandParameter)
     {
-        /*
         var ms = _serviceProvider.GetRequiredService<IMessageAdapterService>();
         var mvm = _serviceProvider.GetRequiredService<TaskBarViewModel>();
         if (!mvm.Authenticated)
@@ -153,9 +148,8 @@ public sealed partial class EditorViewModel : ViewModelBase
         {
             ms.Show(ex.GetFormated(), "Test error", MessageStatus.Error);
         }
-        */
     }
-
+    */
     private static long GetPreviousHourUnixTimestamp()
     {
         var nowLocal = DateTime.Now;

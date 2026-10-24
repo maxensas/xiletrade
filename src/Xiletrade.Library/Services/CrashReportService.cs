@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -19,7 +19,7 @@ public sealed partial class CrashReportService(IMessageAdapterService message)
 {
     private const string Template = "crash_report.yml";
     private const int MaxUrlLength = 7000; // browsers/GitHub reject very long URLs
-    private static readonly string PendingFile = Path.GetFullPath("Xiletrade.crash");
+    private static readonly string PendingFile = Path.Combine(AppContext.BaseDirectory, "Xiletrade.crash");
 
     /// <summary>
     /// To call from the global exception handler: no UI here, the process is going down.

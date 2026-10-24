@@ -151,7 +151,7 @@ public sealed class DataUpdaterService : IDataUpdaterService
         string urlStats = Strings.Api.GetUpdate(idxLang) + "stats";
         try
         {
-            string path = Path.GetFullPath("Data\\Lang\\");
+            string path = Path.Combine(DataManagerService.DataDirectory, "Lang");
             if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
             {
                 string sResult = await _net.SendHTTP(urlStats, Client.Update);
@@ -190,7 +190,7 @@ public sealed class DataUpdaterService : IDataUpdaterService
         string urlStats = Strings.Api.GetUpdate(idxLang) + "leagues";
         try
         {
-            string path = Path.GetFullPath("Data\\Lang\\");
+            string path = Path.Combine(DataManagerService.DataDirectory, "Lang");
             if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
             {
                 string sResult = await _net.SendHTTP(urlStats, Client.Update);
@@ -232,7 +232,7 @@ public sealed class DataUpdaterService : IDataUpdaterService
         string urlStats = Strings.Api.GetUpdate(idxLang) + "static";
         try
         {
-            string path = Path.GetFullPath("Data\\Lang\\");
+            string path = Path.Combine(DataManagerService.DataDirectory, "Lang");
             if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
             {
                 string sResult = await _net.SendHTTP(urlStats, Client.Update);
@@ -251,7 +251,7 @@ public sealed class DataUpdaterService : IDataUpdaterService
         string urlItems = Strings.Api.GetUpdate(idxLang) + "items";
         try
         {
-            string path = Path.GetFullPath("Data\\Lang\\");
+            string path = Path.Combine(DataManagerService.DataDirectory, "Lang");
             if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
             {
                 string sResult = await _net.SendHTTP(urlItems, Client.Update);
@@ -271,7 +271,7 @@ public sealed class DataUpdaterService : IDataUpdaterService
         string urlStats = Strings.Url.GithubData + preffix + fileName;
         try
         {
-            string path = idxLang < 0 ? Path.GetFullPath("Data\\") : Path.GetFullPath("Data\\Lang\\");
+            string path = idxLang < 0 ? DataManagerService.DataDirectory : Path.Combine(DataManagerService.DataDirectory, "Lang");
             if (Uri.TryCreate(Strings.Url.GithubData, UriKind.Absolute, out _))
             {
                 string json = await _net.SendHTTP(urlStats, Client.GitHub);
