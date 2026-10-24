@@ -213,6 +213,32 @@ public sealed class JsonHelper : StringCache
         return result ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
     }
 
+    /// <summary>
+    /// Deserializes a UTF-8 json stream, without building the text in memory.
+    /// </summary>
+    /// <remarks>A UTF-8 byte order mark at the beginning of the stream is skipped (the stream must be seekable to detect it).</remarks>
+    public T Deserialize<T>(Stream utf8Json) where T : class
+    {
+        var context = GetContextOrThrow<T>();
+        SkipUtf8Bom(utf8Json);
+        return JsonSerializer.Deserialize(utf8Json, typeof(T), context) as T
+               ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
+    }
+
+    private static void SkipUtf8Bom(Stream stream)
+    {
+        if (!stream.CanSeek)
+        {
+            return;
+        }
+        Span<byte> bom = stackalloc byte[3];
+        int read = stream.Read(bom);
+        if (read != 3 || bom[0] != 0xEF || bom[1] != 0xBB || bom[2] != 0xBF)
+        {
+            stream.Position = 0;
+        }
+    }
+
     internal SourceGenerationContext GetContextOrThrow<T>() where T : class
     {
         if (_converterContext is null)

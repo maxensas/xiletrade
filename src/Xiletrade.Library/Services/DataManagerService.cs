@@ -196,9 +196,8 @@ public sealed class DataManagerService
     }
 
     /// <summary>
-    /// Reads and deserializes a data file.
+    /// Reads and deserializes a data file, directly from its UTF-8 content.
     /// </summary>
-    /// <returns>Null when the file is empty.</returns>
     /// <exception cref="FileNotFoundException"></exception>
     /// <exception cref="JsonException">The file can not be read or deserialized.</exception>
     private T Load<T>(string filePath) where T : class
@@ -207,8 +206,8 @@ public sealed class DataManagerService
             throw new FileNotFoundException(filePath);
         try
         {
-            var json = File.ReadAllText(filePath);
-            return Json.Deserialize<T>(json);
+            using var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            return Json.Deserialize<T>(stream);
         }
         catch (Exception ex)
         {
