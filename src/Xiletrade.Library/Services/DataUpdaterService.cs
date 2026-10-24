@@ -63,10 +63,12 @@ public sealed class DataUpdaterService : IDataUpdaterService
             {
                 if (i < 0 || i >= Strings.Culture.Length) continue;
 
-                taskList.Add(LeaguesUpdate(i));
-                taskList.Add(FilterDataUpdates(i));
-                taskList.Add(CurrencyUpdate(i));
-                taskList.Add(ItemTypeUpdate(i));
+                taskList.Add(PoeApiUpdate<LeagueData>("leagues", Strings.File.Leagues, "Leagues", i,
+                    arrange: RemoveDuplicateLeagues));
+                taskList.Add(PoeApiUpdate<FilterData>("stats", Strings.File.Filters, "FilterData", i,
+                    prepare: FixFilterJson, arrange: SortFilterEntries));
+                taskList.Add(PoeApiUpdate<CurrencyResult>("static", Strings.File.Currency, "Currency", i));
+                taskList.Add(PoeApiUpdate<ItemTypeResult>("items", Strings.File.Items, "Item type", i));
                 taskList.Add(GithubUpdate<ParserData>(Strings.File.ParsingRules, i));
 
                 if (updateGenerated)
@@ -146,123 +148,74 @@ public sealed class DataUpdaterService : IDataUpdaterService
     }
 
     // all private methods
-    private async Task FilterDataUpdates(int idxLang)
+    /// <summary>
+    /// Downloads a data file from the game server (api), and saves it in the language folder.
+    /// </summary>
+    /// <param name="endpoint">Last part of the api url.</param>
+    /// <param name="fileName">Name of the saved file.</param>
+    /// <param name="label">Name of the data, used in the error messages.</param>
+    /// <param name="idxLang">Index of the language (and of the server).</param>
+    /// <param name="prepare">Fixes the downloaded text before it is deserialized.</param>
+    /// <param name="arrange">Arranges the deserialized data before it is saved, returns null to save nothing.</param>
+    private async Task PoeApiUpdate<T>(string endpoint, string fileName, string label, int idxLang,
+        Func<string, int, string> prepare = null, Func<T, T> arrange = null) where T : class
     {
-        string urlStats = Strings.Api.GetUpdate(idxLang) + "stats";
+        string url = Strings.Api.GetUpdate(idxLang) + endpoint;
         try
         {
             string path = Path.Combine(DataManagerService.DataDirectory, "Lang");
-            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
+            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out _))
             {
-                string sResult = await _net.SendHTTP(urlStats, Client.Update);
-
-                if (sResult.Length > 0)
+                string json = await _net.SendHTTP(url, Client.Update);
+                if (prepare is not null && !string.IsNullOrEmpty(json))
                 {
-                    if (idxLang is 5) // portuguese
-                    {
-                        sResult = sResult.Replace("\\u000b", string.Empty); // remove line tabulation
-                    }
-                    FilterData filterInfo = _dm.Json.Deserialize<FilterData>(sResult);
-                    if (filterInfo is not null)
-                    {
-                        if (filterInfo.Result.Length > 0) // needed for files comparison following leagues updates.
-                        {
-                            for (int i = 0; i < filterInfo.Result.Length; i++)
-                            {
-                                filterInfo.Result[i].Entries = [.. filterInfo.Result[i].Entries.OrderBy(x => x.ID)];
-                            }
-                        }
-
-                        WriteFile(path, Strings.File.Filters, filterInfo, idxLang);
-                    }
+                    json = prepare(json, idxLang);
                 }
+                SaveJsonToFile<T>(json, path, fileName, idxLang, arrange);
             }
         }
         catch (Exception ex)
         {
-            ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[FilterData Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
-                : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : FilterData Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
+            ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + $"[{label} Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
+                : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + $" Server : {label} Update" + Strings.LF + url + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
         }
     }
 
-    private async Task LeaguesUpdate(int idxLang)
+    private static string FixFilterJson(string json, int idxLang)
     {
-        string urlStats = Strings.Api.GetUpdate(idxLang) + "leagues";
-        try
-        {
-            string path = Path.Combine(DataManagerService.DataDirectory, "Lang");
-            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
-            {
-                string sResult = await _net.SendHTTP(urlStats, Client.Update);
-
-                if (sResult.Length > 0)
-                {
-                    LeagueData leaguesInfo = _dm.Json.Deserialize<LeagueData>(sResult);
-                    if (leaguesInfo is not null)
-                    {
-                        List<LeagueResult> leagueList = new();
-                        foreach (var league in leaguesInfo.Result)
-                        {
-                            var checkPresence = leagueList.Where(x => x.Id == league.Id);
-                            if (!checkPresence.Any())
-                            {
-                                leagueList.Add(league);
-                            }
-                        }
-
-                        if (leagueList.Count > 0)
-                        {
-                            leaguesInfo.Result = [.. leagueList];
-
-                            WriteFile(path, Strings.File.Leagues, leaguesInfo, idxLang);
-                        }
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Leagues Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
-                : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : Leagues Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
-        }
+        // remove line tabulation (portuguese)
+        return idxLang is 5 ? json.Replace("\\u000b", string.Empty) : json;
     }
 
-    private async Task CurrencyUpdate(int idxLang)
+    // needed for files comparison following leagues updates.
+    private static FilterData SortFilterEntries(FilterData filter)
     {
-        string urlStats = Strings.Api.GetUpdate(idxLang) + "static";
-        try
+        if (filter.Result.Length > 0)
         {
-            string path = Path.Combine(DataManagerService.DataDirectory, "Lang");
-            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
+            for (int i = 0; i < filter.Result.Length; i++)
             {
-                string sResult = await _net.SendHTTP(urlStats, Client.Update);
-                SaveJsonToFile<CurrencyResult>(sResult, path, Strings.File.Currency, idxLang);
+                filter.Result[i].Entries = [.. filter.Result[i].Entries.OrderBy(x => x.ID)];
             }
         }
-        catch (Exception ex)
-        {
-            ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Currency Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
-                : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : Currency Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
-        }
+        return filter;
     }
 
-    private async Task ItemTypeUpdate(int idxLang)
+    private static LeagueData RemoveDuplicateLeagues(LeagueData leagues)
     {
-        string urlItems = Strings.Api.GetUpdate(idxLang) + "items";
-        try
+        List<LeagueResult> leagueList = new();
+        foreach (var league in leagues.Result)
         {
-            string path = Path.Combine(DataManagerService.DataDirectory, "Lang");
-            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
+            if (!leagueList.Exists(x => x.Id == league.Id))
             {
-                string sResult = await _net.SendHTTP(urlItems, Client.Update);
-                SaveJsonToFile<ItemTypeResult>(sResult, path, Strings.File.Items, idxLang);
+                leagueList.Add(league);
             }
         }
-        catch (Exception ex)
+        if (leagueList.Count is 0)
         {
-            ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Item type Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
-                : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : Item type Update" + Strings.LF + urlItems + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
+            return null;
         }
+        leagues.Result = [.. leagueList];
+        return leagues;
     }
 
     private async Task GithubUpdate<T>(string fileName, int idxLang = -1) where T : class
@@ -294,12 +247,16 @@ public sealed class DataUpdaterService : IDataUpdaterService
     }
 
     private void SaveJsonToFile<T>(ReadOnlySpan<char> json, string path, string fileName, 
-        int idxLang = -1) where T : class
+        int idxLang = -1, Func<T, T> arrange = null) where T : class
     {
         if (json.IsEmpty)
             return;
 
         var data = _dm.Json.Deserialize<T>(json);
+        if (data is not null && arrange is not null)
+        {
+            data = arrange(data);
+        }
         if (data is null)
             return;
 
