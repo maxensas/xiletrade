@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -156,35 +158,66 @@ public sealed class DataManagerService
             string lang = Path.Combine("Lang", Strings.Culture[Config.Options.Language]);
             string langEn = Path.Combine("Lang", Strings.Culture[0]);
 
-            DivTiersData = Load<DivTiersData>(Path.Combine(basePath, Strings.File.Divination));
-            DustData = Load<DustData>(Path.Combine(basePath, Strings.File.DustLevel));
-            SearchPreset = Load<SearchPresetData>(Path.Combine(basePath, Strings.File.SearchPreset)) ?? new SearchPresetData();
-
+            // The files are independent : they are read and deserialized together.
             var filterPath = Path.Combine(basePath, lang);
-            BaseData = Load<BaseData>(Path.Combine(filterPath, Strings.File.Bases));
-            ModData = Load<ModData>(Path.Combine(filterPath, Strings.File.Mods));
-            MonsterData = Load<BaseData>(Path.Combine(filterPath, Strings.File.Monsters));
-            CurrencyData = Load<CurrencyResult>(Path.Combine(filterPath, Strings.File.Currency));
-            ItemTypeData = Load<ItemTypeResult>(Path.Combine(filterPath, Strings.File.Items));
-            Filter = Load<FilterData>(Path.Combine(filterPath, Strings.File.Filters))?.ArrangeFilter(Config.Options.GameVersion) ?? new FilterData();            
-            WordData = Load<WordData>(Path.Combine(filterPath, Strings.File.Words));
-            GemData = Load<GemData>(Path.Combine(filterPath, Strings.File.Gems));
-            Parser = Load<ParserData>(Path.Combine(filterPath, Strings.File.ParsingRules)) ?? new ParserData();
+            var englishPath = Path.Combine(basePath, langEn);
+            var arrangeVersion = Config.Options.GameVersion;
+
+            var divTiers = Load<DivTiersData>(Path.Combine(basePath, Strings.File.Divination));
+            var dust = Load<DustData>(Path.Combine(basePath, Strings.File.DustLevel));
+            var searchPreset = Load<SearchPresetData>(Path.Combine(basePath, Strings.File.SearchPreset));
+            var bases = Load<BaseData>(Path.Combine(filterPath, Strings.File.Bases));
+            var mods = Load<ModData>(Path.Combine(filterPath, Strings.File.Mods));
+            var monsters = Load<BaseData>(Path.Combine(filterPath, Strings.File.Monsters));
+            var words = Load<WordData>(Path.Combine(filterPath, Strings.File.Words));
+            var gems = Load<GemData>(Path.Combine(filterPath, Strings.File.Gems));
+            var parser = Load<ParserData>(Path.Combine(filterPath, Strings.File.ParsingRules));
+
+            var filter = LoadFilter(Path.Combine(filterPath, Strings.File.Filters), arrangeVersion);
+            var currency = Load<CurrencyResult>(Path.Combine(filterPath, Strings.File.Currency));
+            var items = Load<ItemTypeResult>(Path.Combine(filterPath, Strings.File.Items));
+
+            var filterEn = LoadFilter(Path.Combine(englishPath, Strings.File.Filters), arrangeVersion);
+            var currencyEn = Load<CurrencyResult>(Path.Combine(englishPath, Strings.File.Currency));
+            var itemsEn = Load<ItemTypeResult>(Path.Combine(englishPath, Strings.File.Items));
+
+            Task<BaseData> basesGateway = null;
+            Task<WordData> wordsGateway = null;
+            Task<CurrencyResult> currencyGateway = null;
+            if (Config.Options.Gateway != Config.Options.Language)
+            {
+                var gatewayPath = Path.Combine(basePath, Path.Combine("Lang", Strings.Culture[Config.Options.Gateway]));
+                basesGateway = Load<BaseData>(Path.Combine(gatewayPath, Strings.File.Bases));
+                wordsGateway = Load<WordData>(Path.Combine(gatewayPath, Strings.File.Words));
+                currencyGateway = Load<CurrencyResult>(Path.Combine(gatewayPath, Strings.File.Currency));
+            }
 
             InitLeague(Config.Options.Gateway);
 
-            if (Config.Options.Gateway != Config.Options.Language)
-            {
-                var langGateway = Path.Combine("Lang", Strings.Culture[Config.Options.Gateway]);
-                var gatewayPath = Path.Combine(basePath, langGateway);
-                BaseDataGateway = Load<BaseData>(Path.Combine(gatewayPath, Strings.File.Bases));
-                WordDataGateway = Load<WordData>(Path.Combine(gatewayPath, Strings.File.Words));
-                CurrencyDataGateway = Load<CurrencyResult>(Path.Combine(gatewayPath, Strings.File.Currency));
-            }
-            var englishPath = Path.Combine(basePath, langEn);
-            FilterEn = Load<FilterData>(Path.Combine(englishPath, Strings.File.Filters))?.ArrangeFilter(Config.Options.GameVersion) ?? new FilterData();
-            CurrencyDataEn = Load<CurrencyResult>(Path.Combine(englishPath, Strings.File.Currency));
-            ItemTypeDataEn = Load<ItemTypeResult>(Path.Combine(englishPath, Strings.File.Items));
+            WaitAll(divTiers, dust, searchPreset, bases, mods, monsters, currency, items, filter, words, gems,
+                parser, filterEn, currencyEn, itemsEn, basesGateway, wordsGateway, currencyGateway);
+
+            DivTiersData = divTiers.Result;
+            DustData = dust.Result;
+            SearchPreset = searchPreset.Result ?? new();
+            BaseData = bases.Result;
+            ModData = mods.Result;
+            MonsterData = monsters.Result;
+            WordData = words.Result;
+            GemData = gems.Result;
+            Parser = parser.Result ?? new();
+
+            Filter = filter.Result ?? new();
+            CurrencyData = currency.Result;
+            ItemTypeData = items.Result;
+
+            FilterEn = filterEn.Result ?? new();
+            CurrencyDataEn = currencyEn.Result;
+            ItemTypeDataEn = itemsEn.Result;
+
+            BaseDataGateway = basesGateway?.Result;
+            WordDataGateway = wordsGateway?.Result;
+            CurrencyDataGateway = currencyGateway?.Result;
         }
         catch(Exception ex)
         {
@@ -197,24 +230,52 @@ public sealed class DataManagerService
     }
 
     /// <summary>
-    /// Reads and deserializes a data file, directly from its UTF-8 content.
+    /// Waits for the tasks, and throws the exception of the first one (in the given order) that failed,
+    /// as the sequential loading did, instead of an AggregateException.
+    /// </summary>
+    private static void WaitAll(params Task[] tasks)
+    {
+        tasks = [.. tasks.Where(t => t is not null)];
+        try
+        {
+            Task.WaitAll(tasks);
+        }
+        catch (AggregateException)
+        {
+            foreach (var task in tasks)
+            {
+                if (task.IsFaulted)
+                {
+                    ExceptionDispatchInfo.Capture(task.Exception.InnerException).Throw();
+                }
+            }
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Reads (asynchronously) and deserializes a data file, directly from its UTF-8 content.
     /// </summary>
     /// <exception cref="FileNotFoundException"></exception>
     /// <exception cref="JsonException">The file can not be read or deserialized.</exception>
-    private T Load<T>(string filePath) where T : class
+    private async Task<T> Load<T>(string filePath) where T : class
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
         try
         {
-            using var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            return Json.Deserialize<T>(stream);
+            // ConfigureAwait(false) : the deserialization goes on a thread pool thread, and never waits for the caller thread.
+            var json = await File.ReadAllBytesAsync(filePath).ConfigureAwait(false);
+            return Json.Deserialize<T>(json);
         }
         catch (Exception ex)
         {
             throw new JsonException($"Can not load {Path.GetFileName(filePath)}.\nFile location: {filePath}" + ex.Message, ex);
         }
     }
+
+    private async Task<FilterData> LoadFilter(string filePath, int gameVersion)
+        => (await Load<FilterData>(filePath).ConfigureAwait(false))?.ArrangeFilter(gameVersion);
 
     internal byte[] LoadConfiguration(string configfile)
     {
