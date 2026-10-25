@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Notification;
@@ -63,12 +62,12 @@ public sealed class DataUpdaterService : IDataUpdaterService
             {
                 if (i < 0 || i >= Strings.Culture.Length) continue;
 
-                taskList.Add(ApiUpdate<LeagueData>("leagues", Strings.File.Leagues, "Leagues", i,
+                taskList.Add(PoeUpdate<LeagueData>("leagues", Strings.File.Leagues, "Leagues", i,
                     arrange: RemoveDuplicateLeagues));
-                taskList.Add(ApiUpdate<FilterData>("stats", Strings.File.Filters, "FilterData", i,
+                taskList.Add(PoeUpdate<FilterData>("stats", Strings.File.Filters, "FilterData", i,
                     prepare: FixFilterJson, arrange: SortFilterEntries));
-                taskList.Add(ApiUpdate<CurrencyResult>("static", Strings.File.Currency, "Currency", i));
-                taskList.Add(ApiUpdate<ItemTypeResult>("items", Strings.File.Items, "Item type", i));
+                taskList.Add(PoeUpdate<CurrencyResult>("static", Strings.File.Currency, "Currency", i));
+                taskList.Add(PoeUpdate<ItemTypeResult>("items", Strings.File.Items, "Item type", i));
                 taskList.Add(GithubUpdate<ParserData>(Strings.File.ParsingRules, i));
 
                 if (updateGenerated)
@@ -160,7 +159,7 @@ public sealed class DataUpdaterService : IDataUpdaterService
     /// <param name="idxLang">Index of the language (and of the server).</param>
     /// <param name="prepare">Fixes the downloaded text before it is deserialized.</param>
     /// <param name="arrange">Arranges the deserialized data before it is saved, returns null to save nothing.</param>
-    private async Task ApiUpdate<T>(string endpoint, string fileName, string label, int idxLang,
+    private async Task PoeUpdate<T>(string endpoint, string fileName, string label, int idxLang,
         PrepareJson prepare = null, Func<T, T> arrange = null) where T : class
     {
         string url = Strings.Api.GetUpdate(idxLang) + endpoint;

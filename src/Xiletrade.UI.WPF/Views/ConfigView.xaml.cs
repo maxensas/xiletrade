@@ -31,6 +31,7 @@ public partial class ConfigView : ViewBase, IConfigView
     {
         Content = null;
         DataContext = null;
+        Common.CollectGarbage();
         MouseLeftButtonDown -= Window_DragWindow;
         Closed -= OnClosed;
         _scope?.Dispose();

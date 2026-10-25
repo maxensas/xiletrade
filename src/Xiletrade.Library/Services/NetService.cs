@@ -4,7 +4,6 @@ using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Poe.Contract;
@@ -77,6 +76,8 @@ public class NetService : INetService
 
         _default.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
         _update.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
+        // same as the trade client: no connection kept idle, so no background read to abort when it is closed
+        _update.DefaultRequestHeaders.ConnectionClose = true;
         _poePrice.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
         _ninja.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
         _gitHub.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
