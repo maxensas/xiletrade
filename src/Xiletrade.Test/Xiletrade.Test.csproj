@@ -36,6 +36,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Xiletrade.Library\Xiletrade.Library.csproj" />
     <ProjectReference Include="..\Xiletrade.UI.WPF\Xiletrade.UI.WPF.csproj" />
+    <ProjectReference Include="..\Xiletrade.DatToJson\Xiletrade.DatToJson.csproj" />
   </ItemGroup>
 
   <ItemGroup>

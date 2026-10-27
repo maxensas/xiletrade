@@ -1,0 +1,114 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <Version>1.0.0</Version>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Authors>maxensas</Authors>
+    <Company>Toolcaps</Company>
+    <AssemblyTitle>Xiletrade DAT to JSON</AssemblyTitle>
+    <PackageProjectUrl>https://github.com/maxensas/xiletrade</PackageProjectUrl>
+    <PublishAot>true</PublishAot>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <OptimizationPreference>size</OptimizationPreference>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LibGGPK3.LibBundledGGPK3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Json models and serializer shared with the application, so the files are read back as written -->
+    <ProjectReference Include="..\Xiletrade.Library\Xiletrade.Library.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      Minimal schemas and their snapshots (snapshots are created by the 'snapshot' command).
+      Default folder of the commands: the Schemas folder of this project, so the versioned files are updated (read at run time with AppContext.GetData).
+      The copy next to the executable is only used when the tool runs without this option (e.g. published elsewhere).
+    -->
+    <RuntimeHostConfigurationOption Include="Xiletrade.DatToJson.SchemasDirectory" Value="$(MSBuildProjectDirectory)/Schemas" />
+    <Content Include="Schemas\*.json;Schemas\*.bin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Xiletrade.Test" />
+  </ItemGroup>
+
+  <!--
+    ooz, native decompressor of the game bundles (see README).
+    Built automatically with CMake from the Native folder when the library is missing, so only on the first build.
+    Everything is written to bin/ooz (downloaded sources, build files, library): the source folders are never modified.
+    Once the library is built, only bin/ooz/lib/ooz.dll is kept: downloaded sources and build files are deleted.
+    Needs CMake 3.20+, a C++17 compiler and git (on Windows: Visual Studio with the C++ workload).
+    dotnet build -p:SkipOozBuild=true builds the project without it (the commands then stop with an explicit error).
+  -->
+  <PropertyGroup>
+    <OozFileName Condition="$([MSBuild]::IsOSPlatform('Windows'))">ooz.dll</OozFileName>
+    <OozFileName Condition="$([MSBuild]::IsOSPlatform('OSX'))">libooz.dylib</OozFileName>
+    <OozFileName Condition="'$(OozFileName)' == ''">libooz.so</OozFileName>
+    <OozNativeDirectory>$(MSBuildProjectDirectory)/Native</OozNativeDirectory>
+    <OozBuildDirectory>$(MSBuildProjectDirectory)/bin/ooz</OozBuildDirectory>
+    <OozLibraryPath>$(OozBuildDirectory)/lib/$(OozFileName)</OozLibraryPath>
+    <!-- CMake on the PATH by default; -p:OozCMake=<path> to use another one -->
+    <OozCMake Condition="'$(OozCMake)' == ''">cmake</OozCMake>
+    <_OozVsWhere>$(MSBuildProgramFiles32)\Microsoft Visual Studio\Installer\vswhere.exe</_OozVsWhere>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Default download cache of the patch CDN, emptied once the json files are written (read at run time with AppContext.GetData) -->
+    <RuntimeHostConfigurationOption Include="Xiletrade.DatToJson.CacheDirectory" Value="$(OozBuildDirectory)/temp" />
+    <!-- Copied next to the executable when already built -->
+    <None Include="$(OozLibraryPath)" Link="$(OozFileName)" CopyToOutputDirectory="PreserveNewest" Condition="Exists('$(OozLibraryPath)')" />
+  </ItemGroup>
+
+  <Target Name="BuildOoz" BeforeTargets="BeforeBuild"
+          Condition="!Exists('$(OozLibraryPath)') And '$(SkipOozBuild)' != 'true' And '$(DesignTimeBuild)' != 'true'">
+    <Message Importance="high" Text="$(OozLibraryPath) not found: building ooz with CMake (first build only)..." />
+
+    <Exec Command="&quot;$(OozCMake)&quot; --version" IgnoreExitCode="true" StandardOutputImportance="low" StandardErrorImportance="low">
+      <Output TaskParameter="ExitCode" PropertyName="_OozCMakeExitCode" />
+    </Exec>
+
+    <!-- Not on the PATH: on Windows, use the CMake installed with Visual Studio -->
+    <Exec Condition="'$(_OozCMakeExitCode)' != '0' And Exists('$(_OozVsWhere)')"
+          Command="&quot;$(_OozVsWhere)&quot; -latest -products * -find Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe"
+          ConsoleToMSBuild="true" IgnoreExitCode="true" StandardOutputImportance="low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="_OozVsCMake" />
+    </Exec>
+    <PropertyGroup Condition="'$(_OozCMakeExitCode)' != '0' And '$(_OozVsCMake)' != '' And Exists('$(_OozVsCMake)')">
+      <OozCMake>$(_OozVsCMake)</OozCMake>
+      <_OozCMakeExitCode>0</_OozCMakeExitCode>
+    </PropertyGroup>
+
+    <Error Condition="'$(_OozCMakeExitCode)' != '0'"
+           Text="CMake was not found. Install CMake 3.20+ and a C++ compiler (on Windows: Visual Studio with the C++ workload, which includes CMake), then build again. To build the project without ooz: dotnet build -p:SkipOozBuild=true" />
+
+    <Exec Command="&quot;$(OozCMake)&quot; -S &quot;$(OozNativeDirectory)&quot; -B &quot;$(OozBuildDirectory)&quot; -DCMAKE_BUILD_TYPE=Release" />
+    <Exec Command="&quot;$(OozCMake)&quot; --build &quot;$(OozBuildDirectory)&quot; --config Release" />
+
+    <!--
+      Keep only the library: the downloaded sources (_deps) and the files generated by CMake are deleted.
+      cmake -E rm also removes the read-only files of the git checkouts. The CDN cache (temp) is left as is.
+    -->
+    <ItemGroup>
+      <_OozBuildEntries Include="$([System.IO.Directory]::GetDirectories('$(OozBuildDirectory)'))" />
+      <_OozBuildEntries Include="$([System.IO.Directory]::GetFiles('$(OozBuildDirectory)'))" />
+      <_OozLibraryExtraFiles Include="$(OozBuildDirectory)/lib/*" />
+    </ItemGroup>
+    <Exec Condition="'%(_OozBuildEntries.Filename)%(_OozBuildEntries.Extension)' != 'lib' And '%(_OozBuildEntries.Filename)%(_OozBuildEntries.Extension)' != 'temp'"
+          Command="&quot;$(OozCMake)&quot; -E rm -rf &quot;%(_OozBuildEntries.Identity)&quot;"
+          ContinueOnError="true" StandardOutputImportance="low" />
+    <Delete Condition="'%(_OozLibraryExtraFiles.Filename)%(_OozLibraryExtraFiles.Extension)' != '$(OozFileName)'"
+            Files="@(_OozLibraryExtraFiles)" ContinueOnError="true" />
+
+    <ItemGroup>
+      <!-- The library did not exist when the project was evaluated: add it now to the files copied next to the executable. -->
+      <None Include="$(OozLibraryPath)" Link="$(OozFileName)" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+  </Target>
+</Project>
