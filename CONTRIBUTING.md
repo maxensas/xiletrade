@@ -41,7 +41,7 @@ src/
 ├── Xiletrade.UI.WPF/         # Main WPF App             ~ 14k
 ├── Xiletrade.UI.Avalonia/    # Avalonia App             ~  2k
 ├── Xiletrade.Updater/        # Avalonia App             <  1k
-├── Xiletrade.Json/           # Console App              ~  2k
+├── Xiletrade.DatToJson/      # Console App              ~  3k
 ├── Xiletrade.Benchmark/      # Benchmarks Project       ~  1k
 ├── Xiletrade.Test/           # Unit Tests Project       ~  2k
 ├── Xiletrade.sln             # Visual Studio Solution
@@ -56,7 +56,13 @@ Load the main WPF application and unload other projects if you just want to buil
 
 - To run unit tests:
 
-Load Test and Benchmark projects. Via Visual Studio: Test menu > Run All Tests
+Load Test project (with Library and DatToJson, both referenced by the tests). Via Visual Studio: Test menu > Run All Tests.
+From the command line, the same tests as the automated ones (see [Automated tests](#-automated-tests)):
+```bash
+cd src
+dotnet test -c Release --filter-not-namespace "Xiletrade.Test.Exploratory*"
+```
+Add `-p:SkipOozBuild=true` if CMake is not installed: the tests do not need the ooz decompressor of DatToJson.
 
 - To run benchmarks:
 
@@ -64,7 +70,9 @@ Load Test and Benchmark projects. Select 'Release' mode then run Benchmark.
 
 - To run json generator:
 
-Load Json projects. Just run the console App.
+Load Xiletrade.DatToJson project. Its first build also builds the ooz decompressor (CMake and a C++ compiler needed, on Windows: Visual Studio with the C++ workload).
+Run it with a command, from the repository root: `fullupdate` for the json files generated from the game, `trade` for the ones of the trade website.
+See [Xiletrade.DatToJson README](https://github.com/maxensas/xiletrade/blob/master/src/Xiletrade.DatToJson/README.md).
 
 ## 🔄 Create a contribution
 
@@ -78,7 +86,7 @@ git checkout -b feature/NewFeature
 ```
 - Make your changes
 
-Run and validate your code in your personal repo
+Run and validate your code in your personal repo, **including the unit tests** (see above): they will run again on your pull request.
 
 - Commit properly:
 ```bash
@@ -88,9 +96,30 @@ git commit -m "Adding fix or feature XYZ"
 ```bash
 git push origin feature/NewFeature
 ```
-- Open a Pull Request to the master or dev branch
+- Open a Pull Request to the **dev** branch
 
 And now make yourself comfortable and wait for the code review.
+
+## ✅ Automated tests
+
+Unit tests are a **safeguard**: they run automatically on GitHub ([CI workflow](https://github.com/maxensas/xiletrade/blob/master/.github/workflows/CI.yml)) before any pull request can be merged.
+
+- They run when a pull request is **opened**, **reopened**, and on **every new push** to its branch, whatever the target branch.
+- Every test of `Xiletrade.Test` runs, on Windows with the .NET SDK of the project, except the `Xiletrade.Test.Exploratory` namespace (studies and comparisons, run by hand).
+- The result is shown in the **Checks** of the pull request. A pull request whose tests fail is **not merged**: fix the code (or the test, if the expected behavior changed on purpose) and push again, the tests run again.
+- Tests run once more before each release, when dev is merged into master.
+
+Write tests for your changes when possible:
+- in `Xiletrade.Test`, outside of `Exploratory` (not run by the automated tests), e.g. `Xiletrade.Test/CI/<feature>`;
+- named like the existing ones: `_01_What_Should_Happen`, `_02_...`, with the *Arrange / Act / Assert* steps.
+
+## 🔁 Data updates
+
+The json files of `Xiletrade.Library/Data/Lang` and `Xiletrade/Data/Lang` are **generated**: do not edit them by hand (except `ParsingRules.json`).
+They are updated by GitHub workflows using [Xiletrade.DatToJson](https://github.com/maxensas/xiletrade/blob/master/src/Xiletrade.DatToJson/README.md),
+which run the tests too, then open a pull request to dev, validated by the maintainer:
+- `dat-to-json.yml`: files generated from the game (bases, mods, monsters, words, gems, item classes), after a game update;
+- `trade-data.yml`: files of the trade website (leagues, filters, currency, item types).
 
 ## 🧼 Code Style
 
@@ -101,8 +130,8 @@ Please **respect** general C# conventions and adapt your work to the code style 
 
 ## 🔧 Limitations and Improvements
 
-The current base code lacks **automated tests**, which limits its flexibility and is therefore a significant constraint for new eyes wishing to contribute to the repository. 
-Don't be afraid when submitting new idea.
+The **automated tests** only cover part of the base code, which limits its flexibility and is therefore a constraint for new eyes wishing to contribute to the repository: 
+new tests are welcome. Don't be afraid when submitting new idea.
 
 Furthermore, regarding the **price check functionality** :  
 Info descriptions of PoE1/2 items are not automatically tested as they evolve over time at the publisher's discretion, which represents a considerable maintenance burden.
@@ -118,6 +147,9 @@ Using **archive** utility:
 
 Using **parsing** algorithm:
 - [Raffinert.FuzzySharp](https://github.com/Raffinert/FuzzySharp)
+
+Using **game archives** (json generator):
+- [LibGGPK3](https://github.com/aianlinb/LibGGPK3)
 
 **Stick to the goal:** make the application with a low level of dependency on third-party references but also avoid reinventing the wheel when implementing new ideas.
 

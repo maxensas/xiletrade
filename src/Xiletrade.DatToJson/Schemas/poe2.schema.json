@@ -6,8 +6,16 @@
       "rowLength": 150,
       "key": "Id",
       "columns": [
-        { "name": "Id", "type": "String", "offset": 0 },
-        { "name": "Name", "type": "String", "offset": 8 }
+        {
+          "name": "Id",
+          "type": "String",
+          "offset": 0
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "offset": 8
+        }
       ]
     },
     {
@@ -15,10 +23,27 @@
       "rowLength": 360,
       "key": "Id",
       "columns": [
-        { "name": "Id", "type": "String", "offset": 0 },
-        { "name": "ItemClassesKey", "type": "ForeignRow", "offset": 8, "references": "itemclasses" },
-        { "name": "Name", "type": "String", "offset": 32 },
-        { "name": "InheritsFrom", "type": "String", "offset": 40 }
+        {
+          "name": "Id",
+          "type": "String",
+          "offset": 0
+        },
+        {
+          "name": "ItemClassesKey",
+          "type": "ForeignRow",
+          "offset": 8,
+          "references": "itemclasses"
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "offset": 32
+        },
+        {
+          "name": "InheritsFrom",
+          "type": "String",
+          "offset": 40
+        }
       ]
     },
     {
@@ -26,9 +51,21 @@
       "rowLength": 693,
       "key": "Id",
       "columns": [
-        { "name": "Id", "type": "String", "offset": 0 },
-        { "name": "Level", "type": "Int32", "offset": 26 },
-        { "name": "Name", "type": "String", "offset": 98 }
+        {
+          "name": "Id",
+          "type": "String",
+          "offset": 0
+        },
+        {
+          "name": "Level",
+          "type": "Int32",
+          "offset": 26
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "offset": 98
+        }
       ]
     },
     {
@@ -36,8 +73,16 @@
       "rowLength": 64,
       "key": "Text",
       "columns": [
-        { "name": "Text", "type": "String", "offset": 4 },
-        { "name": "Text2", "type": "String", "offset": 48 }
+        {
+          "name": "Text",
+          "type": "String",
+          "offset": 4
+        },
+        {
+          "name": "Text2",
+          "type": "String",
+          "offset": 48
+        }
       ]
     }
   ]
