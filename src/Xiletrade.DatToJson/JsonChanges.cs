@@ -11,9 +11,10 @@ internal enum JsonFileStatus
 }
 
 /// <param name="Path">Relative to the output folder, with '/' (e.g. "en-US/Mods.json").</param>
-/// <param name="Removed">Entries removed from the previous generation.</param>
-/// <param name="Added">Entries added by this generation.</param>
-internal sealed record JsonFileChange(string Path, JsonFileStatus Status, int Removed, int Added);
+/// <param name="Removed">Entries removed from the previous generation, moved entries excluded.</param>
+/// <param name="Added">Entries added by this generation, moved entries excluded.</param>
+/// <param name="Moved">Unchanged entries found at another position.</param>
+internal sealed record JsonFileChange(string Path, JsonFileStatus Status, int Removed, int Added, int Moved);
 
 /// <summary>
 /// Writes the json files, after comparing each of them with the previous generation, before it is replaced.
@@ -44,12 +45,12 @@ internal sealed class JsonChanges(Stream? diff)
 
         if (exists && hadPreamble && previous.Span.SequenceEqual(json.Span))
         {
-            Files.Add(new JsonFileChange(relative, JsonFileStatus.Unchanged, 0, 0));
+            Files.Add(new JsonFileChange(relative, JsonFileStatus.Unchanged, 0, 0, 0));
             return;
         }
 
         var stats = JsonDiff.Compare(previous, json, diff, relative, newFile: !exists);
-        Files.Add(new JsonFileChange(relative, exists ? JsonFileStatus.Changed : JsonFileStatus.Added, stats.Removed, stats.Added));
+        Files.Add(new JsonFileChange(relative, exists ? JsonFileStatus.Changed : JsonFileStatus.Added, stats.Removed, stats.Added, stats.Moved));
 
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         using var stream = File.Create(path);
@@ -73,8 +74,8 @@ internal sealed class JsonChanges(Stream? diff)
             return;
         }
 
-        report.AppendLine().AppendLine("| File | Status | Entries removed | Entries added |");
-        report.AppendLine("|---|---|---|---|");
+        report.AppendLine().AppendLine("| File | Status | Entries removed | Entries added | Entries moved |");
+        report.AppendLine("|---|---|---|---|---|");
         foreach (var file in Files)
         {
             if (file.Status is JsonFileStatus.Unchanged)
@@ -82,7 +83,7 @@ internal sealed class JsonChanges(Stream? diff)
                 continue;
             }
             report.Append(CultureInfo.InvariantCulture,
-                $"| {file.Path} | {(file.Status is JsonFileStatus.Added ? "**new**" : "changed")} | {file.Removed} | {file.Added} |").AppendLine();
+                $"| {file.Path} | {(file.Status is JsonFileStatus.Added ? "**new**" : "changed")} | {file.Removed} | {file.Added} | {file.Moved} |").AppendLine();
         }
     }
 }

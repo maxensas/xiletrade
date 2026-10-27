@@ -63,9 +63,9 @@ public sealed class DataUpdaterService : IDataUpdaterService
                 if (i < 0 || i >= Strings.Culture.Length) continue;
 
                 taskList.Add(PoeUpdate<LeagueData>("leagues", Strings.File.Leagues, "Leagues", i,
-                    arrange: RemoveDuplicateLeagues));
+                    arrange: TradeDataRules.RemoveDuplicateLeagues));
                 taskList.Add(PoeUpdate<FilterData>("stats", Strings.File.Filters, "FilterData", i,
-                    prepare: FixFilterJson, arrange: SortFilterEntries));
+                    prepare: TradeDataRules.FixFilterJson, arrange: TradeDataRules.SortFilterEntries));
                 taskList.Add(PoeUpdate<CurrencyResult>("static", Strings.File.Currency, "Currency", i));
                 taskList.Add(PoeUpdate<ItemTypeResult>("items", Strings.File.Items, "Item type", i));
                 taskList.Add(GithubUpdate<ParserData>(Strings.File.ParsingRules, i));
@@ -181,66 +181,6 @@ public sealed class DataUpdaterService : IDataUpdaterService
             ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + $"[{label} Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
                 : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + $" Server : {label} Update" + Strings.LF + url + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
         }
-    }
-
-    private static byte[] FixFilterJson(ReadOnlySpan<byte> json, int idxLang)
-    {
-        // remove line tabulation (portuguese)
-        if (idxLang is not 5)
-        {
-            return null;
-        }
-
-        ReadOnlySpan<byte> tabulation = "\\u000b"u8;
-        int index = json.IndexOf(tabulation);
-        if (index < 0)
-        {
-            return null;
-        }
-
-        var result = new byte[json.Length];
-        int length = 0;
-        while (index >= 0)
-        {
-            json[..index].CopyTo(result.AsSpan(length));
-            length += index;
-            json = json[(index + tabulation.Length)..];
-            index = json.IndexOf(tabulation);
-        }
-        json.CopyTo(result.AsSpan(length));
-        length += json.Length;
-        return result.AsSpan(0, length).ToArray();
-    }
-
-    // needed for files comparison following leagues updates.
-    private static FilterData SortFilterEntries(FilterData filter)
-    {
-        if (filter.Result.Length > 0)
-        {
-            for (int i = 0; i < filter.Result.Length; i++)
-            {
-                filter.Result[i].Entries = [.. filter.Result[i].Entries.OrderBy(x => x.ID)];
-            }
-        }
-        return filter;
-    }
-
-    private static LeagueData RemoveDuplicateLeagues(LeagueData leagues)
-    {
-        List<LeagueResult> leagueList = new();
-        foreach (var league in leagues.Result)
-        {
-            if (!leagueList.Exists(x => x.Id == league.Id))
-            {
-                leagueList.Add(league);
-            }
-        }
-        if (leagueList.Count is 0)
-        {
-            return null;
-        }
-        leagues.Result = [.. leagueList];
-        return leagues;
     }
 
     private async Task GithubUpdate<T>(string fileName, int idxLang = -1) where T : class

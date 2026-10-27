@@ -9,12 +9,16 @@ namespace Xiletrade.DatToJson;
 /// Compares two generations of a Xiletrade json file and writes the differences in the git unified format.
 /// </summary>
 /// <remarks>
-/// The json files are written on a single line: to get a readable diff, every entry of the main array
-/// (<c>result[0].data</c>, or <c>item_class</c>) is seen as one line. Other json files are seen as one line.
+/// The json files are written on a single line: to get a readable diff, every entry is seen as one line
+/// (entries of <c>result[n].data</c>, <c>result[n].entries</c> with the header of their group, <c>result</c>, or <c>item_class</c>).
+/// Other json files are seen as one line.
 /// Entries are compared on their raw UTF-8 bytes, without allocating strings.
 /// Myers algorithm (the default one of git), applied between the common first and last entries.
 /// Only the changed entries are written, without context (like <c>git diff -U0</c>): the files have thousands of entries,
 /// and an entry is readable on its own.
+/// An entry removed at one place and added unchanged at another one (rows reordered by the game) is a moved entry:
+/// it is still written as '-' and '+' (the diff stays a valid patch), its hunks are marked "moved: n",
+/// and it is counted apart, neither removed nor added.
 /// </remarks>
 internal static class JsonDiff
 {
@@ -24,7 +28,10 @@ internal static class JsonDiff
     /// <summary>Above this number of changed entries, the file is shown as entirely replaced (memory stays bounded).</summary>
     private const int MaxEdits = 4000;
 
-    internal readonly record struct Stats(int Removed, int Added);
+    /// <param name="Removed">Entries removed, moved entries excluded.</param>
+    /// <param name="Added">Entries added, moved entries excluded.</param>
+    /// <param name="Moved">Unchanged entries found at another position.</param>
+    internal readonly record struct Stats(int Removed, int Added, int Moved);
 
     private enum Op : byte
     {
@@ -60,12 +67,68 @@ internal static class JsonDiff
                 added++;
             }
         }
-
-        if (output is not null && removed + added > 0)
+        if (removed + added is 0)
         {
-            WriteUnified(output, path, newFile, a, b, edits);
+            return default;
         }
-        return new Stats(removed, added);
+
+        var moved = FindMoved(a, b, edits, out var moves);
+        if (output is not null)
+        {
+            WriteUnified(output, path, newFile, a, b, edits, moved);
+        }
+        return new Stats(removed - moves, added - moves, moves);
+    }
+
+    /// <summary>
+    /// Pairs every removed entry with an identical added entry, if any.
+    /// </summary>
+    /// <param name="moves">Number of pairs, so of moved entries.</param>
+    /// <returns>For each edit, true when it is one side of a moved entry. Empty when nothing moved.</returns>
+    private static bool[] FindMoved(EntryLines a, EntryLines b, List<Edit> edits, out int moves)
+    {
+        moves = 0;
+        // Removed entries by hash: edit indexes, in file order.
+        Dictionary<ulong, List<int>>? removed = null;
+        for (var i = 0; i < edits.Count; i++)
+        {
+            if (edits[i].Op is Op.Delete)
+            {
+                removed ??= [];
+                var hash = a.HashAt(edits[i].Old);
+                if (!removed.TryGetValue(hash, out var list))
+                {
+                    removed[hash] = list = [];
+                }
+                list.Add(i);
+            }
+        }
+        if (removed is null)
+        {
+            return [];
+        }
+
+        bool[]? moved = null;
+        for (var i = 0; i < edits.Count; i++)
+        {
+            if (edits[i].Op is not Op.Insert || !removed.TryGetValue(b.HashAt(edits[i].New), out var candidates))
+            {
+                continue;
+            }
+            for (var c = 0; c < candidates.Count; c++)
+            {
+                var deleted = candidates[c];
+                if (EntryLines.Same(a, edits[deleted].Old, b, edits[i].New))
+                {
+                    moved ??= new bool[edits.Count];
+                    moved[deleted] = moved[i] = true;
+                    candidates.RemoveAt(c);
+                    moves++;
+                    break;
+                }
+            }
+        }
+        return moved ?? [];
     }
 
     private static List<Edit> GetEdits(EntryLines a, EntryLines b)
@@ -194,7 +257,8 @@ internal static class JsonDiff
         return edits;
     }
 
-    private static void WriteUnified(Stream output, string path, bool newFile, EntryLines a, EntryLines b, List<Edit> edits)
+    /// <param name="moved">For each edit, true when it is one side of a moved entry, or empty.</param>
+    private static void WriteUnified(Stream output, string path, bool newFile, EntryLines a, EntryLines b, List<Edit> edits, bool[] moved)
     {
         WriteText(output, $"diff --git a/{path} b/{path}\n");
         WriteText(output, newFile ? "new file mode 100644\n--- /dev/null\n" : $"--- a/{path}\n");
@@ -227,17 +291,21 @@ internal static class JsonDiff
             }
             hunkEnd = Math.Min(edits.Count, lastChange + Context + 1);
 
-            WriteHunk(output, a, b, edits, hunkStart, hunkEnd);
+            WriteHunk(output, a, b, edits, moved, hunkStart, hunkEnd);
             index = hunkEnd;
         }
     }
 
-    private static void WriteHunk(Stream output, EntryLines a, EntryLines b, List<Edit> edits, int start, int end)
+    private static void WriteHunk(Stream output, EntryLines a, EntryLines b, List<Edit> edits, bool[] moved, int start, int end)
     {
-        int oldStart = -1, newStart = -1, oldCount = 0, newCount = 0;
+        int oldStart = -1, newStart = -1, oldCount = 0, newCount = 0, movedCount = 0;
         for (var i = start; i < end; i++)
         {
             var edit = edits[i];
+            if (moved.Length > 0 && moved[i])
+            {
+                movedCount++;
+            }
             if (edit.Op is not Op.Insert)
             {
                 oldCount++;
@@ -259,7 +327,7 @@ internal static class JsonDiff
         // Git numbers lines from 1; for an empty side, it gives the line before the hunk.
         oldStart = oldCount > 0 ? oldStart + 1 : start > 0 ? edits[start - 1].Old + 1 : 0;
         newStart = newCount > 0 ? newStart + 1 : start > 0 ? edits[start - 1].New + 1 : 0;
-        WriteHunkHeader(output, oldStart, oldCount, newStart, newCount);
+        WriteHunkHeader(output, oldStart, oldCount, newStart, newCount, movedCount);
 
         for (var i = start; i < end; i++)
         {
@@ -279,18 +347,30 @@ internal static class JsonDiff
         }
     }
 
-    /// <summary>"@@ -start,count +start,count @@", written without allocation.</summary>
-    private static void WriteHunkHeader(Stream output, int oldStart, int oldCount, int newStart, int newCount)
+    /// <summary>
+    /// "@@ -start,count +start,count @@", followed by "moved: n" when the hunk has moved entries, written without allocation.
+    /// </summary>
+    /// <remarks>Git ignores the text after the second "@@" (it shows the function name there).</remarks>
+    private static void WriteHunkHeader(Stream output, int oldStart, int oldCount, int newStart, int newCount, int movedCount)
     {
-        Span<byte> buffer = stackalloc byte[64];
+        Span<byte> buffer = stackalloc byte[96];
         "@@ -"u8.CopyTo(buffer);
         var written = 4;
         AppendRange(buffer, ref written, oldStart, oldCount);
         " +"u8.CopyTo(buffer[written..]);
         written += 2;
         AppendRange(buffer, ref written, newStart, newCount);
-        " @@\n"u8.CopyTo(buffer[written..]);
-        output.Write(buffer[..(written + 4)]);
+        " @@"u8.CopyTo(buffer[written..]);
+        written += 3;
+        if (movedCount > 0)
+        {
+            " moved: "u8.CopyTo(buffer[written..]);
+            written += 8;
+            movedCount.TryFormat(buffer[written..], out var length, default, CultureInfo.InvariantCulture);
+            written += length;
+        }
+        buffer[written++] = (byte)'\n';
+        output.Write(buffer[..written]);
     }
 
     /// <summary>Git omits the count when it is 1.</summary>
@@ -351,6 +431,8 @@ internal static class JsonDiff
 
         internal ReadOnlySpan<byte> this[int index] => _json.Span[_ranges[index]];
 
+        internal ulong HashAt(int index) => _hashes[index];
+
         internal static bool Same(EntryLines a, int i, EntryLines b, int j)
             => a._hashes[i] == b._hashes[j] && a[i].SequenceEqual(b[j]);
 
@@ -363,21 +445,10 @@ internal static class JsonDiff
             try
             {
                 using var document = JsonDocument.Parse(json);
-                if (TryGetEntries(document.RootElement, out var entries))
+                List<Range> ranges = [];
+                if (AddEntries(document.RootElement, json.Span, ranges))
                 {
-                    var ranges = new Range[entries.GetArrayLength()];
-                    var index = 0;
-                    foreach (var entry in entries.EnumerateArray())
-                    {
-                        // Raw bytes of the entry, inside the parsed buffer: only its position is kept.
-                        var raw = JsonMarshal.GetRawUtf8Value(entry);
-                        if (!json.Span.Overlaps(raw, out var position))
-                        {
-                            return [Range.All];
-                        }
-                        ranges[index++] = new Range(position, position + raw.Length);
-                    }
-                    return ranges;
+                    return [.. ranges];
                 }
             }
             catch (JsonException)
@@ -387,25 +458,92 @@ internal static class JsonDiff
             return [Range.All];
         }
 
-        /// <summary>The array holding the entries: result[0].data (most files), or item_class.</summary>
-        private static bool TryGetEntries(JsonElement root, out JsonElement entries)
+        /// <summary>
+        /// One line per entry, as raw bytes of the file:
+        /// <list type="bullet">
+        /// <item><c>item_class</c>: each item class;</item>
+        /// <item><c>result</c>, for each element: each entry of its <c>data</c> (bases, mods, words, gems), or its header then each
+        /// entry of its <c>entries</c> (filters, items, currency: the header is the group up to its entries, e.g. <c>{"label":"Pseudo","entries":[</c>),
+        /// otherwise the element itself (leagues).</item>
+        /// </list>
+        /// </summary>
+        /// <returns>False when the file does not have one of these shapes.</returns>
+        private static bool AddEntries(JsonElement root, ReadOnlySpan<byte> json, List<Range> ranges)
         {
-            entries = default;
             if (root.ValueKind is not JsonValueKind.Object)
             {
                 return false;
             }
-            if (root.TryGetProperty("item_class"u8, out entries) && entries.ValueKind is JsonValueKind.Array)
+            if (root.TryGetProperty("item_class"u8, out var itemClasses) && itemClasses.ValueKind is JsonValueKind.Array)
             {
-                return true;
+                return AddItems(itemClasses, json, ranges);
             }
-            if (root.TryGetProperty("result"u8, out var result) && result.ValueKind is JsonValueKind.Array
-                && result.GetArrayLength() is 1 && result[0].ValueKind is JsonValueKind.Object
-                && result[0].TryGetProperty("data"u8, out entries) && entries.ValueKind is JsonValueKind.Array)
+            if (!root.TryGetProperty("result"u8, out var result) || result.ValueKind is not JsonValueKind.Array)
             {
-                return true;
+                return false;
             }
-            return false;
+
+            foreach (var element in result.EnumerateArray())
+            {
+                if (element.ValueKind is JsonValueKind.Object
+                    && element.TryGetProperty("data"u8, out var data) && data.ValueKind is JsonValueKind.Array)
+                {
+                    if (!AddItems(data, json, ranges))
+                    {
+                        return false;
+                    }
+                }
+                else if (element.ValueKind is JsonValueKind.Object
+                    && element.TryGetProperty("entries"u8, out var entries) && entries.ValueKind is JsonValueKind.Array)
+                {
+                    if (!TryGetPosition(element, json, out var groupStart, out _)
+                        || !TryGetPosition(entries, json, out var entriesStart, out _)
+                        || entriesStart < groupStart)
+                    {
+                        return false;
+                    }
+                    ranges.Add(new Range(groupStart, entriesStart + 1));
+                    if (!AddItems(entries, json, ranges))
+                    {
+                        return false;
+                    }
+                }
+                else if (!AddItem(element, json, ranges))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static bool AddItems(JsonElement array, ReadOnlySpan<byte> json, List<Range> ranges)
+        {
+            foreach (var item in array.EnumerateArray())
+            {
+                if (!AddItem(item, json, ranges))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static bool AddItem(JsonElement item, ReadOnlySpan<byte> json, List<Range> ranges)
+        {
+            if (!TryGetPosition(item, json, out var start, out var length))
+            {
+                return false;
+            }
+            ranges.Add(new Range(start, start + length));
+            return true;
+        }
+
+        /// <summary>Position of the raw bytes of a value inside the parsed buffer: only its position is kept.</summary>
+        private static bool TryGetPosition(JsonElement element, ReadOnlySpan<byte> json, out int start, out int length)
+        {
+            var raw = JsonMarshal.GetRawUtf8Value(element);
+            length = raw.Length;
+            return json.Overlaps(raw, out start);
         }
 
         /// <summary>FNV-1a 64 bits.</summary>

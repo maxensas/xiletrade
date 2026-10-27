@@ -70,5 +70,6 @@
   <ItemGroup>
     <InternalsVisibleTo Include="Xiletrade.Test" />
     <InternalsVisibleTo Include="Xiletrade.Benchmark" />
+    <InternalsVisibleTo Include="Xiletrade.DatToJson" />
   </ItemGroup>
 </Project>

@@ -18,7 +18,10 @@ public static partial class Strings
         internal static string Exchange { get => IsPoe2 ? _exchange2[Gateway] : _exchange1[Gateway]; }
         internal static string Whisper { get => IsPoe2 ? _whisper2[Gateway] : _whisper1[Gateway]; }
 
-        internal static string GetUpdate(int idxLang) => IsPoe2 ? _update2[idxLang] : _update1[idxLang];
+        internal static string GetUpdate(int idxLang) => GetUpdate(idxLang, IsPoe2);
+
+        /// <summary>Trade data api of a language (and of its server), for the given game.</summary>
+        internal static string GetUpdate(int idxLang, bool poe2) => poe2 ? _update2[idxLang] : _update1[idxLang];
 
         // private members
         private static readonly string[] _trade1 = ["https://www.pathofexile.com/api/trade/search/", "https://poe.kakaogames.com/api/trade/search/", "https://fr.pathofexile.com/api/trade/search/", "https://es.pathofexile.com/api/trade/search/", "https://de.pathofexile.com/api/trade/search/", "https://br.pathofexile.com/api/trade/search/", "https://ru.pathofexile.com/api/trade/search/", "https://th.pathofexile.com/api/trade/search/", "https://pathofexile.tw/api/trade/search/", "https://poe.game.qq.com/api/trade/search/", "https://jp.pathofexile.com/api/trade/search/"];
