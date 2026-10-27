@@ -13,6 +13,8 @@ namespace Xiletrade.DatToJson;
 /// update   : calibrate, then export when the calibration succeeded.
 /// fullupdate: every step in one command: snapshot when there is none yet, calibrate, export,
 ///             and the differences of the json files written in the report.
+/// trade    : downloads the data of the trade website (leagues, filters, currency, item types) of every language,
+///            writes the json files and their differences in the report (the "update all" of the application).
 /// Game files come either from a local Content.ggpk (--ggpk) or from the patch CDN (--cdn).
 /// --game all runs the command for PoE 1 then PoE 2, with one report and one diff.
 /// </remarks>
@@ -27,6 +29,7 @@ internal static class Cli
     private const string Export = "export";
     private const string Update = "update";
     private const string FullUpdate = "fullupdate";
+    private const string Trade = "trade";
 
     /// <summary>Value of --cdn asking the patch server for the url of the current game version.</summary>
     private const string CurrentVersion = "current";
@@ -40,7 +43,8 @@ internal static class Cli
             return Error;
         }
 
-        if (!OozLibrary.TryRegister())
+        // The trade website gives json: no game file to decompress.
+        if (options.Command is not Trade && !OozLibrary.TryRegister())
         {
             Console.Error.WriteLine($"Native decompressor not found: {OozLibrary.FilePath}");
             Console.Error.WriteLine("It is built with CMake by the first build of the project: build it again without -p:SkipOozBuild=true (see README).");
@@ -70,7 +74,10 @@ internal static class Cli
         return code;
     }
 
-    private static bool WritesJson(string command) => command is Export or Update or FullUpdate;
+    private static bool WritesJson(string command) => command is Export or Update or FullUpdate or Trade;
+
+    /// <summary>Commands writing the differences of the json files in the report.</summary>
+    private static bool ReportsDiff(string command) => command is FullUpdate or Trade;
 
     /// <summary>The differences of the json files, for the commands that write them.</summary>
     private static FileStream? OpenDiff(CliOptions options)
@@ -81,11 +88,22 @@ internal static class Cli
     private static async Task<int> RunGameAsync(int game, CliOptions options, Stream? diff, StringBuilder report)
     {
         var gameReport = new StringBuilder();
-        // Differences of this game: copied to the diff file, and into the report for fullupdate.
-        using var gameDiff = WritesJson(options.Command) && (diff is not null || options.Command is FullUpdate) ? new MemoryStream() : null;
+        // Differences of this game: copied to the diff file, and into the report for fullupdate and trade.
+        using var gameDiff = WritesJson(options.Command) && (diff is not null || ReportsDiff(options.Command)) ? new MemoryStream() : null;
         var code = Error;
         try
         {
+            if (options.Command is Trade)
+            {
+                code = await RunTradeAsync(game, options, gameDiff, gameReport);
+                if (gameDiff is not null && diff is not null)
+                {
+                    gameDiff.Position = 0;
+                    gameDiff.CopyTo(diff);
+                }
+                return code;
+            }
+
             var schemaPath = options.GetSchemaPath(game);
             var schema = SchemaFile.Load(schemaPath);
             if (schema.Game != game)
@@ -135,8 +153,10 @@ internal static class Cli
             Console.WriteLine(gameReport);
             report.Append(gameReport);
             // The differences can be long: only in the report file, not in the console.
-            // "No change" is only stated when the export ran (not after a calibration that needs a manual action).
-            if (options.Command is FullUpdate && gameDiff is not null && (gameDiff.Length > 0 || code is Success))
+            // "No change" is only stated when the files were written: export run (not after a calibration that needs a manual action),
+            // or trade data downloaded, even partly.
+            if (ReportsDiff(options.Command) && gameDiff is not null
+                && (gameDiff.Length > 0 || code is Success || (options.Command is Trade && code is ManualActionRequired)))
             {
                 AppendDiff(report, gameDiff, game);
             }
@@ -181,6 +201,37 @@ internal static class Cli
             report.AppendLine();
         }
         return RunUpdate(schema, source, options, game, diff, report);
+    }
+
+    /// <summary>
+    /// Data of the trade website, for every language.
+    /// </summary>
+    /// <returns><see cref="Success"/>, <see cref="ManualActionRequired"/> when some files could not be downloaded
+    /// (the others are written), <see cref="Error"/> when none could be.</returns>
+    private static async Task<int> RunTradeAsync(int game, CliOptions options, Stream? diff, StringBuilder report)
+    {
+        Console.WriteLine($"Output : {options.OutputPath}");
+        using var http = new HttpClient(new SocketsHttpHandler
+        {
+            PooledConnectionIdleTimeout = TimeSpan.FromMilliseconds(50),
+            AutomaticDecompression = System.Net.DecompressionMethods.All
+        })
+        {
+            Timeout = TimeSpan.FromSeconds(30)
+        };
+        // Same identification as the application (GGG asks for a contact in the user agent).
+        http.DefaultRequestHeaders.Add("User-Agent", Xiletrade.Library.Shared.Strings.Net.UserAgent);
+        http.DefaultRequestHeaders.ConnectionClose = true;
+
+        var changes = new JsonChanges(diff);
+        var updater = new TradeUpdater(http, options.OutputPath, changes);
+        await updater.UpdateAsync(game);
+
+        updater.AppendReport(report, game);
+        changes.AppendReport(report, "below");
+        return updater.Written is 0 ? Error
+            : updater.Failures.Count > 0 ? ManualActionRequired
+            : Success;
     }
 
     private static async Task<IDatSource> OpenSourceAsync(CliOptions options, int game)
@@ -325,6 +376,9 @@ internal static class Cli
         Console.Error.WriteLine("Default --schemas: the Schemas folder of the project (poe<game>.schema.json, poe<game>.snapshot.bin).");
         Console.Error.WriteLine("Default --output: Data/Lang next to the executable.");
         Console.Error.WriteLine("Default download cache: bin/ooz/temp/poe<game> of the project, emptied after export and update.");
+        Console.Error.WriteLine();
+        Console.Error.WriteLine("       Xiletrade.DatToJson trade --game <1|2|all> --report <file.md> [--output <directory>] [--diff <file.diff>]");
+        Console.Error.WriteLine("trade: leagues, filters, currency and item types of the trade website, every language; differences in the report.");
     }
 
     private sealed class CliOptions
@@ -353,9 +407,9 @@ internal static class Cli
         {
             options = new CliOptions();
             error = string.Empty;
-            if (args.Length is 0 || args[0] is not (Snapshot or Calibrate or Export or Update or FullUpdate))
+            if (args.Length is 0 || args[0] is not (Snapshot or Calibrate or Export or Update or FullUpdate or Trade))
             {
-                error = $"The first argument must be '{Snapshot}', '{Calibrate}', '{Export}', '{Update}' or '{FullUpdate}'.";
+                error = $"The first argument must be '{Snapshot}', '{Calibrate}', '{Export}', '{Update}', '{FullUpdate}' or '{Trade}'.";
                 return false;
             }
 
@@ -406,7 +460,20 @@ internal static class Cli
                 error = "--game is required.";
                 return false;
             }
-            if ((ggpk is null) == (cdn is null))
+            if (args[0] is Trade)
+            {
+                if (ggpk is not null || cdn is not null || cache is not null || schemas is not null || schema is not null || snapshot is not null)
+                {
+                    error = $"{Trade} downloads from the trade website: --ggpk, --cdn, --cache and the schema options do not apply.";
+                    return false;
+                }
+                if (report is null)
+                {
+                    error = $"{Trade} writes the differences of the json files in the report: --report is required.";
+                    return false;
+                }
+            }
+            else if ((ggpk is null) == (cdn is null))
             {
                 error = "Give either --ggpk or --cdn.";
                 return false;
@@ -417,7 +484,7 @@ internal static class Cli
                 error = $"--cdn must be '{CurrentVersion}' or a CDN url.";
                 return false;
             }
-            if (games.Length > 1 && (ggpk is not null || cdn is not CurrentVersion))
+            if (args[0] is not Trade && games.Length > 1 && (ggpk is not null || cdn is not CurrentVersion))
             {
                 error = $"--game all needs --cdn {CurrentVersion}: a Content.ggpk or a CDN url is for one game only.";
                 return false;

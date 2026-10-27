@@ -126,7 +126,7 @@ public class JsonExporterTests
                 output, changes).Export();
 
             // Assert
-            changes.Files.Should().ContainSingle().Which.Should().Be(new JsonFileChange("en-US/ModsTwo.json", JsonFileStatus.Changed, 1, 1));
+            changes.Files.Should().ContainSingle().Which.Should().Be(new JsonFileChange("en-US/ModsTwo.json", JsonFileStatus.Changed, 1, 1, 0));
             var text = System.Text.Encoding.UTF8.GetString(diff.ToArray());
             text.Should().StartWith("diff --git a/en-US/ModsTwo.json b/en-US/ModsTwo.json\n--- a/en-US/ModsTwo.json\n+++ b/en-US/ModsTwo.json\n");
             text.Should().Contain("\n-{\"id\":\"Strength2\"").And.Contain("\n+{\"id\":\"Strength4\"");

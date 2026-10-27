@@ -18,7 +18,7 @@ public class JsonDiffTests
         var stats = JsonDiff.Compare(before, after, output, "en-US/Mods.json", newFile: false);
 
         // Assert
-        stats.Should().Be(new JsonDiff.Stats(1, 1));
+        stats.Should().Be(new JsonDiff.Stats(1, 1, 0));
         Encoding.UTF8.GetString(output.ToArray()).Should().Be(
             "diff --git a/en-US/Mods.json b/en-US/Mods.json\n" +
             "--- a/en-US/Mods.json\n" +
@@ -39,7 +39,7 @@ public class JsonDiffTests
         var stats = JsonDiff.Compare(Mods(all), Mods(all[1..^1]), output, "f.json", newFile: false);
 
         // Assert
-        stats.Should().Be(new JsonDiff.Stats(2, 0));
+        stats.Should().Be(new JsonDiff.Stats(2, 0, 0));
         Encoding.UTF8.GetString(output.ToArray()).Should().Be(
             "diff --git a/f.json b/f.json\n" +
             "--- a/f.json\n" +
@@ -61,7 +61,7 @@ public class JsonDiffTests
         var stats = JsonDiff.Compare(ReadOnlyMemory<byte>.Empty, json, output, "fr-FR/ItemClass.json", newFile: true);
 
         // Assert
-        stats.Should().Be(new JsonDiff.Stats(0, 2));
+        stats.Should().Be(new JsonDiff.Stats(0, 2, 0));
         Encoding.UTF8.GetString(output.ToArray()).Should().Be(
             "diff --git a/fr-FR/ItemClass.json b/fr-FR/ItemClass.json\n" +
             "new file mode 100644\n" +
@@ -98,6 +98,55 @@ public class JsonDiffTests
         {
             Directory.Delete(folder, recursive: true);
         }
+    }
+
+    [Fact]
+    public void _05_Moved_Entry_Should_Not_Be_Counted_As_Removed_And_Added()
+    {
+        // Arrange: M2 moves after M8, M10 changes.
+        var before = Mods(Enumerable.Range(1, 10).Select(i => $"{{\"id\":\"M{i}\"}}"));
+        var order = new[] { 1, 3, 4, 5, 6, 7, 8, 2, 9 };
+        var after = Mods(order.Select(i => $"{{\"id\":\"M{i}\"}}").Append("{\"id\":\"M10\",\"level\":\"2\"}"));
+        using var output = new MemoryStream();
+
+        // Act
+        var stats = JsonDiff.Compare(before, after, output, "f.json", newFile: false);
+
+        // Assert
+        stats.Should().Be(new JsonDiff.Stats(1, 1, 1));
+        Encoding.UTF8.GetString(output.ToArray()).Should().Be(
+            "diff --git a/f.json b/f.json\n" +
+            "--- a/f.json\n" +
+            "+++ b/f.json\n" +
+            "@@ -2 +1,0 @@ moved: 1\n" +
+            "-{\"id\":\"M2\"}\n" +
+            "@@ -8,0 +8 @@ moved: 1\n" +
+            "+{\"id\":\"M2\"}\n" +
+            "@@ -10 +10 @@\n" +
+            "-{\"id\":\"M10\"}\n" +
+            "+{\"id\":\"M10\",\"level\":\"2\"}\n");
+    }
+
+    [Fact]
+    public void _06_Grouped_Entries_Should_Give_One_Line_Per_Group_Header_And_Entry()
+    {
+        // Arrange: filters of the trade website, an entry added to the second group.
+        var before = Encoding.UTF8.GetBytes("{\"result\":[" +
+            "{\"label\":\"Pseudo\",\"entries\":[{\"id\":\"pseudo.a\"}]}," +
+            "{\"label\":\"Explicit\",\"entries\":[{\"id\":\"explicit.a\"},{\"id\":\"explicit.c\"}]}]}");
+        var after = Encoding.UTF8.GetBytes("{\"result\":[" +
+            "{\"label\":\"Pseudo\",\"entries\":[{\"id\":\"pseudo.a\"}]}," +
+            "{\"label\":\"Explicit\",\"entries\":[{\"id\":\"explicit.a\"},{\"id\":\"explicit.b\"},{\"id\":\"explicit.c\"}]}]}");
+        using var output = new MemoryStream();
+
+        // Act
+        var stats = JsonDiff.Compare(before, after, output, "en-US/Filters.json", newFile: false);
+
+        // Assert: lines are the headers and the entries ("{"label":"Pseudo","entries":[", "{"id":"pseudo.a"}", ...).
+        stats.Should().Be(new JsonDiff.Stats(0, 1, 0));
+        Encoding.UTF8.GetString(output.ToArray()).Should().EndWith(
+            "@@ -4,0 +5 @@\n" +
+            "+{\"id\":\"explicit.b\"}\n");
     }
 
     private static byte[] Mods(IEnumerable<string> entries)

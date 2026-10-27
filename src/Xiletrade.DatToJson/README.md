@@ -7,6 +7,9 @@ either from a local `Content.ggpk` or directly from the patch CDN of the game (n
 Game bundles are decompressed with [ooz](https://github.com/zao/ooz), an open source decompressor built from source (see below): no proprietary library is used.
 Json models and serializer come from Xiletrade.Library, so the application reads the files exactly as they are written.
 
+It also updates the json files that come from the trade website (leagues, filters, currency, item types) with the `trade` command,
+like the "update all" button of the configuration window (see [Trade website data](#trade-website-data-trade)).
+
 ### The two versioned files
 | File | Content | Written by |
 |---|---|---|
@@ -22,6 +25,8 @@ Xiletrade.DatToJson <snapshot|calibrate|export|update|fullupdate> --game <1|2|al
                     (--ggpk <Content.ggpk> | --cdn <current|url> [--cache <directory>])
                     [--schemas <directory> | --schema <file> --snapshot <file>]   (default: src/Xiletrade.DatToJson/Schemas)
                     [--output <directory>] [--report <file.md>] [--diff <file.diff>]
+
+Xiletrade.DatToJson trade --game <1|2|all> --report <file.md> [--output <directory>] [--diff <file.diff>]
 ```
 | Command | What it does | Writes |
 |---|---|---|
@@ -30,6 +35,7 @@ Xiletrade.DatToJson <snapshot|calibrate|export|update|fullupdate> --game <1|2|al
 | `export` | Writes the json files of every language with the schema as is, after comparing each one with the previous generation. Refuses to run when a file does not have the row length of the schema. | `<output>/<culture>/*.json`, diff |
 | `update` | `calibrate`, then `export` when the calibration succeeded. | all of the above |
 | `fullupdate` | **Every step, the command to run after each game update**: `snapshot` when a game has none yet (first run), `calibrate`, `export`, and the differences of the json files written **in the report**. `--report` is required. | all of the above + report with the diff |
+| `trade` | Downloads the data of the trade website for every language and writes its json files, with the differences **in the report**. No game file is read. `--report` is required. | `<output>/<culture>/` leagues, filters, currency, item types + report with the diff |
 
 Games:
 * `--game 1` or `--game 2` : one game. `--game all` : PoE 1 then PoE 2 in one run, with one report and one diff.
@@ -57,6 +63,7 @@ the full diff of each game in a `diff` block (`## PoE <game> json diff`, "No cha
 * `--diff <file.diff>` : the same differences in a separate file (export, update, fullupdate), see below.
 
 Exit codes : `0` success, `1` manual action required (nothing was written for that game), `2` error (message displayed).
+With `trade`: `1` means that some files could not be downloaded (their previous version is kept, the others are written), `2` that none could be.
 
 Other defaults: `--output` is `Data/Lang` next to the executable, so **pass `--output Xiletrade/Data/Lang`** to update the files of the repository
 (see [Workflow](#workflow-commands-run-from-the-repository-root) for the copy to `src/Xiletrade.Library/Data/Lang`).
@@ -65,7 +72,7 @@ The executable also has a copy of `Schemas`, made at build time: it is only used
 ### Json changes (diff)
 Before replacing a json file, `export` and `update` compare it with the previous generation:
 * a file identical to the previous one is **not written again**;
-* the report lists the new and changed files, with the number of entries removed and added;
+* the report lists the new and changed files, with the number of entries removed, added and moved;
 * the differences are written in the **git unified format**, readable in any diff viewer or in a pull request:
 in the report with `fullupdate`, in a file with `--diff`.
 
@@ -80,6 +87,16 @@ diff --git a/de-DE/ItemClass.json b/de-DE/ItemClass.json
 ```
 Line numbers are entry numbers: `@@ -89,0 +90 @@` adds entry 90 after entry 89, `@@ -25 +26 @@` replaces entry 25, which becomes entry 26.
 An empty diff means that nothing changed. Without context, `git apply` needs `--unidiff-zero` to apply such a diff.
+
+The entries follow the order of the rows of the game. When the game reorders its rows, an unchanged entry can leave its position for another one:
+it is a **moved** entry, counted apart (neither removed nor added). It is still written as `-` at its old position and `+` at the new one,
+so the diff stays a valid patch, and both hunks are marked `moved: <number of moved entries in the hunk>`:
+```diff
+@@ -2 +1,0 @@ moved: 1
+-{"id":"M2"}
+@@ -8,0 +8 @@ moved: 1
++{"id":"M2"}
+```
 Entries are compared on their raw bytes (Myers algorithm, the default one of git); above 4000 changed entries in a file, the file is shown as entirely replaced.
 
 ### Workflow (commands run from the repository root)
@@ -140,6 +157,38 @@ for culture in de-DE en-US es-ES fr-FR ja-JP ko-KR pt-BR ru-RU th-TH zh-TW; do
   for file in Bases Mods Monsters; do cp "src/Xiletrade.Library/Data/Lang/$culture/$file.json" "Xiletrade/Data/Lang/$culture/"; done
 done
 ```
+
+### Trade website data (`trade`)
+The json files read from the trade website are updated like the "update all" button of the configuration window (`DataUpdaterService`),
+without the files generated from the game:
+
+| Api (`/api/trade/data/` for PoE 1, `/api/trade2/data/` for PoE 2) | PoE 1 file | PoE 2 file |
+|---|---|---|
+| `leagues` | `Leagues.json` | `LeaguesTwo.json` |
+| `stats` | `Filters.json` | `FiltersTwo.json` |
+| `static` | `Currency.json` | `CurrencyTwo.json` |
+| `items` | `Items.json` | `ItemsTwo.json` |
+
+For every language, on the server of that language (`www`, `fr`, `de`... `pathofexile.com`, `poe.kakaogames.com` for korean,
+`pathofexile.tw` for traditional chinese, `poe.game.qq.com` for simplified chinese): 4 files per language, 44 per game.
+* Same models, same serializer and same fixes as the application, shared through `TradeDataRules` of the library
+(line tabulations removed from the portuguese filters, filter entries sorted, leagues listed twice removed): the files are identical to the ones it writes.
+* Same user agent as the application (with its contact address), one request at a time; "too many requests" and server errors are tried again
+(3 attempts, waiting as asked by the server, 60 seconds at most).
+* **A file is never replaced by a bad answer**: refused or unreachable server, html page instead of json, or no data (no league...).
+That file keeps its previous version and is listed in the report with the error; the other files are written.
+* The differences are shown one entry per line as for the game files; filters, currency and item types also have one line per group
+(`{"label":"Explicit","entries":[`), so a renamed group is visible.
+
+```
+dotnet run --project src/Xiletrade.DatToJson -c Release -p:SkipOozBuild=true -- trade --game all --output src/Xiletrade.Library/Data/Lang --report trade-data-report.md
+```
+`-p:SkipOozBuild=true`: the game decompressor is not needed for this command.
+
+`.github/workflows/trade-data.yml` runs this command on dev, by hand (`workflow_dispatch`, a schedule is ready to uncomment), with the same protections as
+`dat-to-json.yml`: pull request to dev from the `tradeData/update` branch, tests run with the new files, report as artifact and description.
+Exit code `1` still opens the pull request, with a warning: the files not downloaded are named in the report (a server may refuse the
+GitHub runners, e.g. the korean or chinese one); exit code `2` stops the job, nothing is committed.
 
 ### What is updated automatically
 | Change made by a game update | Result |
