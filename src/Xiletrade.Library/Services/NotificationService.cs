@@ -106,10 +106,14 @@ public sealed class NotificationService : INotificationService, IDisposable
     {
         try
         {
-            await Task.Delay(duration, cts.Token).ConfigureAwait(false);
-            Dismiss(id);
+            // Awaiting through WhenAny does not rethrow the cancellation (no TaskCanceledException when the toast is dismissed early).
+            var delay = Task.Delay(duration, cts.Token);
+            await Task.WhenAny(delay).ConfigureAwait(false);
+            if (!delay.IsCanceled)
+            {
+                Dismiss(id);
+            }
         }
-        catch (OperationCanceledException) { }
         finally
         {
             if (_expiration.TryGetValue(id, out var current) && ReferenceEquals(current, cts))

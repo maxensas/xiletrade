@@ -198,7 +198,7 @@ public sealed partial class ShopViewModel : ViewModelBase
             //change.ExchangeData.Collapse = true;
             change.Engine = "new";
 
-            string url = Strings.Url.Exchange + league + "/?q=" + Uri.EscapeDataString(_dm.Json.Serialize<Models.Poe.Contract.Exchange>(change));
+            string url = Strings.Url.Exchange + league + "/?q=" + Common.EscapeDataString(_dm.Json.SerializeToUtf8<Models.Poe.Contract.Exchange>(change));
             try
             {
                 Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });

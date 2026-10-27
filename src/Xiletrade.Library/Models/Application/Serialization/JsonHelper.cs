@@ -97,12 +97,16 @@ public sealed class JsonHelper : StringCache
         _converterContext = new(options);
     }
 
-    public string Serialize<T>(object obj, bool replace = true) where T : class
+    /// <summary>
+    /// Serializes an object to UTF-8 json (no string conversion).
+    /// </summary>
+    /// <param name="replace">Fixes the characters which .NET escapes and the api does not expect.</param>
+    public byte[] SerializeToUtf8<T>(object obj, bool replace = true) where T : class
     {
         var context = GetContextOrThrow<T>();
         if (!replace)
         {
-            return JsonSerializer.Serialize(obj, typeof(T), context);
+            return JsonSerializer.SerializeToUtf8Bytes(obj, typeof(T), context);
         }
 
         using var memoryStream = new MemoryStream(capacity: 4096);
@@ -116,101 +120,121 @@ public sealed class JsonHelper : StringCache
         }
 
         ReadOnlySpan<byte> utf8Json = memoryStream.GetBuffer().AsSpan(0, (int)memoryStream.Length);
-
-        int maxLength = utf8Json.Length * 2;
-        byte[] buffer = ArrayPool<byte>.Shared.Rent(maxLength);
-        int pos = 0;
-
-        for (int i = 0; i < utf8Json.Length; i++)
+        byte[] buffer = ArrayPool<byte>.Shared.Rent(utf8Json.Length * 2); // every replacement is shorter than its source
+        try
         {
-            bool matched = false;
-
-            foreach (var (sourceBytes, targetBytes) in _serializeReplacements)
-            {
-                if (i + sourceBytes.Length <= utf8Json.Length &&
-                    utf8Json.Slice(i, sourceBytes.Length).SequenceEqual(sourceBytes))
-                {
-                    if (pos + targetBytes.Length > buffer.Length)
-                    {
-                        throw new InvalidOperationException("Buffer too small for replacement");
-                    }
-                    targetBytes.CopyTo(buffer.AsSpan(pos));
-                    pos += targetBytes.Length;
-                    i += sourceBytes.Length - 1;
-                    matched = true;
-                    break;
-                }
-            }
-
-            if (!matched)
-            {
-                if (pos >= buffer.Length)
-                    throw new InvalidOperationException("Buffer too small for copy");
-                buffer[pos++] = utf8Json[i];
-            }
+            int length = ApplyReplacements(utf8Json, buffer, _serializeReplacements);
+            return buffer.AsSpan(0, length).ToArray();
         }
-
-        string result = Encoding.UTF8.GetString(buffer, 0, pos);
-        ArrayPool<byte>.Shared.Return(buffer, clearArray: true);
-        return result;
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(buffer, clearArray: true);
+        }
     }
 
-    public T Deserialize<T>(ReadOnlySpan<char> strData, bool replace = false) where T : class
+    /// <summary>
+    /// Deserializes UTF-8 json, as received from the network (no string conversion).
+    /// </summary>
+    /// <param name="utf8Json">Json text, a byte order mark at the beginning is skipped.</param>
+    /// <param name="replace">Fixes the known bad data of the api before the deserialization.</param>
+    public T Deserialize<T>(ReadOnlySpan<byte> utf8Json, bool replace = false) where T : class
     {
         var context = GetContextOrThrow<T>();
-        if (!replace)
+        if (utf8Json.StartsWith(Utf8Bom))
         {
-            return JsonSerializer.Deserialize(strData, typeof(T), context) as T
+            utf8Json = utf8Json[Utf8Bom.Length..];
+        }
+
+        if (!replace || !ContainsReplacement(utf8Json))
+        {
+            return JsonSerializer.Deserialize(utf8Json, typeof(T), context) as T
                    ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
         }
 
-        int maxByteCount = Encoding.UTF8.GetMaxByteCount(strData.Length);
-        byte[] inputBuffer = ArrayPool<byte>.Shared.Rent(maxByteCount);
-
-        int byteCount = Encoding.UTF8.GetBytes(strData, inputBuffer);
-        ReadOnlySpan<byte> utf8Input = inputBuffer.AsSpan(0, byteCount);
-
-        int maxLength = utf8Input.Length * 2;
-        byte[] outputBuffer = ArrayPool<byte>.Shared.Rent(maxLength);
-        int pos = 0;
-
-        for (int i = 0; i < utf8Input.Length;)
+        byte[] outputBuffer = ArrayPool<byte>.Shared.Rent(utf8Json.Length * 2); // the largest replacement is shorter than twice its source
+        try
         {
-            bool matched = false;
+            int length = ApplyReplacements(utf8Json, outputBuffer, _deserializeReplacements);
+            return JsonSerializer.Deserialize(outputBuffer.AsSpan(0, length), typeof(T), context) as T
+                   ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(outputBuffer, clearArray: true);
+        }
+    }
 
-            foreach (var (source, target) in _deserializeReplacements)
+    private static ReadOnlySpan<byte> Utf8Bom => [0xEF, 0xBB, 0xBF];
+
+    private static bool ContainsReplacement(ReadOnlySpan<byte> utf8Json)
+    {
+        foreach (var (source, _) in _deserializeReplacements)
+        {
+            if (utf8Json.IndexOf(source) >= 0)
             {
-                if (i + source.Length <= utf8Input.Length &&
-                    utf8Input.Slice(i, source.Length).SequenceEqual(source))
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // copies the text into the buffer, the earliest source found is replaced by its target each time
+    private static int ApplyReplacements(ReadOnlySpan<byte> utf8Json, Span<byte> buffer, List<(byte[] source, byte[] target)> replacements)
+    {
+        int length = 0;
+        while (!utf8Json.IsEmpty)
+        {
+            int next = -1, nextIndex = int.MaxValue;
+            for (int i = 0; i < replacements.Count; i++)
+            {
+                int index = utf8Json.IndexOf(replacements[i].source);
+                if (index >= 0 && index < nextIndex)
                 {
-                    if (pos + target.Length > outputBuffer.Length)
-                    {
-                        throw new InvalidOperationException("Output buffer too small for replacement");
-                    }
-                    target.CopyTo(outputBuffer.AsSpan(pos));
-                    pos += target.Length;
-                    i += source.Length;
-                    matched = true;
-                    break;
+                    next = i;
+                    nextIndex = index;
                 }
             }
 
-            if (!matched)
+            if (next < 0)
             {
-                if (pos >= outputBuffer.Length)
-                    throw new InvalidOperationException("Output buffer too small for copy");
-                outputBuffer[pos++] = utf8Input[i];
-                i++;
+                utf8Json.CopyTo(buffer[length..]);
+                return length + utf8Json.Length;
             }
+
+            var (source, target) = replacements[next];
+            utf8Json[..nextIndex].CopyTo(buffer[length..]);
+            length += nextIndex;
+            target.CopyTo(buffer[length..]);
+            length += target.Length;
+            utf8Json = utf8Json[(nextIndex + source.Length)..];
         }
+        return length;
+    }
 
-        ReadOnlySpan<byte> cleanedJsonUtf8 = outputBuffer.AsSpan(0, pos);
-        T result = JsonSerializer.Deserialize(cleanedJsonUtf8, typeof(T), context) as T;
+    /// <summary>
+    /// Deserializes a UTF-8 json stream, without building the text in memory.
+    /// </summary>
+    /// <remarks>A UTF-8 byte order mark at the beginning of the stream is skipped (the stream must be seekable to detect it).</remarks>
+    public T Deserialize<T>(Stream utf8Json) where T : class
+    {
+        var context = GetContextOrThrow<T>();
+        SkipUtf8Bom(utf8Json);
+        return JsonSerializer.Deserialize(utf8Json, typeof(T), context) as T
+               ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
+    }
 
-        ArrayPool<byte>.Shared.Return(inputBuffer, clearArray: true);
-        ArrayPool<byte>.Shared.Return(outputBuffer, clearArray: true);
-
-        return result ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
+    private static void SkipUtf8Bom(Stream stream)
+    {
+        if (!stream.CanSeek)
+        {
+            return;
+        }
+        Span<byte> bom = stackalloc byte[3];
+        int read = stream.Read(bom);
+        if (read != 3 || bom[0] != 0xEF || bom[1] != 0xBB || bom[2] != 0xBF)
+        {
+            stream.Position = 0;
+        }
     }
 
     internal SourceGenerationContext GetContextOrThrow<T>() where T : class

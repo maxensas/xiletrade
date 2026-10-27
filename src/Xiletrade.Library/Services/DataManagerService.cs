@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -22,6 +24,9 @@ public sealed class DataManagerService
     private readonly IMessageAdapterService _message;
     private readonly IViewManager _view;
 
+    /// <summary>Folder of the data files, next to the application (whatever the current directory is).</summary>
+    internal static string DataDirectory => Path.Combine(AppContext.BaseDirectory, "Data");
+
     internal JsonHelper Json { get; private set; }
 
     internal ConfigData Config { get; private set; } // does not use StringCache
@@ -32,22 +37,38 @@ public sealed class DataManagerService
     internal LeagueData League { get; private set; }
     internal SearchPresetData SearchPreset { get; private set; }
 
-    internal BaseResultData[] Bases { get; private set; }
-    internal ModResultData[] Mods { get; private set; }
-    internal WordResultData[] Words { get; private set; }
-    internal GemResultData[] Gems { get; private set; }
-    internal BaseResultData[] Monsters { get; private set; }
-    internal CurrencyResultData[] Currencies { get; private set; }
-    internal CurrencyResultData[] CurrenciesEn { get; private set; }
-    internal ItemTypeResultData[] Items { get; private set; }
-    internal ItemTypeResultData[] ItemsEn { get; private set; }
-    internal DivTiersResult[] DivTiers { get; private set; }
-    internal DustLevel[] DustLevel { get; private set; }
+    // Deserialized files, kept as they are : the data below are read from them (no copy in memory).
+    private BaseData BaseData { get; set; }
+    private BaseData MonsterData { get; set; }
+    private ModData ModData { get; set; }
+    private WordData WordData { get; set; }
+    private GemData GemData { get; set; }
+    private CurrencyResult CurrencyData { get; set; }
+    private CurrencyResult CurrencyDataEn { get; set; }
+    private ItemTypeResult ItemTypeData { get; set; }
+    private ItemTypeResult ItemTypeDataEn { get; set; }
+    private DivTiersData DivTiersData { get; set; }
+    private DustData DustData { get; set; }
+    private BaseData BaseDataGateway { get; set; }
+    private WordData WordDataGateway { get; set; }
+    private CurrencyResult CurrencyDataGateway { get; set; }
+
+    internal BaseResultData[] Bases => BaseData?.Result?[0].Data;
+    internal ModResultData[] Mods => ModData?.Result?[0].Data;
+    internal WordResultData[] Words => WordData?.Result?[0].Data;
+    internal GemResultData[] Gems => GemData?.Result?[0].Data;
+    internal BaseResultData[] Monsters => MonsterData?.Result?[0].Data;
+    internal CurrencyResultData[] Currencies => CurrencyData?.Result;
+    internal CurrencyResultData[] CurrenciesEn => CurrencyDataEn?.Result;
+    internal ItemTypeResultData[] Items => ItemTypeData?.Result;
+    internal ItemTypeResultData[] ItemsEn => ItemTypeDataEn?.Result;
+    internal DivTiersResult[] DivTiers => DivTiersData?.Result;
+    internal DustLevel[] DustLevel => DustData?.Level;
 
     //temp
-    internal WordResultData[] WordsGateway { get; private set; }
-    internal BaseResultData[] BasesGateway { get; private set; }
-    internal CurrencyResultData[] CurrenciesGateway { get; private set; }
+    internal WordResultData[] WordsGateway => WordDataGateway?.Result?[0].Data;
+    internal BaseResultData[] BasesGateway => BaseDataGateway?.Result?[0].Data;
+    internal CurrencyResultData[] CurrenciesGateway => CurrencyDataGateway?.Result;
 
     public DataManagerService(ILogger<DataManagerService> logger,
         IMessageAdapterService message, IViewManager view)
@@ -80,17 +101,17 @@ public sealed class DataManagerService
 
     private void InitConfig(int forceGameVersion)
     {
-        string configJson;
-        string path = Path.GetFullPath("Data\\");
-        if (File.Exists(path + Strings.File.Config))
+        byte[] configJson;
+        string path = DataDirectory;
+        if (File.Exists(Path.Combine(path, Strings.File.Config)))
         {
             configJson = LoadConfiguration(Strings.File.Config);
         }
         else
         {
-            if (!File.Exists(path + Strings.File.DefaultConfig))
+            if (!File.Exists(Path.Combine(path, Strings.File.DefaultConfig)))
             {
-                throw new FileNotFoundException(path + Strings.File.DefaultConfig);
+                throw new FileNotFoundException(Path.Combine(path, Strings.File.DefaultConfig));
             }
             configJson = LoadConfiguration(Strings.File.DefaultConfig);
             SaveConfiguration(configJson);
@@ -114,9 +135,9 @@ public sealed class DataManagerService
     
     private void InitLeague(int gateway)
     {
-        string langGateway = "Lang\\" + Strings.Culture[gateway] + "\\";
-        string streamLeagues = LoadConfiguration(langGateway + Strings.File.Leagues);
-        League = Json.Deserialize<LeagueData>(streamLeagues);
+        string langGateway = Path.Combine("Lang", Strings.Culture[gateway]);
+        var leagues = LoadConfiguration(Path.Combine(langGateway, Strings.File.Leagues));
+        League = Json.Deserialize<LeagueData>(leagues);
     }
 
     private void Initialize(int forceGameVersion)
@@ -133,39 +154,70 @@ public sealed class DataManagerService
             }
             InitConfig(forceGameVersion);
 
-            string basePath = Path.GetFullPath("Data\\");
-            string lang = $"Lang\\{Strings.Culture[Config.Options.Language]}\\";            
-            string langEn = $"Lang\\{Strings.Culture[0]}\\";
+            string basePath = DataDirectory;
+            string lang = Path.Combine("Lang", Strings.Culture[Config.Options.Language]);
+            string langEn = Path.Combine("Lang", Strings.Culture[0]);
 
-            DivTiers = LoadDivTiers(basePath + Strings.File.Divination);
-            DustLevel = LoadDustLevel(basePath + Strings.File.DustLevel);
-            SearchPreset = LoadSearchPreset(basePath + Strings.File.SearchPreset);
+            // The files are independent : they are read and deserialized together.
+            var filterPath = Path.Combine(basePath, lang);
+            var englishPath = Path.Combine(basePath, langEn);
+            var arrangeVersion = Config.Options.GameVersion;
 
-            var filterPath = basePath + lang;
-            Bases = LoadBaseResults(filterPath + Strings.File.Bases);
-            Mods = LoadModResults(filterPath + Strings.File.Mods);
-            Monsters = LoadBaseResults(filterPath + Strings.File.Monsters);
-            Currencies = LoadCurrencyResults(filterPath + Strings.File.Currency);
-            Items = LoadItemTypeResults(filterPath + Strings.File.Items);
-            Filter = LoadFilter(filterPath + Strings.File.Filters, Config.Options.GameVersion);            
-            Words = LoadWordResults(filterPath + Strings.File.Words);
-            Gems = LoadGemResults(filterPath + Strings.File.Gems);
-            Parser = LoadParser(filterPath + Strings.File.ParsingRules);
+            var divTiers = Load<DivTiersData>(Path.Combine(basePath, Strings.File.Divination));
+            var dust = Load<DustData>(Path.Combine(basePath, Strings.File.DustLevel));
+            var searchPreset = Load<SearchPresetData>(Path.Combine(basePath, Strings.File.SearchPreset));
+            var bases = Load<BaseData>(Path.Combine(filterPath, Strings.File.Bases));
+            var mods = Load<ModData>(Path.Combine(filterPath, Strings.File.Mods));
+            var monsters = Load<BaseData>(Path.Combine(filterPath, Strings.File.Monsters));
+            var words = Load<WordData>(Path.Combine(filterPath, Strings.File.Words));
+            var gems = Load<GemData>(Path.Combine(filterPath, Strings.File.Gems));
+            var parser = Load<ParserData>(Path.Combine(filterPath, Strings.File.ParsingRules));
+
+            var filter = LoadFilter(Path.Combine(filterPath, Strings.File.Filters), arrangeVersion);
+            var currency = Load<CurrencyResult>(Path.Combine(filterPath, Strings.File.Currency));
+            var items = Load<ItemTypeResult>(Path.Combine(filterPath, Strings.File.Items));
+
+            var filterEn = LoadFilter(Path.Combine(englishPath, Strings.File.Filters), arrangeVersion);
+            var currencyEn = Load<CurrencyResult>(Path.Combine(englishPath, Strings.File.Currency));
+            var itemsEn = Load<ItemTypeResult>(Path.Combine(englishPath, Strings.File.Items));
+
+            Task<BaseData> basesGateway = null;
+            Task<WordData> wordsGateway = null;
+            Task<CurrencyResult> currencyGateway = null;
+            if (Config.Options.Gateway != Config.Options.Language)
+            {
+                var gatewayPath = Path.Combine(basePath, Path.Combine("Lang", Strings.Culture[Config.Options.Gateway]));
+                basesGateway = Load<BaseData>(Path.Combine(gatewayPath, Strings.File.Bases));
+                wordsGateway = Load<WordData>(Path.Combine(gatewayPath, Strings.File.Words));
+                currencyGateway = Load<CurrencyResult>(Path.Combine(gatewayPath, Strings.File.Currency));
+            }
 
             InitLeague(Config.Options.Gateway);
 
-            if (Config.Options.Gateway != Config.Options.Language)
-            {
-                var langGateway = $"Lang\\{Strings.Culture[Config.Options.Gateway]}\\";
-                var gatewayPath = basePath + langGateway;
-                BasesGateway = LoadBaseResults(gatewayPath + Strings.File.Bases);
-                WordsGateway = LoadWordResults(gatewayPath + Strings.File.Words);
-                CurrenciesGateway = LoadCurrencyResults(gatewayPath + Strings.File.Currency);
-            }
-            var englishPath = basePath + langEn;
-            FilterEn = LoadFilter(englishPath + Strings.File.Filters, Config.Options.GameVersion);
-            CurrenciesEn = LoadCurrencyResults(englishPath + Strings.File.Currency);
-            ItemsEn = LoadItemTypeResults(englishPath + Strings.File.Items);
+            WaitAll(divTiers, dust, searchPreset, bases, mods, monsters, currency, items, filter, words, gems,
+                parser, filterEn, currencyEn, itemsEn, basesGateway, wordsGateway, currencyGateway);
+
+            DivTiersData = divTiers.Result;
+            DustData = dust.Result;
+            SearchPreset = searchPreset.Result ?? new();
+            BaseData = bases.Result;
+            ModData = mods.Result;
+            MonsterData = monsters.Result;
+            WordData = words.Result;
+            GemData = gems.Result;
+            Parser = parser.Result ?? new();
+
+            Filter = filter.Result ?? new();
+            CurrencyData = currency.Result;
+            ItemTypeData = items.Result;
+
+            FilterEn = filterEn.Result ?? new();
+            CurrencyDataEn = currencyEn.Result;
+            ItemTypeDataEn = itemsEn.Result;
+
+            BaseDataGateway = basesGateway?.Result;
+            WordDataGateway = wordsGateway?.Result;
+            CurrencyDataGateway = currencyGateway?.Result;
         }
         catch(Exception ex)
         {
@@ -177,236 +229,64 @@ public sealed class DataManagerService
         }
     }
 
-    private BaseResultData[] LoadBaseResults(string filePath)
+    /// <summary>
+    /// Waits for the tasks, and throws the exception of the first one (in the given order) that failed,
+    /// as the sequential loading did, instead of an AggregateException.
+    /// </summary>
+    private static void WaitAll(params Task[] tasks)
+    {
+        tasks = [.. tasks.Where(t => t is not null)];
+        try
+        {
+            Task.WaitAll(tasks);
+        }
+        catch (AggregateException)
+        {
+            foreach (var task in tasks)
+            {
+                if (task.IsFaulted)
+                {
+                    ExceptionDispatchInfo.Capture(task.Exception.InnerException).Throw();
+                }
+            }
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Reads (asynchronously) and deserializes a data file, directly from its UTF-8 content.
+    /// </summary>
+    /// <exception cref="FileNotFoundException"></exception>
+    /// <exception cref="JsonException">The file can not be read or deserialized.</exception>
+    private async Task<T> Load<T>(string filePath) where T : class
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
         try
         {
-            var json = File.ReadAllText(filePath);
-            var baseData = Json.Deserialize<BaseData>(json);
-            if (baseData is null || baseData.Result is null
-                || baseData.Result.Length is 0 || baseData.Result[0].Data is null)
-            {
-                return null;
-            }
-            return [.. baseData.Result[0].Data];
+            // ConfigureAwait(false) : the deserialization goes on a thread pool thread, and never waits for the caller thread.
+            var json = await File.ReadAllBytesAsync(filePath).ConfigureAwait(false);
+            return Json.Deserialize<T>(json);
         }
         catch (Exception ex)
         {
-            throw new JsonException($"Can not load Base data.\nFile location: {filePath}" + ex.Message, ex);
+            throw new JsonException($"Can not load {Path.GetFileName(filePath)}.\nFile location: {filePath}" + ex.Message, ex);
         }
     }
 
-    private ModResultData[] LoadModResults(string filePath)
-    {
-        if (!File.Exists(filePath))
-            throw new FileNotFoundException(filePath);
-        try
-        {
-            var json = File.ReadAllText(filePath);
-            var modData = Json.Deserialize<ModData>(json);
-            if (modData is null || modData.Result is null
-                || modData.Result.Length is 0 || modData.Result[0].Data is null)
-            {
-                return null;
-            }
-            return [.. modData.Result[0].Data];
-        }
-        catch (Exception ex)
-        {
-            throw new JsonException($"Can not load Mod data.\nFile location: {filePath}" + ex.Message, ex);
-        }
-    }
+    private async Task<FilterData> LoadFilter(string filePath, int gameVersion)
+        => (await Load<FilterData>(filePath).ConfigureAwait(false))?.ArrangeFilter(gameVersion);
 
-    private CurrencyResultData[] LoadCurrencyResults(string filePath)
+    internal byte[] LoadConfiguration(string configfile)
     {
-        if (!File.Exists(filePath))
-            throw new FileNotFoundException(filePath);
+        byte[] config;
         try
         {
-            var json = File.ReadAllText(filePath);
-            var currencyData = Json.Deserialize<CurrencyResult>(json);
-            if (currencyData is null || currencyData.Result is null)
-            {
-                return null;
-            }
-            return [.. currencyData.Result];
-        }
-        catch (Exception ex)
-        {
-            throw new JsonException($"Can not load Currency data.\nFile location: {filePath}" + ex.Message, ex);
-        }
-    }
-
-    private ItemTypeResultData[] LoadItemTypeResults(string filePath)
-    {
-        if (!File.Exists(filePath))
-            throw new FileNotFoundException(filePath);
-        try
-        {
-            var json = File.ReadAllText(filePath);
-            var itemTypeData = Json.Deserialize<ItemTypeResult>(json);
-            if (itemTypeData is null || itemTypeData.Result is null)
-            {
-                return null;
-            }
-            return [.. itemTypeData.Result];
-        }
-        catch (Exception ex)
-        {
-            throw new JsonException($"Can not load Item type data.\nFile location: {filePath}" + ex.Message, ex);
-        }
-    }
-
-    private FilterData LoadFilter(string filePath, int gameVersion)
-    {
-        if (!File.Exists(filePath))
-            throw new FileNotFoundException(filePath);
-        try
-        {
-            var json = File.ReadAllText(filePath);
-            var filterData = Json.Deserialize<FilterData>(json);
-            if (filterData is null)
-            {
-                return new();
-            }
-            return filterData.ArrangeFilter(gameVersion);
-        }
-        catch (Exception ex)
-        {
-            throw new JsonException($"Can not load Filter data.\nFile location: {filePath}" + ex.Message, ex);
-        }
-    }
-
-    private DivTiersResult[] LoadDivTiers(string filePath)
-    {
-        if (!File.Exists(filePath))
-            throw new FileNotFoundException(filePath);
-        try
-        {
-            var json = File.ReadAllText(filePath);
-            var divData = Json.Deserialize<DivTiersData>(json);
-            if (divData is null || divData.Result is null)
-            {
-                return null;
-            }
-            return [.. divData.Result];
-        }
-        catch (Exception ex)
-        {
-            throw new JsonException($"Can not load Divination cards data.\nFile location: {filePath}" + ex.Message, ex);
-        }
-    }
-
-    private DustLevel[] LoadDustLevel(string filePath)
-    {
-        if (!File.Exists(filePath))
-            throw new FileNotFoundException(filePath);
-        try
-        {
-            var json = File.ReadAllText(filePath);
-            var dustData = Json.Deserialize<DustData>(json);
-            if (dustData is null || dustData.Level is null)
-            {
-                return null;
-            }
-            return [.. dustData.Level];
-        }
-        catch(Exception ex)
-        {
-            throw new JsonException($"Can not load Dust level.\nFile location: {filePath}" + ex.Message, ex);
-        }
-    }
-
-    private SearchPresetData LoadSearchPreset(string filePath)
-    {
-        if (!File.Exists(filePath))
-            throw new FileNotFoundException(filePath);
-        try
-        {
-            var json = File.ReadAllText(filePath);
-            var searchPreset = Json.Deserialize<SearchPresetData>(json);
-            return searchPreset is null ? new() : searchPreset;
-        }
-        catch (Exception ex)
-        {
-            throw new JsonException($"Can not load search presets.\nFile location: {filePath}" + ex.Message, ex);
-        }
-    }
-
-    private WordResultData[] LoadWordResults(string filePath)
-    {
-        if (!File.Exists(filePath))
-            throw new FileNotFoundException(filePath);
-        try
-        {
-            var json = File.ReadAllText(filePath);
-            var wordData = Json.Deserialize<WordData>(json);
-            if (wordData is null || wordData.Result is null
-                || wordData.Result.Length is 0 || wordData.Result[0].Data is null)
-            {
-                return null;
-            }
-            return [.. wordData.Result[0].Data];
-        }
-        catch (Exception ex)
-        {
-            throw new JsonException($"Can not load Words data.\nFile location: {filePath}" + ex.Message, ex);
-        }
-    }
-
-    private GemResultData[] LoadGemResults(string filePath)
-    {
-        if (!File.Exists(filePath))
-            throw new FileNotFoundException(filePath);
-        try
-        {
-            var json = File.ReadAllText(filePath);
-            var gemData = Json.Deserialize<GemData>(json);
-            if (gemData is null || gemData.Result is null
-                || gemData.Result.Length is 0 || gemData.Result[0].Data is null)
-            {
-                return null;
-            }
-            return [.. gemData.Result[0].Data];
-        }
-        catch (Exception ex)
-        {
-            throw new JsonException($"Can not load Gems data.\nFile location: {filePath}" + ex.Message, ex);
-        }
-    }
-
-    private ParserData LoadParser(string filePath)
-    {
-        if (!File.Exists(filePath))
-            throw new FileNotFoundException(filePath);
-        try
-        {
-            var json = File.ReadAllText(filePath);
-            var parserData = Json.Deserialize<ParserData>(json);
-            if (parserData is null)
-            {
-                return new();
-            }
-            return parserData;
-        }
-        catch (Exception ex)
-        {
-            throw new JsonException($"Can not load Parsing rules data.\nFile location: {filePath}" + ex.Message, ex);
-        }
-    }
-
-    internal string LoadConfiguration(string configfile)
-    {
-        string config;
-        try
-        {
-            string pathFile = Path.GetFullPath("Data\\") + configfile;
+            string pathFile = Path.Combine(DataDirectory, configfile);
             if (!File.Exists(pathFile))
                 throw new FileNotFoundException(pathFile);
 
-            config = File.ReadAllText(pathFile);
+            config = File.ReadAllBytes(pathFile);
         }
         catch (Exception ex)
         {
@@ -417,11 +297,25 @@ public sealed class DataManagerService
         return config;
     }
 
-    internal async Task<bool> SaveFileAsync(string content, string filePath)
+    private static readonly byte[] Utf8Preamble = Encoding.UTF8.GetPreamble();
+
+    /// <summary>
+    /// Writes a UTF-8 json file, with a byte order mark as the files saved by the application have always had.
+    /// </summary>
+    internal static void WriteJsonFile(string filePath, ReadOnlySpan<byte> json)
+    {
+        using var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read);
+        stream.Write(Encoding.UTF8.Preamble);
+        stream.Write(json);
+    }
+
+    internal async Task<bool> SaveFileAsync(ReadOnlyMemory<byte> json, string filePath)
     {
         try
         {
-            await File.WriteAllTextAsync(filePath, content, Encoding.UTF8);
+            await using var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Read, 4096, useAsync: true);
+            await stream.WriteAsync(Utf8Preamble);
+            await stream.WriteAsync(json);
             return true;
         }
         catch (Exception ex)
@@ -431,22 +325,20 @@ public sealed class DataManagerService
         }
     }
 
-    internal bool SaveConfiguration(ReadOnlySpan<char> configToSave)
+    internal bool SaveConfiguration(ReadOnlySpan<byte> json)
     {
-        string path = Path.GetFullPath("Data\\");
-        string filePath = Path.Combine(path, Strings.File.Config);
-        string configBackup = string.Empty;
+        string filePath = Path.Combine(DataDirectory, Strings.File.Config);
+        byte[] configBackup = null;
         try
         {
             if (File.Exists(filePath))
             {
-                configBackup = File.ReadAllText(filePath, Encoding.UTF8);
+                configBackup = File.ReadAllBytes(filePath);
             }
 
-            var newConfig = Json.Deserialize<ConfigData>(configToSave);
-            var serialized = Json.Serialize<ConfigData>(newConfig);
+            var newConfig = Json.Deserialize<ConfigData>(json);
 
-            File.WriteAllText(filePath, serialized, Encoding.UTF8);
+            WriteJsonFile(filePath, Json.SerializeToUtf8<ConfigData>(newConfig));
             Config = newConfig;
 
             return true;
@@ -455,8 +347,8 @@ public sealed class DataManagerService
         {
             try
             {
-                if (configBackup.Length > 0)
-                    File.WriteAllText(filePath, configBackup, Encoding.UTF8);
+                if (configBackup is { Length: > 0 })
+                    File.WriteAllBytes(filePath, configBackup);
             }
             catch
             {

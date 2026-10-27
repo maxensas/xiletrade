@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared.Enum;
@@ -14,24 +15,19 @@ public sealed class NetServiceAdapter : NetService
     /// <inheritdoc cref="NetServiceAdapter"/>
     /// <param name="service">The service provider used by the base <see cref="NetService"/> class.</param>
     public NetServiceAdapter(ILogger<NetService> logger, ITokenService token, 
-        DataManagerService dm, IUIService ui) : base(logger, token, dm, ui)
+        DataManagerService dm) : base(logger, token, dm)
     {
     }
 
     // TODO add other mock APIs.
-    public override Task<string> SendHTTP(string urlString, Client idClient)
-    {
-        return base.SendHTTP(null, urlString, idClient);
-    }
-
-    public override async Task<string> SendHTTP(string entity, string urlString, Client idClient, bool isXml = false)
+    public override async Task<byte[]> SendHTTPBytes(ReadOnlyMemory<byte> json, string urlString, Client idClient, bool isXml = false)
     {
         if (idClient is Client.Trade)
         {
             await Task.Yield();
-            return $"{{\"id\":\"bG2Xa5QRIL\",\"complexity\":22,\"result\":[],\"total\":0}}";
+            return "{\"id\":\"bG2Xa5QRIL\",\"complexity\":22,\"result\":[],\"total\":0}"u8.ToArray();
         }
 
-        return await base.SendHTTP(entity, urlString, idClient, isXml);
+        return await base.SendHTTPBytes(json, urlString, idClient, isXml);
     }
 }

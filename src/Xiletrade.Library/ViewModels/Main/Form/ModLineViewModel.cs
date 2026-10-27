@@ -192,7 +192,6 @@ public sealed partial class ModLineViewModel : ViewModelBase
         level = modLine.Level;
         mod = modLine.Mod.Replace(Strings.LF, " ");
         modTooltip = modLine.Mod;
-        tagVisible = tagTip?.Count > 0;
         current = modLine.Current;
         tierKind = modLine.TierAffixKind;
         tier = modLine.Tier;
@@ -204,6 +203,14 @@ public sealed partial class ModLineViewModel : ViewModelBase
             foreach (var tip in modLine.TierList)
             {
                 tierTip.Add(tip);
+            }
+        }
+        if (modLine.TagList?.Count > 0)
+        {
+            tagVisible = true;
+            foreach (var tag in modLine.TagList)
+            {
+                tagTip.Add(tag);
             }
         }
 

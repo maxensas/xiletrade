@@ -8,7 +8,7 @@ namespace Xiletrade.Library.Services;
 
 public class FileLoggerService : IFileLoggerService
 {
-    private readonly string _filePath = Path.GetFullPath("Xiletrade.log");
+    private readonly string _filePath = Path.Combine(AppContext.BaseDirectory, "Xiletrade.log");
     private readonly SemaphoreSlim _semaphore = new(1, 1);
 
     public FileLoggerService(ILogger<FileLoggerService> logger)

@@ -112,12 +112,12 @@ jobs:
           body: |
             ${{ github.event.pull_request.body }}
 
-            You can report an issue if you are experiencing any abnormal behaviour : 
+            You can report an issue if you are experiencing any abnormal behaviour :  
 
-            https://github.com/maxensas/xiletrade/issues
+            [Show github issues](https://github.com/maxensas/xiletrade/issues)  
 
             `Release info`
-            - Related PR : ${{ github.event.pull_request.html_url }}
+            - Related PR : [Show details](${{ github.event.pull_request.html_url }})
   
             `SHA256 Checksums`
             - Xiletrade : ${{ steps.hash.outputs.sha256 }}

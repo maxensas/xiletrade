@@ -146,8 +146,7 @@ public class TokenService : ITokenService
                 var cipherBytes = allBytes[16..];
                 var plainBytes = decryptor.TransformFinalBlock(cipherBytes, 0, cipherBytes.Length);
                 
-                var json = Encoding.UTF8.GetString(plainBytes);
-                var token = dm.Json.Deserialize<OAuthToken>(json);
+                var token = dm.Json.Deserialize<OAuthToken>(plainBytes);
                 if (token is not null && token.IsExpired())
                 {
                     DeleteToken(useCustom);
@@ -167,7 +166,7 @@ public class TokenService : ITokenService
             {
                 EnsureAppFolder();
 
-                var json = dm.Json.Serialize<OAuthToken>(token);
+                var plainBytes = dm.Json.SerializeToUtf8<OAuthToken>(token);
 
                 var key = GetOrCreateKey();
                 using var aes = Aes.Create();
@@ -175,7 +174,6 @@ public class TokenService : ITokenService
                 aes.GenerateIV();
 
                 var encryptor = aes.CreateEncryptor();
-                var plainBytes = Encoding.UTF8.GetBytes(json);
                 var cipherBytes = encryptor.TransformFinalBlock(plainBytes, 0, plainBytes.Length);
 
                 var path = GetPath(useCustom);

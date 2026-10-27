@@ -12,6 +12,7 @@ using Xiletrade.Library.Models.GitHub.Contract;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Services.Linux;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.Shared.Interop.Windows;
@@ -28,6 +29,7 @@ namespace Xiletrade.UI.Avalonia.Services;
 public class ViewManager : IViewManager
 {
     private readonly IServiceProvider _sp;
+    private readonly IUIService _ui;
 
     // View content cleared upon closing
     private IViewBase _configView;
@@ -43,9 +45,10 @@ public class ViewManager : IViewManager
 
     public nint MainHandle { get; private set; }
 
-    public ViewManager(IServiceProvider sp, ILogger<ViewManager> logger)
+    public ViewManager(IServiceProvider sp, IUIService ui, ILogger<ViewManager> logger)
     {
         _sp = sp;
+        _ui = ui;
 
 #if DEBUG
         logger.LogInformation("Service launched");
@@ -81,7 +84,11 @@ public class ViewManager : IViewManager
         _editorView.Show();
     }
 
-    public void ShowMainView() => MainView.Show();
+    public void ShowMainView()
+    {
+        var view = MainView;
+        _ui.Invoke(view.Show);
+    }
 
     public void ShowRegexView()
     {
@@ -160,7 +167,7 @@ public class ViewManager : IViewManager
         }
         if (OperatingSystem.IsLinux())
         {
-            //TODO
+            return GetLinuxPoeState();
         }
         return PoeState.NotLaunched;
     }
@@ -173,7 +180,37 @@ public class ViewManager : IViewManager
         }
         if (OperatingSystem.IsLinux())
         {
-            //TODO
+            CloseLinuxOpenedView();
+        }
+    }
+
+    [SupportedOSPlatform("linux")]
+    private PoeState GetLinuxPoeState() => _sp.GetRequiredService<LinuxDesktopService>().GetPoeState();
+
+    /// <summary>
+    /// Closes the first opened window of Xiletrade (config, editor, whisper, popup, regex), or the main view.
+    /// </summary>
+    /// <remarks>
+    /// The windows are found through Avalonia and not through their title on the screen : it also works without X11.
+    /// <br/>There is no key relay to the game like on Windows : the key would come back to the grabbed shortcut.
+    /// </remarks>
+    [SupportedOSPlatform("linux")]
+    private void CloseLinuxOpenedView()
+    {
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            foreach (var win in desktop.Windows)
+            {
+                if (win.Name is not null && Array.IndexOf(Strings.WindowName.XiletradeWindowList, win.Name) >= 0)
+                {
+                    win.Close();
+                    return;
+                }
+            }
+        }
+        if (IsVisibleMainView())
+        {
+            CloseMainView();
         }
     }
 

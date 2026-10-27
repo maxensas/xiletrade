@@ -8,23 +8,14 @@ using Xiletrade.Library.ViewModels.Main;
 
 namespace Xiletrade.Library.Models.Application.Feature;
 
-internal sealed class GetItemInfoFeature(ILogger<GetItemInfoFeature> logger, INetService net, 
-    IViewManager view, IPoeActionService poe, IClipboardService clipboard,
+internal sealed class GetItemInfoFeature(ILogger<GetItemInfoFeature> logger, 
+    IPoeActionService poe, IClipboardService clipboard,
     MainViewModel vm, ConfigShortcut shortcut) : BaseFeature(shortcut)
 {
     internal override void Launch()
     {
         try
         {
-            if (net.TradeCooldown is not null && net.TradeCooldown.IsEnabled)
-            {
-                if (_shortcut.Fonction is Strings.Feature.run)
-                {
-                    view.ShowMainView();
-                }
-                return;
-            }
-
             vm.StopWatch.Restart();
 
             poe.CopyItemDetail();

@@ -189,7 +189,7 @@ public sealed partial class BulkViewModel : ViewModelBase
         }
 
         string url = Strings.Url.Exchange + league + "/?q="
-            + Uri.EscapeDataString(_dm.Json.Serialize<Models.Poe.Contract.Exchange>(change));
+            + Common.EscapeDataString(_dm.Json.SerializeToUtf8<Models.Poe.Contract.Exchange>(change));
         try
         {
             Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });

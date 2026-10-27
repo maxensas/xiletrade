@@ -118,6 +118,8 @@
       SourceFiles="$(UpdaterPublishDir)Xiletrade.Updater.exe"
       DestinationFiles="$(PublishDir)Update.exe" />
   </Target>
+  <ItemGroup>
+    <ProjectReference Include="..\Xiletrade.Updater\Xiletrade.Updater.csproj" ReferenceOutputAssembly="false"
+                      Private="false" SkipGetTargetFrameworkProperties="true" />
+  </ItemGroup>
 </Project>
-
-

@@ -124,7 +124,7 @@ public sealed partial class MainViewModel : ViewModelBase
 
     [RelayCommand]
     private void ExpanderCollapse(object commandParameter)
-        => _dm.SaveConfiguration(_dm.Json.Serialize<ConfigData>(_dm.Config));
+        => _dm.SaveConfiguration(_dm.Json.SerializeToUtf8<ConfigData>(_dm.Config));
 
     [RelayCommand]
     private void OpenWiki(object commandParameter) 
@@ -165,19 +165,19 @@ public sealed partial class MainViewModel : ViewModelBase
         var priceCheck = Form.Tab.QuickSelected || Form.Tab.DetailSelected;
         if (priceCheck || Form.Tab.CustomSearchSelected)
         {
-            var sEntity = GetSerialized(market, customSearch: !priceCheck);
-            if (!string.IsNullOrEmpty(sEntity))
+            var json = GetSerialized(market, customSearch: !priceCheck);
+            if (json is { Length: > 0 })
             {
-                await OpenSearchTask(sEntity, league);
+                await OpenSearchTask(json, league);
             }
         }
     }
 
-    private async Task OpenSearchTask(string sEntity, string league)
+    private async Task OpenSearchTask(ReadOnlyMemory<byte> json, string league)
     {
         try
         {
-            var result = await _net.SendHTTP(sEntity, Strings.Api.Trade + league, Client.Trade);
+            var result = await _net.SendHTTPBytes(json, Strings.Api.Trade + league, Client.Trade);
             if (result.Length > 0)
             {
                 var resultData = _dm.Json.Deserialize<ResultData>(result);
@@ -323,7 +323,7 @@ public sealed partial class MainViewModel : ViewModelBase
         }
     }
 
-    internal string GetSerialized(string market, bool useSaleType = false, bool customSearch = false)
+    internal byte[] GetSerialized(string market, bool useSaleType = false, bool customSearch = false)
     {
         var isPoe2 = _dm.Config.Options.GameVersion is 1;
         var xItem = new XiletradeItem(_dm, Form, customSearch);

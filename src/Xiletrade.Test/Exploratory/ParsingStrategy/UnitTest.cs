@@ -33,36 +33,24 @@ public class UnitTest
         for(int i = 0; i < _cultures.Length; i++)
         {
             var fullpath = _path + _cultures[i] + @"\" + "ParsingRules.json";
-            var fs = new FileStream(fullpath, FileMode.Open);
-            using (StreamReader reader = new(fs))
-            {
-                fs = null;
-                var json = reader.ReadToEnd();
-                var parserData = serializer.Deserialize<ParserData>(json);
+            var parserData = serializer.Deserialize<ParserData>(File.ReadAllBytes(fullpath));
 
-                List<(string oldMod, string newMod)> mods = new();
-                foreach (var mod in parserData.Mods)
+            List<(string oldMod, string newMod)> mods = new();
+            foreach (var mod in parserData.Mods)
+            {
+                if (mod.Replace is "equals")
                 {
-                    if (mod.Replace is "equals")
-                    {
-                        mods.Add((mod.Old, mod.New));
-                    }
+                    mods.Add((mod.Old, mod.New));
                 }
-                AllParserMods[i] = mods;
             }
+            AllParserMods[i] = mods;
 
             fullpath = _path + _cultures[i] + @"\" + "Filters.json";
-            fs = new FileStream(fullpath, FileMode.Open);
-            using (StreamReader reader = new(fs))
-            {
-                fs = null;
-                var json = reader.ReadToEnd();
-                var filterData = serializer.Deserialize<FilterData>(json);
+            var filterData = serializer.Deserialize<FilterData>(File.ReadAllBytes(fullpath));
 
-                AllFilterEntries[i] = from result in filterData.Result
-                                from filter in result.Entries
-                                select filter.Text;
-            }
+            AllFilterEntries[i] = from result in filterData.Result
+                            from filter in result.Entries
+                            select filter.Text;
         }
     }
 

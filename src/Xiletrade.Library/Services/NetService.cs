@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Poe.Contract;
@@ -21,8 +21,6 @@ public class NetService : INetService
 
     private const string USERAGENT = "User-Agent";
     private const int MAX_CONCURRENT_REQUEST = 5;
-
-    public TradeCooldownHandler TradeCooldown { get; }
 
     private readonly HttpClient _default = new(new SocketsHttpHandler
     {
@@ -68,16 +66,18 @@ public class NetService : INetService
 
     private readonly SemaphoreSlim _throttle = new(MAX_CONCURRENT_REQUEST);
 
+    private readonly ConcurrentDictionary<string, RateLimitInfo> _rateLimits = new(StringComparer.Ordinal);
+
     public NetService(ILogger<NetService> logger, ITokenService token, 
-        DataManagerService dm, IUIService ui)
+        DataManagerService dm)
     {
         _token = token;
         _dm = dm;
 
-        //TradeCooldown = new(ui); // disabled for now
-
         _default.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
         _update.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
+        // same as the trade client: no connection kept idle, so no background read to abort when it is closed
+        _update.DefaultRequestHeaders.ConnectionClose = true;
         _poePrice.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
         _ninja.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
         _gitHub.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
@@ -104,6 +104,18 @@ public class NetService : INetService
         }
     }
 
+    public RateLimitInfo GetRateLimit(string policy)
+        => policy is not null && _rateLimits.TryGetValue(policy, out var info) ? info : null;
+
+    private void UpdateRateLimit(HttpResponseMessage response)
+    {
+        var info = RateLimitInfo.Read(response.Headers);
+        if (info is not null && RateLimitInfo.IsTradePolicy(info.Policy))
+        {
+            _rateLimits[info.Policy] = info;
+        }
+    }
+
     private bool TryAddCookie(SocketsHttpHandler handler)
     {
         if (_token.TryGetToken(out var token, useCustom: true) && RegexUtil.MD5().IsMatch(token))
@@ -118,45 +130,40 @@ public class NetService : INetService
     }
 
     /// <summary>
-    /// Send Json request using GET method.
+    /// Send Json request using GET method, the body is returned as UTF-8 bytes.
     /// </summary>
-    /// <param name="urlString"></param>
-    /// <param name="idClient"></param>
-    /// <returns></returns>
-    public virtual Task<string> SendHTTP(string urlString, Client idClient)
-        => SendHTTP(null, urlString, idClient);
+    public virtual Task<byte[]> SendHTTPBytes(string urlString, Client idClient)
+        => SendHTTPBytes(ReadOnlyMemory<byte>.Empty, urlString, idClient);
 
     /// <summary>
-    /// Send Json request using POST method.
+    /// Send Json request using POST method (GET when <paramref name="json"/> is empty), the body is returned as UTF-8 bytes.
     /// </summary>
-    /// <param name="entity"></param>
+    /// <param name="json">Json body, in UTF-8.</param>
     /// <param name="urlString"></param>
     /// <param name="idClient"></param>
+    /// <param name="isXml"></param>
     /// <returns></returns>
-    public virtual async Task<string> SendHTTP(string entity, string urlString, Client idClient, bool isXml = false)
+    public virtual async Task<byte[]> SendHTTPBytes(ReadOnlyMemory<byte> json, string urlString, Client idClient, bool isXml = false)
     {
-        var result = string.Empty;
+        var result = Array.Empty<byte>();
         var client = GetClient(idClient);
         var isTrade = client == Trade;
-        if (isTrade && !isXml)
-        {
-            TradeCooldown?.ApplyCooldown();
-        }
-        
+
         await _throttle.WaitAsync();
         try
         {
             using var request = new HttpRequestMessage()
             {
                 RequestUri = new Uri(urlString),
-                Method = entity is not null ? HttpMethod.Post : HttpMethod.Get,
+                Method = !json.IsEmpty ? HttpMethod.Post : HttpMethod.Get,
             };
             request.Headers.ProxyAuthorization = null;
             //request.Headers.UserAgent.Add(new ProductInfoHeaderValue(Strings.Net.UserAgent));
-            if (entity is not null)
+            if (!json.IsEmpty)
             {
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                request.Content = new StringContent(entity, Encoding.UTF8, "application/json");
+                request.Content = new ReadOnlyMemoryContent(json);
+                request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json") { CharSet = "utf-8" };
             }
             if (isXml)
             {
@@ -168,19 +175,19 @@ public class NetService : INetService
             }
 
             using var response = await client.SendAsync(request).ConfigureAwait(false);
-            if (response.Content is not null)
-            {
-                result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            }
             if (isTrade)
             {
-                TradeCooldown?.HandleTradeRateLimit(response);
+                UpdateRateLimit(response);
+            }
+            if (response.Content is not null)
+            {
+                result = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
             }
             response.EnsureSuccessStatusCode(); // throw HttpRequestException if response failed.
         }
         catch (HttpRequestException ex)
         {
-            if (isTrade && !string.IsNullOrEmpty(result))
+            if (isTrade && result.Length > 0)
             {
                 var message = _dm.Json.Deserialize<NetResponse>(result)?.Error?.Message;
                 if (!string.IsNullOrEmpty(message))
@@ -226,8 +233,8 @@ public class NetService : INetService
 
     public async Task<T> GetFromJsonAsync<T>(string urlString, Client idClient) where T : class, new()
     {
-        var result = await SendHTTP(urlString, idClient);
-        if (!string.IsNullOrEmpty(result))
+        var result = await SendHTTPBytes(urlString, idClient);
+        if (result.Length > 0)
         {
             return _dm.Json.Deserialize<T>(result);
         }

@@ -5,6 +5,6 @@ namespace Xiletrade.Library.Models.Poe.Domain.Interface;
 
 internal interface IJsonDataFactory
 {
-    string CreateAndSerialize(XiletradeItem xItem, ItemData item, bool useSaleType, string market);
-    string CreateAndSerialize(XiletradeItem xItem, UniqueUnidentified unid, string market, string search);
+    byte[] CreateAndSerialize(XiletradeItem xItem, ItemData item, bool useSaleType, string market);
+    byte[] CreateAndSerialize(XiletradeItem xItem, UniqueUnidentified unid, string market, string search);
 }

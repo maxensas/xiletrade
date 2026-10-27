@@ -1,0 +1,62 @@
+{
+  "game": 1,
+  "tables": [
+    {
+      "name": "itemclasses",
+      "rowLength": 153,
+      "key": "Id",
+      "columns": [
+        { "name": "Id", "type": "String", "offset": 0 },
+        { "name": "Name", "type": "String", "offset": 8 }
+      ]
+    },
+    {
+      "name": "baseitemtypes",
+      "rowLength": 374,
+      "key": "Id",
+      "columns": [
+        { "name": "Id", "type": "String", "offset": 0 },
+        { "name": "ItemClassesKey", "type": "ForeignRow", "offset": 8, "references": "itemclasses" },
+        { "name": "Name", "type": "String", "offset": 32 },
+        { "name": "InheritsFrom", "type": "String", "offset": 40 }
+      ]
+    },
+    {
+      "name": "mods",
+      "rowLength": 654,
+      "key": "Id",
+      "columns": [
+        { "name": "Id", "type": "String", "offset": 0 },
+        { "name": "Level", "type": "Int32", "offset": 26 },
+        { "name": "Name", "type": "String", "offset": 98 }
+      ]
+    },
+    {
+      "name": "monstervarieties",
+      "rowLength": 794,
+      "key": "Id",
+      "columns": [
+        { "name": "Id", "type": "String", "offset": 0 },
+        { "name": "Name", "type": "String", "offset": 260 }
+      ]
+    },
+    {
+      "name": "words",
+      "rowLength": 64,
+      "key": "Text",
+      "columns": [
+        { "name": "Text", "type": "String", "offset": 4 },
+        { "name": "Text2", "type": "String", "offset": 48 }
+      ]
+    },
+    {
+      "name": "gemeffects",
+      "rowLength": 132,
+      "key": "Id",
+      "columns": [
+        { "name": "Id", "type": "String", "offset": 0 },
+        { "name": "Name", "type": "String", "offset": 8 }
+      ]
+    }
+  ]
+}

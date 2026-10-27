@@ -91,7 +91,7 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
             PoepricesList.Clear();
             PoepricesList.Add(new("Waiting response from poeprices.info ..."));
 
-            var result = await _net.SendHTTP(Strings.Api.PoePrice + _dm.Config.Options.League
+            var result = await _net.SendHTTPBytes(Strings.Api.PoePrice + _dm.Config.Options.League
                 + "&i=" + Convert.ToBase64String(Encoding.UTF8.GetBytes(_vm.ClipboardText)), Client.PoePrice);
             if (result is null || result.Length is 0)
             {
@@ -175,9 +175,9 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
 
             try
             {
-                var sEntity = $"{{\"token\":\"{saleInfo.HideoutToken}\"}}";
+                var json = Encoding.UTF8.GetBytes($"{{\"token\":\"{saleInfo.HideoutToken}\"}}");
                 //var urlRef = Strings.TradeUrl + _vm.Form.League[_vm.Form.LeagueIndex] + "/" + _vm.Result.Data.ResultData.Id;
-                var result = await _net.SendHTTP(sEntity, Strings.Api.Whisper, Client.Trade, isXml: true);
+                var result = await _net.SendHTTPBytes(json, Strings.Api.Whisper, Client.Trade, isXml: true);
                 if (result.Length > 0)
                 {
                     //{"success":true}
@@ -314,18 +314,19 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
                 entity[1] = [.. curGetList];
             }
 
-            if (entity[0] is null)
-            {
-                entity[0] = new() { _vm.GetSerialized(_vm.Form.Market[_vm.Form.MarketIndex], useSaleType: true) };
-            }
+            var isTradeSearch = entity[0] is null;
+            var tradeJson = isTradeSearch ? _vm.GetSerialized(_vm.Form.Market[_vm.Form.MarketIndex], useSaleType: true) : null;
             var isCurrency = _vm.Item is not null && _vm.Item.State.ExchangeCurrency; // quick or detail
             var isItemExchange = _vm.Form.Tab.BulkSelected || _vm.Form.Tab.ShopSelected;
             var usePoeApi = isItemExchange || !isCurrency;
             ResultBar resultBar = null;
             if (usePoeApi)
             {
-                var priceInfo = new PricingInfo(entity, _vm.Form.League[_vm.Form.LeagueIndex]
-                    , _vm.Form.Market[_vm.Form.MarketIndex], minimumStock, maxFetch, _vm.Form.SameUser, _vm.Form.Tab.BulkSelected);
+                var league = _vm.Form.League[_vm.Form.LeagueIndex];
+                var market = _vm.Form.Market[_vm.Form.MarketIndex];
+                var priceInfo = isTradeSearch
+                    ? new PricingInfo(tradeJson, league, market, maxFetch, _vm.Form.SameUser)
+                    : new PricingInfo(entity, league, market, minimumStock, maxFetch, _vm.Form.SameUser, _vm.Form.Tab.BulkSelected);
                 resultBar = await UpdateWithApi(priceInfo);
             }
             RefreshResultBar(isItemExchange, resultBar ?? new(state: ResultBarSate.Unimplemented));
@@ -420,12 +421,12 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
     internal async Task<ResultBar> UpdateWithApi(PricingInfo pricingInfo)
     {
         string urlApi = string.Empty;
-        string sEntity = null;
+        ReadOnlyMemory<byte> json = default;
         try
         {
             if (pricingInfo.IsTradeEntity)
             {
-                sEntity = pricingInfo.TradeEntity;
+                json = pricingInfo.TradeJson;
                 urlApi = Strings.Api.Trade;
                 Data.StatDetail = new();
             }
@@ -438,16 +439,16 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
                 change.ExchangeData.Have = pricingInfo.ExchangeHave;
                 change.ExchangeData.Want = pricingInfo.ExchangeWant;
 
-                sEntity = _dm.Json.Serialize<Models.Poe.Contract.Exchange>(change);
+                json = _dm.Json.SerializeToUtf8<Models.Poe.Contract.Exchange>(change);
                 urlApi = Strings.Api.Exchange;
                 Data.StatBulk = new();
             }
-            if (sEntity is null || sEntity.Length is 0)
+            if (json.IsEmpty)
             {
                 return new ResultBar(state: ResultBarSate.NoData);
             }
             var token = _vm.TaskManager.GetPriceToken(initCts: true);
-            _vm.TaskManager.PriceTask = _poeApi.RunPriceTask(_vm.Result, pricingInfo, sEntity, urlApi, token);
+            _vm.TaskManager.PriceTask = _poeApi.RunPriceTask(_vm.Result, pricingInfo, json, urlApi, token);
             return await _vm.TaskManager.PriceTask;
         }
         catch (Exception ex)

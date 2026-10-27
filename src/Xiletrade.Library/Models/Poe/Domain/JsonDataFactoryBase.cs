@@ -10,7 +10,7 @@ using Xiletrade.Library.Shared;
 namespace Xiletrade.Library.Models.Poe.Domain;
 
 /// <summary>
-/// Abstract class used to generate JSON objects for POE 1 and 2 and allow string serialization.
+/// Abstract class used to generate JSON objects for POE 1 and 2 and allow UTF-8 serialization.
 /// </summary>
 /// <typeparam name="T">Concrete JSON contract type (<see cref="JsonData"/> or <see cref="JsonDataTwo"/>).</typeparam>
 /// <param name="dm"></param>
@@ -22,11 +22,11 @@ internal abstract class JsonDataFactoryBase<T>(DataManagerService dm) : IJsonDat
 
     internal abstract T Create(XiletradeItem xItem, ItemData item, bool useSaleType, string market);
 
-    public string CreateAndSerialize(XiletradeItem xItem, ItemData item, bool useSaleType, string market)
-        => _dm.Json.Serialize<T>(Create(xItem, item, useSaleType, market));
+    public byte[] CreateAndSerialize(XiletradeItem xItem, ItemData item, bool useSaleType, string market)
+        => _dm.Json.SerializeToUtf8<T>(Create(xItem, item, useSaleType, market));
 
-    public string CreateAndSerialize(XiletradeItem xItem, UniqueUnidentified unid, string market, string search)
-        => _dm.Json.Serialize<T>(Create(xItem, unid, market, search));
+    public byte[] CreateAndSerialize(XiletradeItem xItem, UniqueUnidentified unid, string market, string search)
+        => _dm.Json.SerializeToUtf8<T>(Create(xItem, unid, market, search));
 
     // Utility
     protected static string GetAffixType(ReadOnlySpan<char> inputType) => inputType switch

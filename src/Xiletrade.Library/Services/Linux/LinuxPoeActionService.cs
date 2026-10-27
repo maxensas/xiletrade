@@ -1,158 +1,178 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using System.IO;
 using System.Runtime.Versioning;
+using System.Threading;
+using Xiletrade.Library.Models.Application.Adapter;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Services.Windows;
+using Xiletrade.Library.Services.Linux.Helper;
 
 namespace Xiletrade.Library.Services.Linux;
 
-//TOTEST
+/// <summary>
+/// Provides clipboard operations for interacting with Path of Exile.
+/// </summary>
+/// <remarks>
+/// Keys are sent to the focused window with the XTest extension of the X server (X11 and XWayland),
+/// where the game runs through Wine / Proton. Same sequences as the Windows implementation.
+/// </remarks>
 [SupportedOSPlatform("linux")]
 public sealed class LinuxPoeActionService : IPoeActionService
 {
-    private readonly string _xdotoolPath;
-    private readonly string _wtypePath;
-    private readonly bool _isWayland;
+    private const int CopyPollDelayMs = 20;
 
-    public (string Key, ushort Code) ChatKey { get; set; }
+    private readonly DataManagerService _dm;
+    private readonly LinuxDesktopService _desktop;
+    private readonly LinuxClipboardAdapter _clipboard = new();
 
-    public LinuxPoeActionService()
+    public LinuxPoeActionService(ILogger<LinuxPoeActionService> logger, DataManagerService dm,
+        LinuxDesktopService desktop)
     {
-        _isWayland = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WAYLAND_DISPLAY"));
+        _dm = dm;
+        _desktop = desktop;
 
-        _xdotoolPath = FindTool("xdotool");
-        _wtypePath = FindTool("wtype");
-
-        if (_isWayland && _wtypePath is null)
-        {
-            WarnMissingTool("wtype", "sudo apt install wtype");
-        }
-        else if (!_isWayland && _xdotoolPath is null)
-        {
-            WarnMissingTool("xdotool", "sudo apt install xdotool");
-        }
+#if DEBUG
+        logger.LogInformation("Service launched");
+#endif
     }
+
+    private bool FastInputs => _dm.Config.Options.FastInputs;
+
+    private int InputDelay => FastInputs ? 10 : 20;
+    private int ClipboardDelay => FastInputs ? 1 : 20;
+
+    // The game takes some time to publish the copied text to the X selection.
+    private int CopyTimeout => FastInputs ? 100 : 250;
+
+    private static ushort ControlKey => X11Keys.VkLControl;
+
+    public (string Key, ushort Code) ChatKey { get; set; } = (string.Empty, 0);
 
     public void PasteClipboard()
     {
-        // Ctrl+V + Enter
-        SendKeys("ctrl+v", "Return");
+        BeginKeys();
+        Paste();
     }
 
     public void CleanChatAndPasteClipboard()
     {
-        SendKeys($"{ChatKey.Key}+Home", "Delete");
-        PasteClipboard();
+        BeginKeys();
+        SendModifiedKeys([ControlKey, X11Keys.VkRShift], ChatKey.Code);
+        SendKey(X11Keys.VkBack, delay: !FastInputs);
+        Paste();
     }
 
     public void ReplyLastWhisper()
     {
-        SendKeys($"ctrl+{ChatKey.Key}");
-        PasteClipboard();
+        BeginKeys();
+        SendModifiedKey(ControlKey, ChatKey.Code);
+        Paste();
     }
 
+    // not used anymore
     public void CopyItemDetailAdvanced()
     {
-        SendKeys("ctrl+alt+c");
+        BeginKeys();
+        SendModifiedKeys([ControlKey, X11Keys.VkMenu], X11Keys.VkC, delay: true);
+        Thread.Sleep(ClipboardDelay);
     }
 
     public void CopyItemDetail()
     {
-        SendKeys("ctrl+c");
+        BeginKeys();
+        SendModifiedKey(ControlKey, X11Keys.VkC, delay: true);
+        Thread.Sleep(ClipboardDelay);
+        WaitForCopiedText();
     }
 
     public void CutLastWhisperToClipboard()
     {
-        SendKeys($"ctrl+{ChatKey.Key}", "Shift+Home", "ctrl+x");
+        BeginKeys();
+        SendModifiedKey(ControlKey, ChatKey.Code, delay: !FastInputs);
+        SendModifiedKey(X11Keys.VkRShift, X11Keys.VkHome, delay: !FastInputs);
+        SendModifiedKey(ControlKey, X11Keys.VkX, delay: true);
+        WaitForCopiedText();
     }
 
     public void CleanPoeSearchBarAndPasteClipboard()
     {
-        SendKeys("ctrl+f", "Delete");
-        PasteClipboard();
+        BeginKeys();
+        SendModifiedKey(ControlKey, X11Keys.VkF, delay: !FastInputs);
+        SendKey(X11Keys.VkDelete, delay: !FastInputs);
+        Paste();
     }
 
-    // ---------------- Helpers ----------------
+    // -------- Sequences --------
 
-    private void SendKeys(params string[] sequences)
+    private void Paste()
     {
-        foreach (var key in sequences)
+        SendModifiedKey(ControlKey, X11Keys.VkV, delay: true);
+        SendKey(X11Keys.VkReturn, delay: !FastInputs);
+    }
+
+    /// <summary>
+    /// The modifiers held by the user (keys of the shortcut) must not alter the keys sent to the game.
+    /// </summary>
+    private void BeginKeys() => _desktop.ReleaseHeldModifiers();
+
+    /// <summary>
+    /// Waits until the game has put text in the clipboard, or for a short time if it does not.
+    /// </summary>
+    private void WaitForCopiedText()
+    {
+        var watch = Stopwatch.StartNew();
+        while (watch.ElapsedMilliseconds < CopyTimeout)
         {
-            if (_isWayland && _wtypePath != null)
+            if (_clipboard.ContainsTextData())
             {
-                RunProcess(_wtypePath, $"--text \"{KeyToString(key)}\"");
+                return;
             }
-            else if (!_isWayland && _xdotoolPath != null)
-            {
-                RunProcess(_xdotoolPath, $"key --clearmodifiers {key}");
-            }
+            Thread.Sleep(CopyPollDelayMs);
         }
     }
 
-    private static string FindTool(string toolName)
+    // -------- Standard Key Input --------
+
+    private void SendKey(ushort vk, bool delay = false)
     {
-        try
+        SendKeyDown(vk, delay);
+        SendKeyUp(vk, delay);
+    }
+
+    private void SendModifiedKey(ushort modifier, ushort vk, bool delay = false)
+    {
+        SendKeyDown(modifier, delay);
+        SendKey(vk, delay);
+        SendKeyUp(modifier, delay);
+    }
+
+    private void SendModifiedKeys(ushort[] modifiers, ushort vk, bool delay = false)
+    {
+        foreach (var modifier in modifiers)
         {
-            var psi = new ProcessStartInfo
-            {
-                FileName = "which",
-                Arguments = toolName,
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            using var process = Process.Start(psi);
-            string path = process?.StandardOutput.ReadLine();
-            process?.WaitForExit();
-
-            return File.Exists(path ?? "") ? path : null;
+            SendKeyDown(modifier, delay);
         }
-        catch
+        SendKey(vk);
+        for (int i = modifiers.Length - 1; i >= 0; i--)
         {
-            return null;
+            SendKeyUp(modifiers[i], delay);
         }
     }
 
-    private static void RunProcess(string command, string args)
+    private void SendKeyUp(ushort vk, bool delay = false)
     {
-        try
+        _desktop.SendKey(vk, press: false);
+        if (delay)
         {
-            var psi = new ProcessStartInfo
-            {
-                FileName = command,
-                Arguments = args,
-                RedirectStandardOutput = false,
-                RedirectStandardError = false,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            using var proc = Process.Start(psi);
-            proc?.WaitForExit();
-        }
-        catch (Exception ex)
-        {
-            Console.Error.WriteLine($"❌ Error running command: {command} {args}\n{ex.Message}");
+            Thread.Sleep(InputDelay);
         }
     }
 
-    private static void WarnMissingTool(string tool, string suggestion)
+    private void SendKeyDown(ushort vk, bool delay = false)
     {
-        Console.Error.WriteLine($"❌ Required tool '{tool}' is not installed.");
-        Console.Error.WriteLine($"👉 You can install it with: {suggestion}");
-    }
-
-    private static string KeyToString(string key)
-    {
-        return key switch
+        _desktop.SendKey(vk, press: true);
+        if (delay)
         {
-            "ctrl+c" => "\u0003", // ETX
-            "ctrl+v" => "\u0016", // SYN
-            "Return" => "\n",
-            "Delete" => "\u007F",
-            _ => key
-        };
+            Thread.Sleep(InputDelay);
+        }
     }
 }

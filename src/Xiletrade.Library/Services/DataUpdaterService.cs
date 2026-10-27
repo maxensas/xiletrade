@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Notification;
@@ -63,10 +62,12 @@ public sealed class DataUpdaterService : IDataUpdaterService
             {
                 if (i < 0 || i >= Strings.Culture.Length) continue;
 
-                taskList.Add(LeaguesUpdate(i));
-                taskList.Add(FilterDataUpdates(i));
-                taskList.Add(CurrencyUpdate(i));
-                taskList.Add(ItemTypeUpdate(i));
+                taskList.Add(PoeUpdate<LeagueData>("leagues", Strings.File.Leagues, "Leagues", i,
+                    arrange: RemoveDuplicateLeagues));
+                taskList.Add(PoeUpdate<FilterData>("stats", Strings.File.Filters, "FilterData", i,
+                    prepare: FixFilterJson, arrange: SortFilterEntries));
+                taskList.Add(PoeUpdate<CurrencyResult>("static", Strings.File.Currency, "Currency", i));
+                taskList.Add(PoeUpdate<ItemTypeResult>("items", Strings.File.Items, "Item type", i));
                 taskList.Add(GithubUpdate<ParserData>(Strings.File.ParsingRules, i));
 
                 if (updateGenerated)
@@ -129,7 +130,7 @@ public sealed class DataUpdaterService : IDataUpdaterService
         {
             if (Uri.TryCreate(Strings.Url.GithubData, UriKind.Absolute, out _))
             {
-                var json = await _net.SendHTTP(Strings.Url.GithubData + Strings.File.AppSettings, Client.GitHub);
+                var json = await _net.SendHTTPBytes(Strings.Url.GithubData + Strings.File.AppSettings, Client.GitHub);
                 var settings = _dm.Json.Deserialize<SettingsData>(json);
                 if (settings is not null)
                 {
@@ -146,123 +147,100 @@ public sealed class DataUpdaterService : IDataUpdaterService
     }
 
     // all private methods
-    private async Task FilterDataUpdates(int idxLang)
+    /// <summary>Fixes the downloaded json, returns null when there is nothing to fix.</summary>
+    private delegate byte[] PrepareJson(ReadOnlySpan<byte> json, int idxLang);
+
+    /// <summary>
+    /// Downloads a data file from the game server (api), and saves it in the language folder.
+    /// </summary>
+    /// <param name="endpoint">Last part of the api url.</param>
+    /// <param name="fileName">Name of the saved file.</param>
+    /// <param name="label">Name of the data, used in the error messages.</param>
+    /// <param name="idxLang">Index of the language (and of the server).</param>
+    /// <param name="prepare">Fixes the downloaded text before it is deserialized.</param>
+    /// <param name="arrange">Arranges the deserialized data before it is saved, returns null to save nothing.</param>
+    private async Task PoeUpdate<T>(string endpoint, string fileName, string label, int idxLang,
+        PrepareJson prepare = null, Func<T, T> arrange = null) where T : class
     {
-        string urlStats = Strings.Api.GetUpdate(idxLang) + "stats";
+        string url = Strings.Api.GetUpdate(idxLang) + endpoint;
         try
         {
-            string path = Path.GetFullPath("Data\\Lang\\");
-            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
+            string path = Path.Combine(DataManagerService.DataDirectory, "Lang");
+            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out _))
             {
-                string sResult = await _net.SendHTTP(urlStats, Client.Update);
-
-                if (sResult.Length > 0)
+                var json = await _net.SendHTTPBytes(url, Client.Update);
+                if (prepare is not null && json.Length > 0)
                 {
-                    if (idxLang is 5) // portuguese
-                    {
-                        sResult = sResult.Replace("\\u000b", string.Empty); // remove line tabulation
-                    }
-                    FilterData filterInfo = _dm.Json.Deserialize<FilterData>(sResult);
-                    if (filterInfo is not null)
-                    {
-                        if (filterInfo.Result.Length > 0) // needed for files comparison following leagues updates.
-                        {
-                            for (int i = 0; i < filterInfo.Result.Length; i++)
-                            {
-                                filterInfo.Result[i].Entries = [.. filterInfo.Result[i].Entries.OrderBy(x => x.ID)];
-                            }
-                        }
-
-                        WriteFile(path, Strings.File.Filters, filterInfo, idxLang);
-                    }
+                    json = prepare(json, idxLang) ?? json;
                 }
+                SaveJsonToFile<T>(json, path, fileName, idxLang, arrange);
             }
         }
         catch (Exception ex)
         {
-            ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[FilterData Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
-                : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : FilterData Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
+            ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + $"[{label} Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
+                : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + $" Server : {label} Update" + Strings.LF + url + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
         }
     }
 
-    private async Task LeaguesUpdate(int idxLang)
+    private static byte[] FixFilterJson(ReadOnlySpan<byte> json, int idxLang)
     {
-        string urlStats = Strings.Api.GetUpdate(idxLang) + "leagues";
-        try
+        // remove line tabulation (portuguese)
+        if (idxLang is not 5)
         {
-            string path = Path.GetFullPath("Data\\Lang\\");
-            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
-            {
-                string sResult = await _net.SendHTTP(urlStats, Client.Update);
-
-                if (sResult.Length > 0)
-                {
-                    LeagueData leaguesInfo = _dm.Json.Deserialize<LeagueData>(sResult);
-                    if (leaguesInfo is not null)
-                    {
-                        List<LeagueResult> leagueList = new();
-                        foreach (var league in leaguesInfo.Result)
-                        {
-                            var checkPresence = leagueList.Where(x => x.Id == league.Id);
-                            if (!checkPresence.Any())
-                            {
-                                leagueList.Add(league);
-                            }
-                        }
-
-                        if (leagueList.Count > 0)
-                        {
-                            leaguesInfo.Result = [.. leagueList];
-
-                            WriteFile(path, Strings.File.Leagues, leaguesInfo, idxLang);
-                        }
-                    }
-                }
-            }
+            return null;
         }
-        catch (Exception ex)
+
+        ReadOnlySpan<byte> tabulation = "\\u000b"u8;
+        int index = json.IndexOf(tabulation);
+        if (index < 0)
         {
-            ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Leagues Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
-                : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : Leagues Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
+            return null;
         }
+
+        var result = new byte[json.Length];
+        int length = 0;
+        while (index >= 0)
+        {
+            json[..index].CopyTo(result.AsSpan(length));
+            length += index;
+            json = json[(index + tabulation.Length)..];
+            index = json.IndexOf(tabulation);
+        }
+        json.CopyTo(result.AsSpan(length));
+        length += json.Length;
+        return result.AsSpan(0, length).ToArray();
     }
 
-    private async Task CurrencyUpdate(int idxLang)
+    // needed for files comparison following leagues updates.
+    private static FilterData SortFilterEntries(FilterData filter)
     {
-        string urlStats = Strings.Api.GetUpdate(idxLang) + "static";
-        try
+        if (filter.Result.Length > 0)
         {
-            string path = Path.GetFullPath("Data\\Lang\\");
-            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
+            for (int i = 0; i < filter.Result.Length; i++)
             {
-                string sResult = await _net.SendHTTP(urlStats, Client.Update);
-                SaveJsonToFile<CurrencyResult>(sResult, path, Strings.File.Currency, idxLang);
+                filter.Result[i].Entries = [.. filter.Result[i].Entries.OrderBy(x => x.ID)];
             }
         }
-        catch (Exception ex)
-        {
-            ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Currency Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
-                : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : Currency Update" + Strings.LF + urlStats + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
-        }
+        return filter;
     }
 
-    private async Task ItemTypeUpdate(int idxLang)
+    private static LeagueData RemoveDuplicateLeagues(LeagueData leagues)
     {
-        string urlItems = Strings.Api.GetUpdate(idxLang) + "items";
-        try
+        List<LeagueResult> leagueList = new();
+        foreach (var league in leagues.Result)
         {
-            string path = Path.GetFullPath("Data\\Lang\\");
-            if (Uri.TryCreate(Strings.Api.GetUpdate(idxLang), UriKind.Absolute, out Uri res)) // res not used
+            if (!leagueList.Exists(x => x.Id == league.Id))
             {
-                string sResult = await _net.SendHTTP(urlItems, Client.Update);
-                SaveJsonToFile<ItemTypeResult>(sResult, path, Strings.File.Items, idxLang);
+                leagueList.Add(league);
             }
         }
-        catch (Exception ex)
+        if (leagueList.Count is 0)
         {
-            ErrorMsg += ex.InnerException is not HttpRequestException ? Strings.LF + "[Item type Update] Exception with Json writting : " + Common.GetInnerExceptionMessages(ex) + Strings.LF
-                : idxLang != 9 ? Strings.LF + GetPoeServer(idxLang) + " Server : Item type Update" + Strings.LF + urlItems + " : " + Common.GetInnerExceptionMessages(ex) + Strings.LF : string.Empty;
+            return null;
         }
+        leagues.Result = [.. leagueList];
+        return leagues;
     }
 
     private async Task GithubUpdate<T>(string fileName, int idxLang = -1) where T : class
@@ -271,10 +249,10 @@ public sealed class DataUpdaterService : IDataUpdaterService
         string urlStats = Strings.Url.GithubData + preffix + fileName;
         try
         {
-            string path = idxLang < 0 ? Path.GetFullPath("Data\\") : Path.GetFullPath("Data\\Lang\\");
+            string path = idxLang < 0 ? DataManagerService.DataDirectory : Path.Combine(DataManagerService.DataDirectory, "Lang");
             if (Uri.TryCreate(Strings.Url.GithubData, UriKind.Absolute, out _))
             {
-                string json = await _net.SendHTTP(urlStats, Client.GitHub);
+                var json = await _net.SendHTTPBytes(urlStats, Client.GitHub);
                 SaveJsonToFile<T>(json, path, fileName, idxLang);
             }
         }
@@ -293,13 +271,17 @@ public sealed class DataUpdaterService : IDataUpdaterService
         return idxLang is 9 ? "TENCENT" : idxLang is 8 ? "GARENA" : "GLOBAL";
     }
 
-    private void SaveJsonToFile<T>(ReadOnlySpan<char> json, string path, string fileName, 
-        int idxLang = -1) where T : class
+    private void SaveJsonToFile<T>(ReadOnlySpan<byte> json, string path, string fileName, 
+        int idxLang = -1, Func<T, T> arrange = null) where T : class
     {
         if (json.IsEmpty)
             return;
 
         var data = _dm.Json.Deserialize<T>(json);
+        if (data is not null && arrange is not null)
+        {
+            data = arrange(data);
+        }
         if (data is null)
             return;
 
@@ -323,7 +305,6 @@ public sealed class DataUpdaterService : IDataUpdaterService
         string filePath = Path.Combine(path, fileName);
 
         // Serialize and write the file
-        using StreamWriter writer = new(filePath, false, Encoding.UTF8);
-        writer.Write(_dm.Json.Serialize<T>(data));
+        DataManagerService.WriteJsonFile(filePath, _dm.Json.SerializeToUtf8<T>(data));
     }
 }

@@ -54,37 +54,10 @@ public sealed class PoeApiService
             int resultCount = dataToFetch.Result.Length;
             if (dataToFetch.Result.Length > 0)
             {
-                int nbFetch = 0;
-                while (nbFetch < maxFetch)
+                var pages = GetFetchPages(dataToFetch, beginFetch, maxFetch, fetchNbMax);
+                if (pages.Count > 0)
                 {
-                    token.ThrowIfCancellationRequested();
-                    var data = new string[fetchNbMax];
-                    if (beginFetch >= dataToFetch.Result.Length)
-                        break;
-
-                    for (int i = 0; i < fetchNbMax; i++)
-                    {
-                        if (beginFetch >= dataToFetch.Result.Length)
-                            break;
-
-                        data[i] = dataToFetch.Result[beginFetch];
-                        nbFetch++;
-                        beginFetch++;
-                    }
-
-                    string url = Strings.Api.Fetch + string.Join(",", data) + "?query=" + dataToFetch.Id;
-
-                    string sResult = await _net.SendHTTP(url, Client.Trade); // use cooldown
-#if DEBUG
-                    _logger.LogInformation("Recovered result from Fetch API..");
-#endif
-                    if (sResult.Length > 0)
-                    {
-                        currencys.Add(FillDetailVm(rVm, hideSameUser, sResult, token));
-#if DEBUG
-                        _logger.LogInformation("Data fetched into vm...");
-#endif
-                    }
+                    beginFetch = await FetchPagesAsync(rVm, pages, beginFetch, hideSameUser, currencys, token);
                 }
             }
 
@@ -117,20 +90,20 @@ public sealed class PoeApiService
     }
 
     internal async Task<ResultBar> RunPriceTask(ResultViewModel rVm, PricingInfo pricingInfo,
-        string sEntity, string urlApi, CancellationToken token)
+        ReadOnlyMemory<byte> json, string urlApi, CancellationToken token)
     {
         try
         {
-            var sResult = await _net.SendHTTP(sEntity, urlApi + pricingInfo.League, Client.Trade); // use cooldown
+            var sResult = await _net.SendHTTPBytes(json, urlApi + pricingInfo.League, Client.Trade); // use cooldown
 
             token.ThrowIfCancellationRequested();
             if (sResult.Length > 0)
             {
-                if (sResult.Contain("total\":false"))
+                if (sResult.AsSpan().IndexOf("total\":false"u8) >= 0)
                 {
                     return new(state: ResultBarSate.BadLeague);
                 }
-                if (sResult.Contain("total\":0"))
+                if (sResult.AsSpan().IndexOf("total\":0"u8) >= 0)
                 {
                     return new(state: ResultBarSate.NoResult);
                 }
@@ -163,8 +136,121 @@ public sealed class PoeApiService
 
     // private
 
+    private readonly record struct FetchPage(string Url, int Count);
+
+    // The response of a fetch tells the requests still allowed : it is only trusted while it is recent.
+    private const int RateLimitMaxAgeMs = 5_000;
+
+    private static List<FetchPage> GetFetchPages(ResultData dataToFetch, int begin, int maxFetch, int pageSize)
+    {
+        var pages = new List<FetchPage>();
+        int nbFetch = 0;
+        while (nbFetch < maxFetch && begin < dataToFetch.Result.Length)
+        {
+            var data = new string[pageSize];
+            int count = 0;
+            while (count < pageSize && begin < dataToFetch.Result.Length)
+            {
+                data[count++] = dataToFetch.Result[begin++];
+            }
+            nbFetch += count;
+            pages.Add(new(Strings.Api.Fetch + string.Join(",", data) + "?query=" + dataToFetch.Id, count));
+        }
+        return pages;
+    }
+
+    /// <summary>
+    /// Fetches the pages of results and fills the view model, in the order of the pages.
+    /// </summary>
+    /// <remarks>
+    /// The rate limit state comes from the response of the search request (read just before the fetch).
+    /// The pages are requested together, as many as the limit allows.
+    /// The pages that are not requested stay available through the 'fetch more' command.
+    /// </remarks>
+    /// <returns>The index of the first result which is not fetched.</returns>
+    private async Task<int> FetchPagesAsync(ResultViewModel rVm, List<FetchPage> pages, int begin,
+        bool hideSameUser, CurrencyFetch currencys, CancellationToken token)
+    {
+        token.ThrowIfCancellationRequested();
+
+        // the fetch policy is the most accurate when it is known, otherwise the state given by the search request is used
+        var limit = _net.GetRateLimit(Strings.Net.TradeFetchRequestLimit);
+        if (limit is null || !limit.IsFresh(RateLimitMaxAgeMs))
+        {
+            limit = _net.GetRateLimit(Strings.Net.TradeSearchRequestLimit);
+        }
+        if (limit is null || !limit.IsFresh(RateLimitMaxAgeMs))
+        {
+            // unknown limit : one page at a time
+            foreach (var page in pages)
+            {
+                token.ThrowIfCancellationRequested();
+                await FetchPageAsync(page.Url);
+                begin += page.Count;
+            }
+            return begin;
+        }
+
+        int count = Math.Clamp(limit.Spare, 1, pages.Count);
+        var requests = new Task<byte[]>[count];
+        for (int i = 0; i < count; i++)
+        {
+            requests[i] = _net.SendHTTPBytes(pages[i].Url, Client.Trade); // use cooldown
+        }
+        try
+        {
+            for (int i = 0; i < count; i++)
+            {
+                token.ThrowIfCancellationRequested();
+                Fill(await requests[i]);
+                begin += pages[i].Count;
+            }
+        }
+        finally
+        {
+            ObserveFaults(requests);
+        }
+        return begin;
+
+        async Task FetchPageAsync(string url)
+        {
+            var sResult = await _net.SendHTTPBytes(url, Client.Trade); // use cooldown
+#if DEBUG
+            _logger.LogInformation("Recovered result from Fetch API..");
+#endif
+            Fill(sResult);
+        }
+
+        void Fill(ReadOnlySpan<byte> sResult)
+        {
+            if (sResult.Length > 0)
+            {
+                currencys.Add(FillDetailVm(rVm, hideSameUser, sResult, token));
+#if DEBUG
+                _logger.LogInformation("Data fetched into vm...");
+#endif
+            }
+        }
+    }
+
+    // A request which is not awaited anymore (cancellation, error on a previous page) must not leave an unobserved exception.
+    private static void ObserveFaults(Task[] requests)
+    {
+        foreach (var request in requests)
+        {
+            if (request.IsFaulted)
+            {
+                _ = request.Exception;
+            }
+            else if (!request.IsCompleted)
+            {
+                _ = request.ContinueWith(static task => _ = task.Exception, TaskContinuationOptions.OnlyOnFaulted);
+            }
+        }
+    }
+
     // TODO: move responsibility to a viewmodel dedicated to Quick and Detail
-    private CurrencyFetch FillDetailVm(ResultViewModel rVm, bool hideSameUser, ReadOnlySpan<char> sResult, CancellationToken token)
+    private CurrencyFetch FillDetailVm(ResultViewModel rVm, bool hideSameUser, ReadOnlySpan<byte> sResult, CancellationToken token)
     {
         var cur = new CurrencyFetch();
         var isPoe2 = _dm.Config.Options.GameVersion is 1;

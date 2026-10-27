@@ -228,16 +228,16 @@
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
                                         <Condition Binding="{Binding IsSelected, ElementName=tabItemExchange}" Value="True"/>
-                                        <Condition Binding="{Binding Path=Form.Bulk.Pay.CurrencyIndex, Converter={StaticResource greaterThanZeroConverter}}" Value="True"/>
-                                        <Condition Binding="{Binding Path=Form.Bulk.Get.CurrencyIndex, Converter={StaticResource greaterThanZeroConverter}}" Value="True"/>
+                                        <Condition Binding="{Binding Path=Form.ItemExchange.Bulk.Pay.CurrencyIndex, Converter={StaticResource greaterThanZeroConverter}}" Value="True"/>
+                                        <Condition Binding="{Binding Path=Form.ItemExchange.Bulk.Get.CurrencyIndex, Converter={StaticResource greaterThanZeroConverter}}" Value="True"/>
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="IsEnabled" Value="True"/>
                                 </MultiDataTrigger>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
                                         <Condition Binding="{Binding IsSelected, ElementName=tabItemShop}" Value="True"/>
-                                        <Condition Binding="{Binding Path=Form.Shop.GetList.Count, Converter={StaticResource greaterThanZeroConverter}}" Value="True"/>
-                                        <Condition Binding="{Binding Path=Form.Shop.PayList.Count, Converter={StaticResource greaterThanZeroConverter}}" Value="True"/>
+                                        <Condition Binding="{Binding Path=Form.ItemExchange.Shop.GetList.Count, Converter={StaticResource greaterThanZeroConverter}}" Value="True"/>
+                                        <Condition Binding="{Binding Path=Form.ItemExchange.Shop.PayList.Count, Converter={StaticResource greaterThanZeroConverter}}" Value="True"/>
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="IsEnabled" Value="True"/>
                                 </MultiDataTrigger>

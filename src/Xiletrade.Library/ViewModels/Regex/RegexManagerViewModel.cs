@@ -84,7 +84,7 @@ public sealed partial class RegexManagerViewModel : ViewModelBase
                 listCfgReg.Add(cfgReg);
             }
             Config.RegularExpressions = [..listCfgReg];
-            var configToSave = _dm.Json.Serialize<ConfigData>(Config);
+            var configToSave = _dm.Json.SerializeToUtf8<ConfigData>(Config);
             _dm.SaveConfiguration(configToSave);
 
             view.Close();

@@ -53,7 +53,7 @@ public sealed partial class StartViewModel : ViewModelBase
 
     //member
     private ConfigData Config { get; set; }
-    private string ConfigBackup { get; set; }
+    private byte[] ConfigBackup { get; set; }
 
     public StartViewModel(DataManagerService dm, LocalizationService localization)
     {
@@ -104,7 +104,7 @@ public sealed partial class StartViewModel : ViewModelBase
 
     private void UpdateConfig()
     {
-        var configToSave = _dm.Json.Serialize<ConfigData>(Config);
+        var configToSave = _dm.Json.SerializeToUtf8<ConfigData>(Config);
         _dm.SaveConfiguration(configToSave);
         _dm.TryInit();
     }

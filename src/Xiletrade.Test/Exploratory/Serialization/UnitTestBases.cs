@@ -19,7 +19,7 @@ public class UnitTestBases : UnitTest<BaseData>
     [Trait("Type", "Exploratory")]
     public void _00_EN_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<BaseData>(Serializable.GetValueOrDefault(Culture[0]));
+        var net = NETSerializer.SerializeToUtf8<BaseData>(Serializable.GetValueOrDefault(Culture[0]));
 
         Assert.Equal(Jsons.GetValueOrDefault(Culture[0]), net);
     }
@@ -28,7 +28,7 @@ public class UnitTestBases : UnitTest<BaseData>
     [Trait("Type", "Exploratory")]
     public void _01_KR_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<BaseData>(Serializable.GetValueOrDefault(Culture[1]));
+        var net = NETSerializer.SerializeToUtf8<BaseData>(Serializable.GetValueOrDefault(Culture[1]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[1]), net);
     }
 
@@ -36,7 +36,7 @@ public class UnitTestBases : UnitTest<BaseData>
     [Trait("Type", "Exploratory")]
     public void _02_FR_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<BaseData>(Serializable.GetValueOrDefault(Culture[2]));
+        var net = NETSerializer.SerializeToUtf8<BaseData>(Serializable.GetValueOrDefault(Culture[2]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[2]), net);
     }
 
@@ -44,7 +44,7 @@ public class UnitTestBases : UnitTest<BaseData>
     [Trait("Type", "Exploratory")]
     public void _03_ES_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<BaseData>(Serializable.GetValueOrDefault(Culture[3]));
+        var net = NETSerializer.SerializeToUtf8<BaseData>(Serializable.GetValueOrDefault(Culture[3]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[3]), net);
     }
 
@@ -52,7 +52,7 @@ public class UnitTestBases : UnitTest<BaseData>
     [Trait("Type", "Exploratory")]
     public void _04_DE_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<BaseData>(Serializable.GetValueOrDefault(Culture[4]));
+        var net = NETSerializer.SerializeToUtf8<BaseData>(Serializable.GetValueOrDefault(Culture[4]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[4]), net);
     }
 
@@ -60,7 +60,7 @@ public class UnitTestBases : UnitTest<BaseData>
     [Trait("Type", "Exploratory")]
     public void _05_BR_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<BaseData>(Serializable.GetValueOrDefault(Culture[5]));
+        var net = NETSerializer.SerializeToUtf8<BaseData>(Serializable.GetValueOrDefault(Culture[5]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[5]), net);
     }
 
@@ -68,7 +68,7 @@ public class UnitTestBases : UnitTest<BaseData>
     [Trait("Type", "Exploratory")]
     public void _06_RU_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<BaseData>(Serializable.GetValueOrDefault(Culture[6]));
+        var net = NETSerializer.SerializeToUtf8<BaseData>(Serializable.GetValueOrDefault(Culture[6]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[6]), net);
     }
 
@@ -76,7 +76,7 @@ public class UnitTestBases : UnitTest<BaseData>
     [Trait("Type", "Exploratory")]
     public void _07_TH_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<BaseData>(Serializable.GetValueOrDefault(Culture[7]));
+        var net = NETSerializer.SerializeToUtf8<BaseData>(Serializable.GetValueOrDefault(Culture[7]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[7]), net);
     }
 
@@ -84,7 +84,7 @@ public class UnitTestBases : UnitTest<BaseData>
     [Trait("Type", "Exploratory")]
     public void _08_TW_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<BaseData>(Serializable.GetValueOrDefault(Culture[8]));
+        var net = NETSerializer.SerializeToUtf8<BaseData>(Serializable.GetValueOrDefault(Culture[8]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[8]), net);
     }
 
@@ -92,7 +92,7 @@ public class UnitTestBases : UnitTest<BaseData>
     [Trait("Type", "Exploratory")]
     public void _09_CN_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<BaseData>(Serializable.GetValueOrDefault(Culture[9]));
+        var net = NETSerializer.SerializeToUtf8<BaseData>(Serializable.GetValueOrDefault(Culture[9]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[9]), net);
     }
 
@@ -100,7 +100,7 @@ public class UnitTestBases : UnitTest<BaseData>
     [Trait("Type", "Exploratory")]
     public void _10_JP_SerializeWithNET()
     {
-        var net = NETSerializer.Serialize<BaseData>(Serializable.GetValueOrDefault(Culture[10]));
+        var net = NETSerializer.SerializeToUtf8<BaseData>(Serializable.GetValueOrDefault(Culture[10]));
         Assert.Equal(Jsons.GetValueOrDefault(Culture[10]), net);
     }
 }
