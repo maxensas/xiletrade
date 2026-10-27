@@ -22,4 +22,4 @@ You can contact me by mail [xiletrade@gmail.com](mailto:xiletrade@gmail.com)
 ### Acknowledgement
 * [PoeTradeSearch](https://github.com/phiDelPark/PoeTradeSearch) as reference project by [파이델 phiDelPark](https://github.com/phiDelPark)  
 * [SharpCompress](https://github.com/adamhathcock/sharpcompress) by [Adam Hathcock](https://github.com/adamhathcock)
-* [Fastenshtein](https://github.com/DanHarltey/Fastenshtein) by [DanHarltey](https://github.com/DanHarltey)
+* [Raffinert.FuzzySharp](https://github.com/Raffinert/FuzzySharp) by [Raffinert](https://github.com/Raffinert)

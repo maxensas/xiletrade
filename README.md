@@ -41,6 +41,6 @@ If you want to share your ideas, you can contribute as a developer by following 
 |---------|---------|
 | [WPF UI](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade.UI.WPF) | [GPLv3](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_Xiletrade) |
 | [Library](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade.Library) | [LGPLv3](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_XiletradeLibrary) |
-| [Json generator](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade.Json) | [MIT](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_XiletradeJson) |
+| [Json generator](https://github.com/maxensas/xiletrade/tree/master/src/Xiletrade.DatToJson) | [GPLv3](https://github.com/maxensas/xiletrade/blob/master/licenses/LICENSE_Xiletrade) |
 
 Xiletrade isn't affiliated with or endorsed by Grinding Gear Games in any way.<br>
