@@ -15,7 +15,8 @@ namespace Xiletrade.Library.Models.Application.Serialization;
 /// <remarks>using System.Text.Json</remarks>
 public sealed class JsonHelper : StringCache
 {
-    private readonly SourceGenerationContext _converterContext;
+    private readonly SourceGenerationContext _converterContext; // all converters + string cache (interning)
+    private readonly SourceGenerationContext _runtimeContext; // all converters, no string cache
     private readonly SourceGenerationContext _defaultContext;
 
     /// <summary>
@@ -41,7 +42,7 @@ public sealed class JsonHelper : StringCache
         (Encoding.UTF8.GetBytes("name:,"), Encoding.UTF8.GetBytes("\"name\":\"\","))
     };
 
-    // List of types for which we want to disable the cache
+    // List of types always handled by the default context (no string cache, base converters)
     // You can easily add more here
     private static readonly HashSet<Type> _excludedTypesFromCache =
         [ typeof(ConfigData), typeof(BulkData)];
@@ -91,6 +92,10 @@ public sealed class JsonHelper : StringCache
         options.Converters.Add(new DoubleJsonConverter());
         options.Converters.Add(new StatusConverter(_defaultContext));
 
+        // Same converters without the cache : the data received at runtime (trade, ninja...) are not interned,
+        // otherwise every unique string (ids, whispers, names) would be kept by the cache until its next reset.
+        _runtimeContext = new(new JsonSerializerOptions(options));
+
         options.Converters.Add(new InterningStringConverter(this)); // cache
         _converterContext = new(options);
     }
@@ -129,9 +134,10 @@ public sealed class JsonHelper : StringCache
     /// </summary>
     /// <param name="utf8Json">Json text, a byte order mark at the beginning is skipped.</param>
     /// <param name="replace">Fixes the known bad data of the api before the deserialization.</param>
-    public T Deserialize<T>(ReadOnlySpan<byte> utf8Json, bool replace = false) where T : class
+    /// <param name="intern">Strings go through the cache (shared between the data loaded together), see <see cref="StringCache"/>.</param>
+    public T Deserialize<T>(ReadOnlySpan<byte> utf8Json, bool replace = false, bool intern = false) where T : class
     {
-        var context = GetContextOrThrow<T>();
+        var context = GetContextOrThrow<T>(intern);
         if (utf8Json.StartsWith(Utf8Bom))
         {
             utf8Json = utf8Json[Utf8Bom.Length..];
@@ -230,15 +236,13 @@ public sealed class JsonHelper : StringCache
         }
     }
 
-    internal SourceGenerationContext GetContextOrThrow<T>() where T : class
+    internal SourceGenerationContext GetContextOrThrow<T>(bool intern = false) where T : class
     {
-        if (_converterContext is null)
+        if (_converterContext is null || _excludedTypesFromCache.Contains(typeof(T)))
         {
             return _defaultContext;
         }
-        return (ShouldUseInterning<T>() ? _converterContext : _defaultContext)
+        return (intern ? _converterContext : _runtimeContext)
             ?? throw new InvalidOperationException("Json not initialized. Call Json.Initialize(...) first.");
     }
-
-    private static bool ShouldUseInterning<T>() => !_excludedTypesFromCache.Contains(typeof(T));
 }

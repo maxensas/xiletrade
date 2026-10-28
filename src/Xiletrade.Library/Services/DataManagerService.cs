@@ -137,7 +137,7 @@ public sealed class DataManagerService
     {
         string langGateway = Path.Combine("Lang", Strings.Culture[gateway]);
         var leagues = LoadConfiguration(Path.Combine(langGateway, Strings.File.Leagues));
-        League = Json.Deserialize<LeagueData>(leagues);
+        League = Json.Deserialize<LeagueData>(leagues, intern: true);
     }
 
     private void Initialize(int forceGameVersion)
@@ -218,6 +218,10 @@ public sealed class DataManagerService
             BaseDataGateway = basesGateway?.Result;
             WordDataGateway = wordsGateway?.Result;
             CurrencyDataGateway = currencyGateway?.Result;
+
+            // The cache only serves the files loaded together (the runtime data do not use it) :
+            // the loaded data keep their shared strings, the table itself is released.
+            Json.ResetCache();
         }
         catch(Exception ex)
         {
@@ -266,7 +270,7 @@ public sealed class DataManagerService
         {
             // ConfigureAwait(false) : the deserialization goes on a thread pool thread, and never waits for the caller thread.
             var json = await File.ReadAllBytesAsync(filePath).ConfigureAwait(false);
-            return Json.Deserialize<T>(json);
+            return Json.Deserialize<T>(json, intern: true);
         }
         catch (Exception ex)
         {
