@@ -3,11 +3,11 @@
 namespace Xiletrade.Library.Models.Application.Serialization;
 
 /// <summary>
-/// Class used to handle a SpanHashMap<string> cache
+/// Class used to handle a <see cref="SpanHashMap"/> cache : one instance by string value, found from its UTF-8 bytes.
 /// </summary>
 public abstract class StringCache
 {
-    private SpanHashMap<string> _cache = new();
+    private SpanHashMap _cache = new();
     private readonly object _lock = new();
 
     public int Count
@@ -21,20 +21,17 @@ public abstract class StringCache
         }
     }
 
-    public string Intern(ReadOnlySpan<char> span)
+    /// <summary>
+    /// Returns the cached string of these UTF-8 bytes (unescaped json text), a string is allocated only the first time.
+    /// </summary>
+    public string Intern(ReadOnlySpan<byte> utf8)
     {
-        if (span.IsEmpty)
+        if (utf8.IsEmpty)
             return string.Empty;
 
         lock (_lock)
         {
-            if (_cache.TryGetValue(span, out var existing))
-            {
-                return existing;
-            }
-
-            string key = span.ToString();
-            return _cache.AddOrGetExisting(key, key);
+            return _cache.GetOrAdd(utf8);
         }
     }
 
