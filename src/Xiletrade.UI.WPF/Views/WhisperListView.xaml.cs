@@ -26,8 +26,9 @@ public partial class WhisperListView : ViewBase
     {
         var scaleFactor = GetDisplayScaleFactor(Strings.WindowName.Whisper);
 
-        this.Left = (System.Windows.Forms.Cursor.Position.X / scaleFactor) - (this.Width / 2);
-        this.Top = (System.Windows.Forms.Cursor.Position.Y / scaleFactor) - (this.Height / 2);
+        Native.GetCursorPos(out var cursor);
+        this.Left = (cursor.X / scaleFactor) - (this.Width / 2);
+        this.Top = (cursor.Y / scaleFactor) - (this.Height / 2);
     }
 
     private void Window_DragWindow(object sender, MouseButtonEventArgs e)

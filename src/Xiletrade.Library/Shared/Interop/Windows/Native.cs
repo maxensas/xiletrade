@@ -12,6 +12,7 @@ public static partial class Native
     public const int WM_KEYUP = 0x0101;
     public const int WM_CLOSE = 0x0010;
     public const int WM_HOTKEY = 0x312;
+    public const uint MONITOR_DEFAULTTONEAREST = 2;
     //public const int WM_CLIPBOARDUPDATE = 0x031D;
     //public const int WM_DRAWCLIPBOARD = 0x0308;
     //public const int WM_CHANGECBCHAIN = 0x030D;
@@ -36,6 +37,31 @@ public static partial class Native
         public nint lpszClassName;   // nint (au lieu de string)
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct POINT
+    {
+        public int X;
+        public int Y;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT
+    {
+        public int Left;
+        public int Top;
+        public int Right;
+        public int Bottom;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MONITORINFO
+    {
+        public int cbSize;
+        public RECT rcMonitor;
+        public RECT rcWork;
+        public uint dwFlags;
+    }
+
     // -------- p/invoke --------
     [LibraryImport("user32.dll", EntryPoint = "FindWindowW", StringMarshalling = StringMarshalling.Utf16)]
     public static partial nint FindWindow(string lpClassName, string lpWindowName);
@@ -48,6 +74,17 @@ public static partial class Native
 
     [LibraryImport("user32.dll")]
     public static partial int GetDpiForWindow(nint hWnd);
+
+    [LibraryImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool GetCursorPos(out POINT lpPoint);
+
+    [LibraryImport("user32.dll")]
+    public static partial nint MonitorFromWindow(nint hwnd, uint dwFlags);
+
+    [LibraryImport("user32.dll", EntryPoint = "GetMonitorInfoW")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static partial bool GetMonitorInfo(nint hMonitor, ref MONITORINFO lpmi);
 
     // internal
     [LibraryImport("kernel32.dll")]
