@@ -160,6 +160,7 @@ public sealed class DataManagerService
             var filterPath = Path.Combine(basePath, lang);
             var englishPath = Path.Combine(basePath, langEn);
             var arrangeVersion = Config.Options.GameVersion;
+            var isEnglish = Config.Options.Language is 0;
 
             var divTiers = Load<DivTiersData>(Path.Combine(basePath, Strings.File.Divination), context);
             var dust = Load<DustData>(Path.Combine(basePath, Strings.File.DustLevel), context);
@@ -175,9 +176,9 @@ public sealed class DataManagerService
             var currency = Load<CurrencyResult>(Path.Combine(filterPath, Strings.File.Currency), context);
             var items = Load<ItemTypeResult>(Path.Combine(filterPath, Strings.File.Items), context);
 
-            var filterEn = LoadFilter(Path.Combine(englishPath, Strings.File.Filters), arrangeVersion, context);
-            var currencyEn = Load<CurrencyResult>(Path.Combine(englishPath, Strings.File.Currency), context);
-            var itemsEn = Load<ItemTypeResult>(Path.Combine(englishPath, Strings.File.Items), context);
+            var filterEn = isEnglish ? filter : LoadFilter(Path.Combine(englishPath, Strings.File.Filters), arrangeVersion, context);
+            var currencyEn = isEnglish ? currency : Load<CurrencyResult>(Path.Combine(englishPath, Strings.File.Currency), context);
+            var itemsEn = isEnglish ? items : Load<ItemTypeResult>(Path.Combine(englishPath, Strings.File.Items), context);
 
             Task<BaseData> basesGateway = null;
             Task<WordData> wordsGateway = null;
@@ -209,7 +210,7 @@ public sealed class DataManagerService
             CurrencyData = currency.Result;
             ItemTypeData = items.Result;
 
-            FilterEn = filterEn.Result ?? new();
+            FilterEn = isEnglish ? Filter : filterEn.Result ?? new();
             CurrencyDataEn = currencyEn.Result;
             ItemTypeDataEn = itemsEn.Result;
 
