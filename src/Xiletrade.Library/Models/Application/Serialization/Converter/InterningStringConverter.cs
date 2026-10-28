@@ -8,18 +8,18 @@ namespace Xiletrade.Library.Models.Application.Serialization.Converter;
 /// <summary>
 /// Reads the json strings through the cache, from their UTF-8 bytes : a known value is neither decoded nor allocated.
 /// </summary>
-public sealed class InterningStringConverter(JsonHelper helper) : JsonConverter<string>
+public sealed class InterningStringConverter(StringCache cache) : JsonConverter<string>
 {
     private const int StackLimit = 256;
 
-    private readonly JsonHelper _helper = helper;
+    private readonly StringCache _cache = cache;
 
     public override string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         // Most values : the bytes of the json are the value itself (no escape), nothing is copied.
         if (!reader.HasValueSequence && !reader.ValueIsEscaped)
         {
-            return _helper.Intern(reader.ValueSpan);
+            return _cache.Intern(reader.ValueSpan);
         }
 
         // Escaped value (\", \u00e9...) : unescaped by the reader into a buffer, the UTF-8 result is never longer than the source.
@@ -29,7 +29,7 @@ public sealed class InterningStringConverter(JsonHelper helper) : JsonConverter<
         try
         {
             int length = reader.CopyString(buffer);
-            return _helper.Intern(buffer[..length]);
+            return _cache.Intern(buffer[..length]);
         }
         finally
         {
