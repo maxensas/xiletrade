@@ -13,7 +13,7 @@ namespace Xiletrade.Updater
         public static void Main(string[] args)
         {
             // The updater works on its current directory : the folder of the application (3rd argument),
-            // whatever the way it was launched (in place or relocated).
+            // whatever the way it was launched (in place, relocated, relaunched as administrator).
             if (args.Length >= 3 && Path.GetDirectoryName(args[2]) is { Length: > 0 } installFolder
                 && Directory.Exists(installFolder))
             {
