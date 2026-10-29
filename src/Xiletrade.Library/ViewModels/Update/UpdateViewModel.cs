@@ -108,8 +108,8 @@ public sealed partial class UpdateViewModel(IUpdateDownloader downloader,
         {
             FileName = exe,
             UseShellExecute = true,
-            Arguments = arguments.ToString(),
-            Verb = "runas" // RunUpdateAsAdmin
+            Arguments = arguments.ToString()
+            // no "runas" : the installation folder is extracted from the archive by the user, who can update it
         };
 
         try

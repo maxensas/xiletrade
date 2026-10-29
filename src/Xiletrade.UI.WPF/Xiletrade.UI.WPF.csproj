@@ -116,6 +116,10 @@
     <Copy
       SourceFiles="$(UpdaterPublishDir)Xiletrade.Updater.exe"
       DestinationFiles="$(PublishDir)Update.exe" />
+    <!-- official native libraries of Avalonia used by the updater (NativeAOT : not linked in the exe) -->
+    <Copy
+      SourceFiles="$(UpdaterPublishDir)av_libglesv2.dll;$(UpdaterPublishDir)libHarfBuzzSharp.dll;$(UpdaterPublishDir)libSkiaSharp.dll"
+      DestinationFolder="$(PublishDir)" />
   </Target>
   <ItemGroup>
     <ProjectReference Include="..\Xiletrade.Updater\Xiletrade.Updater.csproj" ReferenceOutputAssembly="false"

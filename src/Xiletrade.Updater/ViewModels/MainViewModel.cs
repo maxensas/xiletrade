@@ -15,6 +15,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Threading.Tasks;
 using System.Linq;
+using Xiletrade.Updater.Util;
 
 namespace Xiletrade.Updater.ViewModels;
 
@@ -30,7 +31,11 @@ public partial class MainViewModel : ViewModelBase
     private static readonly string _extracting = "Extracting {0}";
     //private static readonly string _fileStillInUseCaption = "Unable to update the file!";
     //private static readonly string _fileStillInUseMessage = "{0} is still open and it is using \"{1}\". Please close the process manually and press Retry.";
-    private static readonly List<string> _listFilesToSkip = new() { "Update.exe", "av_libglesv2.dll", "libHarfBuzzSharp.dll", "libSkiaSharp.dll" };
+    // Run from %LOCALAPPDATA% (see Util/Relocation.cs) : no installed file is locked, none is skipped.
+    // Run in place (relocation failed) : its own files are locked, they are skipped as before.
+    private static readonly List<string> _listFilesToSkip = Relocation.IsRelocated
+        ? new()
+        : new() { "Update.exe", "av_libglesv2.dll", "libHarfBuzzSharp.dll", "libSkiaSharp.dll" };
 
     [ObservableProperty]
     private string installText = "Extracting files...";

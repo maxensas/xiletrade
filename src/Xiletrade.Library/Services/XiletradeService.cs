@@ -37,6 +37,7 @@ public sealed class XiletradeService
     {
         try
         {
+            _ = appUpdater.DeleteUpdaterFolderAsync();
             report.OfferPendingReport();
 
             var options = dm.Config.Options;
