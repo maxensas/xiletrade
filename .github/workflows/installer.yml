@@ -1,0 +1,117 @@
+name: Installer
+
+# Builds the NSIS web installer and publishes it in an immutable pre-release : tag installer-<version>.
+# The setup downloads the latest release when it runs : it does not depend on the application version.
+#
+# The version is computed : last installer-x.y.z tag + the chosen increment (1.0.0 for the first one).
+# Run it once, then only when the installer script changes : a new build is a new file whose SmartScreen
+# reputation (based on the hash of the file) starts over.
+# release.yml attaches the setup of the most recent installer pre-release, unchanged, to every release.
+# A pre-release is never returned by releases/latest : the application updater does not see it.
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Version increment of the installer'
+        type: choice
+        options: [patch, minor, major]
+        default: patch
+
+permissions:
+  contents: write
+
+concurrency:
+  group: installer
+
+jobs:
+  installer:
+    runs-on: ubuntu-latest
+
+    env:
+      INSTALLER: Xiletrade_win-x64_Setup.exe
+      NSIS_SCRIPT: src/Xiletrade.Updater/Installer/Xiletrade.nsi
+      # 7zr.exe (official 7-Zip console) embedded in the setup to extract the archive :
+      # taken from the latest release of the official 7-Zip repository at build time.
+      SEVENZIP_REPO: ip7z/7zip
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      # highest installer-x.y.z among the releases (drafts included) and the tags : never reused
+      - name: Compute installer version
+        id: version
+        env:
+          BUMP: ${{ inputs.bump }}
+        run: |
+          last=$( { gh api --paginate "repos/$GITHUB_REPOSITORY/releases?per_page=100" --jq '.[].tag_name'
+                    gh api --paginate "repos/$GITHUB_REPOSITORY/tags?per_page=100" --jq '.[].name'; } \
+                  | sed -n 's/^installer-\([0-9]\+\.[0-9]\+\.[0-9]\+\)$/\1/p' | sort -u -V | tail -n 1)
+          if [ -z "$last" ]; then
+            version="1.0.0"
+          else
+            IFS=. read -r major minor patch <<< "$last"
+            case "$BUMP" in
+              major) version="$((major + 1)).0.0" ;;
+              minor) version="$major.$((minor + 1)).0" ;;
+              *)     version="$major.$minor.$((patch + 1))" ;;
+            esac
+          fi
+          echo "Last installer : ${last:-none}, new : $version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=installer-$version" >> "$GITHUB_OUTPUT"
+
+      - name: Download 7zr.exe from the latest 7-Zip release
+        id: sevenzip
+        run: |
+          release=$(gh api "repos/$SEVENZIP_REPO/releases/latest")
+          version=$(jq -r '.tag_name' <<< "$release")
+          url=$(jq -r '.assets[] | select(.name == "7zr.exe") | .url' <<< "$release")
+          digest=$(jq -r '.assets[] | select(.name == "7zr.exe") | .digest // empty' <<< "$release")
+          if [ -z "$url" ]; then echo "::error::7zr.exe not found in 7-Zip $version"; exit 1; fi
+          if [ -z "$digest" ]; then echo "::error::No digest for 7zr.exe in 7-Zip $version : integrity cannot be checked"; exit 1; fi
+          curl -fsSL -o "$RUNNER_TEMP/7zr.exe" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/octet-stream" \
+            "$url"
+          actual=$(sha256sum "$RUNNER_TEMP/7zr.exe" | cut -d ' ' -f 1)
+          if [ "${digest#sha256:}" != "$actual" ]; then
+            echo "::error::7zr.exe does not match the digest of 7-Zip $version"; exit 1
+          fi
+          echo "7zr.exe of 7-Zip $version : $actual"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "sha256=$actual" >> "$GITHUB_OUTPUT"
+
+      - name: Install NSIS
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq nsis
+
+      - name: Build installer with NSIS
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          makensis -V3 \
+            -DINSTALLER_VERSION="$VERSION" \
+            -DGITHUB_REPO="$GITHUB_REPOSITORY" \
+            -DSEVENZIP="$RUNNER_TEMP/7zr.exe" \
+            -DOUTFILE="$GITHUB_WORKSPACE/$INSTALLER" \
+            "$NSIS_SCRIPT"
+          sha256sum "$INSTALLER"
+
+      # immutable releases : the asset is attached to a draft, then the release is published
+      - name: Publish installer in the '${{ steps.version.outputs.tag }}' pre-release
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
+          VERSION: ${{ steps.version.outputs.version }}
+          SEVENZIP_VERSION: ${{ steps.sevenzip.outputs.version }}
+          SEVENZIP_SHA256: ${{ steps.sevenzip.outputs.sha256 }}
+        run: |
+          gh release create "$TAG" "$INSTALLER" --repo "$GITHUB_REPOSITORY" \
+            --draft --prerelease --latest=false --target "$GITHUB_SHA" \
+            --title "Xiletrade Installer $VERSION" \
+            --notes "Installs the latest release of Xiletrade (internet access required). It is attached unchanged to every release of the application : updates are done by the application itself.
+
+          Embedded 7zr.exe : 7-Zip $SEVENZIP_VERSION (https://github.com/$SEVENZIP_REPO/releases/tag/$SEVENZIP_VERSION), SHA256 $SEVENZIP_SHA256"
+          gh release edit "$TAG" --draft=false --repo "$GITHUB_REPOSITORY"
