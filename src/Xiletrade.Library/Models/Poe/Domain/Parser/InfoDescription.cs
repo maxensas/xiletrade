@@ -50,7 +50,10 @@ public sealed record InfoDescription
     /// <returns>String array : splited string by 'Strings.ItemInfoDelimiter'</returns>
     private static string[] NormalizeItemText(ReadOnlySpan<char> input)
     {
-        char[] buffer = ArrayPool<char>.Shared.Rent(input.Length * 2);
+        // on the stack when the text is small (as the next buffer), pooled otherwise
+        int capacity = input.Length * 2;
+        char[] rented = null;
+        Span<char> buffer = capacity <= 2048 ? stackalloc char[capacity] : (rented = ArrayPool<char>.Shared.Rent(capacity));
         int len = 0;
 
         // 1. Normalize + remove "()" + CRLF line endings
@@ -110,7 +113,7 @@ public sealed record InfoDescription
             buffer[len++] = c;
         }
 
-        Span<char> span = buffer.AsSpan(0, len);
+        Span<char> span = buffer[..len];
 
         // 2. INLINE ParseBracketMod (direct merging, no strings)
         Span<char> bracketParsed = span.Length <= 2048 
@@ -189,7 +192,10 @@ public sealed record InfoDescription
             finalSpan = finalSpan[(pos + Strings.ItemInfoDelimiter.Length)..];
         }
 
-        ArrayPool<char>.Shared.Return(buffer, clearArray: true);
+        if (rented is not null)
+        {
+            ArrayPool<char>.Shared.Return(rented, clearArray: true);
+        }
 
         return result;
     }

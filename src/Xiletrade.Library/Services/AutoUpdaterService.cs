@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.GitHub.Contract;
@@ -28,6 +29,39 @@ public sealed class AutoUpdaterService : IAutoUpdaterService
     }
 
     private const string ASSETNAME = "Xiletrade_win-x64.7z";
+    private const int DELETE_ATTEMPTS = 5;
+
+    // Copy of the updater run during an update (see Xiletrade.Updater, Util/Relocation.cs).
+    private static readonly string _updaterFolder = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Xiletrade", "Updater");
+
+    public async Task DeleteUpdaterFolderAsync()
+    {
+        // the updater exits just after launching the application : its files may still be locked for a moment
+        for (int attempt = 0; attempt < DELETE_ATTEMPTS && Directory.Exists(_updaterFolder); attempt++)
+        {
+            try
+            {
+                Directory.Delete(_updaterFolder, true);
+                DeleteIfEmpty(Path.GetDirectoryName(_updaterFolder));
+                return;
+            }
+            catch (IOException) { }
+            catch (UnauthorizedAccessException) { }
+            await Task.Delay(1000);
+        }
+    }
+
+    // %LOCALAPPDATA%\Xiletrade is only removed when nothing else uses it
+    private static void DeleteIfEmpty(string folder)
+    {
+        try
+        {
+            Directory.Delete(folder);
+        }
+        catch (IOException) { }
+        catch (UnauthorizedAccessException) { }
+    }
 
     public async Task CheckForUpdateAsync(bool manualCheck = false)
     {

@@ -56,7 +56,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" />
     <PackageReference Include="MessageBox.Avalonia" />
-    <!--<PackageReference Include="StaticLink.Avalonia" Condition="'$(PublishAot)' == 'True'" />-->
   </ItemGroup>
 
   <ItemGroup>

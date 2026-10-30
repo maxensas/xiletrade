@@ -48,7 +48,6 @@
     <PackageReference Include="MessageBox.Avalonia" />
     <PackageReference Include="CommunityToolkit.Mvvm" />
     <PackageReference Include="SharpCompress" />
-    <PackageReference Include="StaticLink.Avalonia" Condition="'$(PublishAot)' == 'True'" />
   </ItemGroup>
 </Project>
 

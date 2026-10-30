@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Serialization;
+using Xiletrade.Library.Models.Serialization.SourceGeneration;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services.Interface;
@@ -133,26 +134,23 @@ public sealed class DataManagerService
         Strings.InitializeGameContext(isPoe2, gateway);
     }
     
-    private void InitLeague(int gateway)
+    private void InitLeague(int gateway, SourceGenerationContext context)
     {
         string langGateway = Path.Combine("Lang", Strings.Culture[gateway]);
         var leagues = LoadConfiguration(Path.Combine(langGateway, Strings.File.Leagues));
-        League = Json.Deserialize<LeagueData>(leagues);
+        League = Json.Deserialize<LeagueData>(leagues, context: context);
     }
 
     private void Initialize(int forceGameVersion)
     {
         try
         {
-            if (Json is null)
-            {
-                Json = new(useCache: true);
-            }
-            else
-            {
-                Json.ResetCache();
-            }
+            Json ??= new();
             InitConfig(forceGameVersion);
+
+            // The strings of the files loaded together are shared through this cache :
+            // the cache and its context are only used here, and released with the loading.
+            var context = Json.CreateInterningContext(new StringCache());
 
             string basePath = DataDirectory;
             string lang = Path.Combine("Lang", Strings.Culture[Config.Options.Language]);
@@ -162,24 +160,25 @@ public sealed class DataManagerService
             var filterPath = Path.Combine(basePath, lang);
             var englishPath = Path.Combine(basePath, langEn);
             var arrangeVersion = Config.Options.GameVersion;
+            var isEnglish = Config.Options.Language is 0;
 
-            var divTiers = Load<DivTiersData>(Path.Combine(basePath, Strings.File.Divination));
-            var dust = Load<DustData>(Path.Combine(basePath, Strings.File.DustLevel));
-            var searchPreset = Load<SearchPresetData>(Path.Combine(basePath, Strings.File.SearchPreset));
-            var bases = Load<BaseData>(Path.Combine(filterPath, Strings.File.Bases));
-            var mods = Load<ModData>(Path.Combine(filterPath, Strings.File.Mods));
-            var monsters = Load<BaseData>(Path.Combine(filterPath, Strings.File.Monsters));
-            var words = Load<WordData>(Path.Combine(filterPath, Strings.File.Words));
-            var gems = Load<GemData>(Path.Combine(filterPath, Strings.File.Gems));
-            var parser = Load<ParserData>(Path.Combine(filterPath, Strings.File.ParsingRules));
+            var divTiers = Load<DivTiersData>(Path.Combine(basePath, Strings.File.Divination), context);
+            var dust = Load<DustData>(Path.Combine(basePath, Strings.File.DustLevel), context);
+            var searchPreset = Load<SearchPresetData>(Path.Combine(basePath, Strings.File.SearchPreset), context);
+            var bases = Load<BaseData>(Path.Combine(filterPath, Strings.File.Bases), context);
+            var mods = Load<ModData>(Path.Combine(filterPath, Strings.File.Mods), context);
+            var monsters = Load<BaseData>(Path.Combine(filterPath, Strings.File.Monsters), context);
+            var words = Load<WordData>(Path.Combine(filterPath, Strings.File.Words), context);
+            var gems = Load<GemData>(Path.Combine(filterPath, Strings.File.Gems), context);
+            var parser = Load<ParserData>(Path.Combine(filterPath, Strings.File.ParsingRules), context);
 
-            var filter = LoadFilter(Path.Combine(filterPath, Strings.File.Filters), arrangeVersion);
-            var currency = Load<CurrencyResult>(Path.Combine(filterPath, Strings.File.Currency));
-            var items = Load<ItemTypeResult>(Path.Combine(filterPath, Strings.File.Items));
+            var filter = LoadFilter(Path.Combine(filterPath, Strings.File.Filters), arrangeVersion, context);
+            var currency = Load<CurrencyResult>(Path.Combine(filterPath, Strings.File.Currency), context);
+            var items = Load<ItemTypeResult>(Path.Combine(filterPath, Strings.File.Items), context);
 
-            var filterEn = LoadFilter(Path.Combine(englishPath, Strings.File.Filters), arrangeVersion);
-            var currencyEn = Load<CurrencyResult>(Path.Combine(englishPath, Strings.File.Currency));
-            var itemsEn = Load<ItemTypeResult>(Path.Combine(englishPath, Strings.File.Items));
+            var filterEn = isEnglish ? filter : LoadFilter(Path.Combine(englishPath, Strings.File.Filters), arrangeVersion, context);
+            var currencyEn = isEnglish ? currency : Load<CurrencyResult>(Path.Combine(englishPath, Strings.File.Currency), context);
+            var itemsEn = isEnglish ? items : Load<ItemTypeResult>(Path.Combine(englishPath, Strings.File.Items), context);
 
             Task<BaseData> basesGateway = null;
             Task<WordData> wordsGateway = null;
@@ -187,12 +186,12 @@ public sealed class DataManagerService
             if (Config.Options.Gateway != Config.Options.Language)
             {
                 var gatewayPath = Path.Combine(basePath, Path.Combine("Lang", Strings.Culture[Config.Options.Gateway]));
-                basesGateway = Load<BaseData>(Path.Combine(gatewayPath, Strings.File.Bases));
-                wordsGateway = Load<WordData>(Path.Combine(gatewayPath, Strings.File.Words));
-                currencyGateway = Load<CurrencyResult>(Path.Combine(gatewayPath, Strings.File.Currency));
+                basesGateway = Load<BaseData>(Path.Combine(gatewayPath, Strings.File.Bases), context);
+                wordsGateway = Load<WordData>(Path.Combine(gatewayPath, Strings.File.Words), context);
+                currencyGateway = Load<CurrencyResult>(Path.Combine(gatewayPath, Strings.File.Currency), context);
             }
 
-            InitLeague(Config.Options.Gateway);
+            InitLeague(Config.Options.Gateway, context);
 
             WaitAll(divTiers, dust, searchPreset, bases, mods, monsters, currency, items, filter, words, gems,
                 parser, filterEn, currencyEn, itemsEn, basesGateway, wordsGateway, currencyGateway);
@@ -211,7 +210,7 @@ public sealed class DataManagerService
             CurrencyData = currency.Result;
             ItemTypeData = items.Result;
 
-            FilterEn = filterEn.Result ?? new();
+            FilterEn = isEnglish ? Filter : filterEn.Result ?? new();
             CurrencyDataEn = currencyEn.Result;
             ItemTypeDataEn = itemsEn.Result;
 
@@ -258,7 +257,7 @@ public sealed class DataManagerService
     /// </summary>
     /// <exception cref="FileNotFoundException"></exception>
     /// <exception cref="JsonException">The file can not be read or deserialized.</exception>
-    private async Task<T> Load<T>(string filePath) where T : class
+    private async Task<T> Load<T>(string filePath, SourceGenerationContext context) where T : class
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException(filePath);
@@ -266,7 +265,7 @@ public sealed class DataManagerService
         {
             // ConfigureAwait(false) : the deserialization goes on a thread pool thread, and never waits for the caller thread.
             var json = await File.ReadAllBytesAsync(filePath).ConfigureAwait(false);
-            return Json.Deserialize<T>(json);
+            return Json.Deserialize<T>(json, context: context);
         }
         catch (Exception ex)
         {
@@ -274,8 +273,8 @@ public sealed class DataManagerService
         }
     }
 
-    private async Task<FilterData> LoadFilter(string filePath, int gameVersion)
-        => (await Load<FilterData>(filePath).ConfigureAwait(false))?.ArrangeFilter(gameVersion);
+    private async Task<FilterData> LoadFilter(string filePath, int gameVersion, SourceGenerationContext context)
+        => (await Load<FilterData>(filePath, context).ConfigureAwait(false))?.ArrangeFilter(gameVersion);
 
     internal byte[] LoadConfiguration(string configfile)
     {

@@ -8,4 +8,9 @@ namespace Xiletrade.Library.Services.Interface;
 public interface IAutoUpdaterService
 {
     Task CheckForUpdateAsync(bool manualCheck = false);
+
+    /// <summary>
+    /// Deletes the copy of the updater run during the last update (%LOCALAPPDATA%\Xiletrade\Updater), not needed anymore.
+    /// </summary>
+    Task DeleteUpdaterFolderAsync();
 }

@@ -120,7 +120,18 @@ public sealed partial class ConfigViewModel : ViewModelBase
     private async Task UpdateFilters(object commandParameter)
     {
         bool allLang = commandParameter is string cmd && cmd is "all";
-        await _updater.UpdateAsync(cfgVm: General, allLanguages: allLang);
+        General.BtnUpdateEnable = false;
+        try
+        {
+            if (await _updater.UpdateAsync(General.LanguageIndex, allLanguages: allLang))
+            {
+                General.InitLeagueList();
+            }
+        }
+        finally
+        {
+            General.BtnUpdateEnable = true;
+        }
         Common.CollectGarbage();
     }
 

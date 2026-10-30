@@ -1,28 +1,29 @@
 ﻿using System;
-using System.Linq;
+using System.Buffers;
+using System.Text;
+using System.Text.Unicode;
 
 namespace Xiletrade.Library.Models.Application.Serialization;
 
 /// <summary>
-/// Class used to store unique strings using hash of Span.
+/// Set of unique strings, searched by their UTF-8 bytes : a string already stored is found without being decoded nor allocated.
 /// </summary>
-/// <typeparam name="TValue"></typeparam>
-public class SpanHashMap<TValue>
+/// <remarks>Not thread safe, see <see cref="StringCache"/>.</remarks>
+public sealed class SpanHashMap
 {
     private struct Entry
     {
-        public int HashCode;   // hash code of the key
-        public string Key;     // stored key
-        public TValue Value;
+        public int HashCode;   // hash of the UTF-8 bytes
+        public string Value;   // stored string
         public int Next;       // index of next entry in chain (-1 if none)
     }
 
     private Entry[] _entries;
     private int[] _buckets;
     private int _count;
-    private int _freeList;
 
     private const int InitialCapacity = 16;
+    private const int StackLimit = 256;
 
     public int Count => _count;
 
@@ -30,87 +31,44 @@ public class SpanHashMap<TValue>
     {
         capacity = Math.Max(capacity, InitialCapacity);
         _buckets = new int[capacity];
-        for (int i = 0; i < _buckets.Length; i++)
-            _buckets[i] = -1;
-
+        _buckets.AsSpan().Fill(-1);
         _entries = new Entry[capacity];
         _count = 0;
-        _freeList = -1;
     }
 
-    private static int GetHashCode(ReadOnlySpan<char> span)
+    private static int GetHashCode(ReadOnlySpan<byte> utf8)
     {
-        unchecked
-        {
-            int hash = 17;
-            for (int i = 0; i < span.Length; i++)
-                hash = hash * 31 + span[i];
-            return hash & 0x7FFFFFFF; // positive
-        }
+        var hash = new HashCode();
+        hash.AddBytes(utf8); // vectorized, seed is random by process (the map lives in the process only)
+        return hash.ToHashCode() & 0x7FFFFFFF; // positive
     }
 
-    private static int GetHashCode(string s)
+    /// <summary>
+    /// Returns the stored string equal to <paramref name="utf8"/>, or stores a new one (the only allocation).
+    /// </summary>
+    public string GetOrAdd(ReadOnlySpan<byte> utf8)
     {
-        return GetHashCode(s.AsSpan());
-    }
-
-    public bool TryGetValue(ReadOnlySpan<char> keySpan, out TValue value)
-    {
-        int hashCode = GetHashCode(keySpan);
+        int hashCode = GetHashCode(utf8);
         int bucket = hashCode % _buckets.Length;
 
         for (int i = _buckets[bucket]; i >= 0; i = _entries[i].Next)
         {
             ref var entry = ref _entries[i];
-            if (entry.HashCode == hashCode && entry.Key.AsSpan().SequenceEqual(keySpan))
-            {
-                value = entry.Value;
-                return true;
-            }
-        }
-
-        value = default!;
-        return false;
-    }
-
-    public bool ContainsKey(ReadOnlySpan<char> keySpan)
-    {
-        return TryGetValue(keySpan, out _);
-    }
-
-    public TValue AddOrGetExisting(string key, TValue value)
-    {
-        int hashCode = GetHashCode(key);
-        int bucket = hashCode % _buckets.Length;
-
-        for (int i = _buckets[bucket]; i >= 0; i = _entries[i].Next)
-        {
-            ref var entry = ref _entries[i];
-            if (entry.HashCode == hashCode && entry.Key == key)
+            if (entry.HashCode == hashCode && Utf8Equals(utf8, entry.Value))
             {
                 return entry.Value;
             }
         }
 
-        int index;
-        if (_freeList >= 0)
+        if (_count == _entries.Length)
         {
-            index = _freeList;
-            _freeList = _entries[index].Next;
-        }
-        else
-        {
-            if (_count == _entries.Length)
-            {
-                Resize();
-                bucket = hashCode % _buckets.Length;
-            }
-            index = _count;
-            _count++;
+            Resize();
+            bucket = hashCode % _buckets.Length;
         }
 
+        string value = Encoding.UTF8.GetString(utf8);
+        int index = _count++;
         _entries[index].HashCode = hashCode;
-        _entries[index].Key = key;
         _entries[index].Value = value;
         _entries[index].Next = _buckets[bucket];
         _buckets[bucket] = index;
@@ -118,12 +76,41 @@ public class SpanHashMap<TValue>
         return value;
     }
 
+    // Compares UTF-8 bytes with the chars of a stored string (no copy, no allocation).
+    private static bool Utf8Equals(ReadOnlySpan<byte> utf8, ReadOnlySpan<char> value)
+    {
+        // A non ascii char always takes more UTF-8 bytes than UTF-16 chars :
+        // with the same length, the two are equal only if both are ascii.
+        if (utf8.Length == value.Length)
+        {
+            return Ascii.Equals(utf8, value);
+        }
+        if (value.Length > utf8.Length)
+        {
+            return false;
+        }
+
+        char[] rented = null;
+        Span<char> chars = utf8.Length <= StackLimit ? stackalloc char[StackLimit] : (rented = ArrayPool<char>.Shared.Rent(utf8.Length));
+        try
+        {
+            var status = Utf8.ToUtf16(utf8, chars, out _, out int written);
+            return status is OperationStatus.Done && chars[..written].SequenceEqual(value);
+        }
+        finally
+        {
+            if (rented is not null)
+            {
+                ArrayPool<char>.Shared.Return(rented);
+            }
+        }
+    }
+
     private void Resize()
     {
         int newSize = _entries.Length * 2;
         var newBuckets = new int[newSize];
-        for (int i = 0; i < newBuckets.Length; i++)
-            newBuckets[i] = -1;
+        newBuckets.AsSpan().Fill(-1);
 
         var newEntries = new Entry[newSize];
         Array.Copy(_entries, newEntries, _count);

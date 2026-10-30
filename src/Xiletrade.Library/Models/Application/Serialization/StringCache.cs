@@ -3,46 +3,25 @@
 namespace Xiletrade.Library.Models.Application.Serialization;
 
 /// <summary>
-/// Class used to handle a SpanHashMap<string> cache
+/// Unique strings of the data files loaded together, found from their UTF-8 bytes (see <see cref="SpanHashMap"/>).
 /// </summary>
-public abstract class StringCache
+/// <remarks>Thread safe : the files are deserialized in parallel.</remarks>
+public sealed class StringCache
 {
-    private SpanHashMap<string> _cache = new();
+    private readonly SpanHashMap _cache = new();
     private readonly object _lock = new();
 
-    public int Count
+    /// <summary>
+    /// Returns the cached string of these UTF-8 bytes (unescaped json text), a string is allocated only the first time.
+    /// </summary>
+    public string Intern(ReadOnlySpan<byte> utf8)
     {
-        get
-        {
-            lock (_lock)
-            {
-                return _cache.Count;
-            }
-        }
-    }
-
-    public string Intern(ReadOnlySpan<char> span)
-    {
-        if (span.IsEmpty)
+        if (utf8.IsEmpty)
             return string.Empty;
 
         lock (_lock)
         {
-            if (_cache.TryGetValue(span, out var existing))
-            {
-                return existing;
-            }
-
-            string key = span.ToString();
-            return _cache.AddOrGetExisting(key, key);
-        }
-    }
-
-    public void ResetCache()
-    {
-        lock (_lock)
-        {
-            _cache = new();
+            return _cache.GetOrAdd(utf8);
         }
     }
 }

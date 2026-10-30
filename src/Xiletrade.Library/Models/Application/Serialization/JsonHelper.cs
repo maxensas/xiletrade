@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -15,13 +13,13 @@ namespace Xiletrade.Library.Models.Application.Serialization;
 
 /// <summary>Helper class used for JSON serialization.</summary>
 /// <remarks>using System.Text.Json</remarks>
-public sealed class JsonHelper : StringCache
+public sealed class JsonHelper
 {
-    private readonly SourceGenerationContext _converterContext;
     private readonly SourceGenerationContext _defaultContext;
+    private readonly SourceGenerationContext _fullContext;
 
     /// <summary>
-    /// Default Context that does not use string cache (InterningStringConverter)
+    /// Default Context : base converters only (used by the converters of the full context, to read the inner objects)
     /// </summary>
     public SourceGenerationContext DefaultContext => _defaultContext;
 
@@ -43,9 +41,9 @@ public sealed class JsonHelper : StringCache
         (Encoding.UTF8.GetBytes("name:,"), Encoding.UTF8.GetBytes("\"name\":\"\","))
     };
 
-    // List of types for which we want to disable the cache
+    // List of types handled by the default context
     // You can easily add more here
-    private static readonly HashSet<Type> _excludedTypesFromCache =
+    private static readonly HashSet<Type> _defaultContextTypes =
         [ typeof(ConfigData), typeof(BulkData)];
 
     public JsonHelper()
@@ -65,15 +63,22 @@ public sealed class JsonHelper : StringCache
         optionsNoCache.Converters.Add(new DoubleJsonConverter());
 
         _defaultContext = new(optionsNoCache);
+        _fullContext = new(CreateFullOptions());
     }
 
-    public JsonHelper(bool useCache) : this()
+    /// <summary>
+    /// Creates a context that shares the strings through <paramref name="cache"/> : used while the data files are loaded,
+    /// the cache and the context are released with the loading.
+    /// </summary>
+    internal SourceGenerationContext CreateInterningContext(StringCache cache)
     {
-        if (!useCache)
-        {
-            return;
-        }
-        
+        var options = CreateFullOptions();
+        options.Converters.Add(new InterningStringConverter(cache));
+        return new(options);
+    }
+
+    private JsonSerializerOptions CreateFullOptions()
+    {
         var options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
@@ -92,9 +97,7 @@ public sealed class JsonHelper : StringCache
         options.Converters.Add(new FlexibleNullableDecimalConverter());
         options.Converters.Add(new DoubleJsonConverter());
         options.Converters.Add(new StatusConverter(_defaultContext));
-
-        options.Converters.Add(new InterningStringConverter(this)); // cache
-        _converterContext = new(options);
+        return options;
     }
 
     /// <summary>
@@ -103,7 +106,7 @@ public sealed class JsonHelper : StringCache
     /// <param name="replace">Fixes the characters which .NET escapes and the api does not expect.</param>
     public byte[] SerializeToUtf8<T>(object obj, bool replace = true) where T : class
     {
-        var context = GetContextOrThrow<T>();
+        var context = GetContext<T>();
         if (!replace)
         {
             return JsonSerializer.SerializeToUtf8Bytes(obj, typeof(T), context);
@@ -119,17 +122,11 @@ public sealed class JsonHelper : StringCache
             JsonSerializer.Serialize(writer, obj, typeof(T), context);
         }
 
-        ReadOnlySpan<byte> utf8Json = memoryStream.GetBuffer().AsSpan(0, (int)memoryStream.Length);
-        byte[] buffer = ArrayPool<byte>.Shared.Rent(utf8Json.Length * 2); // every replacement is shorter than its source
-        try
-        {
-            int length = ApplyReplacements(utf8Json, buffer, _serializeReplacements);
-            return buffer.AsSpan(0, length).ToArray();
-        }
-        finally
-        {
-            ArrayPool<byte>.Shared.Return(buffer, clearArray: true);
-        }
+        // The replacements are done in place, in the buffer of the stream : each target is shorter than its source,
+        // so the write position never goes past the read position. No second buffer (nor pooled one) is needed.
+        byte[] buffer = memoryStream.GetBuffer();
+        int length = ApplyReplacements(buffer.AsSpan(0, (int)memoryStream.Length), buffer, _serializeReplacements);
+        return buffer.AsSpan(0, length).ToArray();
     }
 
     /// <summary>
@@ -137,9 +134,10 @@ public sealed class JsonHelper : StringCache
     /// </summary>
     /// <param name="utf8Json">Json text, a byte order mark at the beginning is skipped.</param>
     /// <param name="replace">Fixes the known bad data of the api before the deserialization.</param>
-    public T Deserialize<T>(ReadOnlySpan<byte> utf8Json, bool replace = false) where T : class
+    /// <param name="context">Context to use instead of the one of <typeparamref name="T"/> (see <see cref="CreateInterningContext"/>).</param>
+    public T Deserialize<T>(ReadOnlySpan<byte> utf8Json, bool replace = false, SourceGenerationContext context = null) where T : class
     {
-        var context = GetContextOrThrow<T>();
+        context ??= GetContext<T>();
         if (utf8Json.StartsWith(Utf8Bom))
         {
             utf8Json = utf8Json[Utf8Bom.Length..];
@@ -151,17 +149,12 @@ public sealed class JsonHelper : StringCache
                    ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
         }
 
-        byte[] outputBuffer = ArrayPool<byte>.Shared.Rent(utf8Json.Length * 2); // the largest replacement is shorter than twice its source
-        try
-        {
-            int length = ApplyReplacements(utf8Json, outputBuffer, _deserializeReplacements);
-            return JsonSerializer.Deserialize(outputBuffer.AsSpan(0, length), typeof(T), context) as T
-                   ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
-        }
-        finally
-        {
-            ArrayPool<byte>.Shared.Return(outputBuffer, clearArray: true);
-        }
+        // exact length first, then the text is built on the stack when it is small (heap otherwise, no pooled buffer)
+        int length = ApplyReplacements(utf8Json, default, _deserializeReplacements);
+        Span<byte> output = length <= 1024 ? stackalloc byte[length] : new byte[length];
+        ApplyReplacements(utf8Json, output, _deserializeReplacements);
+        return JsonSerializer.Deserialize(output, typeof(T), context) as T
+               ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
     }
 
     private static ReadOnlySpan<byte> Utf8Bom => [0xEF, 0xBB, 0xBF];
@@ -178,7 +171,8 @@ public sealed class JsonHelper : StringCache
         return false;
     }
 
-    // copies the text into the buffer, the earliest source found is replaced by its target each time
+    // copies the text into the buffer (it can be the same memory when every target is shorter than its source), the earliest source found is replaced by its target each time
+    // with an empty buffer, nothing is copied and the length of the result is returned
     private static int ApplyReplacements(ReadOnlySpan<byte> utf8Json, Span<byte> buffer, List<(byte[] source, byte[] target)> replacements)
     {
         int length = 0;
@@ -197,15 +191,20 @@ public sealed class JsonHelper : StringCache
 
             if (next < 0)
             {
-                utf8Json.CopyTo(buffer[length..]);
+                if (!buffer.IsEmpty)
+                {
+                    utf8Json.CopyTo(buffer[length..]);
+                }
                 return length + utf8Json.Length;
             }
 
             var (source, target) = replacements[next];
-            utf8Json[..nextIndex].CopyTo(buffer[length..]);
-            length += nextIndex;
-            target.CopyTo(buffer[length..]);
-            length += target.Length;
+            if (!buffer.IsEmpty)
+            {
+                utf8Json[..nextIndex].CopyTo(buffer[length..]);
+                target.CopyTo(buffer[(length + nextIndex)..]);
+            }
+            length += nextIndex + target.Length;
             utf8Json = utf8Json[(nextIndex + source.Length)..];
         }
         return length;
@@ -217,7 +216,7 @@ public sealed class JsonHelper : StringCache
     /// <remarks>A UTF-8 byte order mark at the beginning of the stream is skipped (the stream must be seekable to detect it).</remarks>
     public T Deserialize<T>(Stream utf8Json) where T : class
     {
-        var context = GetContextOrThrow<T>();
+        var context = GetContext<T>();
         SkipUtf8Bom(utf8Json);
         return JsonSerializer.Deserialize(utf8Json, typeof(T), context) as T
                ?? throw new InvalidOperationException($"Deserialization returned null for type {typeof(T)}");
@@ -237,15 +236,6 @@ public sealed class JsonHelper : StringCache
         }
     }
 
-    internal SourceGenerationContext GetContextOrThrow<T>() where T : class
-    {
-        if (_converterContext is null)
-        {
-            return _defaultContext;
-        }
-        return (ShouldUseInterning<T>() ? _converterContext : _defaultContext)
-            ?? throw new InvalidOperationException("Json not initialized. Call Json.Initialize(...) first.");
-    }
-
-    private static bool ShouldUseInterning<T>() => !_excludedTypesFromCache.Contains(typeof(T));
+    internal SourceGenerationContext GetContext<T>() where T : class
+        => _defaultContextTypes.Contains(typeof(T)) ? _defaultContext : _fullContext;
 }

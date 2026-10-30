@@ -11,7 +11,6 @@ using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.ViewModels.Config;
 
 namespace Xiletrade.Library.Services;
 
@@ -41,18 +40,15 @@ public sealed class DataUpdaterService : IDataUpdaterService
 
     private static string ErrorMsg { get; set; } = string.Empty;
 
-    public async Task UpdateAsync(GeneralViewModel cfgVm = null, bool allLanguages = false, bool updateGenerated = true)
+    public async Task<bool> UpdateAsync(int language = -1, bool allLanguages = false, bool updateGenerated = true)
     {
         List<Task> taskList = new();
-        
-        if (cfgVm is not null)
-        {
-            cfgVm.BtnUpdateEnable = false;
-        }
-        
-        var cult = cfgVm is null || allLanguages ? string.Empty : " (" + Strings.Culture[cfgVm.LanguageIndex] + ")";
-        var cultStart = cfgVm is not null ? allLanguages ? 0 : cfgVm.LanguageIndex : _dm.Config.Options.Language;
-        var cultStop = allLanguages ? Strings.Culture.Length : (cfgVm is not null ? cfgVm.LanguageIndex : _dm.Config.Options.Language) + 1;
+
+        var useConfig = language < 0;
+        var idxLang = useConfig ? _dm.Config.Options.Language : language;
+        var cult = useConfig || allLanguages ? string.Empty : " (" + Strings.Culture[idxLang] + ")";
+        var cultStart = allLanguages ? 0 : idxLang;
+        var cultStop = allLanguages ? Strings.Culture.Length : idxLang + 1;
         var timeoutSecond = allLanguages ? 50 : 3;
         
         bool aborted = false;
@@ -102,17 +98,11 @@ public sealed class DataUpdaterService : IDataUpdaterService
         {
             ErrorMsg += $"Exception while executing tasks : {ex}";
         }
-        
-        if (cfgVm is not null)
-        {
-            cfgVm.BtnUpdateEnable = true;
-        }
-        
+
         bool isNoError = ErrorMsg.Length is 0;
         if (isNoError)
         {
             _dm.TryInit();
-            cfgVm?.InitLeagueList();
         }
         var title = isNoError ? "Xiletrade : " + (aborted ? Resources.Resources.Main193_DownloadKo : Resources.Resources.Main192_DownloadOk)
         : "Xiletrade : " + Resources.Resources.Main193_DownloadKo;
@@ -122,6 +112,7 @@ public sealed class DataUpdaterService : IDataUpdaterService
         var type = !isNoError || aborted ? NotificationStatus.Error : NotificationStatus.Success;
         var message = new ToastNotification(title: title, message: msg, status: type);
         _notif.Show(message);
+        return isNoError;
     }
 
     public async Task<SettingsData> GetAppSettings()

@@ -26,8 +26,6 @@
     <PackageVersion Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
     <PackageVersion Include="Xaml.Behaviors.Avalonia" Version="12.0.7" />
     <PackageVersion Include="MessageBox.Avalonia" Version="12.0.0" />
-    <!-- Allow native AOT with a single file using ANGLE + SkiaSharp static link -->
-    <PackageVersion Include="StaticLink.Avalonia" Version="4.150.1-7922.1" />
     
     <!-- Lib/Tests/Bench -->
     <PackageVersion Include="Raffinert.FuzzySharp" Version="3.0.7" />

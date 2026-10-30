@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
-using Xiletrade.Library.ViewModels.Config;
 
 namespace Xiletrade.Library.Services.Interface;
 
@@ -8,6 +7,9 @@ namespace Xiletrade.Library.Services.Interface;
 /// <remarks>Retrieve source data from Xiletrade Github repository and GGG server.</remarks>
 public interface IDataUpdaterService
 {
-    Task UpdateAsync(GeneralViewModel cfgVm = null, bool allLanguages = false, bool updateGenerated = true);
+    /// <summary>Downloads the data files, then reloads them when no error occurred.</summary>
+    /// <param name="language">Index of the language to update, the language of the configuration when negative.</param>
+    /// <returns>True when the data files were reloaded.</returns>
+    Task<bool> UpdateAsync(int language = -1, bool allLanguages = false, bool updateGenerated = true);
     Task<SettingsData> GetAppSettings();
 }
