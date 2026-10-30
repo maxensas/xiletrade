@@ -15,6 +15,7 @@ jobs:
       PROJECT_PATH: src/Xiletrade.UI.WPF/Xiletrade.UI.WPF.csproj
       PUBLISH_DIR: Xiletrade
       ARCHIVE: Xiletrade_win-x64.7z
+      INSTALLER: Xiletrade_win-x64_Setup.exe
 
     steps:
       - name: Checkout code
@@ -45,6 +46,25 @@ jobs:
       - name: Skip if release exists
         if: steps.check_release.outputs.status == '200'
         run: echo "Release already exists. Skipping."
+
+      # Setup compiled once by installer.yml (most recent installer-<version> pre-release), attached unchanged :
+      # same file, same hash, its SmartScreen reputation is kept. Immutable releases : attached at creation.
+      - name: Get installer from the latest installer pre-release
+        if: steps.check_release.outputs.status != '200'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag=$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" --jq \
+            '[.[] | select(.prerelease and (.draft | not) and (.tag_name | startswith("installer-")))] | sort_by(.published_at) | last | .tag_name // empty')
+          if [ -z "$tag" ]; then echo "::error::No installer pre-release : run the Installer workflow once"; exit 1; fi
+          digest=$(gh api "repos/$GITHUB_REPOSITORY/releases/tags/$tag" --jq '.assets[] | select(.name == $ENV.INSTALLER) | .digest // empty')
+          gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern "$INSTALLER" --clobber
+          actual=$(sha256sum "$INSTALLER" | cut -d ' ' -f 1)
+          if [ -n "$digest" ] && [ "${digest#sha256:}" != "$actual" ]; then
+            echo "::error::$INSTALLER does not match the digest of $tag"; exit 1
+          fi
+          echo "Installer of $tag : $actual"
 
       - name: Run tests
         if: steps.check_release.outputs.status != '200'
@@ -122,6 +142,8 @@ jobs:
             `SHA256 Checksums`
             - Xiletrade : ${{ steps.hash.outputs.sha256 }}
             - Update    : ${{ steps.updater_hash.outputs.sha256 }}
-          files: "${{ env.ARCHIVE }}"
+          files: |
+            ${{ env.ARCHIVE }}
+            ${{ env.INSTALLER }}
         env:
           GITHUB_TOKEN: ${{ secrets.GH_DEPLOY }}
