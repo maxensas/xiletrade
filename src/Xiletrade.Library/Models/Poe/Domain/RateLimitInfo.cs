@@ -50,7 +50,17 @@ public sealed class RateLimitInfo
     }
 
     /// <summary>True if the response was received less than <paramref name="maxAgeMs"/> milliseconds ago.</summary>
-    public bool IsFresh(int maxAgeMs) => Environment.TickCount64 - ReceivedAt <= maxAgeMs;
+    /// <remarks>Debug build with a debugger attached : always fresh, the time spent on breakpoints must not expire the response.</remarks>
+    public bool IsFresh(int maxAgeMs)
+    {
+#if DEBUG
+        if (System.Diagnostics.Debugger.IsAttached)
+        {
+            return false;
+        }
+#endif
+        return Environment.TickCount64 - ReceivedAt <= maxAgeMs;
+    }
 
     /// <summary>True for the trade policies which are tracked (search, fetch, exchange).</summary>
     internal static bool IsTradePolicy(string policy) => ResolvePolicy(policy) is not null;

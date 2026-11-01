@@ -27,6 +27,12 @@ internal sealed record ModFilter
 
         foreach (var filter in dm.Filter.Result)
         {
+            if (item.Flag.Gem.IsGem && item.Flag.Tag.Imbued 
+                && filter.Entries is not [{ Type: Strings.Type.Imbued }, ..])
+            {
+                continue;
+            }
+
             var entries = filter.FindEntries(mod, item, inputRegex);
             
             if (entries.Count > 0)

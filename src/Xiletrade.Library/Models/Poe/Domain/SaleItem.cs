@@ -58,7 +58,7 @@ public sealed record SaleItem
         Rarity = new(item);
         ItemLevel = item.Ilvl;
         ShowItemLevel = ItemLevel > 0;
-        IsVisibleBuiltInSupport = item.BuiltInSupport?.Length > 0;
+        IsVisibleBuiltInSupport = item.BuiltInSupport?.Description?.Length > 0;
         IsVisibleEnchant = item.EnchantMods?.Count > 0;
         IsVisibleImplicit = item.ImplicitMods?.Count > 0;
         IsVisibleGrantedSkill = item.GrantedSkills?.Length > 0;
@@ -76,7 +76,7 @@ public sealed record SaleItem
 
         if (IsVisibleBuiltInSupport)
         {
-            BuiltInSupport = item.BuiltInSupport;
+            BuiltInSupport = item.BuiltInSupport.Description;
         }
 
         if (IsVisibleMercenarySkill)

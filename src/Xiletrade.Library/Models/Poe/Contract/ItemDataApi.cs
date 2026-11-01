@@ -73,7 +73,7 @@ public sealed class ItemDataApi
     public string Rarity { get; set; }
 
     [JsonPropertyName("builtInSupport")]
-    public string BuiltInSupport { get; set; }
+    public ItemBuiltInSupport BuiltInSupport { get; set; }
 
     [JsonPropertyName("enchantMods")]
     public List<ModAffix> EnchantMods { get; set; }

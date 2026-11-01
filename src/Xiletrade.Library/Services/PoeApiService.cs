@@ -254,6 +254,9 @@ public sealed class PoeApiService
     {
         var cur = new CurrencyFetch();
         var isPoe2 = _dm.Config.Options.GameVersion is 1;
+#if DEBUG
+        var debug = Encoding.UTF8.GetString(sResult);
+#endif
         var fetchData = _dm.Json.Deserialize<FetchData>(sResult, replace: true);
         for (int i = 0; i < fetchData.Result.Length; i++)
         {

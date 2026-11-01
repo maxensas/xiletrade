@@ -136,6 +136,7 @@ namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
 [JsonSerializable(typeof(OAuthToken))]
 [JsonSerializable(typeof(SearchPresetData))]
 [JsonSerializable(typeof(ModAffix))]
+[JsonSerializable(typeof(ItemBuiltInSupport))]
 [JsonSerializable(typeof(FlagAffix))]
 [JsonSerializable(typeof(ItemTypeResult))]
 [JsonSerializable(typeof(ItemTypeResultData))]
