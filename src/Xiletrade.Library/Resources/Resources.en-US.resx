@@ -1409,6 +1409,9 @@ It will deselect all attribute mod values ! (not uniques)</value>
   <data name="General245_ScryingOrb" xml:space="preserve">
     <value>Scrying Orb</value>
   </data>
+  <data name="General246_CannotUse" xml:space="preserve">
+    <value>You cannot use this item. Its stats will be ignored</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
   </data>

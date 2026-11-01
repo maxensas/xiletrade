@@ -1540,6 +1540,10 @@
   <data name="General245_ScryingOrb" xml:space="preserve">
     <value>占卜球</value>
   </data>
+  <data name="General246_CannotUse" xml:space="preserve">
+    <value>You cannot use this item. Its stats will be ignored</value>
+    <comment>TO translate</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

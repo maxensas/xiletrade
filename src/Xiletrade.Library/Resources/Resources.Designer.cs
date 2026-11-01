@@ -4031,6 +4031,15 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General245_ScryingOrb", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => You cannot use this item. Its stats will be ignored.
+        /// </summary>
+        public static string General246_CannotUse {
+            get {
+                return ResourceManager.GetString("General246_CannotUse", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.

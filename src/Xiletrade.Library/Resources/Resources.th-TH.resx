@@ -1420,6 +1420,9 @@
   <data name="General245_ScryingOrb" xml:space="preserve">
     <value>ลูกแก้วส่งชะตา</value>
   </data>
+  <data name="General246_CannotUse" xml:space="preserve">
+    <value>คุณ​ไม่​สามารถ​ใช้​ไอเทม​ชิ้น​นี้​ได้ Stats ของ​ไอเทม​นี้​จะ​ไม่มี​ผล/คุณไม่สามารถใช้ไอเทมชิ้นนี้ได้ Stats ของไอเทมนี้จะไม่มีผล</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

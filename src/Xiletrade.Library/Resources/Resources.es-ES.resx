@@ -1279,6 +1279,9 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="General245_ScryingOrb" xml:space="preserve">
     <value>Orbe de destino</value>
   </data>
+  <data name="General246_CannotUse" xml:space="preserve">
+    <value>No puedes usar este objeto. Sus estadísticas serán ignoradas</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
   </data>

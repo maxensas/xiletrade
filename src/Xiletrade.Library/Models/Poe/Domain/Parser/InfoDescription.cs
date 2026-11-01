@@ -120,8 +120,21 @@ public sealed record InfoDescription
             ? stackalloc char[span.Length] : new char[span.Length];
         int write = 0;
         int j = 0;
+
+        ReadOnlySpan<char> cannotUse = Resources.Resources.General246_CannotUse;
         while (j < span.Length)
         {
+            // skip General246_CannotUse variants with delimiter
+            if (span[..j].EndsWith(Strings.CRLF))
+            {
+                int skip = GetSkipLength(span[j..], cannotUse, withDelimiter: true);
+                if (skip > 0)
+                {
+                    j += skip;
+                    continue;
+                }
+            }
+
             if (span[j] is '[')
             {
                 int start = j + 1;
@@ -198,5 +211,43 @@ public sealed record InfoDescription
         }
 
         return result;
+    }
+
+    /// <summary>
+    /// Returns the number of chars to skip if 'source' starts with one of the '/' separated variants.
+    /// </summary>
+    /// <param name="source">CRLF normalized text, starting at a line start</param>
+    /// <param name="variants">'/' separated variants to match</param>
+    /// <param name="withDelimiter">true to also skip the following CRLF + ItemInfoDelimiter + CRLF</param>
+    /// <returns>Number of chars to skip, 0 if nothing matched</returns>
+    private static int GetSkipLength(ReadOnlySpan<char> source, ReadOnlySpan<char> variants, bool withDelimiter)
+    {
+        foreach (Range r in variants.Split('/'))
+        {
+            ReadOnlySpan<char> variant = variants[r];
+            if (variant.IsEmpty || !source.StartsWith(variant))
+                continue;
+
+            ReadOnlySpan<char> rest = source[variant.Length..];
+            bool hasCrlf = rest.StartsWith(Strings.CRLF);
+
+            if (!withDelimiter)
+            {
+                // skip the whole line : text + CRLF if present
+                return hasCrlf ? variant.Length + Strings.CRLF.Length : variant.Length;
+            }
+
+            // expected after text : CRLF + ItemInfoDelimiter + CRLF
+            if (hasCrlf)
+            {
+                rest = rest[Strings.CRLF.Length..];
+                if (rest.StartsWith(Strings.ItemInfoDelimiter)
+                    && rest[Strings.ItemInfoDelimiter.Length..].StartsWith(Strings.CRLF))
+                {
+                    return variant.Length + Strings.ItemInfoDelimiter.Length + 2 * Strings.CRLF.Length;
+                }
+            }
+        }
+        return 0;
     }
 }

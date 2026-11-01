@@ -1411,6 +1411,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General245_ScryingOrb" xml:space="preserve">
     <value>예지의 오브</value>
   </data>
+  <data name="General246_CannotUse" xml:space="preserve">
+    <value>아이템 착용 불가. 아이템 효과 미적용</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>
   </data>

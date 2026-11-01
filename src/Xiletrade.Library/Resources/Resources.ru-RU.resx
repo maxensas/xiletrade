@@ -1410,6 +1410,9 @@
   <data name="General245_ScryingOrb" xml:space="preserve">
     <value>Заговаривающая сфера</value>
   </data>
+  <data name="General246_CannotUse" xml:space="preserve">
+    <value>Вы не можете использовать этот предмет, его параметры не будут учтены</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>
   </data>

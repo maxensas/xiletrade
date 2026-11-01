@@ -1408,6 +1408,9 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General245_ScryingOrb" xml:space="preserve">
     <value>Tauschsphäre</value>
   </data>
+  <data name="General246_CannotUse" xml:space="preserve">
+    <value>Du kannst diesen Gegenstand nicht benutzen. Seine Eigenschaften werden ignoriert.</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>

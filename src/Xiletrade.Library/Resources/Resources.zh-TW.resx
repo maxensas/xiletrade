@@ -1485,6 +1485,9 @@
   <data name="General245_ScryingOrb" xml:space="preserve">
     <value>占卜寶珠</value>
   </data>
+  <data name="General246_CannotUse" xml:space="preserve">
+    <value>你無法使用這項裝備，它的數值將被忽略</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>
   </data>
