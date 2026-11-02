@@ -30,7 +30,8 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Border Margin="190,351,90,71" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto">
+        <!-- aggregate by seller : hidden with the securable market (index 2, instant buyout) -->
+        <Border Margin="190,351,90,71" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" Visibility="{Binding Form.MarketIndex, Converter={StaticResource notSecurableVisibilityConverter}}">
             <ToggleButton Margin="0,2,0,0" Content="{ext:Localization Main090_tbAggregate}" ToolTip="{ext:Localization Main104_cbSameUserTip}" IsChecked="{Binding Path=Form.SameUser}" Style="{StaticResource ToggleSwitchContent}" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <ToggleButton.LayoutTransform>
                     <ScaleTransform ScaleX="1.1" ScaleY="1.1" />
@@ -48,8 +49,9 @@
         <!-- Buyout price : currencies of the sales taken into account (PoE 1 / PoE 2 options). The tooltip of the selected option is shown on the combobox -->
         <StackPanel Margin="345,351,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
             <TextBlock Text="{ext:Localization Main260_BuyoutPrice}" Style="{StaticResource TextBlockTitle}" FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0"/>
-            <ComboBox Height="22" MinWidth="56" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                      ToolTip="{Binding SelectedItem.ToolTip, RelativeSource={RelativeSource Self}}">
+            <ComboBox Height="22" MinWidth="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                      ToolTip="{Binding SelectedItem.ToolTip, RelativeSource={RelativeSource Self}}"
+                      d:Visibility="Collapsed">
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -77,8 +79,9 @@
                     <Image Source="{StaticResource ImgDivine}" Height="18" Stretch="Uniform"/>
                 </ComboBoxItem>
             </ComboBox>
-            <ComboBox Height="22" MinWidth="56" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                      ToolTip="{Binding SelectedItem.ToolTip, RelativeSource={RelativeSource Self}}">
+            <ComboBox Height="22" MinWidth="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                      ToolTip="{Binding SelectedItem.ToolTip, RelativeSource={RelativeSource Self}}"
+                      d:Visibility="Visible" d:SelectedIndex="3">
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
                         <Setter Property="Visibility" Value="Collapsed"/>

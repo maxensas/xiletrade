@@ -9,11 +9,14 @@ public sealed class IntegerToVisibilityConverter : IValueConverter
 {
     public int IntegerValue { get; set; }
 
+    /// <summary>True : visible when the value is different from <see cref="IntegerValue"/>.</summary>
+    public bool Reverse { get; set; }
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is int @val)
         {
-            return @val == IntegerValue ? Visibility.Visible : Visibility.Collapsed;
+            return (@val == IntegerValue) != Reverse ? Visibility.Visible : Visibility.Collapsed;
         }
         return Visibility.Collapsed;
     }

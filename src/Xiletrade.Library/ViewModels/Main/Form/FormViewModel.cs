@@ -219,6 +219,16 @@ public sealed partial class FormViewModel : ViewModelBase
     [ObservableProperty]
     private bool unidentifiedUnique;
 
+    // buyout price changed by the user : the search is done again, as with a click on the result bar
+    partial void OnBuyoutPriceIndexChanged(int value)
+    {
+        if (value < 0 || Freeze)
+        {
+            return;
+        }
+        RefreshSearch(null);
+    }
+
     partial void OnUniqueIndexChanged(int value)
     {
         if (value < 0 || !(Tab.QuickSelected || Tab.DetailSelected))
