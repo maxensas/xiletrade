@@ -24,6 +24,9 @@
             </Grid.ColumnDefinitions>
             <!-- Buyout price : currencies of the sales taken into account (PoE 1 / PoE 2 options). The tooltip of the selected option is shown on the combobox -->
             <StackPanel Grid.Column="0" Margin="8,0,0,0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <StackPanel.LayoutTransform>
+                    <ScaleTransform ScaleX="1.1" ScaleY="1.1"/>
+                </StackPanel.LayoutTransform>
                 <TextBlock Text="{ext:Localization Main260_BuyoutPrice}" Style="{StaticResource TextBlockTitle}" FontSize="13" VerticalAlignment="Center" Margin="0,0,6,0"/>
                 <ComboBox Height="22" MinWidth="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                           ToolTip="{Binding SelectedItem.ToolTip, RelativeSource={RelativeSource Self}}"
