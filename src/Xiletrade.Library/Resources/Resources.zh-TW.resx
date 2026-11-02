@@ -2483,6 +2483,21 @@
   <data name="Main259_SelectDesiredUnique" xml:space="preserve">
     <value>選擇所需的唯一項目</value>
   </data>
+  <data name="Main260_BuyoutPrice" xml:space="preserve">
+    <value>直購價 :</value>
+  </data>
+  <data name="Main261_ExaltDivTip" xml:space="preserve">
+    <value>允許您僅查看尊貴或神聖寶珠的價格。
+將忽略以其他貨幣定價的銷售。</value>
+  </data>
+  <data name="Main262_DivineOnlyTip" xml:space="preserve">
+    <value>僅允許您查看以神聖寶珠計價的商品價格。
+將忽略以其他貨幣計價的商品。 </value>
+  </data>
+  <data name="Main263_AllCurrenciesTip" xml:space="preserve">
+    <value>允許您查看以所有貨幣計價的價格。
+不會忽略任何銷售。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>
   </data>

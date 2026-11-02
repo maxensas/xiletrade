@@ -2406,6 +2406,21 @@
   <data name="Main259_SelectDesiredUnique" xml:space="preserve">
     <value>Выберите нужный уникальный элемент</value>
   </data>
+  <data name="Main260_BuyoutPrice" xml:space="preserve">
+    <value>Цена выкупа :</value>
+  </data>
+  <data name="Main261_ExaltDivTip" xml:space="preserve">
+    <value>Позволяет проверять цены только в Возвышенных или Божественных сферах.
+Будет игнорировать продажи, оцененные в других валютах.</value>
+  </data>
+  <data name="Main262_DivineOnlyTip" xml:space="preserve">
+    <value>Позволяет проверять цены только в Божественных сферах.
+Продажи с ценами в других валютах будут игнорироваться.</value>
+  </data>
+  <data name="Main263_AllCurrenciesTip" xml:space="preserve">
+    <value>Позволяет проверять цены во всех валютах.
+Ни одна продажа не будет игнорироваться.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
   </data>

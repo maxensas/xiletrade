@@ -235,6 +235,11 @@
     <ext:ImageAsset x:Key="ImgExaltPoe2" Path="exalt2_poe2.png"/>
     <ext:ImageAsset x:Key="ImgDivinePoe2" Path="divine2_poe2.png"/>
 
+    <ext:ImageAsset x:Key="ImgAllCurency" Path="allcur.png"/>
+    <ext:ImageAsset x:Key="ImgAllCurencyPoe2" Path="allcur_poe2.png"/>
+    <ext:ImageAsset x:Key="ImgChaosDivine" Path="chaosdivine.png"/>
+    <ext:ImageAsset x:Key="ImgExaltDivinePoe2" Path="exaltdivine_poe2.png"/>
+    
     <ext:ImageAsset x:Key="ImgNothingGray" Path="nothing.png"/>
     <ext:ImageAsset x:Key="ImgNothing" Path="nothing2.png"/>
 

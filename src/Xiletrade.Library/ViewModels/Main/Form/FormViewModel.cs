@@ -200,14 +200,12 @@ public sealed partial class FormViewModel : ViewModelBase
     [ObservableProperty]
     private bool sameUser;
 
+    /// <summary>
+    /// Buyout price option (index of the combobox) : 0 = all currencies.
+    /// PoE 1 : 1 = chaos or divine, 2 = divine. PoE 2 : 1 = exalted, 2 = exalted or divine, 3 = chaos.
+    /// </summary>
     [ObservableProperty]
-    private bool chaosDiv;
-
-    [ObservableProperty]
-    private bool exalt;
-
-    [ObservableProperty]
-    private bool chaos;
+    private int buyoutPriceIndex;
 
     [ObservableProperty]
     private bool autoClose;

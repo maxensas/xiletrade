@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
              xmlns:ext="clr-namespace:Xiletrade.UI.WPF.Util.Extensions"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:uc="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
              xmlns:local="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
              mc:Ignorable="d" 
@@ -44,43 +45,70 @@
             </CheckBox>
             -->
         </Border>
-        <Border Margin="345,351,0,71" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}" d:Visibility="Collapsed">
-            <ToggleButton Margin="0,2,0,0" Content="{ext:Localization Main214_tbChaosDiv}" ToolTip="{ext:Localization Main215_ChaosDivTip}" IsChecked="{Binding Path=Form.ChaosDiv}" Style="{StaticResource ToggleSwitchContent}" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <ToggleButton.LayoutTransform>
-                    <ScaleTransform ScaleX="1.1" ScaleY="1.1" />
-                </ToggleButton.LayoutTransform>
-            </ToggleButton>
-            <!--
-            <CheckBox x:Name="cbChaosDiv" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="{ext:Localization Main215_ChaosDivTip}" Height="14" IsChecked="{Binding Path=Form.ChaosDiv}">
-                <CheckBox.LayoutTransform>
-                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
-                </CheckBox.LayoutTransform>
-                <TextBlock x:Name="tbChaosDiv" Text="{ext:Localization Main214_tbChaosDiv}" Margin="0,2,0,0" Foreground="{StaticResource ForegroundTextBrush}" FontFamily="{StaticResource LithosProRegular}" FontSize="8"/>
-            </CheckBox>
-            -->
-        </Border>
-        <Border Margin="345,351,0,71" VerticalAlignment="Top" HorizontalAlignment="Left" d:Visibility="Visible" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
-            <Grid>
-                <ToggleButton Margin="0,2,0,0" Content="Exalted" ToolTip="{ext:Localization Main226_ExaltTip}" IsChecked="{Binding Path=Form.Exalt}" IsEnabled="{Binding Path=Form.Chaos, Converter={StaticResource inverseBooleanConverter}}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <ToggleButton.LayoutTransform>
-                        <ScaleTransform ScaleX="1.1" ScaleY="1.1" />
-                    </ToggleButton.LayoutTransform>
-                </ToggleButton>
-                <ToggleButton Margin="80,2,0,0" Content="Chaos" ToolTip="{ext:Localization Main239_ChaosOnlyTip}" IsChecked="{Binding Path=Form.Chaos}" IsEnabled="{Binding Path=Form.Exalt, Converter={StaticResource inverseBooleanConverter}}" Style="{StaticResource ToggleSwitchContentSmall}" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <ToggleButton.LayoutTransform>
-                        <ScaleTransform ScaleX="1.1" ScaleY="1.1" />
-                    </ToggleButton.LayoutTransform>
-                </ToggleButton>
-            </Grid>
-            <!--
-            <CheckBox x:Name="cbExalt" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="{ext:Localization Main226_ExaltTip}" Height="14" IsChecked="{Binding Path=Form.Exalt}">
-                <CheckBox.LayoutTransform>
-                    <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
-                </CheckBox.LayoutTransform>
-                <TextBlock x:Name="tbExalt" Text="Exalted" Margin="0,2,0,0" Foreground="{StaticResource ForegroundTextBrush}" FontFamily="{StaticResource LithosProRegular}" FontSize="8"/>
-            </CheckBox>
-            -->
-        </Border>
+        <!-- Buyout price : currencies of the sales taken into account (PoE 1 / PoE 2 options). The tooltip of the selected option is shown on the combobox -->
+        <StackPanel Margin="345,351,0,0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <TextBlock Text="{ext:Localization Main260_BuyoutPrice}" Style="{StaticResource TextBlockTitle}" FontSize="11" VerticalAlignment="Center" Margin="0,0,6,0"/>
+            <ComboBox Height="22" MinWidth="56" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                      ToolTip="{Binding SelectedItem.ToolTip, RelativeSource={RelativeSource Self}}">
+                <ComboBox.Style>
+                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <!-- bound only when displayed : the PoE 2 index 3 does not exist here -->
+                            <DataTrigger Binding="{Binding Form.IsPoeTwo}" Value="False">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="SelectedIndex" Value="{Binding Form.BuyoutPriceIndex}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ComboBox.Style>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="DropDownClosed">
+                        <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ComboBoxItem ToolTip="{ext:Localization Main263_AllCurrenciesTip}">
+                    <Image Source="{StaticResource ImgAllCurency}" Height="18" Stretch="Uniform"/>
+                </ComboBoxItem>
+                <ComboBoxItem ToolTip="{ext:Localization Main215_ChaosDivTip}">
+                    <Image Source="{StaticResource ImgChaosDivine}" Height="18" Stretch="Uniform"/>
+                </ComboBoxItem>
+                <ComboBoxItem ToolTip="{ext:Localization Main262_DivineOnlyTip}">
+                    <Image Source="{StaticResource ImgDivine}" Height="18" Stretch="Uniform"/>
+                </ComboBoxItem>
+            </ComboBox>
+            <ComboBox Height="22" MinWidth="56" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                      ToolTip="{Binding SelectedItem.ToolTip, RelativeSource={RelativeSource Self}}">
+                <ComboBox.Style>
+                    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Form.IsPoeTwo}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Setter Property="SelectedIndex" Value="{Binding Form.BuyoutPriceIndex}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ComboBox.Style>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="DropDownClosed">
+                        <i:InvokeCommandAction Command="{Binding Form.ClearFocusCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ComboBoxItem ToolTip="{ext:Localization Main263_AllCurrenciesTip}">
+                    <Image Source="{StaticResource ImgAllCurencyPoe2}" Height="18" Stretch="Uniform"/>
+                </ComboBoxItem>
+                <ComboBoxItem ToolTip="{ext:Localization Main226_ExaltTip}">
+                    <Image Source="{StaticResource ImgExaltPoe2}" Height="18" Stretch="Uniform"/>
+                </ComboBoxItem>
+                <ComboBoxItem ToolTip="{ext:Localization Main261_ExaltDivTip}">
+                    <Image Source="{StaticResource ImgExaltDivinePoe2}" Height="18" Stretch="Uniform"/>
+                </ComboBoxItem>
+                <ComboBoxItem ToolTip="{ext:Localization Main239_ChaosOnlyTip}">
+                    <Image Source="{StaticResource ImgChaosPoe2}" Height="18" Stretch="Uniform"/>
+                </ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
 
         <Border x:Name="bdRect2" Margin="0,383,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="506" Height="52" Visibility="Visible" BorderThickness="1" Grid.Row="0" CornerRadius="3" IsEnabled="{Binding Path=Form.Freeze, Converter={StaticResource inverseBooleanConverter}}">
             <Border.Style>

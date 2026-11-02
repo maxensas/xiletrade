@@ -2913,6 +2913,21 @@ A second click to load or unload all values.</comment>
   <data name="Main259_SelectDesiredUnique" xml:space="preserve">
     <value>希望する一意の項目を選択してください</value>
   </data>
+  <data name="Main260_BuyoutPrice" xml:space="preserve">
+    <value>即決価格 :</value>
+  </data>
+  <data name="Main261_ExaltDivTip" xml:space="preserve">
+    <value>Exalted または Divine Orbs でのみ価格を確認できます。
+他の通貨で価格設定されたセールは無視されます。</value>
+  </data>
+  <data name="Main262_DivineOnlyTip" xml:space="preserve">
+    <value>Divine Orbs でのみ価格を確認できます。
+他の通貨で価格設定されたセールは無視されます。</value>
+  </data>
+  <data name="Main263_AllCurrenciesTip" xml:space="preserve">
+    <value>すべての通貨で価格を確認できます。
+どのセールも無視されません。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>

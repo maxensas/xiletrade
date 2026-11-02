@@ -348,12 +348,17 @@ internal sealed class JsonDataTwoFactory : JsonDataFactoryBase<JsonDataTwo>
         {
             trade.Filters.Price.Min = xItem.PriceMin;
         }
-        if (xItem.ExaltOnly && !xItem.ChaosOnly)
+        if (xItem.ExaltOnly)
         {
             trade.Disabled = false;
             trade.Filters.Price.Option = "exalted";
         }
-        if (xItem.ChaosOnly && !xItem.ExaltOnly)
+        if (xItem.ExaltDivOnly)
+        {
+            trade.Disabled = false;
+            trade.Filters.Price.Option = "exalted_divine";
+        }
+        if (xItem.ChaosOnly)
         {
             trade.Disabled = false;
             trade.Filters.Price.Option = "chaos";

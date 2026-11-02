@@ -425,7 +425,7 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
             trade.Filters.Price.Min = xItem.PriceMin;
         }
 
-        if (xItem.ChaosDivOnly)
+        if (xItem.ChaosDivOnly || xItem.DivineOnly)
         {
             trade.Disabled = false;
 
@@ -433,7 +433,7 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
             {
                 trade.Filters.Price = new();
             }
-            trade.Filters.Price.Option = new("chaos_divine");
+            trade.Filters.Price.Option = new(xItem.DivineOnly ? "divine" : "chaos_divine");
         }
 
         return trade.Disabled ? null : trade;

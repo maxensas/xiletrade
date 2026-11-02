@@ -2408,6 +2408,21 @@ o no gestionada actualmente</value>
   <data name="Main259_SelectDesiredUnique" xml:space="preserve">
     <value>Seleccione el elemento único deseado</value>
   </data>
+  <data name="Main260_BuyoutPrice" xml:space="preserve">
+    <value>Precio de compra :</value>
+  </data>
+  <data name="Main261_ExaltDivTip" xml:space="preserve">
+    <value>Te permite consultar precios solo en Orbes exaltados o divinos.
+Ignorará las ofertas con precios en otras monedas.</value>
+  </data>
+  <data name="Main262_DivineOnlyTip" xml:space="preserve">
+    <value>Te permite consultar precios solo en Orbes divinos.
+Ignorará las ofertas con precios en otras monedas.</value>
+  </data>
+  <data name="Main263_AllCurrenciesTip" xml:space="preserve">
+    <value>Te permite consultar precios en todas las monedas.
+No se ignorará ninguna oferta.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenida en Xiletrade</value>
   </data>

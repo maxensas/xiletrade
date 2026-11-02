@@ -2552,6 +2552,21 @@
   <data name="Main259_SelectDesiredUnique" xml:space="preserve">
     <value>选择所需的唯一项目</value>
   </data>
+  <data name="Main260_BuyoutPrice" xml:space="preserve">
+    <value>一口价 :</value>
+  </data>
+  <data name="Main261_ExaltDivTip" xml:space="preserve">
+    <value>仅允许您查看以崇敬或神圣宝珠计价的价格。
+将忽略以其他货币计价的销售。</value>
+  </data>
+  <data name="Main262_DivineOnlyTip" xml:space="preserve">
+    <value>仅允许您查看以神圣宝珠计价的商品价格。
+将忽略以其他货币计价的商品。</value>
+  </data>
+  <data name="Main263_AllCurrenciesTip" xml:space="preserve">
+    <value>允许您查看以所有货币计价的价格。
+不会忽略任何销售。</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
   </data>

@@ -16,7 +16,9 @@ internal record class XiletradeItem
     internal bool SynthesisBlight { get; }
     internal bool BlightRavaged { get; }
     internal bool ChaosDivOnly { get; }
+    internal bool DivineOnly { get; }
     internal bool ExaltOnly { get; }
+    internal bool ExaltDivOnly { get; }
     internal bool ChaosOnly { get; }
     internal bool ByType { get; }
     internal bool SocketColors { get; }
@@ -142,9 +144,12 @@ internal record class XiletradeItem
 
         RewardType = form.Panel?.Reward?.Tip.Length > 0 ? form.Panel.Reward.Tip : null;
         Reward = form.Panel?.Reward?.Text.Length > 0 ? form.Panel.Reward.Text : null;
-        ChaosDivOnly = form.ChaosDiv;
-        ExaltOnly = form.Exalt;
-        ChaosOnly = form.Chaos;
+        // buyout price option, see FormViewModel.BuyoutPriceIndex (0 : all currencies, no option sent)
+        ChaosDivOnly = !form.IsPoeTwo && form.BuyoutPriceIndex is 1;
+        DivineOnly = !form.IsPoeTwo && form.BuyoutPriceIndex is 2;
+        ExaltOnly = form.IsPoeTwo && form.BuyoutPriceIndex is 1;
+        ExaltDivOnly = form.IsPoeTwo && form.BuyoutPriceIndex is 2;
+        ChaosOnly = form.IsPoeTwo && form.BuyoutPriceIndex is 3;
         Rarity = form.Rarity.Index >= 0 && form.Rarity.Index < form.Rarity.ComboBox.Count ?
             form.Rarity.ComboBox[form.Rarity.Index] : form.Rarity.Item;
         UniqueName = form.GetUniqueName();

@@ -7049,6 +7049,50 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
+        ///   Localized string similar to => Buyout Price :.
+        /// </summary>
+        public static string Main260_BuyoutPrice
+        {
+            get
+            {
+                return ResourceManager.GetString("Main260_BuyoutPrice", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => ExaltDivTip.
+        /// </summary>
+        public static string Main261_ExaltDivTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main261_ExaltDivTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => DivineOnlyTip.
+        /// </summary>
+        public static string Main262_DivineOnlyTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main262_DivineOnlyTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => AllCurrenciesTip.
+        /// </summary>
+        public static string Main263_AllCurrenciesTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main263_AllCurrenciesTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Localized string similar to => Welcome to Xiletrade.
         /// </summary>
         public static string Start001_lblWelcome {
