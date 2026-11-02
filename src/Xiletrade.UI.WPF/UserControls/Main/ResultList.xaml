@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:t="clr-namespace:Xiletrade.Library.ViewModels.Main;assembly=Xiletrade.Library"
              xmlns:ext="clr-namespace:Xiletrade.UI.WPF.Util.Extensions"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:helper="clr-namespace:Xiletrade.UI.WPF.Util.Helper"
              xmlns:uc="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
              xmlns:local="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
              mc:Ignorable="d" d:DesignHeight="336" d:DesignWidth="505"
@@ -27,6 +29,10 @@
              VirtualizingStackPanel.IsVirtualizing="True"
              VirtualizingStackPanel.VirtualizationMode="Recycling"
              HorizontalContentAlignment="Stretch">
+            <i:Interaction.Behaviors>
+                <!-- end of the list reached : next results fetched, as with the fetch button of the detail view -->
+                <helper:ScrollEndCommandBehavior Command="{Binding Result.FetchCommand}" IsEnabled="{Binding Result.FetchDetailIsEnabled}"/>
+            </i:Interaction.Behaviors>
             <ListBox.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="3"/>
