@@ -53,8 +53,10 @@ public class ViewManager : IViewManager
         {
             try
             {
-                MainWindow.Show();
-                MainWindow.ShowActivated = false;
+                if (MainWindow is MainView view)
+                {
+                    view.Reveal();
+                }
             }
             catch (Exception ex)
             {
