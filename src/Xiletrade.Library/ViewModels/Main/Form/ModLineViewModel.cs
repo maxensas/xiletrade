@@ -135,6 +135,15 @@ public sealed partial class ModLineViewModel : ViewModelBase
     [ObservableProperty]
     private bool vestigial;
 
+    /// <summary>True when the mod has a min value : it can be displayed with the slider.</summary>
+    internal bool IsSlidable { get; }
+
+    /// <summary>Max value assigned by default.</summary>
+    internal string DefaultMax { get; }
+
+    /// <summary>True when the mod is filled by default with a max value only (negative value or max default position) : slider disabled.</summary>
+    internal bool IsDefaultMax { get; }
+
     [RelayCommand]
     private void ToggleChecked(object commandParameter)
     {
@@ -225,7 +234,10 @@ public sealed partial class ModLineViewModel : ViewModelBase
         min = modLine.Min;
         max = modLine.Max;
 
-        preferMinMax = min.Length is 0 || showMinMax;
+        IsSlidable = min.Length > 0;
+        DefaultMax = max;
+        IsDefaultMax = !IsSlidable && max.Length > 0;
+        preferMinMax = !IsSlidable || showMinMax;
         slideValue = min.ToDoubleEmptyField();
         currentSlide = modLine.CurrentVal;
         modKind = modLine.ModKind;
