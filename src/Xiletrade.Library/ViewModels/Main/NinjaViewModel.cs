@@ -61,11 +61,6 @@ public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNi
                 {
                     NinjaInfoBase.Link += ninja.Id;
                 }
-                if (ninja.Detail is not null)
-                {
-                    Detail = ninja.Detail;
-                }
-
                 _vm.Form.Visible.Ninja = true;
 
                 double value = ninja.DivinePrice > 1 ? Math.Round(ninja.DivinePrice, 2)
@@ -79,6 +74,12 @@ public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNi
             if (_vm.Form.UnidentifiedUnique)
             {
                 UpdateUniqueListIcons();
+            }
+
+            // currency history (exchange only) : not cached, requested after the price display
+            if (ninja is not null && NinjaInfoBase.UrlDetails?.Length > 0)
+            {
+                Detail = await _ninja.GetCurrencyHistory(NinjaInfoBase);
             }
         }
         catch (Exception ex)

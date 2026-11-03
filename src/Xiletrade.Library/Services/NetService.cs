@@ -48,7 +48,8 @@ public class NetService : INetService
 
     private readonly HttpClient _ninja = new(new SocketsHttpHandler
     {
-        PooledConnectionIdleTimeout = TimeSpan.FromMilliseconds(200)
+        PooledConnectionIdleTimeout = TimeSpan.FromMinutes(1),
+        AutomaticDecompression = DecompressionMethods.All
     })
     {
         Timeout = TimeSpan.FromSeconds(10)
