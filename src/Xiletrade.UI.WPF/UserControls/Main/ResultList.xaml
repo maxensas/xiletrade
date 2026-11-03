@@ -16,12 +16,13 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <StackPanel Margin="0,0,0,5" Orientation="Horizontal" Grid.Row="0" Height="15"><!-- Visibility="Collapsed"-->
-            <TextBlock Text="{ext:Localization Main087_lblPrice}" HorizontalAlignment="Left" Margin="28,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource ForegroundTextBrush}" Visibility="Visible" Width="75"/>
-            <TextBlock Text="iLvl" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource ForegroundTextBrush}" Visibility="Visible" Width="40"/>
-            <TextBlock Text="{ext:Localization Main066_tbQuality}" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource ForegroundTextBrush}" Visibility="Visible" Width="70"/>
-            <TextBlock Text="{ext:Localization Main088_lblIndexed}" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource ForegroundTextBrush}" Visibility="Visible" Width="128" TextAlignment="Left"/>
-            <TextBlock Text="{ext:Localization Main089_lblSellers}" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource ForegroundTextBrush}" Visibility="Visible" Width="125"/>
+        <!-- header of the result list -->
+        <StackPanel Margin="0,0,0,5" Orientation="Horizontal" Grid.Row="0" Height="15">
+            <TextBlock Text="{ext:Localization Main087_lblPrice}" HorizontalAlignment="Left" Margin="30,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource ForegroundBrush}" Visibility="Visible" Width="79"/>
+            <TextBlock Text="iLvl" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource ForegroundBrush}" Visibility="Visible" Width="40"/>
+            <TextBlock Text="{ext:Localization Main066_tbQuality}" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource ForegroundBrush}" Visibility="Visible" Width="70"/>
+            <TextBlock Text="{ext:Localization Main088_lblIndexed}" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource ForegroundBrush}" Visibility="Visible" Width="93" TextAlignment="Left"/>
+            <TextBlock Text="{ext:Localization Main089_lblSellers}" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource ForegroundBrush}" Visibility="Visible" Width="125"/>
         </StackPanel>
         <ListBox Grid.Row="1" FontFamily="Consolas" BorderThickness="1" AlternationCount="2"
              ItemsSource="{Binding Path=Result.DetailList}"
@@ -90,8 +91,9 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <!-- the tooltip is on this wrapper : it covers the whole item (2px on the left and 5px above the grid included), the hideout Button keeps its own tooltip -->
-                    <Border Padding="2,5,0,0" Background="Transparent" Tag="{Binding Tag}"
+                    <!-- the tooltip is on this wrapper : it covers the whole item (padding included), the hideout Button keeps its own tooltip.
+                         the padding is the same above and below the content : the line is vertically centered -->
+                    <Border Padding="2,1,0,1" Background="Transparent" Tag="{Binding Tag}"
                             ToolTipService.BetweenShowDelay="0" ToolTipService.InitialShowDelay="0" 
                             ToolTipService.HorizontalOffset="40" ToolTipService.VerticalOffset="40"
                             MouseLeave="ResultItem_MouseLeave">
@@ -103,33 +105,51 @@
                         <Grid Tag="{Binding Tag}">
 
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="14"/>
+                                <RowDefinition Height="16"/>
                             </Grid.RowDefinitions>
 
                             <Grid.ColumnDefinitions>
+                                <!-- amount -->
                                 <ColumnDefinition Width="30"/>
-                                <ColumnDefinition Width="67"/>
-                                <ColumnDefinition Width="17"/>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="62"/>
+                                <!-- currency -->
+                                <ColumnDefinition Width="25"/>
+                                <!-- hideout -->
+                                <ColumnDefinition Width="35"/>
+                                <!-- item level -->
+                                <ColumnDefinition Width="30"/>
+                                <!-- quality / count -->
+                                <ColumnDefinition Width="48"/>
+                                <!-- age -->
+                                <ColumnDefinition Width="60"/>
+                                <!-- age label -->
                                 <ColumnDefinition Width="80"/>
-                                <ColumnDefinition Width="40"/>
+                                <!-- account -->
                                 <ColumnDefinition Width="144"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock FontSize="14" d:Text="200" Text="{Binding Info.Amount}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-                            <Image x:Name="tradeCur" Source="{Binding Currency, Converter={StaticResource imageSourceConverter}}" d:Source="{StaticResource ImgDivine}" Width="16" Height="16" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="6,0,0,0" d:Visibility="Visible" Visibility="{Binding Source={RelativeSource Self}, Path=Source, Converter={StaticResource null2CollapseConverter}}"/>
-                            <TextBlock FontSize="14" d:Text="divine" Text="{Binding Currency.Name}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="8,0,0,0" VerticalAlignment="Bottom" Visibility="{Binding ElementName=tradeCur, Path=Source, Converter={StaticResource notnull2CollapseConverter}}"/>
-                            <TextBlock FontSize="14" d:Text="83" Text="{Binding Item.ItemLevel}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-                            <TextBlock FontSize="14" d:Text="20" Text="{Binding Info.QualityOrCount}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-                            <TextBlock FontSize="14" d:Text="5" Text="{Binding Info.Age}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
-                            <TextBlock FontSize="14" d:Text="days" Text="{Binding Info.AgeLabel}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Left" Margin="8,0,0,0" VerticalAlignment="Bottom"/>
-                            <Button Grid.Row="0" Grid.Column="6" Height="14" Width="18" Command="{Binding DataContext.Result.TravelToHideoutCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding Info}" ToolTip="Travel to hideout" VerticalAlignment="Bottom" Cursor="Hand">
+                            <TextBlock Margin="0,-1,0,0" FontSize="14" d:Text="200" Text="{Binding Info.Amount}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <TextBlock.ToolTip>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Info.Amount"/>
+                                                <Binding Path="Currency.Name"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <Image Margin="6,0,0,0" x:Name="tradeCur" Source="{Binding Currency, Converter={StaticResource imageSourceConverter}}" d:Source="{StaticResource ImgDivine}" Width="16" Height="16" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" d:Visibility="Visible" Visibility="{Binding Source={RelativeSource Self}, Path=Source, Converter={StaticResource null2CollapseConverter}}"/>
+                            <Button Grid.Row="0" Grid.Column="2" Height="13" Width="15" Command="{Binding DataContext.Result.TravelToHideoutCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding Info}" ToolTip="Travel to hideout" Cursor="Hand">
                                 <Viewbox Width="10" Height="10" Cursor="">
-                                    <Path Style="{StaticResource HouseIcon}"/>
+                                    <Path Style="{StaticResource HouseIcon}" Stretch="Uniform"/>
                                 </Viewbox>
                             </Button>
-                            <TextBlock FontSize="14" d:Text="Samathor" Text="{Binding Info.Account}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="7" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                            <TextBlock Margin="0,-1,0,0" FontSize="14" d:Text="83" Text="{Binding Item.ItemLevel}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            <TextBlock Margin="0,-1,0,0" FontSize="14" d:Text="20" Text="{Binding Info.QualityOrCount}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            <TextBlock Margin="0,-1,0,0" FontSize="14" d:Text="5" Text="{Binding Info.Age}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            <TextBlock Margin="8,-1,0,0" FontSize="14" d:Text="days" Text="{Binding Info.AgeLabel}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="6" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock Margin="0,-1,0,1" FontSize="14" d:Text="Samathor" Text="{Binding Info.Account}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="7" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
                 </DataTemplate>
