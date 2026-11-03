@@ -21,7 +21,6 @@ namespace Xiletrade.Library.ViewModels.Main.Form;
 public sealed partial class FormViewModel : ViewModelBase
 {
     private readonly IViewManager _view;
-    private readonly IKeyboardAdapterService _keyboard;
     private readonly IMessageAdapterService _message;
     private readonly DataManagerService _dm;
     private readonly MainViewModel _vm;
@@ -245,14 +244,12 @@ public sealed partial class FormViewModel : ViewModelBase
         _vm.Result.UpdateAsync(minimumStock: 0);
     }
 
-    public FormViewModel(DataManagerService dm, MainViewModel vm,
-        IViewManager view, IKeyboardAdapterService keyboard,
-        IMessageAdapterService message, bool useCustomOrBulk)
+    public FormViewModel(DataManagerService dm, MainViewModel vm, IViewManager view, IMessageAdapterService message, 
+        bool useCustomOrBulk)
     {
         _dm = dm;
         _vm = vm;
         _view = view;
-        _keyboard = keyboard;
         _message = message;
 
         itemBaseType = useCustomOrBulk ? Resources.Resources.Main247_CustomSearch + " / "
@@ -260,11 +257,11 @@ public sealed partial class FormViewModel : ViewModelBase
         itemBaseTypeColor = useCustomOrBulk ? Strings.Color.Moccasin : string.Empty;
         baseTypeFontSize = useCustomOrBulk ? 16 : 12; // FontSize cannot be equal to 0
         itemExchange = new(_dm, _vm, _view, _message, useCustomOrBulk);
+        tab = new(this, useCustomOrBulk);
         if (useCustomOrBulk)
         {
             visible = new();
             rarity = new();
-            tab = new(this);
             customSearch = new(_dm, _vm, _view, _message);
         }
 
@@ -280,10 +277,8 @@ public sealed partial class FormViewModel : ViewModelBase
         league = _dm.GetLeagueAsyncCollection();
     }
 
-    public FormViewModel(DataManagerService dm, MainViewModel vm, 
-        IViewManager view, IKeyboardAdapterService keyboard, IMessageAdapterService message,
-        ItemData item, InfoDescription infoDesc, bool showMinMax) 
-        : this(dm, vm, view, keyboard, message, useCustomOrBulk: false)
+    public FormViewModel(DataManagerService dm, MainViewModel vm, IViewManager view, IMessageAdapterService message,
+        ItemData item, InfoDescription infoDesc, bool showMinMax) : this(dm, vm, view, message, useCustomOrBulk: false)
     {
         var flag = item.Flag;
         if (item.ModList?.Count > 0)

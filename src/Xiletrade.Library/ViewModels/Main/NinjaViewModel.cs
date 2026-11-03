@@ -64,13 +64,6 @@ public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNi
                 if (ninja.Detail is not null)
                 {
                     Detail = ninja.Detail;
-
-                    if (!_vm.Form.Tab.HistoryEnable)
-                    {
-                        _vm.Form.Tab.HistoryEnable = _vm.Form.Tab.HistorySelected = true;
-                        _vm.Form.Visible.Poeprices = false;
-                        _vm.Form.Tab.QuickEnable = _vm.Form.Tab.DetailEnable = false;
-                    }
                 }
 
                 _vm.Form.Visible.Ninja = true;

@@ -141,7 +141,7 @@ public sealed partial class VisibilityViewModel : ViewModelBase
 
         wiki = true;
         btnPoeDb = true;
-        poeprices = iSpoe1English;
+        poeprices = iSpoe1English && !item.State.ExchangeCurrency;
         btnDust = useDust;
         if (flag.Area.SanctumResearch)
         {
