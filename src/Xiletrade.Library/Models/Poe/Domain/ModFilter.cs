@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
@@ -23,8 +22,6 @@ internal sealed record ModFilter
     {
         Mod = mod;
 
-        var inputRegex = GetInputRegex(mod);
-
         foreach (var filter in dm.Filter.Result)
         {
             if (item.Flag.Gem.IsGem && item.Flag.Tag.Imbued 
@@ -33,9 +30,9 @@ internal sealed record ModFilter
                 continue;
             }
 
-            var entries = filter.FindEntries(mod, item, inputRegex);
+            var entries = filter.FindEntries(mod, item);
             
-            if (entries.Count > 0)
+            if (entries?.Count > 0)
             {
                 var (entrie, min, max) = entries.GetMinMaxEntrie(dm, mod, item);
                 if (entrie is not null)
@@ -53,13 +50,6 @@ internal sealed record ModFilter
         }
 
         IsFetched = Entrie.ID != string.Empty;
-    }
-
-    private static Regex GetInputRegex(ItemModifier mod)
-    {
-        string inputRegEscape = Regex.Escape(RegexUtil.DecimalPattern().Replace(mod.Parsed, "#"));
-        string inputRegPattern = RegexUtil.DiezePattern().Replace(inputRegEscape, RegexUtil.DecimalPatternDieze);
-        return new Regex("^" + inputRegPattern + "$", RegexOptions.IgnoreCase);
     }
 
     // not used anymore

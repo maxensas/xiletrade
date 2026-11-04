@@ -34,7 +34,7 @@ internal static class FilterResultEntrieExtensions
             {
                 for (int t = 0; t < secondMatches.Count; t++)
                 {
-                    if (secondMatches[t].Value is "#")
+                    if (secondMatches[t].ValueSpan is "#")
                     {
                         if (!isMin)
                         {
@@ -47,7 +47,7 @@ internal static class FilterResultEntrieExtensions
                             idxMax = t;
                         }
                     }
-                    else if (firstMatches[t].Value != secondMatches[t].Value)
+                    else if (!firstMatches[t].ValueSpan.SequenceEqual(secondMatches[t].ValueSpan))
                     {
                         isBreak = false;
                         break;
@@ -57,7 +57,7 @@ internal static class FilterResultEntrieExtensions
 
             if (isBreak) //TOCHECK if does not impact negatively
             {
-                var matches = RegexUtil.DecimalNoPlusPattern().Matches(mod.Parsed);
+                var matches = firstMatches; // same input
                 if (item.Flag.SanctumRelic) // TO update with other unparsed values not done yet
                 {
                     isMin = true;

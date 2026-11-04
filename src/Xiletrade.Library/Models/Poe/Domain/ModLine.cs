@@ -147,10 +147,11 @@ internal sealed record ModLine
                 OptionList.Add(optionText); // fire selection changed
                 OptionIdList.Add(opt.ID.Id); // fire selection changed
 
-                string[] textLine = opt.Text.Split(Strings.LF);
-                for (int l = 0; l < textLine.Length; l++)
+                // lines read on spans, compared ignoring case : no string allocation
+                ReadOnlySpan<char> optText = opt.Text;
+                foreach (Range line in optText.Split('\n')) // Strings.LF
                 {
-                    if (modFilter.Mod.Parsed.ToLowerInvariant().Contain(textLine[l].ToLowerInvariant()))
+                    if (modFilter.Mod.Parsed.AsSpan().Contains(optText[line], StringComparison.OrdinalIgnoreCase))
                     {
                         ItemFilter.Option = opt.ID.Id;
                         selId = OptionList.Count - 1;
