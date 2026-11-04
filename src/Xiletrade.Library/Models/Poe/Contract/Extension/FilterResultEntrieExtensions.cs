@@ -70,6 +70,30 @@ internal static class FilterResultEntrieExtensions
         return (null, ModFilter.EMPTYFIELD, ModFilter.EMPTYFIELD);
     }
 
+    // same as lSkipMods.Contains(id.Split('.')[1]), without allocation (id without '.' : not skipped)
+    private static bool IsSkipMod(ReadOnlySpan<char> id)
+    {
+        int dot = id.IndexOf('.');
+        if (dot < 0)
+        {
+            return false;
+        }
+        var stat = id[(dot + 1)..];
+        int next = stat.IndexOf('.');
+        if (next >= 0)
+        {
+            stat = stat[..next];
+        }
+        foreach (var skip in Strings.StatPoe1.Aura.lSkipMods)
+        {
+            if (stat.SequenceEqual(skip))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     internal static bool SwitchEntrieId(this FilterResultEntrie entrie, DataManagerService dm, ItemData item)
         => item.IsPoe2 ? entrie.SwitchPoe2EntrieId(dm, item) : entrie.SwitchPoe1EntrieId(dm, item);
 
@@ -80,7 +104,7 @@ internal static class FilterResultEntrieExtensions
 
         if (entrie.ID.Length > 1)
         {
-            if (Strings.StatPoe1.Aura.lSkipMods.Contains(entrie.ID.Split('.')[1]))
+            if (IsSkipMod(entrie.ID))
             {
                 return true;
             }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Models.Poe.Domain.Parser.Flag;
@@ -203,8 +204,8 @@ internal sealed record ModLine
         }
         else if (ItemFilter.Min.IsNotEmpty() || ItemFilter.Max.IsNotEmpty())
         {
-            var split = modFilter.Entrie.ID.Split('.');
-            bool defMaxPosition = split.Length is 2 && Strings.StatPoe1.dicDefaultPosition.ContainsKey(split[1]);
+            bool defMaxPosition = modFilter.Entrie.ID.TryGetStatId(out var statId)
+                && Strings.StatPoe1.dicDefaultPosition.ContainsSpanKey(statId);
             var negativeMin = ItemFilter.Min < 0 && ItemFilter.Max.IsEmpty();
             if (negativeMin || (defMaxPosition && ItemFilter.Min > 0 && ItemFilter.Max.IsEmpty()))
             {
@@ -384,18 +385,31 @@ internal sealed record ModLine
         {
             kind = Strings.ModKind.AugmentedMod;
         }
-        var idStat = ItemFilter.Id.Split('.');
-        if (item.Flag.Map.IsMap && idStat.Length is 2 &&
-            _dm.Config.DangerousMapMods.FirstOrDefault(x => x.Id.IdxOf(idStat[1]) > -1) is not null)
+        if (ItemFilter.Id.TryGetStatId(out var statId))
         {
-            kind = Strings.ModKind.DangerousMod;
-        }
-        if (!item.Flag.Map.IsMap && idStat.Length is 2 &&
-            _dm.Config.RareItemMods.FirstOrDefault(x => x.Id.IdxOf(idStat[1]) > -1) is not null)
-        {
-            kind = Strings.ModKind.RareMod;
+            if (item.Flag.Map.IsMap && ContainsStatId(_dm.Config.DangerousMapMods, statId))
+            {
+                kind = Strings.ModKind.DangerousMod;
+            }
+            if (!item.Flag.Map.IsMap && ContainsStatId(_dm.Config.RareItemMods, statId))
+            {
+                kind = Strings.ModKind.RareMod;
+            }
         }
         return kind;
+    }
+
+    // same as FirstOrDefault(x => x.Id.IdxOf(statId) > -1) is not null, without closure
+    private static bool ContainsStatId(ConfigMods[] mods, ReadOnlySpan<char> statId)
+    {
+        foreach (var mod in mods)
+        {
+            if (mod.Id.IdxOf(statId) > -1)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static string GetReducesOptionText(string text)
@@ -416,8 +430,8 @@ internal sealed record ModLine
         var isPoe2 = _dm.Config.Options.GameVersion is 1;
         if (!isPoe2)
         {
-            var idSplit = AffixList[0]?.ID.Split('.');
-            if (idSplit?.Length is 2 && Strings.StatPoe1.dicPseudo.TryGetValue(idSplit[1], out string value)) // Gestion des pseudo
+            string affixId = AffixList[0]?.ID;
+            if (affixId.TryGetStatId(out var statId) && Strings.StatPoe1.dicPseudo.TryGetSpanValue(statId, out string value)) // Gestion des pseudo
             {
                 AffixList.Add(new("pseudo." + value, Resources.Resources.General014_Pseudo));
             }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <Version>1.0.0</Version>
@@ -63,7 +63,7 @@
     <!-- Default download cache of the patch CDN, emptied once the json files are written (read at run time with AppContext.GetData) -->
     <RuntimeHostConfigurationOption Include="Xiletrade.DatToJson.CacheDirectory" Value="$(OozBuildDirectory)/temp" />
     <!-- Copied next to the executable when already built -->
-    <None Include="$(OozLibraryPath)" Link="$(OozFileName)" CopyToOutputDirectory="PreserveNewest" Condition="Exists('$(OozLibraryPath)')" />
+    <None Include="$(OozLibraryPath)" Link="$(OozFileName)" CopyToOutputDirectory="PreserveNewest" Visible="false" Condition="Exists('$(OozLibraryPath)')" />
   </ItemGroup>
 
   <Target Name="BuildOoz" BeforeTargets="BeforeBuild"

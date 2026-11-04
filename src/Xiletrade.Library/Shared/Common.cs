@@ -18,8 +18,8 @@ public static class Common
     {
         GC.Collect(); // find finalizable objects
         GC.WaitForPendingFinalizers(); // wait until finalizers executed
-        GC.Collect(); // collect finalized objects
 
+        // collect finalized objects and compact the whole heap (large object heap included) in one collection
         GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
         GC.Collect(2, GCCollectionMode.Forced, blocking: true, compacting: true);
     }

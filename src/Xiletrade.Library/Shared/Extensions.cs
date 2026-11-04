@@ -64,10 +64,15 @@ public static class Extensions
         return string.Concat(text.AsSpan(0, pos), replace, text.AsSpan(pos + search.Length));
     }
     
+    /// <summary>Removes the longest string of the array found in input, then trims. Input returned as is if none is found (empty if null, as before).</summary>
     public static string RemoveStringFromArrayDesc(this string input, ReadOnlySpan<string> array)
-        => input.AsSpan().RemoveStringFromArrayDesc(array);
+        => FindLongestString(input, array, out int idx, out int length) ? RemoveAndTrim(input, idx, length) : input ?? string.Empty;
     
     public static string RemoveStringFromArrayDesc(this ReadOnlySpan<char> input, ReadOnlySpan<string> array)
+        => FindLongestString(input, array, out int idx, out int length) ? RemoveAndTrim(input, idx, length) : input.ToString();
+
+    // first occurrence of the longest string found (same order as before : longest first, then array order)
+    private static bool FindLongestString(ReadOnlySpan<char> input, ReadOnlySpan<string> array, out int idx, out int length)
     {
         int maxLen = 0;
 
@@ -82,25 +87,56 @@ public static class Extensions
                 if (s.Length != len)
                     continue;
 
-                ReadOnlySpan<char> needle = s.AsSpan();
-                int idx = input.IndexOf(needle);
-
-                if (idx < 0)
-                    continue;
-
-                int newLen = input.Length - needle.Length;
-
-                char[] buffer = new char[newLen];
-
-                input[..idx].CopyTo(buffer);
-                input[(idx + needle.Length)..].CopyTo(buffer.AsSpan(idx));
-
-                return new string(buffer).Trim();
+                idx = input.IndexOf(s.AsSpan());
+                if (idx >= 0)
+                {
+                    length = len;
+                    return true;
+                }
             }
         }
 
-        return input.ToString();
+        idx = -1;
+        length = 0;
+        return false;
     }
+
+    // only the returned string is allocated (buffer on the stack when small)
+    private static string RemoveAndTrim(ReadOnlySpan<char> input, int idx, int length)
+    {
+        int newLen = input.Length - length;
+        Span<char> buffer = newLen <= 256 ? stackalloc char[newLen] : new char[newLen];
+
+        input[..idx].CopyTo(buffer);
+        input[(idx + length)..].CopyTo(buffer[idx..]);
+
+        return new string(buffer.Trim());
+    }
+
+    /// <summary>
+    /// Stat part of an id containing exactly one '.' ("explicit.stat_1" -> "stat_1"), 
+    /// same condition as Split('.') returning 2 parts, without allocation.
+    /// </summary>
+    internal static bool TryGetStatId(this string id, out ReadOnlySpan<char> stat)
+    {
+        ReadOnlySpan<char> span = id;
+        int dot = span.IndexOf('.');
+        if (dot < 0 || span[(dot + 1)..].Contains('.'))
+        {
+            stat = default;
+            return false;
+        }
+        stat = span[(dot + 1)..];
+        return true;
+    }
+
+    /// <summary>Key lookup with a span : without allocation when the dictionary supports it (string comparers of .NET 9+).</summary>
+    internal static bool ContainsSpanKey<TValue>(this System.Collections.Generic.Dictionary<string, TValue> dic, ReadOnlySpan<char> key)
+        => dic.TryGetAlternateLookup<ReadOnlySpan<char>>(out var lookup) ? lookup.ContainsKey(key) : dic.ContainsKey(key.ToString());
+
+    /// <summary>Value lookup with a span : without allocation when the dictionary supports it (string comparers of .NET 9+).</summary>
+    internal static bool TryGetSpanValue<TValue>(this System.Collections.Generic.Dictionary<string, TValue> dic, ReadOnlySpan<char> key, out TValue value)
+        => dic.TryGetAlternateLookup<ReadOnlySpan<char>>(out var lookup) ? lookup.TryGetValue(key, out value) : dic.TryGetValue(key.ToString(), out value);
 
     public static bool Contain(this string source, ReadOnlySpan<char> toCheck) => source.AsSpan().Contains(toCheck, StringComparison.Ordinal);
 

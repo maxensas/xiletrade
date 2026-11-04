@@ -279,14 +279,13 @@ public sealed class PoeApiService
 
             string account = info.Listing.Account.Name;
             bool addedData = false;
-            string ageIndex = GetAgeIndex(info.Listing.Indexed);
+            var age = GetAgeIndex(info.Listing.Indexed);
             string key = info.Listing.Price.Currency;
             string keyName = key;
             double amount = 0; // int val formating
             amount = info.Listing.Price.Amount;
             int tempFetch = rVm.Data.StatDetail.ResultLoaded;
             string curShort = ReplaceCurrencyChars(keyName);
-            var age = ageIndex.Split('-');
             // need non-async
             bool addItem = true;
             if (_vm.Form.SameUser && rVm.DetailList.Count >= 1)
@@ -303,7 +302,7 @@ public sealed class PoeApiService
                 var entry = _dm.Currencies.FindEntryById(curShort);
                 var curInfo = entry is null ? new CurrencyInfo(curShort, isPoe2)
                     : new CurrencyInfo(curShort, entry.Img, isPoe2);
-                var saleInfo = new SaleInfo(amount, GetQuality(info), age[0], age[1], account, info.Listing.HideoutToken);
+                var saleInfo = new SaleInfo(amount, GetQuality(info), age.Count, age.Unit, account, info.Listing.HideoutToken);
                 var saleItem = new SaleItem(_dm, info.Item);
 
                 rVm.DetailList.Add(new(saleItem, saleInfo, curInfo, info.Listing.Account.Status));
@@ -320,14 +319,14 @@ public sealed class PoeApiService
                     if (idCount > 0)
                     {
                         var idx = idCount + Resources.Resources.Main015_ListCount.Length;
-                        string trimmed = lbi.Content.AsSpan(idx, lbi.Content.Length - idx).ToString().Trim();
-                        itemCount = int.Parse(trimmed.AsSpan(0, trimmed.IndexOf(' ')).ToString(), System.Globalization.CultureInfo.InvariantCulture);
+                        var trimmed = lbi.Content.AsSpan(idx).Trim();
+                        itemCount = int.Parse(trimmed[..trimmed.IndexOf(' ')], System.Globalization.CultureInfo.InvariantCulture);
                     }
 
                     itemCount = itemCount is 0 ? 2 : itemCount + 1;
                     rVm.DetailList.RemoveAt(iLastInd); // Remove last record from same user account found
                     var count = Resources.Resources.Main015_ListCount + ": " + itemCount;
-                    var saleInfo = new SaleInfo(amount, count, age[0], age[1], account, info.Listing.HideoutToken);
+                    var saleInfo = new SaleInfo(amount, count, age.Count, age.Unit, account, info.Listing.HideoutToken);
                     var entry = _dm.Currencies.FindEntryById(curShort);
                     var curInfo = entry is null ? new CurrencyInfo(curShort, isPoe2)
                         : new CurrencyInfo(curShort, entry.Img, isPoe2);
@@ -536,7 +535,8 @@ public sealed class PoeApiService
         return new();
     }
 
-    private static string GetAgeIndex(string indexTime)
+    // count and unit of the listing age : no concatenation then split
+    private static (string Count, string Unit) GetAgeIndex(string indexTime)
     {
         DateTime indexTimeDate = DateTime.Parse(indexTime);
         TimeSpan intervalIndex = DateTime.Now - indexTimeDate;
@@ -547,46 +547,53 @@ public sealed class PoeApiService
             if (daysCount >= 365)
             {
                 double yearCount = Math.Round((double)daysCount / 365, MidpointRounding.ToEven);
-                return yearCount.ToString() + "-" + (yearCount > 1 ? Resources.Resources.Main140_Years : Resources.Resources.Main139_Year);// + " ago";
+                return (yearCount.ToString(), yearCount > 1 ? Resources.Resources.Main140_Years : Resources.Resources.Main139_Year);// + " ago";
             }
             if (daysCount >= 30)
             {
                 double monthCount = Math.Round((double)daysCount / 30, MidpointRounding.ToEven);
-                return monthCount.ToString() + "-" + (monthCount > 1 ? Resources.Resources.Main138_Months : Resources.Resources.Main137_Month);// + " ago";
+                return (monthCount.ToString(), monthCount > 1 ? Resources.Resources.Main138_Months : Resources.Resources.Main137_Month);// + " ago";
             }
             if (daysCount >= 1 && daysCount < 30)
             {
-                return daysCount.ToString() + "-" + (daysCount > 1 ? Resources.Resources.Main136_Days : Resources.Resources.Main135_Day);// + " ago";
+                return (daysCount.ToString(), daysCount > 1 ? Resources.Resources.Main136_Days : Resources.Resources.Main135_Day);// + " ago";
             }
         }
         if (intervalIndex.Hours > 0)
         {
             int hoursCount = intervalIndex.Hours;
-            return hoursCount.ToString() + "-" + (hoursCount > 1 ? Resources.Resources.Main134_Hours : Resources.Resources.Main133_Hour);// + " ago";
+            return (hoursCount.ToString(), hoursCount > 1 ? Resources.Resources.Main134_Hours : Resources.Resources.Main133_Hour);// + " ago";
         }
         if (intervalIndex.Minutes > 0)
         {
             int minutesCount = intervalIndex.Minutes;
-            return minutesCount.ToString() + "-" + (minutesCount > 1 ? Resources.Resources.Main132_Minutes : Resources.Resources.Main131_Minute);// + " ago";
+            return (minutesCount.ToString(), minutesCount > 1 ? Resources.Resources.Main132_Minutes : Resources.Resources.Main131_Minute);// + " ago";
         }
         if (intervalIndex.Seconds > 0)
         {
             int secondsCount = intervalIndex.Seconds;
-            return secondsCount.ToString() + "-" + (secondsCount > 1 ? Resources.Resources.Main130_Seconds : Resources.Resources.Main129_Second);// + " ago";
+            return (secondsCount.ToString(), secondsCount > 1 ? Resources.Resources.Main130_Seconds : Resources.Resources.Main129_Second);// + " ago";
         }
-        return "0-error";
+        return ("0", "error");
     }
 
     private static string ReplaceCurrencyChars(string entry)
     {
-        StringBuilder sb = new(entry);
-
-        foreach (var item in Strings.Collection.dicCurrencyChars.Keys)
+        // most currencies (chaos, divine, exalted...) contain none of the keys : returned as is, without allocation
+        StringBuilder sb = null;
+        foreach (var pair in Strings.Collection.dicCurrencyChars)
         {
-            sb.Replace(item, Strings.Collection.dicCurrencyChars[item]);
+            if (sb is null)
+            {
+                if (!entry.Contain(pair.Key))
+                {
+                    continue;
+                }
+                sb = new(entry);
+            }
+            sb.Replace(pair.Key, pair.Value);
         }
-
-        return sb.ToString();
+        return sb is null ? entry : sb.ToString();
     }
 
     private static string GetQuality(FetchDataInfo info)
@@ -594,10 +601,21 @@ public sealed class PoeApiService
         var qual = info.Item.Properties?.FirstOrDefault(x => x.Name.Contain(Strings.ItemApi.Quality));
         if (qual?.Values[0] is not null)
         {
-            var match = RegexUtil.DecimalNoPlusDiezePattern().Matches(qual.Values[0].Item1);
-            if (match.Count is 1)
+            // exactly one value expected : counted without MatchCollection
+            string text = qual.Values[0].Item1;
+            int count = 0;
+            Range value = default;
+            foreach (var match in RegexUtil.DecimalNoPlusDiezePattern().EnumerateMatches(text))
             {
-                return match[0].Value;
+                if (++count > 1)
+                {
+                    return string.Empty;
+                }
+                value = new(match.Index, match.Index + match.Length);
+            }
+            if (count is 1)
+            {
+                return text[value];
             }
         }
         return string.Empty;

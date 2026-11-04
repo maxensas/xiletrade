@@ -1,7 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Order;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
@@ -28,19 +28,18 @@ public class ItemDataBenchMark
     [GlobalSetup]
     public void Setup()
     {
-        var services = new ServiceCollection();
-        services.AddSingleton<DataManagerService>().AddSingleton<LocalizationService>();
-        var sp = services.BuildServiceProvider();
-        _dmPoe1 = sp.GetRequiredService<DataManagerService>();
-        _dmPoe1.TryInit(forceGameVersion: 1);
-        sp.GetRequiredService<LocalizationService>().RefreshCurrentCulture(_dmPoe1.Config.Options.Language);
+        _dmPoe1 = CreateDataManager(gameVersion: 1);
+        _dmPoe2 = CreateDataManager(gameVersion: 2);
+    }
 
-        services = new ServiceCollection();
-        services.AddSingleton<DataManagerService>().AddSingleton<LocalizationService>();
-        sp = services.BuildServiceProvider();
-        _dmPoe2 = sp.GetRequiredService<DataManagerService>();
-        _dmPoe2.TryInit(forceGameVersion: 2);
-        sp.GetRequiredService<LocalizationService>().RefreshCurrentCulture(_dmPoe2.Config.Options.Language);
+    // DataManagerService needs a logger, a message service and a view manager : no UI in a benchmark (see BenchServices)
+    private static DataManagerService CreateDataManager(int gameVersion)
+    {
+        var dm = new DataManagerService(NullLogger<DataManagerService>.Instance,
+            new BenchMessageAdapterService(), new BenchViewManager());
+        dm.TryInit(forceGameVersion: gameVersion);
+        new LocalizationService(NullLogger<LocalizationService>.Instance, dm).RefreshCurrentCulture(dm.Config.Options.Language);
+        return dm;
     }
 
     ///| Method                     | Mean      | Error     | StdDev    | Rank | Gen0    | Allocated |
