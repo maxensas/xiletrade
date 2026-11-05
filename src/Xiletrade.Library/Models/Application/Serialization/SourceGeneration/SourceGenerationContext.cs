@@ -51,6 +51,8 @@ namespace Xiletrade.Library.Models.Serialization.SourceGeneration;
 [JsonSerializable(typeof(FilterResultEntrie))]
 [JsonSerializable(typeof(FilterResultOption))]
 [JsonSerializable(typeof(FilterResultOptions))]
+[JsonSerializable(typeof(StatRule))]
+[JsonSerializable(typeof(StatRuleMatch))]
 [JsonSerializable(typeof(Filters))]
 [JsonSerializable(typeof(GemData))]
 [JsonSerializable(typeof(GemResult))]

@@ -20,34 +20,9 @@ public static partial class Strings
         internal static class Temple
         {
             internal const string Room01 = "pseudo_temple_apex"; // Apex of Atzoatl
-            internal const string Room02 = "pseudo_temple_breeding_room_3"; // Hall of War
-            internal const string Room03 = "pseudo_temple_workshop_3"; // Factory
-            internal const string Room04 = "pseudo_temple_explosives_room_3"; // Shrine of Unmaking
-            internal const string Room05 = "pseudo_temple_breach_room_3"; // House of the Others
-            internal const string Room06 = "pseudo_temple_currency_vault_3"; // Wealth of the Vaal
-            internal const string Room07 = "pseudo_temple_weapon_room_3"; // Hall of Champions
-            internal const string Room08 = "pseudo_temple_armour_room_3"; // Chamber of Iron
-            internal const string Room09 = "pseudo_temple_trinket_room_3"; // Glittering Halls
-            internal const string Room10 = "pseudo_temple_cartography_room_3"; // Atlas of Worlds
             internal const string Room11 = "pseudo_temple_gem_room_3"; // Doryani's Institute
-            internal const string Room12 = "pseudo_temple_torment_3"; // Sadist's Den
-            internal const string Room13 = "pseudo_temple_strongbox_3"; // Court of Sealed Death
-            internal const string Room14 = "pseudo_temple_legion_3"; // Hall of Legends
             internal const string Room15 = "pseudo_temple_sacrifice_room_3"; // Apex of Ascension
-            internal const string Room16 = "pseudo_temple_chests_3"; // Museum of Artefacts
             internal const string Room17 = "pseudo_temple_corruption_room_3"; // Locus of Corruption
-            internal const string Room18 = "pseudo_temple_empowering_room_3"; // Temple Nexus
-            internal const string Room19 = "pseudo_temple_storm_room_3"; // Storm of Corruption
-            internal const string Room20 = "pseudo_temple_poison_room_3"; // Toxic Grove
-            internal const string Room21 = "pseudo_temple_trap_room_3"; // Defense Research Lab
-            internal const string Room22 = "pseudo_temple_healing_room_3"; // Sanctum of Immortality
-            internal const string Room23 = "pseudo_temple_boss_fire_3"; // Crucible of Flame
-            internal const string Room24 = "pseudo_temple_boss_lightning_3"; // Conduit of Lightning
-            internal const string Room25 = "pseudo_temple_boss_minions_3"; // Hybridisation Chamber
-            internal const string Room26 = "pseudo_temple_queens_chambers_3"; // Throne of Atziri
-
-            internal static readonly string[] RoomList = [ Room01, Room02, Room03, Room04, Room05, Room06, Room07, Room08, Room09, Room10,
-            Room11, Room12, Room13, Room14, Room15, Room16, Room17, Room18, Room19, Room20, Room21, Room22, Room23, Room24, Room25, Room26];
         }
 
         internal static class Lake
@@ -70,36 +45,6 @@ public static partial class Strings
 
             internal const string EmmptyPrefix = "pseudo.pseudo_number_of_empty_prefix_mods"; // # Empty Prefix Modifiers
             internal const string EmptySuffix = "pseudo.pseudo_number_of_empty_suffix_mods"; // # Empty Suffix Modifiers
-        }
-
-        internal static class Aura
-        {
-            //auras
-            internal const string Hatred = "stat_1920370417";
-            internal const string Grace = "stat_1803598623";
-            internal const string Determination = "stat_2721871046";
-            internal const string Pride = "stat_3484910620";
-            internal const string Anger = "stat_2963485753";
-            internal const string Zealotry = "stat_4216444167";
-            internal const string Malevolence = "stat_3266567165";
-            internal const string Wrath = "stat_1761642973";
-            internal const string Discipline = "stat_1692887998";
-            internal const string HeraldIce = "stat_3059700363";
-            internal const string HeraldAsh = "stat_3819451758";
-            internal const string HeraldPurity = "stat_1542765265";
-            internal const string HeraldAgony = "stat_1284151528";
-            internal const string HeraldThunder = "stat_3959101898";
-            internal const string ArcticArmour = "stat_2605040931";
-            internal const string PurityFire = "stat_1135152940";
-            internal const string PurityLightning = "stat_1450978702";
-            internal const string PurityIce = "stat_2665518524";
-            internal const string DelveCorrupted = "delve_corrupted_implicit";
-
-            internal static readonly string[] lSkipMods =
-            [
-                Hatred, Grace, Determination, Pride, Anger, Zealotry, Malevolence, Wrath, Discipline, HeraldIce, HeraldAsh,
-                HeraldPurity, HeraldAgony, HeraldThunder, ArcticArmour, PurityFire, PurityLightning, PurityIce, DelveCorrupted
-            ];
         }
 
         internal static class Generic
@@ -178,34 +123,10 @@ public static partial class Strings
         //explicits
         internal const string StunOnYou = "explicit.stat_1067429236"; // #% increased Stun Duration on you
 
-        internal const string PoisonMoreDmg1 = "explicit.stat_2523146878"; // #% chance for Poisons inflicted with this Weapon to deal 100% more Damage
-        internal const string PoisonMoreDmg2 = "explicit.stat_768124628"; // #% chance for Poisons inflicted with this Weapon to deal 300% more Damage
-
-        internal const string HitBlind1 = "explicit.stat_3503466234"; // #% increased Damage with Hits and Ailments against Blinded Enemies
-        internal const string HitBlind2 = "explicit.stat_3565956680"; // #% increased Damage with Hits and Ailments against Blinded Enemies
-
         internal const string IncExpGain = "explicit.stat_3666934677"; // #% increased Experience gain
         internal const string IncExpGainMap = "explicit.stat_57434274"; // #% increased Experience gain (Maps)
 
-        internal const string TriggerAssassinOld = "explicit.stat_3382957283"; // Before HEIST : Trigger Level # Assassin's Mark when you Hit a Rare or Unique Enemy
-        internal const string TriggerAssassinNew = "explicit.stat_3924520095"; // Heist update mod
-
-        internal const string ImmunityIgnite1 = "explicit.stat_2361218755"; // Grants Immunity to Ignite for # seconds if used while Ignited\nRemoves all Burning when used
         internal const string ImmunityIgnite2 = "explicit.stat_2695527599"; // Grants Immunity to Ignite for 4 seconds if used while Ignited\nRemoves all Burning when used
-
-        internal const string IncManaReserveEffOld = "explicit.stat_1269219558"; // #% increased Mana Reservation Efficiency of Skills
-        internal const string IncManaReserveEffNew = "explicit.stat_4237190083"; // #% increased Mana Reservation Efficiency of Skills
-
-        internal const string BlockAttack1 = "explicit.stat_2530372417"; // #% Chance to Block Attack Damage
-        internal const string BlockAttack2 = "explicit.stat_1702195217"; // #% Chance to Block Attack Damage
-        internal const string BlockSpell1 = "explicit.stat_561307714"; // #% Chance to Block Spell Damage
-        internal const string BlockSpell2 = "explicit.stat_19803471"; // #% Chance to Block Spell Damage
-
-        internal const string IncCritAgainst1 = "explicit.stat_165218607"; // Hits have #% increased Critical Strike Chance against you
-        internal const string IncCritAgainst2 = "explicit.stat_4270096386"; // Hits have #% increased Critical Strike Chance against you
-
-        internal const string FlaskIncRarity1 = "explicit.stat_1740200922"; // #% increased Rarity of Items found during Effect
-        internal const string FlaskIncRarity2 = "explicit.stat_3251705960"; // #% increased Rarity of Items found during Effect
 
         internal const string MonsterLifeOld = "explicit.stat_95249895";
         internal const string MonsterLifeNew = "explicit.stat_2710898947";
@@ -214,112 +135,16 @@ public static partial class Strings
 
         internal const string Conflux = "explicit.stat_1190121450";
 
-        internal const string Rampage = "explicit.stat_2397408229"; // Rampage
-
-        internal const string SupressNew = "explicit.stat_3680664274"; // #% chance to Suppress Spell Damage
-        internal const string SupressOld = "explicit.stat_492027537"; // #% chance to Suppress Spell Damage
-
         internal const string BleedingAvoid = "explicit.stat_1618589784"; // #% chance to Avoid Bleeding
         internal const string BleedingCannot = "explicit.stat_1901158930"; // Bleeding cannot be inflicted on you
 
         internal const string SocketsUnmodifiable = "explicit.stat_3192592092"; // Sockets cannot be modified
 
-        internal const string TheBlueDream = "explicit.stat_926444104";
-        internal const string TheBlueNightmare = "explicit.stat_1224928411";
-
-        internal const string FireTakenOld = "explicit.stat_1029319062"; // #% of Fire Damage from Hits taken as Physical Damage
-        internal const string FireTakenNew = "explicit.stat_3205239847"; // #% of Fire Damage from Hits taken as Physical Damage
-
-        internal const string CritFlaskChargeOld = "explicit.stat_2858921304"; // #% chance to gain a Flask Charge when you deal a Critical Strike
-        internal const string CritFlaskChargeNew = "explicit.stat_3738001379"; // #% chance to gain a Flask Charge when you deal a Critical Strike
-
-        internal const string SocketedPierce1 = "explicit.stat_254728692"; // Socketed Gems are Supported by Level # Pierce
-        internal const string SocketedPierce2 = "explicit.indexable_support_33"; // Socketed Gems are Supported by Level # Pierce
                                                                                  //internal const string SocketedPierce3 = "explicit.stat_2433615566"; // Socketed Gems are supported by Level # Pierce
 
-        internal const string CurseVulnerability = "explicit.stat_3967845372"; // Curse Enemies with Vulnerability on Hit
-        internal const string CurseVulnerabilityChance = "explicit.stat_2213584313"; // #% chance to Curse Enemies with Vulnerability on Hit
-
-        internal const string ClusterCurseEffect1 = "enchant.stat_3948993189|25"; // Added Small Passive Skills grant: 2% increased Effect of your Curses
-        internal const string ClusterCurseEffect2 = "enchant.stat_3948993189|55"; // Added Small Passive Skills grant: 2% increased Effect of your Curses
-
         //local
-        internal const string ArmorLocal = "explicit.stat_3484657501"; // # to Armour (Local)
-        internal const string EsLocal = "explicit.stat_4052037485"; // # to maximum Energy Shield (Local)
-        internal const string EvaLocal = "explicit.stat_53045048"; // # to Evasion Rating (Local)
-        internal const string AccuracyLocal = "explicit.stat_691932474"; // # to Accuracy Rating (Local)
 
         //non-local
-        internal const string Armor = "explicit.stat_809229260"; // # to Armour
-        internal const string Es = "explicit.stat_3489782002"; // # to maximum Energy Shield
-        internal const string Eva = "explicit.stat_2144192055"; // # to Evasion Rating
-        internal const string Accuracy = "explicit.stat_803737631"; // # to Accuracy Rating
-
-        internal const string PurityIce1 = "explicit.stat_151975117"; // Grants Level # Purity of Ice Skill
-        internal const string PurityFire1 = "explicit.stat_3716281760"; // Grants Level # Purity of Fire Skill
-        internal const string PurityLightning1 = "explicit.stat_1141249906"; // Grants Level # Purity of Lightning Skill
-
-        internal const string PurityIce2 = "explicit.stat_4193390599"; // Grants Level # Purity of Ice Skill
-        internal const string PurityFire2 = "explicit.stat_3970432307"; // Grants Level # Purity of Fire Skill
-        internal const string PurityLightning2 = "explicit.stat_3822878124"; // Grants Level # Purity of Lightning Skill
-
-        internal const string PrecisionEfficiencyOld = "explicit.stat_1291925008"; // Precision has 100% increased Mana Reservation Efficiency
-        internal const string PrecisionEfficiencyNew = "explicit.stat_3859865977"; // Precision has #% increased Mana Reservation Efficiency
-
-        internal const string SocketedInspiration1 = "explicit.stat_749770518"; // Socketed Gems are Supported by Level # Inspiration
-        internal const string SocketedInspiration2 = "explicit.indexable_support_24"; // Socketed Gems are Supported by Level # Inspiration
-
-        internal const string PeneFireTincture = "explicit.stat_1123291426"; // Damage Penetrates #% Fire Resistance
-        internal const string PeneFire = "explicit.stat_2653955271"; // Damage Penetrates #% Fire Resistance
-
-        internal const string PeneColdTincture = "explicit.stat_1211769158"; // Damage Penetrates #% Cold Resistance
-        internal const string PeneCold = "explicit.stat_3417711605"; // Damage Penetrates #% Cold Resistance
-
-        internal const string PeneLightTincture = "explicit.stat_3301510262"; // Damage Penetrates #% Lightning Resistance
-        internal const string PeneLight = "explicit.stat_818778753"; // Damage Penetrates #% Lightning Resistance
-
-        internal const string ManaPerKillTincture = "explicit.stat_782259898"; // Gain # Mana per Enemy Killed
-        internal const string ManaPerKill = "explicit.stat_1368271171"; // Gain # Mana per Enemy Killed
-
-        internal const string AoeKillTincture = "explicit.stat_923608573"; // #% increased Area of Effect if you've Killed Recently
-        internal const string AoeKill = "explicit.stat_3481736410"; // #% increased Area of Effect if you've Killed Recently
-
-        internal const string CritFullLifeTincture = "explicit.stat_3735443206"; // +#% to Critical Strike Multiplier against Enemies that are on Full Life
-        internal const string CritFullLife = "explicit.stat_2355615476"; // +#% to Critical Strike Multiplier against Enemies that are on Full Life
-
-        internal const string PhasingKillTincture = "explicit.stat_3669845133"; // #% chance to gain Phasing for 4 seconds on Kill
-        internal const string PhasingKill = "explicit.stat_2918708827"; // #% chance to gain Phasing for 4 seconds on Kill
-
-        internal const string ConcGroundTincture = "explicit.stat_4278270018"; // #% chance to create Consecrated Ground when you Hit a Rare or Unique Enemy, lasting 8 seconds
-        internal const string ConcGround = "explicit.stat_3135669941"; // #% chance to create Consecrated Ground when you Hit a Rare or Unique Enemy, lasting 8 seconds
-
-        internal const string StrikeRangeTincture = "explicit.stat_3369332977"; // +# metre to Melee Strike Range
-        internal const string StrikeRange = "explicit.stat_2264295449"; // +# metres to Melee Strike Range
-
-        internal const string ReduceEleGorgon = "explicit.stat_983989924"; // #% reduced Elemental Damage taken while stationary
-        internal const string ReduceEle = "explicit.stat_3859593448"; // #% reduced Elemental Damage taken while stationary
-
-        internal const string ShockSpreadEsh = "explicit.stat_1640259660"; // Shocks you inflict spread to other Enemies within 1.5 metres
-        internal const string ShockSpread = "explicit.stat_424549222"; // Shocks you inflict spread to other Enemies within # metre
-
-        internal const string ZombieBones = "explicit.stat_2739830820"; // +# to Level of all Raise Zombie Gems
-        internal const string Zombie = "explicit.indexable_skill_16"; // +# to Level of all Raise Zombie Gems
-
-        internal const string SpectreBones = "explicit.stat_3235814433"; // +# to Level of all Raise Spectre Gems
-        internal const string Spectre = "explicit.indexable_skill_29"; // +# to Level of all Raise Spectre Gems
-
-        internal const string StrIntCharm = "explicit.stat_2543977012"; // +# to Strength and Intelligence
-        internal const string StrInt = "explicit.stat_1535626285"; // +# to Strength and Intelligence
-
-        internal const string BlockDmgJewCharm = "explicit.stat_1702195217"; // +#% Chance to Block Attack Damage
-        internal const string BlockDmg = "explicit.stat_2530372417"; // #% Chance to Block Attack Damage
-
-        internal const string OnslaughtWeaponCharm = "explicit.stat_665823128"; // #% chance to gain Onslaught for 4 seconds on Kill
-        internal const string Onslaught = "explicit.stat_3023957681"; // #% chance to gain Onslaught for 4 seconds on Kill
-        internal const string OnslaughtAmulet = "explicit.stat_2453026567"; // #% chance to gain Onslaught for 10 seconds on Kill
-
-        internal const string CoolDownRecovery1 = "explicit.stat_1004011302"; // #% increased Cooldown Recovery Rate
-        internal const string CoolDownRecovery2 = "explicit.stat_239144"; // #% increased Cooldown Recovery Rate
 
         //veiled
         internal const string VeiledPrefix = "veiled.mod_65000"; // Veiled

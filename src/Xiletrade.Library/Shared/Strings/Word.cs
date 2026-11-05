@@ -13,8 +13,6 @@ public static partial class Strings
         internal const string Cold = "cold";
         internal const string Lightning = "lightning";
         internal const string Chaos = "chaos";
-        internal const string IndexableSupport = "indexable_support";
-        internal const string Sanctum = "sanctum";
         internal const string Logbook = "logbook";
         internal const string scarab = "scarab";
         internal const string sep = "sep";

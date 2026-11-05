@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Application.Serialization;
 using Xiletrade.Library.Models.Serialization.SourceGeneration;
 using Xiletrade.Library.Models.Poe.Contract;
@@ -35,6 +36,8 @@ public sealed class DataManagerService
     internal FilterData Filter { get; private set; }
     internal FilterData FilterEn { get; private set; }
     internal ParserData Parser { get; private set; }
+    /// <summary>Rules giving the id sent to the trade api for a filter entry (see StatRuleExtensions).</summary>
+    internal StatRule Stat { get; private set; }
     internal LeagueData League { get; private set; }
     internal SearchPresetData SearchPreset { get; private set; }
 
@@ -171,6 +174,7 @@ public sealed class DataManagerService
             var words = Load<WordData>(Path.Combine(filterPath, Strings.File.Words), context);
             var gems = Load<GemData>(Path.Combine(filterPath, Strings.File.Gems), context);
             var parser = Load<ParserData>(Path.Combine(filterPath, Strings.File.ParsingRules), context);
+            var statRules = Load<StatRule>(Path.Combine(basePath, Strings.File.StatRules), context);
 
             var filter = LoadFilter(Path.Combine(filterPath, Strings.File.Filters), arrangeVersion, context);
             var currency = Load<CurrencyResult>(Path.Combine(filterPath, Strings.File.Currency), context);
@@ -194,7 +198,7 @@ public sealed class DataManagerService
             InitLeague(Config.Options.Gateway, context);
 
             WaitAll(divTiers, dust, searchPreset, bases, mods, monsters, currency, items, filter, words, gems,
-                parser, filterEn, currencyEn, itemsEn, basesGateway, wordsGateway, currencyGateway);
+                parser, statRules, filterEn, currencyEn, itemsEn, basesGateway, wordsGateway, currencyGateway);
 
             DivTiersData = divTiers.Result;
             DustData = dust.Result;
@@ -205,6 +209,7 @@ public sealed class DataManagerService
             WordData = words.Result;
             GemData = gems.Result;
             Parser = parser.Result ?? new();
+            Stat = statRules.Result ?? new();
 
             Filter = filter.Result ?? new();
             CurrencyData = currency.Result;
@@ -217,6 +222,10 @@ public sealed class DataManagerService
             BaseDataGateway = basesGateway?.Result;
             WordDataGateway = wordsGateway?.Result;
             CurrencyDataGateway = currencyGateway?.Result;
+
+            // a mistake in the rules stops the loading with its location
+            Parser.Validate(Path.Combine(lang, Strings.File.ParsingRules));
+            Stat.Validate(Strings.File.StatRules);
         }
         catch(Exception ex)
         {

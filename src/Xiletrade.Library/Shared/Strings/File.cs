@@ -21,6 +21,7 @@ public static partial class Strings
         internal const string _mods1 = "Mods.json";
         internal const string _words1 = "Words.json";
         internal const string _items1 = "Items.json";
+        internal const string _statRules1 = "StatRules.json";
 
         internal const string _currency2 = "CurrencyTwo.json";
         internal const string _filters2 = "FiltersTwo.json";
@@ -29,6 +30,7 @@ public static partial class Strings
         internal const string _mods2 = "ModsTwo.json";
         internal const string _words2 = "WordsTwo.json";
         internal const string _items2 = "ItemsTwo.json";
+        internal const string _statRules2 = "StatRulesTwo.json";
 
         internal static string Currency { get => IsPoe2 ? _currency2 : _currency1; }
         internal static string Filters { get => IsPoe2 ? _filters2 : _filters1; }
@@ -37,5 +39,6 @@ public static partial class Strings
         internal static string Mods { get => IsPoe2 ? _mods2 : _mods1; }
         internal static string Words { get => IsPoe2 ? _words2 : _words1; }
         internal static string Items { get => IsPoe2 ? _items2 : _items1; }
+        internal static string StatRules { get => IsPoe2 ? _statRules2 : _statRules1; }
     }
 }
