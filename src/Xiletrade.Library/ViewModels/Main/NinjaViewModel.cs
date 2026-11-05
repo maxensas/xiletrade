@@ -30,6 +30,14 @@ public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNi
     [ObservableProperty]
     private NinjaDetail detail;
 
+    /// <summary>The currency history is loaded : its charts are displayed.</summary>
+    [ObservableProperty]
+    private bool historyLoaded;
+
+    /// <summary>No currency history : low price or currency not managed.</summary>
+    [ObservableProperty]
+    private bool historyMissing;
+
     private NinjaInfoBase NinjaInfoBase { get; set; }
 
     /// <summary>
@@ -54,6 +62,9 @@ public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNi
             if (NinjaInfoBase is null || !NinjaInfoBase.VerifiedLink)
                 return;
 
+            // currency history (exchange only) : requested in parallel with the price, displayed after it, not cached
+            var historyTask = NinjaInfoBase.UrlDetails?.Length > 0 ? _ninja.GetCurrencyHistory(NinjaInfoBase) : null;
+
             var ninja = await NinjaInfoBase.GetNinjaValueAsync();
             if (ninja is not null)
             {
@@ -76,16 +87,21 @@ public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNi
                 UpdateUniqueListIcons();
             }
 
-            // currency history (exchange only) : not cached, requested after the price display
-            if (ninja is not null && NinjaInfoBase.UrlDetails?.Length > 0)
+            if (historyTask is not null)
             {
-                Detail = await _ninja.GetCurrencyHistory(NinjaInfoBase);
+                Detail = await historyTask;
             }
         }
         catch (Exception ex)
         {
             if (_logger.IsEnabled(LogLevel.Debug))
                 _logger.LogDebug("Exception raised : {Message}", ex.Message);
+        }
+        finally
+        {
+            // history tab : the charts when there is a history, the reason otherwise
+            HistoryLoaded = Detail?.Pairs?.Count > 0;
+            HistoryMissing = !HistoryLoaded;
         }
     }
 

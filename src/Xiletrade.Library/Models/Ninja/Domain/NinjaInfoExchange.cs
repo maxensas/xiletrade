@@ -104,9 +104,6 @@ internal sealed record class NinjaInfoExchange : NinjaInfoBase
 
     internal override async Task<NinjaValue> GetNinjaValueAsync()
     {
-        // currency history requested in parallel with the overview (cached or not)
-        var historyTask = _ninja.GetCurrencyHistory(this);
-
         var jsonItem = await _ninja.GetNinjaItem<NinjaExchangeContract>(this);
         if (jsonItem is null)
         {
@@ -132,19 +129,12 @@ internal sealed record class NinjaInfoExchange : NinjaInfoBase
             divinePrice = chaosPrice * jsonItem.Core.Rates.Divine.Value;
         }
 
-        var jsonDetail = await historyTask;
-        if (jsonDetail is not null)
+        return new()
         {
-            return new()
-            {
-                Id = line.Id,
-                Name = jsonItem.Items.FirstOrDefault(x => x.Id == line.Id)?.Name,
-                ChaosPrice = chaosPrice,
-                DivinePrice = divinePrice,
-                Detail = jsonDetail
-            };
-        }
-
-        return null;
+            Id = line.Id,
+            Name = jsonItem.Items.FirstOrDefault(x => x.Id == line.Id)?.Name,
+            ChaosPrice = chaosPrice,
+            DivinePrice = divinePrice
+        };
     }
 }
