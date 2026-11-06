@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.ExceptionServices;
@@ -39,7 +40,8 @@ public sealed class DataManagerService
     /// <summary>Rules giving the id sent to the trade api for a filter entry (see StatRuleExtensions).</summary>
     internal StatRule Stat { get; private set; }
     internal LeagueData League { get; private set; }
-    internal SearchPresetData SearchPreset { get; private set; }
+    /// <summary>Presets of the custom search, saved with the configuration (see <see cref="SaveSearchPreset"/>).</summary>
+    internal SearchPresetData SearchPreset => Config.SearchPreset;
 
     // Deserialized files, kept as they are : the data below are read from them (no copy in memory).
     private BaseData BaseData { get; set; }
@@ -52,6 +54,7 @@ public sealed class DataManagerService
     private ItemTypeResult ItemTypeData { get; set; }
     private ItemTypeResult ItemTypeDataEn { get; set; }
     private DivTiersData DivTiersData { get; set; }
+    private ItemClassData ItemClassData { get; set; }
     private DustData DustData { get; set; }
     private BaseData BaseDataGateway { get; set; }
     private WordData WordDataGateway { get; set; }
@@ -67,6 +70,9 @@ public sealed class DataManagerService
     internal ItemTypeResultData[] Items => ItemTypeData?.Result;
     internal ItemTypeResultData[] ItemsEn => ItemTypeDataEn?.Result;
     internal DivTiersResult[] DivTiers => DivTiersData?.Result;
+
+    /// <summary>Item classes in the language used : names of the item categories of the custom search.</summary>
+    internal ItemClass[] ItemClasses => ItemClassData?.ItemClass;
     internal DustLevel[] DustLevel => DustData?.Level;
 
     //temp
@@ -100,8 +106,101 @@ public sealed class DataManagerService
             _message.Show(Resources.Resources.Main118_Closing + "\n" + ex.InnerException.Message
                 , Resources.Resources.Main187_Fatalerror, MessageStatus.Exclamation);
             _view.ShutDownNativeApp(1);
+            return;
+        }
+        RepairSearchPresets();
+    }
+
+    /// <summary>
+    /// The presets of the game loaded are checked with its filters (the other game is checked when loaded) :
+    /// the file is updated and the changes displayed.
+    /// </summary>
+    private void RepairSearchPresets()
+    {
+        try
+        {
+            var presets = SearchPreset.CustomSearch;
+            if (presets is null)
+            {
+                return;
+            }
+            var report = new List<string>();
+            RepairSearchPresets(presets, Config.Options.GameVersion is 1, Filter, report);
+            if (report.Count is 0)
+            {
+                return;
+            }
+            SaveSearchPreset();
+            _message.Show(GetRepairMessage(report), Resources.Resources.Main289_SearchPresets, MessageStatus.Information);
+        }
+        catch (Exception ex)
+        {
+            _message.Show(ex.GetFormated(), Resources.Resources.Main289_SearchPresets, MessageStatus.Exclamation);
         }
     }
+
+    /// <summary>Message of the changes made by the check of the presets.</summary>
+    internal static string GetRepairMessage(List<string> report)
+        => Resources.Resources.Main291_PresetsUpdated + "\n" + string.Join("\n", report);
+
+    /// <summary>
+    /// Presets imported checked with the filters of their game : the filters of the other game are read from its file.
+    /// </summary>
+    /// <returns>Changes made, empty : none.</returns>
+    internal List<string> RepairSearchPresets(CustomSearchPreset[] presets)
+    {
+        var report = new List<string>();
+        var isPoe2 = Config.Options.GameVersion is 1;
+        RepairSearchPresets(presets, isPoe2, Filter, report);
+        if (presets.Any(x => x.Poe2 != isPoe2))
+        {
+            RepairSearchPresets(presets, !isPoe2, ReadFilter(!isPoe2), report);
+        }
+        return report;
+    }
+
+    private static void RepairSearchPresets(CustomSearchPreset[] presets, bool isPoe2, FilterData filter, List<string> report)
+    {
+        if (filter is null)
+        {
+            return;
+        }
+        foreach (var preset in presets)
+        {
+            if (preset.Poe2 == isPoe2)
+            {
+                preset.Repair(filter, report);
+            }
+        }
+    }
+
+    // filters of a game in the language used, only their ids are read : not arranged
+    private FilterData ReadFilter(bool isPoe2)
+    {
+        var path = Path.Combine(DataDirectory, "Lang", Strings.Culture[Config.Options.Language],
+            isPoe2 ? Strings.File._filters2 : Strings.File._filters1);
+        return File.Exists(path) ? Json.Deserialize<FilterData>(File.ReadAllBytes(path)) : null;
+    }
+
+    /// <summary>Presets of the custom search of an import file (format of "search_presets"), null : not readable.</summary>
+    internal CustomSearchPreset[] ReadSearchPresets(string filePath)
+    {
+        try
+        {
+            var data = Json.Deserialize<SearchPresetData>(File.ReadAllBytes(filePath));
+            return data?.CustomSearch ?? [];
+        }
+        catch (Exception ex)
+        {
+            _message.Show(ex.GetFormated(), Resources.Resources.Error017_XSerialization, MessageStatus.Exclamation);
+            return null;
+        }
+    }
+
+    /// <summary>Presets of the custom search written in an export file (format of "search_presets"), both games.</summary>
+    internal bool ExportSearchPresets(string filePath)
+        => WriteJson(filePath, Json.SerializeToUtf8<SearchPresetData>(new SearchPresetData() { CustomSearch = SearchPreset.CustomSearch }),
+            Resources.Resources.Error024_XSaveFile);
 
     private void InitConfig(int forceGameVersion)
     {
@@ -167,7 +266,6 @@ public sealed class DataManagerService
 
             var divTiers = Load<DivTiersData>(Path.Combine(basePath, Strings.File.Divination), context);
             var dust = Load<DustData>(Path.Combine(basePath, Strings.File.DustLevel), context);
-            var searchPreset = Load<SearchPresetData>(Path.Combine(basePath, Strings.File.SearchPreset), context);
             var bases = Load<BaseData>(Path.Combine(filterPath, Strings.File.Bases), context);
             var mods = Load<ModData>(Path.Combine(filterPath, Strings.File.Mods), context);
             var monsters = Load<BaseData>(Path.Combine(filterPath, Strings.File.Monsters), context);
@@ -179,6 +277,9 @@ public sealed class DataManagerService
             var filter = LoadFilter(Path.Combine(filterPath, Strings.File.Filters), arrangeVersion, context);
             var currency = Load<CurrencyResult>(Path.Combine(filterPath, Strings.File.Currency), context);
             var items = Load<ItemTypeResult>(Path.Combine(filterPath, Strings.File.Items), context);
+            // optional : not available in every language (names of the item categories of the custom search)
+            var itemClassPath = Path.Combine(filterPath, Strings.File.ItemClass);
+            var itemClass = File.Exists(itemClassPath) ? Load<ItemClassData>(itemClassPath, context) : null;
 
             var filterEn = isEnglish ? filter : LoadFilter(Path.Combine(englishPath, Strings.File.Filters), arrangeVersion, context);
             var currencyEn = isEnglish ? currency : Load<CurrencyResult>(Path.Combine(englishPath, Strings.File.Currency), context);
@@ -197,12 +298,12 @@ public sealed class DataManagerService
 
             InitLeague(Config.Options.Gateway, context);
 
-            WaitAll(divTiers, dust, searchPreset, bases, mods, monsters, currency, items, filter, words, gems,
-                parser, statRules, filterEn, currencyEn, itemsEn, basesGateway, wordsGateway, currencyGateway);
+            WaitAll(divTiers, dust, bases, mods, monsters, currency, items, filter, words, gems,
+                parser, statRules, filterEn, currencyEn, itemsEn, itemClass, basesGateway, wordsGateway, currencyGateway);
 
             DivTiersData = divTiers.Result;
+            ItemClassData = itemClass?.Result;
             DustData = dust.Result;
-            SearchPreset = searchPreset.Result ?? new();
             BaseData = bases.Result;
             ModData = mods.Result;
             MonsterData = monsters.Result;
@@ -333,6 +434,28 @@ public sealed class DataManagerService
         }
     }
 
+    /// <summary>
+    /// Saves the presets of the custom search with the configuration (Config.json) : the configuration of the user
+    /// is kept by the updates of Xiletrade, its presets with it.
+    /// </summary>
+    internal bool SaveSearchPreset()
+        => WriteJson(Path.Combine(DataDirectory, Strings.File.Config), Json.SerializeToUtf8<ConfigData>(Config),
+            Resources.Resources.Error007_XSaveConfig);
+
+    private bool WriteJson(string filePath, byte[] json, string errorTitle)
+    {
+        try
+        {
+            WriteJsonFile(filePath, json);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _message.Show(ex.GetFormated(), errorTitle, MessageStatus.Exclamation);
+            return false;
+        }
+    }
+
     internal bool SaveConfiguration(ReadOnlySpan<byte> json)
     {
         string filePath = Path.Combine(DataDirectory, Strings.File.Config);
@@ -345,6 +468,9 @@ public sealed class DataManagerService
             }
 
             var newConfig = Json.Deserialize<ConfigData>(json);
+            // the search presets are only changed by the custom search : a configuration saved elsewhere
+            // (settings, default settings, start, regex manager) keeps the presets of the user
+            newConfig.SearchPreset = Config?.SearchPreset ?? newConfig.SearchPreset;
 
             WriteJsonFile(filePath, Json.SerializeToUtf8<ConfigData>(newConfig));
             Config = newConfig;

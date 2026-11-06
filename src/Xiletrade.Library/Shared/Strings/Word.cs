@@ -22,6 +22,9 @@ public static partial class Strings
         internal const string price = "~price";
         internal const string contains = "contains";
         internal const string equals = "equals";
+        internal const string and = "and";
+        internal const string not = "not";
+        internal const string count = "count";
     }
 }
 

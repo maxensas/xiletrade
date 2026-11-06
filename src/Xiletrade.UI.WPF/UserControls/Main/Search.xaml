@@ -9,71 +9,296 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:uc="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
              xmlns:local="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
+             xmlns:helper="clr-namespace:Xiletrade.UI.WPF.Util.Helper"
              mc:Ignorable="d" 
              d:DesignHeight="476" d:DesignWidth="520"
              d:DataContext="{d:DesignInstance Type=t:MainViewModel}">
     <Grid Margin="2,0,-2,0" Cursor="">
-        <uc:ResultList VerticalAlignment="Top" HorizontalAlignment="Left" Height="234"/>
-        <Grid Margin="0,252,0,0" VerticalAlignment="Top" Height="128" Cursor="">
-            <TextBlock Margin="6,0,0,0" Text="{ext:Localization Main245_SearchPreset}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="12" Style="{StaticResource TextBlockTitle}" Visibility="Visible" />
-            <StackPanel Margin="6,20,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Cursor="">
+        <Grid.Resources>
+            <!-- kind of stat : colors of the trade site, no label for the explicit stats -->
+            <Style x:Key="StatKindBadge" TargetType="{x:Type Border}">
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Padding" Value="4,0"/>
+                <Setter Property="CornerRadius" Value="2"/>
+                <Setter Property="Background" Value="#232420"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding KindType}" Value="explicit">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KindType}" Value="implicit">
+                        <Setter Property="Background" Value="#65621E"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KindType}" Value="imbued">
+                        <Setter Property="Background" Value="#6F2F9B"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KindType}" Value="fractured">
+                        <Setter Property="Background" Value="#A29162"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KindType}" Value="enchant">
+                        <Setter Property="Background" Value="#8B579C"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KindType}" Value="scourge">
+                        <Setter Property="Background" Value="#FF6E25"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KindType}" Value="crafted">
+                        <Setter Property="Background" Value="#0060BF"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KindType}" Value="augment">
+                        <Setter Property="Background" Value="#444243"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KindType}" Value="desecrated">
+                        <Setter Property="Background" Value="#8E9E52"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KindType}" Value="skill">
+                        <Setter Property="Background" Value="#6F2F9B"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KindType}" Value="mercenary">
+                        <Setter Property="Background" Value="Transparent"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KindType}" Value="veiled">
+                        <Setter Property="Background" Value="#545C63"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KindType}" Value="delve">
+                        <Setter Property="Background" Value="#AD631B"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KindType}" Value="ultimatum">
+                        <Setter Property="Background" Value="#D20000"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KindType}" Value="sanctum">
+                        <Setter Property="Background" Value="#887040"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding KindType}" Value="crucible">
+                        <Setter Property="Background" Value="#FF7339"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <!-- larger in the suggestions -->
+            <Style x:Key="StatKindBadgeLarge" TargetType="{x:Type Border}" BasedOn="{StaticResource StatKindBadge}">
+                <Setter Property="Margin" Value="4,3,2,3"/>
+                <Setter Property="Padding" Value="7,3"/>
+                <Setter Property="CornerRadius" Value="3"/>
+            </Style>
+            <Style x:Key="StatKindText" TargetType="{x:Type TextBlock}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="10"/>
+                <Setter Property="FontStyle" Value="Italic"/>
+                <Setter Property="Foreground" Value="#FFF8E1"/>
+            </Style>
+            <!-- buttons under the stat groups : add preset, update preset, add stat group -->
+            <!-- the text (Content) is shown by the text block of the template : its color is set by the triggers,
+                 a text block given as content would keep the color of the default style. Tag="menu" : arrow of a menu -->
+            <ControlTemplate x:Key="SearchActionButton" TargetType="{x:Type ButtonBase}">
+                <Border x:Name="Bd" Height="26" Padding="8,0" Background="{StaticResource DarkBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1" CornerRadius="2">
+                    <DockPanel>
+                        <Path x:Name="Arrow" DockPanel.Dock="Right" Margin="8,0,0,0" Data="M0,0 L8,0 L4,5 Z" Fill="{StaticResource GrayForegoundBrush}" VerticalAlignment="Center" Visibility="Collapsed"/>
+                        <TextBlock x:Name="Text" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" FontFamily="{StaticResource FontinSmallCaps}"
+                                   Foreground="{StaticResource ForegroundBrush}" Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"/>
+                    </DockPanel>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="Tag" Value="menu">
+                        <Setter TargetName="Arrow" Property="Visibility" Value="Visible"/>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource ThemeSecondForegroundBrush}"/>
+                    </Trigger>
+                    <!-- text in the color of the theme : while pressed, while its menu is open, and a moment after the click -->
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource ThemeSecondForegroundBrush}"/>
+                    </Trigger>
+                    <Trigger Property="ToggleButton.IsChecked" Value="True">
+                        <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource ThemeSecondForegroundBrush}"/>
+                    </Trigger>
+                    <EventTrigger RoutedEvent="ButtonBase.Click">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Text" Storyboard.TargetProperty="Foreground" Duration="0:0:0.6" FillBehavior="Stop">
+                                    <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource ThemeSecondForegroundBrush}"/>
+                                </ObjectAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+            <!-- filters of the sections : label on the left, min / max or choice on the right -->
+            <Style x:Key="FilterRow" TargetType="{x:Type DockPanel}">
+                <Setter Property="Height" Value="24"/>
+                <Setter Property="Margin" Value="0,1"/>
+                <Setter Property="LastChildFill" Value="True"/>
+            </Style>
+            <Style x:Key="FilterLabel" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontFamily" Value="{StaticResource FontinSmallCaps}"/>
+                <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+            </Style>
+            <Style x:Key="FilterComboStyle" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="Width" Value="90"/>
+                <Setter Property="Height" Value="22"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Style.Triggers>
+                    <Trigger Property="SelectedIndex" Value="0">
+                        <Setter Property="Foreground" Value="Gray"/>
+                    </Trigger>
+                    <Trigger Property="IsDropDownOpen" Value="True">
+                        <Setter Property="Foreground" Value="White"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <!-- cross to remove a group or a stat : red on hover (of its border) -->
+            <Style x:Key="RemoveCross" TargetType="{x:Type Path}">
+                <Setter Property="Data" Value="M0,0 L9,9 M9,0 L0,9"/>
+                <Setter Property="StrokeThickness" Value="2"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Stroke" Value="{StaticResource ForegroundBrush}"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Border}}" Value="True">
+                        <Setter Property="Stroke" Value="{StaticResource RedBrush}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <!-- import / export of the presets : filled in the gray of the reset icon, colored on hover, the geometry is the tag -->
+            <SolidColorBrush x:Key="PresetFileIconBrush" Color="#FF9E9C9C"/>
+            <StreamGeometry x:Key="PresetImportIcon">M5,0 L7,0 L7,4.5 L9.5,4.5 L6,8 L2.5,4.5 L5,4.5 Z M0,8 L1.6,8 L1.6,10.4 L10.4,10.4 L10.4,8 L12,8 L12,12 L0,12 Z</StreamGeometry>
+            <StreamGeometry x:Key="PresetExportIcon">M6,0 L9.5,3.5 L7,3.5 L7,8 L5,8 L5,3.5 L2.5,3.5 Z M0,8 L1.6,8 L1.6,10.4 L10.4,10.4 L10.4,8 L12,8 L12,12 L0,12 Z</StreamGeometry>
+            <Style x:Key="PresetFileButton" TargetType="{x:Type Button}">
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="Width" Value="16"/>
+                <Setter Property="Height" Value="15"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="Transparent">
+                                <Path x:Name="Icon" Width="12" Height="12" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Fill="{StaticResource PresetFileIconBrush}" Data="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Icon" Property="Fill" Value="{DynamicResource ThemeSecondForegroundBrush}"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Icon" Property="Opacity" Value="0.4"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <!-- suggestions : title of each group (kind of stat, item category), not selectable -->
+            <Style x:Key="SuggestionItemStyle" TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsHeader}" Value="True">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Setter Property="Cursor" Value="Arrow"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <Border Padding="8,5" Background="{StaticResource BlackBrush}">
+                                        <TextBlock FontSize="13" FontFamily="{StaticResource FontinSmallCaps}" Foreground="{StaticResource GrayForegoundBrush}" Text="{Binding Kind}"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <!-- suggestions of a field (SuggestionListViewModel), a title by group :
+                 the template of the suggestions is the tag of the content control displaying the list -->
+            <DataTemplate x:Key="SuggestionList">
+                <Border Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="2" CornerRadius="3" Width="430">
+                    <ListBox ItemContainerStyle="{StaticResource SuggestionItemStyle}" ItemsSource="{Binding Suggestions}" MaxHeight="300" SelectedItem="{Binding SelectedSuggestion, Mode=TwoWay}"
+                             ItemTemplate="{Binding Tag, RelativeSource={RelativeSource AncestorType=ContentControl}}"
+                             BorderThickness="0" SelectionMode="Single" Cursor="Hand" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonUp">
+                                <i:InvokeCommandAction Command="{Binding SelectSuggestionCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
+                </Border>
+            </DataTemplate>
+            <!-- stat suggestion : kind of the stat, text with the query highlighted -->
+            <DataTemplate x:Key="StatSuggestionItem">
+                <DockPanel Width="400" ToolTip="{Binding Id}">
+                    <Border DockPanel.Dock="Left" VerticalAlignment="Center" Style="{StaticResource StatKindBadgeLarge}">
+                        <TextBlock Style="{StaticResource StatKindText}" Text="{Binding Kind}"/>
+                    </Border>
+                    <TextBlock Padding="3,5" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" FontFamily="{StaticResource FontinSmallCaps}">
+                        <Run Text="{Binding Before}"/><Run Text="{Binding Match}" FontWeight="Bold" Foreground="{StaticResource BlueForegroundBrush}" /><Run Text="{Binding After}" />
+                    </TextBlock>
+                </DockPanel>
+            </DataTemplate>
+            <!-- item suggestion : unique items with a left border in the unique color -->
+            <DataTemplate x:Key="ItemSuggestionItem">
+                <Border Width="400">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="3,0,0,0"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Flag.IsUnique}" Value="True">
+                                    <Setter Property="BorderBrush" Value="{StaticResource UniqueWebBrush}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock Padding="5" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" FontFamily="{StaticResource FontinSmallCaps}">
+                        <Run Text="{Binding Before}"/><Run Text="{Binding Match}" FontWeight="Bold" Foreground="{StaticResource BlueForegroundBrush}" /><Run Text="{Binding After}" />
+                    </TextBlock>
+                </Border>
+            </DataTemplate>
+        </Grid.Resources>
+        <!-- title, and switch between the search criteria and the results once a search is launched -->
+        <DockPanel DataContext="{Binding Form.CustomSearch}" Margin="6,0,8,0" Height="18" VerticalAlignment="Top" LastChildFill="False">
+            <TextBlock DockPanel.Dock="Left" FontSize="12" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Main245_SearchPreset}"
+                       Visibility="{Binding ShowCriteria, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <TextBlock DockPanel.Dock="Right" FontSize="12" Cursor="Hand" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource BlueForegroundBrush}"
+                       Text="{Binding ToggleText}" d:Text="Show results"
+                       Visibility="{Binding HasResults, Converter={StaticResource bool2VisibilityConverter}}">
+                <TextBlock.InputBindings>
+                    <MouseBinding Command="{Binding ToggleCriteriaCommand}" MouseAction="LeftClick"/>
+                </TextBlock.InputBindings>
+            </TextBlock>
+        </DockPanel>
+
+        <!-- results -->
+        <uc:ResultList Margin="0,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="413" d:Visibility="Collapsed"
+                       Visibility="{Binding Form.CustomSearch.ShowCriteria, Converter={StaticResource inverseBool2VisibilityConverter}, FallbackValue=Collapsed}"/>
+
+        <!-- search criteria -->
+        <Grid Margin="0,20,0,0" VerticalAlignment="Top" Height="360"
+              Visibility="{Binding Form.CustomSearch.ShowCriteria, Converter={StaticResource bool2VisibilityConverter}, FallbackValue=Visible}">
+            <StackPanel DataContext="{Binding Form.CustomSearch}" Margin="6,0,0,0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Cursor="">
                 <Image Height="16" Width="16">
                     <Image.Style>
                         <Style TargetType="{x:Type Image}" BasedOn="{StaticResource NothingImage}"/>
                     </Image.Style>
                     <Image.InputBindings>
-                        <MouseBinding Command="{Binding Form.CustomSearch.ResetCustomSearchCommand}" MouseAction="LeftClick"/>
+                        <MouseBinding Command="{Binding ResetCustomSearchCommand}" MouseAction="LeftClick"/>
                     </Image.InputBindings>
                 </Image>
                 <Grid Margin="8,0,0,0">
-                    <TextBox x:Name="SearchBox" Width="220" Height="30" Style="{StaticResource tbTag}" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" ToolTip="{ext:Localization Main248_CustomSearchTip}" IsEnabled="True" Tag="{ext:Localization Main250_SearchItem}" Text="{Binding Form.CustomSearch.Search.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox x:Name="SearchBox" Width="220" Height="30" Style="{StaticResource tbTag}" d:Text="" BorderThickness="1" TextAlignment="Left" VerticalContentAlignment="Center" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" ToolTip="{ext:Localization Main248_CustomSearchTip}" IsEnabled="True" Tag="{ext:Localization Main250_SearchItem}" Text="{Binding Search.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <TextBox.InputBindings>
-                            <KeyBinding Key="Return" Command="{Binding Form.CustomSearch.CustomSearchCommand}" CommandParameter="none" />
+                            <KeyBinding Key="Return" Command="{Binding CustomSearchCommand}" CommandParameter="none" />
                         </TextBox.InputBindings>
                     </TextBox>
-                    <Popup IsOpen="{Binding Form.CustomSearch.Search.IsDropdownOpen}" PlacementTarget="{Binding ElementName=SearchBox}"
-        StaysOpen="False" AllowsTransparency="True" PopupAnimation="Slide" HorizontalOffset="0" VerticalOffset="2">
-                        <Border Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}"
-            BorderThickness="2" CornerRadius="3"
-            Width="{Binding ElementName=SearchBox, Path=ActualWidth}">
-                            <ListBox ItemsSource="{Binding Form.CustomSearch.Search.Suggestions}" 
-                 MaxHeight="250" SelectedItem="{Binding Form.CustomSearch.Search.SelectedSuggestion, Mode=TwoWay}"
-                 BorderThickness="0" SelectedValuePath="Text" SelectionMode="Single" Cursor="Hand">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseLeftButtonUp">
-                                        <i:InvokeCommandAction Command="{Binding Form.CustomSearch.Search.SelectSuggestionCommand}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border>
-                                            <Border.Style>
-                                                <Style TargetType="{x:Type Border}">
-                                                    <Setter Property="BorderBrush" Value="Transparent"/>
-                                                    <Setter Property="BorderThickness" Value="0,0,0,0"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Flag.IsUnique}" Value="True">
-                                                            <Setter Property="BorderBrush" Value="{StaticResource UniqueWebBrush}"/>
-                                                            <Setter Property="BorderThickness" Value="3,0,0,0"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-                                            <TextBlock Padding="5" TextWrapping="NoWrap" FontFamily="{StaticResource FontinSmallCaps}">
-                                                <Run Text="{Binding Before}"/><Run Text="{Binding Match}" FontWeight="Bold" Foreground="{StaticResource BlueForegroundBrush}" /><Run Text="{Binding After}" />
-                                            </TextBlock>
-                                        </Border>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </Border>
+                    <!-- suggestions by category, as the stat fields : open while the mouse is over the field,
+                         a click in the field does not close the list -->
+                    <Popup IsOpen="{Binding Search.IsDropdownOpen}" PlacementTarget="{Binding ElementName=SearchBox}" Placement="Bottom"
+                           StaysOpen="{Binding IsMouseOver, ElementName=SearchBox}" AllowsTransparency="True" PopupAnimation="Slide" VerticalOffset="2">
+                        <ContentControl Focusable="False" Content="{Binding Search}" Tag="{StaticResource ItemSuggestionItem}" ContentTemplate="{StaticResource SuggestionList}"/>
                     </Popup>
                     <Grid x:Name="scopeShop" Margin="195,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="1" d:DataContext="{d:DesignInstance Type=t:MainViewModel}" Visibility="Visible">
                         <Grid.Style>
                             <Style TargetType="{x:Type Grid}">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Form.CustomSearch.Search.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Value="">
+                                    <DataTrigger Binding="{Binding Search.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Value="">
                                         <Setter Property="Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -93,8 +318,32 @@
                     </Grid>
                 </Grid>
             </StackPanel>
-            <ComboBox Margin="6,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" MaxDropDownHeight="160" Width="245" Height="30" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
-VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Form.CustomSearch.UnidUniques}" SelectedIndex="{Binding Form.CustomSearch.UnidUniquesIndex}" Cursor="Hand">
+            <!-- import / export of the presets, aligned with the reset of the search -->
+            <StackPanel DataContext="{Binding Form.CustomSearch}" Margin="6,36,0,0" Width="16" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button Style="{StaticResource PresetFileButton}" Tag="{StaticResource PresetImportIcon}" ToolTip="{ext:Localization Main287_ImportPresets}"
+                        Command="{Binding ImportPresetsCommand}"/>
+                <Button Style="{StaticResource PresetFileButton}" Tag="{StaticResource PresetExportIcon}" ToolTip="{ext:Localization Main288_ExportPresets}"
+                        Command="{Binding ExportPresetsCommand}"/>
+            </StackPanel>
+            <!-- presets : search presets, separator, unidentified uniques -->
+            <ComboBox DataContext="{Binding Form.CustomSearch}" Margin="30,36,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" MaxDropDownHeight="160" Width="220" Height="30" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling" ItemsSource="{Binding Presets}" SelectedIndex="{Binding PresetIndex}" Cursor="Hand">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ComboBoxItem}" BasedOn="{StaticResource ComboBoxItemStyle}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSeparator}" Value="True">
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                                            <Border Margin="6,4" Height="1" Background="{StaticResource WindowBorderBrush}"/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ComboBox.ItemContainerStyle>
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -112,60 +361,340 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <TextBlock Margin="6,107,0,0" FontSize="10" Text="WIP" Foreground="{StaticResource RareWebBrush}" FontFamily="{StaticResource FontinSmallCaps}" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
-            <Grid Margin="30,98,0,0" IsEnabled="False">
-                <TextBox x:Name="StatBox" Width="220" Height="30" Style="{StaticResource tbTag}" d:Text="" BorderThickness="1" TextAlignment="Left" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" ToolTip="{ext:Localization Main248_CustomSearchTip}" IsEnabled="True" Tag="{ext:Localization Main251_AddStatFilter}" Text="{Binding Form.CustomSearch.Stat.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    <TextBox.InputBindings>
-                        <KeyBinding Key="Return" Command="{Binding Form.CustomSearch.StatSearchCommand}" CommandParameter="none" />
-                    </TextBox.InputBindings>
-                </TextBox>
-                <Popup IsOpen="{Binding Form.CustomSearch.Stat.IsDropdownOpen}" PlacementTarget="{Binding ElementName=StatBox}"
-StaysOpen="False" AllowsTransparency="True" PopupAnimation="Slide" HorizontalOffset="0" VerticalOffset="2">
-                    <Border Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}"
-    BorderThickness="2" CornerRadius="3"
-    Width="{Binding ElementName=StatBox, Path=ActualWidth}">
-                        <ListBox ItemsSource="{Binding Form.CustomSearch.Stat.Suggestions}" 
-         MaxHeight="250" SelectedItem="{Binding Form.CustomSearch.Stat.SelectedSuggestion, Mode=TwoWay}"
-         BorderThickness="0" SelectedValuePath="Text" SelectionMode="Single" Cursor="Hand">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseLeftButtonUp">
-                                    <i:InvokeCommandAction Command="{Binding Form.CustomSearch.Stat.SelectSuggestionCommand}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Padding="5" TextWrapping="NoWrap" FontFamily="{StaticResource FontinSmallCaps}">
-                <Run Text="{Binding Before}"/><Run Text="{Binding Match}" FontWeight="Bold" Foreground="{StaticResource BlueForegroundBrush}" /><Run Text="{Binding After}" />
-                                    </TextBlock>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </Border>
-                </Popup>
-            </Grid>
-
-            <ListBox ItemsSource="{Binding Form.CustomSearch.MinMaxList}" BorderThickness="1" Margin="270,0,0,0" 
-                     Height="128" Width="110" VerticalAlignment="Top" HorizontalAlignment="Left" 
-                     HorizontalContentAlignment="Center" Background="Transparent" 
-                     d:ItemsSource="{d:SampleData}" Focusable="False" Style="{StaticResource lbBottomForm}" 
-                     ItemContainerStyle="{StaticResource lbItemBottomForm}"
-                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                <ListBox.ItemTemplate>
+            <!-- item category of the trade site : categories and their sub-categories -->
+            <TextBlock Margin="6,77,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="11" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Main264_SearchCategory}"/>
+            <ComboBox DataContext="{Binding Form.CustomSearch}" Margin="6,94,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" MaxDropDownHeight="250" Width="245" Height="30" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+                      ItemsSource="{Binding Categories}" SelectedIndex="{Binding CategoryIndex}" Cursor="Hand">
+                <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <local:Stat/>
+                        <TextBlock Text="{Binding Label}">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Margin" Value="0"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsSub}" Value="True">
+                                            <Setter Property="Margin" Value="14,0,0,0"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel Orientation="Vertical" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-            </ListBox>
-            <uc:FilterOptionList Margin="395,0,0,0" Height="128"/>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <!-- filters by section, as on the trade site : a click on the title shows or hides them.
+                 Not focusable : a click outside the controls still moves the window -->
+            <ScrollViewer DataContext="{Binding Form.CustomSearch}" Margin="262,0,0,0" Width="244" Height="128" HorizontalAlignment="Left" VerticalAlignment="Top"
+                          VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False">
+                <ItemsControl ItemsSource="{Binding FilterSections}" Margin="0,0,4,0">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,2">
+                                <!-- title of the section -->
+                                <ToggleButton IsChecked="{Binding IsExpanded}" Focusable="False" Cursor="Hand">
+                                    <ToggleButton.Template>
+                                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                            <Border Height="20" Background="Transparent" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="0,0,0,1">
+                                                <DockPanel>
+                                                    <Path x:Name="Arrow" DockPanel.Dock="Left" Margin="2,0,6,0" Data="M0,0 L4,4 L0,8 Z" Fill="{StaticResource GrayForegoundBrush}" VerticalAlignment="Center"/>
+                                                    <TextBlock x:Name="Title" VerticalAlignment="Center" FontSize="12" FontFamily="{StaticResource FontinSmallCaps}"
+                                                               Foreground="{StaticResource TitleForegroundBrush}" Text="{Binding Title}"/>
+                                                </DockPanel>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsChecked" Value="True">
+                                                    <Setter TargetName="Arrow" Property="Data" Value="M0,0 L8,0 L4,4 Z"/>
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Title" Property="Foreground" Value="{DynamicResource ThemeSecondForegroundBrush}"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </ToggleButton.Template>
+                                </ToggleButton>
+                                <StackPanel Margin="10,2,0,0" Visibility="{Binding IsExpanded, Converter={StaticResource bool2VisibilityConverter}}">
+                                    <!-- rarity (type filters) -->
+                                    <DockPanel Style="{StaticResource FilterRow}" DataContext="{Binding DataContext.Form, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                               Visibility="{Binding DataContext.ShowRarity, RelativeSource={RelativeSource AncestorType=StackPanel, AncestorLevel=2}, Converter={StaticResource bool2VisibilityConverter}}">
+                                        <ComboBox DockPanel.Dock="Right" Style="{StaticResource FilterComboStyle}" ItemsSource="{Binding Rarity.ComboBox}" SelectedIndex="{Binding Rarity.Index}"/>
+                                        <TextBlock Style="{StaticResource FilterLabel}" Text="{ext:Localization Main083_lbRarity}"/>
+                                    </DockPanel>
+                                    <!-- min / max : used as soon as one is set -->
+                                    <ItemsControl ItemsSource="{Binding MinMax}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <DockPanel Style="{StaticResource FilterRow}">
+                                                    <TextBox DockPanel.Dock="Right" Margin="2,0,0,0" Width="40" Height="22" Style="{StaticResource tbStat}" Tag="{ext:Localization Main063_lbMax}" Text="{Binding Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <TextBox DockPanel.Dock="Right" Width="40" Height="22" Style="{StaticResource tbStat}" Tag="{ext:Localization Main061_lbMin}" Text="{Binding Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <TextBlock Style="{StaticResource FilterLabel}" Text="{Binding Text}" ToolTip="{Binding Text}"/>
+                                                </DockPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <!-- options of the form (miscellaneous) -->
+                                    <StackPanel DataContext="{Binding DataContext.Form, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                Visibility="{Binding DataContext.ShowOptions, RelativeSource={RelativeSource AncestorType=StackPanel, AncestorLevel=2}, Converter={StaticResource bool2VisibilityConverter}}">
+                                            <DockPanel Style="{StaticResource FilterRow}">
+                                                <ComboBox DockPanel.Dock="Right" Style="{StaticResource FilterComboStyle}" ItemsSource="{Binding Identified}" SelectedIndex="{Binding IdentifiedIndex}"/>
+                                                <TextBlock Style="{StaticResource FilterLabel}" Text="{ext:Localization Main244_Identified}"/>
+                                            </DockPanel>
+                                            <DockPanel Style="{StaticResource FilterRow}">
+                                                <ComboBox DockPanel.Dock="Right" Style="{StaticResource FilterComboStyle}" ItemsSource="{Binding Corruption}" SelectedIndex="{Binding CorruptedIndex}"/>
+                                                <TextBlock Style="{StaticResource FilterLabel}" Text="{ext:Localization Main080_lbCorrupted}"/>
+                                            </DockPanel>
+                                            <DockPanel Style="{StaticResource FilterRow}" Visibility="{Binding IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+                                                <ComboBox DockPanel.Dock="Right" Style="{StaticResource FilterComboStyle}" ItemsSource="{Binding DoubleCorruption}" SelectedIndex="{Binding DoubleCorruptedIndex}"/>
+                                                <TextBlock Style="{StaticResource FilterLabel}" Text="{ext:Localization Main254_twiceCorrupted}"/>
+                                            </DockPanel>
+                                            <DockPanel Style="{StaticResource FilterRow}">
+                                                <ComboBox DockPanel.Dock="Right" Style="{StaticResource FilterComboStyle}" ItemsSource="{Binding Mirrored}" SelectedIndex="{Binding MirroredIndex}"/>
+                                                <TextBlock Style="{StaticResource FilterLabel}" Text="{ext:Localization General109_Mirrored}"/>
+                                            </DockPanel>
+                                            <DockPanel Style="{StaticResource FilterRow}">
+                                                <ComboBox DockPanel.Dock="Right" Style="{StaticResource FilterComboStyle}" ItemsSource="{Binding Fractured}" SelectedIndex="{Binding FracturedIndex}"/>
+                                                <TextBlock Style="{StaticResource FilterLabel}" Text="{ext:Localization General016_Fractured}"/>
+                                            </DockPanel>
+                                            <DockPanel Style="{StaticResource FilterRow}" Visibility="{Binding IsPoeTwo, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                                                <ComboBox DockPanel.Dock="Right" Style="{StaticResource FilterComboStyle}" ItemsSource="{Binding Split}" SelectedIndex="{Binding SplitIndex}"/>
+                                                <TextBlock Style="{StaticResource FilterLabel}" Text="{ext:Localization General157_Split}"/>
+                                            </DockPanel>
+                                            <DockPanel Style="{StaticResource FilterRow}">
+                                                <ComboBox DockPanel.Dock="Right" Style="{StaticResource FilterComboStyle}" ItemsSource="{Binding Crafted}" SelectedIndex="{Binding CraftedIndex}"/>
+                                                <TextBlock Style="{StaticResource FilterLabel}" Text="{ext:Localization General012_Crafted}"/>
+                                            </DockPanel>
+                                            <DockPanel Style="{StaticResource FilterRow}">
+                                                <ComboBox DockPanel.Dock="Right" Style="{StaticResource FilterComboStyle}" ItemsSource="{Binding Mutated}" SelectedIndex="{Binding MutatedIndex}"/>
+                                                <TextBlock Style="{StaticResource FilterLabel}" Text="{ext:Localization General176_ModifierVaalUnique}"/>
+                                            </DockPanel>
+                                            <DockPanel Style="{StaticResource FilterRow}" Visibility="{Binding IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+                                                <ComboBox DockPanel.Dock="Right" Style="{StaticResource FilterComboStyle}" ItemsSource="{Binding Desecrated}" SelectedIndex="{Binding DesecratedIndex}"/>
+                                                <TextBlock Style="{StaticResource FilterLabel}" Text="{ext:Localization General158_Desecrated}"/>
+                                            </DockPanel>
+                                            <DockPanel Style="{StaticResource FilterRow}" Visibility="{Binding IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+                                                <ComboBox DockPanel.Dock="Right" Style="{StaticResource FilterComboStyle}" ItemsSource="{Binding Veiled}" SelectedIndex="{Binding VeiledIndex}"/>
+                                                <TextBlock Style="{StaticResource FilterLabel}" Text="{ext:Localization Main258_Unrevealed}"/>
+                                            </DockPanel>
+                                            <DockPanel Style="{StaticResource FilterRow}" Visibility="{Binding IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+                                                <ComboBox DockPanel.Dock="Right" Style="{StaticResource FilterComboStyle}" ItemsSource="{Binding Sanctified}" SelectedIndex="{Binding SanctifiedIndex}"/>
+                                                <TextBlock Style="{StaticResource FilterLabel}" Text="{ext:Localization General209_Sanctified}"/>
+                                            </DockPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <!-- stat groups, as on the trade site : and (stat filters), not, count -->
+            <!-- not focusable : a click outside the controls still moves the window -->
+            <ScrollViewer DataContext="{Binding Form.CustomSearch}" Margin="0,136,0,0" Height="224" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False">
+                <StackPanel Margin="6,0,4,0">
+                    <ItemsControl ItemsSource="{Binding StatGroups}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,0,0,10">
+                                    <!-- group : enabled, title, min / max of the count group, remove -->
+                                    <Grid Height="26">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="22"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="22"/>
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding Enabled}"/>
+                                        <Border Grid.Column="1" Margin="0,0,4,2" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="0,0,0,1">
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <TextBlock FontSize="13" FontFamily="{StaticResource FontinSmallCaps}" Foreground="{StaticResource TitleForegroundBrush}" Text="{Binding Title}"/>
+                                                <TextBlock Margin="4,0,0,0" FontSize="12" Foreground="{StaticResource GrayForegoundBrush}" Text="(?)" Cursor="Help"
+                                                           ToolTip="{ext:Localization Main270_StatGroupCountTip}" Visibility="{Binding IsCount, Converter={StaticResource bool2VisibilityConverter}}"/>
+                                            </StackPanel>
+                                        </Border>
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal" Visibility="{Binding IsCount, Converter={StaticResource bool2VisibilityConverter}}">
+                                            <TextBox Width="44" Height="24" VerticalAlignment="Center" Style="{StaticResource tbStat}" Tag="{ext:Localization Main061_lbMin}" Text="{Binding Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <TextBox Margin="2,0,0,0" Width="44" Height="24" VerticalAlignment="Center" Style="{StaticResource tbStat}" Tag="{ext:Localization Main063_lbMax}" Text="{Binding Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </StackPanel>
+                                        <Border Grid.Column="3" Background="Transparent" Cursor="Hand">
+                                            <Border.InputBindings>
+                                                <MouseBinding Command="{Binding DataContext.Form.CustomSearch.RemoveStatGroupCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" MouseAction="LeftClick"/>
+                                            </Border.InputBindings>
+                                            <Path Style="{StaticResource RemoveCross}"/>
+                                        </Border>
+                                    </Grid>
+                                    <!-- stats : enabled, kind, text, min / max, remove -->
+                                    <ItemsControl ItemsSource="{Binding Filters}">
+                                        <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,0,0,2" Height="26">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="22"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="22"/>
+                                                </Grid.ColumnDefinitions>
+                                                <CheckBox Grid.Column="0" VerticalAlignment="Center" IsChecked="{Binding Enabled}"/>
+                                                <!-- stat : a click puts its text in the field of the group, the stat selected replaces it.
+                                                     Button : the command runs on the release of the click, otherwise the list opened
+                                                     at once is closed by the release (click outside it) -->
+                                                <Button Grid.Column="1" Margin="0,0,4,0" Focusable="False" Cursor="Hand" ToolTip="{Binding ToolTip}" Command="{Binding EditCommand}">
+                                                    <Button.Template>
+                                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                            <ContentPresenter/>
+                                                        </ControlTemplate>
+                                                    </Button.Template>
+                                                    <Border Background="{StaticResource DarkBackgroundBrush}">
+                                                        <Border.Style>
+                                                            <Style TargetType="{x:Type Border}">
+                                                                <Setter Property="BorderBrush" Value="{StaticResource WindowBorderBrush}"/>
+                                                                <Setter Property="BorderThickness" Value="1,0,0,0"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsEditing}" Value="True">
+                                                                        <Setter Property="BorderBrush" Value="{StaticResource BlueForegroundBrush}"/>
+                                                                        <Setter Property="BorderThickness" Value="1"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <DockPanel LastChildFill="True">
+                                                            <!-- kind of stat : pseudo, explicit, enchant... -->
+                                                            <Border DockPanel.Dock="Left" Style="{StaticResource StatKindBadge}">
+                                                                <TextBlock Style="{StaticResource StatKindText}" Text="{Binding Kind}"/>
+                                                            </Border>
+                                                            <!-- color of the theme on hover, as the other lists : set on the text block, its default style sets its color -->
+                                                            <TextBlock Margin="3,0" VerticalAlignment="Center" FontSize="12" TextTrimming="CharacterEllipsis" Text="{Binding Text}">
+                                                                <TextBlock.Style>
+                                                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                                                        <Setter Property="FontFamily" Value="{StaticResource FontinSmallCaps}"/>
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
+                                                                                <Setter Property="Foreground" Value="{DynamicResource ThemeSecondForegroundBrush}"/>
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </TextBlock.Style>
+                                                            </TextBlock>
+                                                        </DockPanel>
+                                                    </Border>
+                                                </Button>
+                                                <TextBox Grid.Column="2" Width="44" Height="24" VerticalAlignment="Center" Style="{StaticResource tbStat}" Tag="{ext:Localization Main061_lbMin}" Text="{Binding Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <TextBox Grid.Column="3" Margin="2,0,0,0" Width="44" Height="24" VerticalAlignment="Center" Style="{StaticResource tbStat}" Tag="{ext:Localization Main063_lbMax}" Text="{Binding Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <Border Grid.Column="4" Background="Transparent" Cursor="Hand">
+                                                    <Border.InputBindings>
+                                                        <MouseBinding Command="{Binding DataContext.RemoveStatCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" MouseAction="LeftClick"/>
+                                                    </Border.InputBindings>
+                                                    <Path Style="{StaticResource RemoveCross}"/>
+                                                </Border>
+                                            </Grid>
+                                        </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <!-- add stat filter : the stat selected is added to the group -->
+                                    <Grid Margin="22,0,22,0">
+                                        <TextBox x:Name="StatBox" Height="26" Width="Auto" HorizontalAlignment="Stretch" Style="{StaticResource tbTag}" BorderThickness="1" TextAlignment="Left" VerticalContentAlignment="Center" FontFamily="{StaticResource FontinSmallCaps}" FontWeight="Normal"
+                                                 Tag="{ext:Localization Main251_AddStatFilter}" Text="{Binding Stat.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                 helper:FocusHelper.IsFocused="{Binding IsSearchFocused}">
+                                            <TextBox.InputBindings>
+                                                <KeyBinding Key="Return" Command="{Binding StatSearchCommand}" CommandParameter="none" />
+                                            </TextBox.InputBindings>
+                                        </TextBox>
+                                        <!-- open while the mouse is over the field : a click in the field does not close the list,
+                                             a click elsewhere closes it and removes the text typed -->
+                                        <Popup IsOpen="{Binding Stat.IsDropdownOpen}" PlacementTarget="{Binding ElementName=StatBox}" Placement="Bottom"
+                                               StaysOpen="{Binding IsMouseOver, ElementName=StatBox}" AllowsTransparency="True" PopupAnimation="Slide" VerticalOffset="2">
+                                            <ContentControl Focusable="False" Content="{Binding Stat}" Tag="{StaticResource StatSuggestionItem}" ContentTemplate="{StaticResource SuggestionList}"/>
+                                        </Popup>
+                                    </Grid>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <!-- presets : add one with the criteria of the form, update the one selected ; stat groups -->
+                    <DockPanel Margin="22,0,22,6" LastChildFill="False">
+                        <!-- add stat group : and, not, count -->
+                        <Grid DockPanel.Dock="Right">
+                            <!-- opened on the release of the click (toggle button), not clickable while open :
+                                 otherwise the popup closes at once, or opens again when clicking on the button to close it -->
+                            <ToggleButton x:Name="AddGroupButton" Tag="menu" Content="{ext:Localization Main271_AddStatGroup}" Cursor="Hand" Focusable="False" Template="{StaticResource SearchActionButton}"
+                                          IsChecked="{Binding IsGroupMenuOpen, Mode=TwoWay}"
+                                          IsHitTestVisible="{Binding IsOpen, ElementName=GroupMenu, Converter={StaticResource inverseBooleanConverter}}"/>
+                            <Popup x:Name="GroupMenu" IsOpen="{Binding IsGroupMenuOpen}" PlacementTarget="{Binding ElementName=AddGroupButton}" Placement="Top"
+                                   StaysOpen="False" AllowsTransparency="True" VerticalOffset="-2">
+                                <Border Width="210" Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="2" CornerRadius="3">
+                                    <StackPanel>
+                                        <StackPanel.Resources>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Padding" Value="8,5"/>
+                                                <Setter Property="Cursor" Value="Hand"/>
+                                                <Setter Property="FontFamily" Value="{StaticResource FontinSmallCaps}"/>
+                                                <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="{StaticResource GrayHoverBrush}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Resources>
+                                        <TextBlock Text="{ext:Localization Main267_StatGroupAnd}">
+                                            <TextBlock.InputBindings>
+                                                <MouseBinding Command="{Binding AddStatGroupCommand}" CommandParameter="and" MouseAction="LeftClick"/>
+                                            </TextBlock.InputBindings>
+                                        </TextBlock>
+                                        <TextBlock Text="{ext:Localization Main268_StatGroupNot}">
+                                            <TextBlock.InputBindings>
+                                                <MouseBinding Command="{Binding AddStatGroupCommand}" CommandParameter="not" MouseAction="LeftClick"/>
+                                            </TextBlock.InputBindings>
+                                        </TextBlock>
+                                        <TextBlock Text="{ext:Localization Main269_StatGroupCount}">
+                                            <TextBlock.InputBindings>
+                                                <MouseBinding Command="{Binding AddStatGroupCommand}" CommandParameter="count" MouseAction="LeftClick"/>
+                                            </TextBlock.InputBindings>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <!-- add preset : its name is asked -->
+                        <Grid DockPanel.Dock="Left">
+                            <ToggleButton x:Name="AddPresetButton" Content="{ext:Localization Main272_AddPreset}" Cursor="Hand" Focusable="False" Template="{StaticResource SearchActionButton}"
+                                          IsChecked="{Binding IsPresetMenuOpen, Mode=TwoWay}"
+                                          IsHitTestVisible="{Binding IsOpen, ElementName=PresetMenu, Converter={StaticResource inverseBooleanConverter}}"/>
+                            <Popup x:Name="PresetMenu" IsOpen="{Binding IsPresetMenuOpen}" PlacementTarget="{Binding ElementName=AddPresetButton}" Placement="Top"
+                                   StaysOpen="False" AllowsTransparency="True" VerticalOffset="-2">
+                                <Border Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="2" CornerRadius="3" Padding="4">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox Width="200" Height="26" Style="{StaticResource tbTag}" BorderThickness="1" TextAlignment="Left" VerticalContentAlignment="Center" FontFamily="{StaticResource FontinSmallCaps}"
+                                                 Tag="{ext:Localization Main274_PresetName}" Text="{Binding PresetName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                 helper:FocusHelper.IsFocused="{Binding IsPresetMenuOpen}">
+                                            <TextBox.InputBindings>
+                                                <KeyBinding Key="Return" Command="{Binding AddPresetCommand}" CommandParameter="none"/>
+                                            </TextBox.InputBindings>
+                                        </TextBox>
+                                        <Button Margin="4,0,0,0" Content="OK" Cursor="Hand" Focusable="False" Template="{StaticResource SearchActionButton}" Command="{Binding AddPresetCommand}"/>
+                                    </StackPanel>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <!-- update preset : only with a search preset selected -->
+                        <Button DockPanel.Dock="Left" Margin="6,0,0,0" Content="{ext:Localization Main273_UpdatePreset}" Cursor="Hand" Focusable="False" Template="{StaticResource SearchActionButton}"
+                                Command="{Binding UpdatePresetCommand}"
+                                Visibility="{Binding CanUpdatePreset, Converter={StaticResource bool2VisibilityConverter}}"/>
+                        <!-- delete preset : only with a search preset selected, after confirmation -->
+                        <Button DockPanel.Dock="Left" Margin="6,0,0,0" Content="{ext:Localization Main275_DeletePreset}" Cursor="Hand" Focusable="False" Template="{StaticResource SearchActionButton}"
+                                Command="{Binding DeletePresetCommand}"
+                                Visibility="{Binding CanUpdatePreset, Converter={StaticResource bool2VisibilityConverter}}"/>
+                    </DockPanel>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
 
-        <Border x:Name="bdRect5" Margin="0,383,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="506" Height="52" Visibility="Visible" BorderThickness="1" Grid.Row="0" CornerRadius="3" IsEnabled="{Binding Path=Form.Freeze, Converter={StaticResource inverseBooleanConverter}}">
+
+        <!-- search bar : only with the search criteria, the results take its place -->
+        <Border x:Name="bdRect5" Margin="0,383,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="506" Height="52" BorderThickness="1"
+                Visibility="{Binding Form.CustomSearch.ShowCriteria, Converter={StaticResource bool2VisibilityConverter}, FallbackValue=Visible}" Grid.Row="0" CornerRadius="3" IsEnabled="{Binding Path=Form.Freeze, Converter={StaticResource inverseBooleanConverter}}">
             <Border.Style>
                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource BorderResult}"/>
             </Border.Style>

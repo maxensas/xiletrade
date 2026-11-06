@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Resources;
 using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Shared;
 
@@ -20,6 +21,55 @@ public static class Extensions
     {
         return StrToDouble(str, false);
     }
+
+    /// <summary>Value of a min / max field, null if empty or not a number.</summary>
+    internal static double? ToNullableDouble(this string str)
+    {
+        var value = StrToDouble(str, true);
+        return value.IsEmpty() ? null : value;
+    }
+
+    /// <summary>Rarity of the trade api (normal, uniquefoil, nonunique...) of a rarity in the language used, empty : unknown.</summary>
+    internal static string ToRarityApi(this ReadOnlySpan<char> rarityLang)
+    {
+        var rm = Resources.Resources.ResourceManager;
+
+        string matchedKey = null;
+        foreach (var key in Strings.Collection.RarityResourceKeys)
+        {
+            if (rarityLang.SequenceEqual(rm.GetString(key)))
+            {
+                matchedKey = key;
+                break;
+            }
+        }
+        if (matchedKey is null) return string.Empty;
+
+        var english = rm.GetEnglish(matchedKey);
+
+        return english switch
+        {
+            "Any N-U" => "nonunique",
+            "Foil Unique" => "uniquefoil",
+            _ => english.ToLowerInvariant()
+        };
+    }
+
+    /// <summary>Type of the stat group of the trade api : and, not, count.</summary>
+    internal static string ToApi(this StatGroup group) => group switch
+    {
+        StatGroup.Not => Strings.Word.not,
+        StatGroup.Count => Strings.Word.count,
+        _ => Strings.Word.and
+    };
+
+    /// <summary>Stat group of a type of the trade api, and by default.</summary>
+    internal static StatGroup ToStatGroup(this string group) => group switch
+    {
+        Strings.Word.not => StatGroup.Not,
+        Strings.Word.count => StatGroup.Count,
+        _ => StatGroup.And
+    };
 
     /// <summary>Return true if equal to EMPTYFIELD = 99999</summary>
     public static bool IsEmpty(this double value)

@@ -219,7 +219,7 @@ public sealed partial class MainViewModel : ViewModelBase
         if (Form?.CustomSearch is not null)
         {
             Form.CustomSearch.Search = null;
-            Form.CustomSearch.Stat = null;
+            Form.CustomSearch.StatGroups.Clear();
         }
     }
 
@@ -334,10 +334,7 @@ public sealed partial class MainViewModel : ViewModelBase
             if (customSearch)
             {
                 var search = Form.CustomSearch.Search.SearchQuery;
-                var unid = Form.CustomSearch.UnidUniquesIndex > 0
-                    ? Form.CustomSearch.UnidUniques[Form.CustomSearch.UnidUniquesIndex] : null;
-
-                return factory.CreateAndSerialize(xItem, unid, market, search);
+                return factory.CreateAndSerialize(xItem, Form.CustomSearch.SelectedUnid, market, search);
             }
             return factory.CreateAndSerialize(xItem, Item, useSaleType, market);
         }

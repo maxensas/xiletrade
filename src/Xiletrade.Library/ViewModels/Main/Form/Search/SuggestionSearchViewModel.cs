@@ -1,150 +1,66 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Raffinert.FuzzySharp;
 using Xiletrade.Library.Models.Poe.Domain;
-using Xiletrade.Library.Shared.Collection;
 
 namespace Xiletrade.Library.ViewModels.Main.Form.Search;
 
-public partial class SuggestionSearchViewModel : ViewModelBase
+/// <summary>
+/// Suggestions of the item search of the custom search : names and types of the items file, in the language used.
+/// </summary>
+/// <remarks>
+/// The best items are kept (texts starting with the query, then containing it, then the closest ones),
+/// then displayed by category under a title, in the order of the items file : accessories, armours...
+/// </remarks>
+public sealed partial class SuggestionSearchViewModel : SuggestionListViewModel
 {
-    private readonly CustomSearchViewModel _cVm;
+    private const int MAX_SUGGESTIONS = 15;
 
     private readonly ConcurrentDictionary<string, Levenshtein> _levCache = new();
 
-    private IEnumerable<(string Text, bool IsUnique)> _sourceData;
+    private readonly IEnumerable<(string Text, bool IsUnique, string Category, int Group)> _sourceData;
 
-    private bool _suppressUpdate;
-
-    [ObservableProperty]
-    private AsyncObservableCollection<SearchItem> suggestions = new();
-
-    [ObservableProperty]
-    private SearchItem selectedSuggestion;
-
-    [ObservableProperty]
-    private string searchQuery;
-
-    [ObservableProperty]
-    private bool isDropdownOpen;
-
-    public SuggestionSearchViewModel(CustomSearchViewModel cVm, IEnumerable<(string, bool)> sourceList)
+    internal SuggestionSearchViewModel(IEnumerable<(string, bool, string, int)> sourceList)
     {
-        _cVm = cVm;
         _sourceData = sourceList;
-
-        PropertyChanged += async (_, e) =>
-        {
-            if (e.PropertyName == nameof(SearchQuery))
-            {
-                if (_suppressUpdate)
-                {
-                    _suppressUpdate = false;
-                    return;
-                }
-                await UpdateSuggestionsAsync();
-            }
-        };
     }
 
-    [RelayCommand]
-    private void SelectSuggestion(object parameter)
+    // the item chosen is put in the field : the search is launched by the user
+    protected override void Select(SearchItem item) => SetQuery(item.Text);
+
+    protected override List<SearchItem> Find(string query)
     {
-        if (SelectedSuggestion is null)
-            return;
-
-        _suppressUpdate = true;
-        SearchQuery = SelectedSuggestion.FullText;
-
-        IsDropdownOpen = false;
-
-        Suggestions.Clear();
-
-        _cVm.LaunchCustomSearchAsync();
-    }
-
-    private async Task UpdateSuggestionsAsync()
-    {
-        string query = SearchQuery?.Trim() ?? string.Empty;
-
-        if (string.IsNullOrWhiteSpace(query))
-        {
-            Suggestions.Clear();
-            IsDropdownOpen = false;
-            return;
-        }
-
-        var results = await Task.Run(() => SearchLevenshtein(query));
-
-        // Update collection
-        Suggestions.ReplaceRange(results);
-
-        IsDropdownOpen = Suggestions.Count > 0;
-    }
-
-    private IEnumerable<SearchItem> SearchLevenshtein(string query)
-    {
-        if (string.IsNullOrWhiteSpace(query)) return [];
-
         var lev = _levCache.GetOrAdd(query, q => new Levenshtein(q.ToLower()));
 
-        return _sourceData
+        // best items, then by category (stable sort : the best first in each category)
+        var best = _sourceData
             .Select(item =>
             {
-                string text = item.Text.ToLower();
-                int score;
-
-                if (text.StartsWith(query, StringComparison.OrdinalIgnoreCase))
-                {
-                    score = 0; // max priority
-                }
-                else if (text.Contains(query, StringComparison.OrdinalIgnoreCase))
-                {
-                    score = 1; // medium priority
-                }
-                else
-                {
-                    score = lev.DistanceFrom(item.Text) + 2; // Low priority, +2 to stay behind StartsWith/Contains
-                }
-
-                return new { item, score };
+                int score = item.Text.StartsWith(query, StringComparison.OrdinalIgnoreCase) ? 0 // max priority
+                    : item.Text.Contains(query, StringComparison.OrdinalIgnoreCase) ? 1 // medium priority
+                    : lev.DistanceFrom(item.Text) + 2; // Low priority, +2 to stay behind StartsWith/Contains
+                return (item, score);
             })
             .OrderBy(x => x.score)
-            .ThenBy(x => x.item) // Optional: alphabetical sort if equal
-            .Take(7).TakeWhile(x => x.score < 4)
-            .Select(x => Highlight(x.item.Text, query, x.score, new(){ IsUnique = x.item.IsUnique }));
-    }
+            .ThenBy(x => x.item.Text, StringComparer.Ordinal) // alphabetical sort if equal
+            .Take(MAX_SUGGESTIONS).TakeWhile(x => x.score < 4)
+            .OrderBy(x => x.item.Group);
 
-    private static SearchItem Highlight(string text, string query, int score, SearchFlag flag)
-    {
-        int index = text.IndexOf(query, StringComparison.CurrentCultureIgnoreCase);
-
-        if (index < 0)
+        var list = new List<SearchItem>(MAX_SUGGESTIONS * 2);
+        int lastGroup = -1;
+        foreach (var (item, score) in best)
         {
-            return new SearchItem
+            if (item.Group != lastGroup)
             {
-                Flag = flag,
-                Score = score,
-                Text = text,
-                Before = text,
-                Match = string.Empty,
-                After = string.Empty
-            };
+                lastGroup = item.Group;
+                list.Add(CreateHeader(item.Category));
+            }
+            var suggestion = Highlight(item.Text, query, score, new() { IsUnique = item.IsUnique });
+            suggestion.Kind = item.Category;
+            list.Add(suggestion);
         }
-
-        return new SearchItem
-        {
-            Flag = flag,
-            Score = score,
-            Text = text,
-            Before = text[..index],
-            Match = text.Substring(index, query.Length),
-            After = text[(index + query.Length)..]
-        };
+        return list;
     }
 }

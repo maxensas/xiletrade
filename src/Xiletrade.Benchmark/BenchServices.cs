@@ -43,6 +43,8 @@ internal sealed class BenchViewManager : IViewManager
     public void CloseOpenedView(ConfigShortcut shortcut) { }
     public PoeState GetPoeWindowState() => default;
     public void ClearFocus() { }
+    public Task<string> ShowOpenFileViewAsync(string title, string filterName, string extension) => Task.FromResult<string>(null);
+    public Task<string> ShowSaveFileViewAsync(string title, string filterName, string extension, string fileName) => Task.FromResult<string>(null);
     public void SetMainHandle(object view) { }
     public void ShutDownNativeApp(int exitCode = 0)
         => throw new InvalidOperationException($"Application shutdown requested (exit code {exitCode})");

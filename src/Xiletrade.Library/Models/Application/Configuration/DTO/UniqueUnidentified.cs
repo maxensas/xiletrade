@@ -23,4 +23,8 @@ public sealed class UniqueUnidentified
 
     [JsonPropertyName("poe2")]
     public bool Poe2 { get; set; }
+
+    /// <summary>The search is launched when the preset is selected, true by default.</summary>
+    [JsonPropertyName("auto_search")]
+    public bool AutoSearch { get; set; } = true;
 }

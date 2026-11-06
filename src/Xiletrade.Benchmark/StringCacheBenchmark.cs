@@ -92,7 +92,6 @@ internal sealed record DataFile(string Name, byte[] Json, Func<JsonHelper, byte[
         {
             Create<DivTiersData>(Path.Combine(basePath, StringsFile.Divination)),
             Create<DustData>(Path.Combine(basePath, StringsFile.DustLevel)),
-            Create<SearchPresetData>(Path.Combine(basePath, StringsFile.SearchPreset)),
             Create<BaseData>(Path.Combine(langPath, isPoe2 ? StringsFile._bases2 : StringsFile._bases1)),
             Create<ModData>(Path.Combine(langPath, isPoe2 ? StringsFile._mods2 : StringsFile._mods1)),
             Create<BaseData>(Path.Combine(langPath, StringsFile.Monsters)),

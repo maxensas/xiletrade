@@ -71,30 +71,7 @@ internal abstract class JsonDataFactoryBase<T>(DataManagerService dm) : IJsonDat
         return "2weeks";
     }
 
-    protected static string GetEnglishRarity(ReadOnlySpan<char> rarityLang)
-    {
-        var rm = Resources.Resources.ResourceManager;
-
-        string matchedKey = null;
-        foreach (var key in Strings.Collection.RarityResourceKeys)
-        {
-            if (rarityLang.SequenceEqual(rm.GetString(key)))
-            {
-                matchedKey = key;
-                break;
-            }
-        }
-        if (matchedKey is null) return string.Empty;
-
-        var english = rm.GetEnglish(matchedKey);
-
-        return english switch
-        {
-            "Any N-U" => "nonunique",
-            "Foil Unique" => "uniquefoil",
-            _ => english.ToLowerInvariant()
-        };
-    }
+    protected static string GetEnglishRarity(ReadOnlySpan<char> rarityLang) => rarityLang.ToRarityApi();
 
     protected string GetTradeIdentifier(ReadOnlySpan<char> text)
     {

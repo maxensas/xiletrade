@@ -68,5 +68,11 @@ public enum StatPanel
     HeistEngineering,
     HeistBruteForce,
     HeistPerception,
-    HeistDeception
+    HeistDeception,
+
+    WeaponDamage,
+    WeaponAttacksPerSecond,
+    WeaponCriticalChance,
+    MapTier,
+    AreaLevel
 }

@@ -44,9 +44,11 @@ internal sealed class JsonDataTwoFactory : JsonDataFactoryBase<JsonDataTwo>
         // Filters
         json.Query.Filters.Equipment = GetEquipmentFilters(xItem);
         json.Query.Filters.Requirement = GetRequirementFilters(xItem);
+        json.Query.Filters.Map = GetMapFilters(xItem);
         json.Query.Filters.Misc = GetMiscFilters(xItem);
         json.Query.Filters.Type = GetTypeFilters(xItem);
         json.Query.Filters.Trade = GetTradeFilters(xItem, _dm.Config.Options.SearchBeforeDay, useSaleType: true);
+        json.Query.Stats = xItem.CustomStats;
 
         return json;
     }
@@ -98,13 +100,19 @@ internal sealed class JsonDataTwoFactory : JsonDataFactoryBase<JsonDataTwo>
     {
         var rarityEn = GetEnglishRarity(xItem.Rarity);
         var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.Word.any;
+        var isCategory = xItem.Category?.Length > 0;
 
-        if (!(isRarity || xItem.Lvl.Enable || xItem.Quality.Enable))
+        if (!(isRarity || isCategory || xItem.Lvl.Enable || xItem.Quality.Enable))
         {
             return null;
         }
 
         TypeTwo type = new();
+
+        if (isCategory)
+        {
+            type.Filters.Category = new(xItem.Category);
+        }
 
         if (isRarity)
         {
@@ -218,12 +226,17 @@ internal sealed class JsonDataTwoFactory : JsonDataFactoryBase<JsonDataTwo>
             misc.Filters.GemSockets = new() { Min = xItem.GemSockets.Min, Max = xItem.GemSockets.Max };
         }
 
+        if (xItem.AreaLevel.Enable)
+        {
+            misc.Filters.AreaLevel = new() { Min = xItem.AreaLevel.Min, Max = xItem.AreaLevel.Max };
+        }
+
         var enable = misc.Filters.Identified is not null || misc.Filters.Corrupted is not null
             || misc.Filters.TwiceCorrupted is not null || misc.Filters.Veiled is not null
             || misc.Filters.Fractured is not null || misc.Filters.Mirrored is not null
             || misc.Filters.Crafted is not null || misc.Filters.Mutated is not null
             || misc.Filters.Desecrated is not null || misc.Filters.Sanctified is not null
-            || xItem.GemSockets.Enable;
+            || xItem.GemSockets.Enable || xItem.AreaLevel.Enable;
 
         return enable ? misc : null;
     }
@@ -367,14 +380,27 @@ internal sealed class JsonDataTwoFactory : JsonDataFactoryBase<JsonDataTwo>
         return trade.Disabled ? null : trade;
     }
 
-    private static MapTwo GetMapFilters(XiletradeItem xItem, ItemData item)
+    private static MapTwo GetMapFilters(XiletradeItem xItem, ItemData item) => item.Flag.Waystones ? GetMapFilters(xItem) : null;
+
+    // endgame filters with a value (waystones, custom search)
+    private static MapTwo GetMapFilters(XiletradeItem xItem)
     {
-        if (!item.Flag.Waystones)
+        if (!(xItem.MapTier.Enable || xItem.ItemRarity.Enable || xItem.PackSize.Enable || xItem.MonsterRarity.Enable
+            || xItem.Effectiveness.Enable || xItem.WaystoneDrop.Enable || xItem.Revives.Enable))
         {
             return null;
         }
 
         MapTwo map = new();
+
+        if (xItem.MapTier.Enable)
+        {
+            map.Filters.Tier = new()
+            {
+                Min = xItem.MapTier.Min,
+                Max = xItem.MapTier.Max
+            };
+        }
 
         if (xItem.ItemRarity.Enable)
         {
@@ -444,6 +470,7 @@ internal sealed class JsonDataTwoFactory : JsonDataFactoryBase<JsonDataTwo>
     {
         if (!(xItem.Armour.Enable || xItem.Energy.Enable || xItem.Evasion.Enable
                 || xItem.DpsTotal.Enable || xItem.DpsPhys.Enable || xItem.DpsElem.Enable
+                || xItem.WeaponDamage.Enable || xItem.AttacksPerSecond.Enable || xItem.CriticalChance.Enable
                 || xItem.RuneSockets.Enable || xItem.Ward.Enable))
         {
             return null;
@@ -483,13 +510,22 @@ internal sealed class JsonDataTwoFactory : JsonDataFactoryBase<JsonDataTwo>
         {
             equipment.Filters.RuneSockets = new() { Min = xItem.RuneSockets.Min, Max = xItem.RuneSockets.Max };
         }
+        if (xItem.WeaponDamage.Enable)
+        {
+            equipment.Filters.Damage = new() { Min = xItem.WeaponDamage.Min, Max = xItem.WeaponDamage.Max };
+        }
+        if (xItem.AttacksPerSecond.Enable)
+        {
+            equipment.Filters.AttacksPerSecond = new() { Min = xItem.AttacksPerSecond.Min, Max = xItem.AttacksPerSecond.Max };
+        }
+        if (xItem.CriticalChance.Enable)
+        {
+            equipment.Filters.CriticalChance = new() { Min = xItem.CriticalChance.Min, Max = xItem.CriticalChance.Max };
+        }
 
         //TODO
         /*
-        equipment.Filters.Damage
         equipment.Filters.EmptyRuneSockets
-        equipment.Filters.CriticalChance
-        equipment.Filters.AttacksPerSecond
         equipment.Filters.Block
         equipment.Filters.Spirit
         */
