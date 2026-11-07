@@ -2699,6 +2699,9 @@
   <data name="Main307_LiveStopAll" xml:space="preserve">
     <value>停止实时搜索</value>
   </data>
+  <data name="Main308_Search" xml:space="preserve">
+    <value>搜索</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
   </data>

@@ -253,8 +253,8 @@ public sealed partial class FormViewModel : ViewModelBase
         _view = view;
         _message = message;
 
-        itemBaseType = useCustomOrBulk ? Resources.Resources.Main247_CustomSearch + " / "
-            + Resources.Resources.Main032_cbTotalExchange : string.Empty;
+        // title of the tab selected (see TabViewModel) : custom search first
+        itemBaseType = useCustomOrBulk ? Resources.Resources.Main247_CustomSearch : string.Empty;
         itemBaseTypeColor = useCustomOrBulk ? Strings.Color.Moccasin : string.Empty;
         baseTypeFontSize = useCustomOrBulk ? 16 : 12; // FontSize cannot be equal to 0
         itemExchange = new(_dm, _vm, _view, _message, useCustomOrBulk);

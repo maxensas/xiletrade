@@ -2562,6 +2562,9 @@
   <data name="Main307_LiveStopAll" xml:space="preserve">
     <value>หยุดการค้นหาแบบสด</value>
   </data>
+  <data name="Main308_Search" xml:space="preserve">
+    <value>ค้นหา</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>

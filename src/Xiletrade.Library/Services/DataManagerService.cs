@@ -35,6 +35,9 @@ public sealed class DataManagerService
 
     internal ConfigData Config { get; private set; } // does not use StringCache
 
+    /// <summary>Opacity of the backgrounds set by the user (options), used by the views outside the library (notifications).</summary>
+    public double Opacity => Config?.Options.Opacity ?? 1;
+
     internal FilterData Filter { get; private set; }
     internal FilterData FilterEn { get; private set; }
     internal ParserData Parser { get; private set; }

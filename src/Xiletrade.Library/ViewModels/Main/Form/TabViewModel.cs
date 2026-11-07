@@ -65,6 +65,11 @@ public sealed partial class TabViewModel : ViewModelBase
         if (!value)
             return;
 
+        // custom search / bulk view : title of the tab selected (custom search, exchange or shop)
+        if (CustomSearchEnable)
+        {
+            _form.ItemBaseType = useBulk ? Resources.Resources.Main032_cbTotalExchange : Resources.Resources.Main247_CustomSearch;
+        }
         _form.UpdateMarket(useBulk);
     }
 

@@ -13,6 +13,10 @@ public sealed partial class ResultListItemViewModel : ViewModelBase
     [ObservableProperty]
     private string fgColor;
 
+    /// <summary>The hideout of the seller has been visited (travel to hideout).</summary>
+    [ObservableProperty]
+    private bool isVisited;
+
     public string Content { get; }
     public string ToolTip { get; }
     public string Tag { get; }

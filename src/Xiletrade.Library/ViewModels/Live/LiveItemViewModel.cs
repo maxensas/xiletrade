@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ public sealed partial class LiveItemViewModel : ViewModelBase
 {
     private readonly Func<string, Task> _travel;
     private readonly Action<string> _dismiss;
+    private readonly Func<LiveItemViewModel, bool> _pin;
     private readonly string _hideoutToken;
 
     /// <summary>Id of the listing, also id of the toast.</summary>
@@ -43,11 +45,22 @@ public sealed partial class LiveItemViewModel : ViewModelBase
     /// <summary>Instant buyout : the seller can be joined in his hideout.</summary>
     public bool CanTravel { get; }
 
+    /// <summary>Pinned toasts of the live searches : the pin is red while no more toast can be pinned.</summary>
+    public LivePinStateViewModel Pins { get; }
+
+    /// <summary>Pinned : kept at the top of the screen until it is closed, the pin button is hidden.</summary>
+    [ObservableProperty]
+    private bool isPinned;
+
     /// <param name="travel">Travel with the hideout token, sent like the fetch of the live search.</param>
-    internal LiveItemViewModel(DataManagerService dm, FetchDataInfo info, Func<string, Task> travel, Action<string> dismiss)
+    /// <param name="pin">Displays the toast again, pinned : false when the maximum of pinned toasts is reached.</param>
+    internal LiveItemViewModel(DataManagerService dm, FetchDataInfo info, Func<string, Task> travel,
+        Action<string> dismiss, Func<LiveItemViewModel, bool> pin, LivePinStateViewModel pins)
     {
         _travel = travel;
         _dismiss = dismiss;
+        _pin = pin;
+        Pins = pins;
         _hideoutToken = info.Listing?.HideoutToken;
 
         var item = info.Item;
@@ -81,6 +94,15 @@ public sealed partial class LiveItemViewModel : ViewModelBase
     {
         await _travel(_hideoutToken);
         _dismiss(Id);
+    }
+
+    [RelayCommand]
+    private void Pin(object commandParameter)
+    {
+        if (IsPinned || !_pin(this))
+            return;
+
+        IsPinned = true;
     }
 
     [RelayCommand]

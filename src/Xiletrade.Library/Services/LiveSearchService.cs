@@ -37,6 +37,7 @@ public sealed class LiveSearchService : IDisposable
     internal const int MaxSessions = 1;
 
     private const int MaxToasts = 5;
+    private const int MaxPinned = 2;
     private const int MaxResultsPerMinute = 60;
     private const double RateLimitReserve = 0.8;
     // rate limit state of a response trusted during this time
@@ -56,6 +57,9 @@ public sealed class LiveSearchService : IDisposable
     private readonly List<LiveSearchSession> _sessions = [];
     // ids of the toasts of the live searches, oldest first
     private readonly Queue<string> _toasts = new();
+    // ids of the pinned toasts, out of the toasts above
+    private readonly HashSet<string> _pinned = new(StringComparer.Ordinal);
+    private readonly LivePinStateViewModel _pins = new();
 
     // timestamp (Stopwatch) from which a fetch may start, 1 : fetch running
     private long _nextFetch;
@@ -88,6 +92,9 @@ public sealed class LiveSearchService : IDisposable
         _token = token;
         _notif = notif;
         _poeApi = poeApi;
+
+        // a pinned toast closed frees its place
+        _notif.NotificationRemoved += OnNotificationRemoved;
     }
 
     /// <summary>
@@ -294,7 +301,7 @@ public sealed class LiveSearchService : IDisposable
                     continue; // no longer listed
                 }
                 Show(new LiveItemViewModel(_dm, info, hideoutToken => _poeApi.TravelToHideoutAsync(hideoutToken, session.Referer),
-                    id => _notif.Dismiss(id)), sound);
+                    id => _notif.Dismiss(id), TryPin, _pins), sound);
                 sound = false;
 #if DEBUG
                 shown++;
@@ -329,15 +336,7 @@ public sealed class LiveSearchService : IDisposable
         lock (_gate)
         {
             var displayed = _notif.Current.Select(x => x.Id).ToHashSet(StringComparer.Ordinal);
-            var count = _toasts.Count;
-            for (int i = 0; i < count; i++)
-            {
-                var id = _toasts.Dequeue();
-                if (displayed.Contains(id) && id != item.Id)
-                {
-                    _toasts.Enqueue(id); // still displayed, order kept
-                }
-            }
+            RemoveToast(item.Id, displayed);
             while (_toasts.Count >= MaxToasts)
             {
                 dismiss.Add(_toasts.Dequeue());
@@ -357,13 +356,79 @@ public sealed class LiveSearchService : IDisposable
             Status = NotificationStatus.Information,
             Duration = ToastDuration,
             Content = item,
-            PlaySound = sound
+            PlaySound = sound,
+            Placement = NotificationPlacement.LowerQuarterRight
         });
+    }
+
+    // pinned : out of the MaxToasts toasts, displayed again at the top of the screen until it is closed (MaxPinned at most)
+    private bool TryPin(LiveItemViewModel item)
+    {
+        lock (_gate)
+        {
+            if (_pinned.Count >= MaxPinned)
+                return false;
+
+            RemoveToast(item.Id);
+        }
+
+        _notif.Show(new ToastNotification
+        {
+            Id = item.Id,
+            Title = item.Title,
+            Message = item.PriceText,
+            Status = NotificationStatus.Information,
+            Duration = null,
+            Content = item,
+            IsPinned = true,
+            Placement = NotificationPlacement.TopRight
+        });
+
+        // after the toast is displayed again : its removal (replaced by the pinned one) is not a closing
+        bool full;
+        lock (_gate)
+        {
+            _pinned.Add(item.Id);
+            full = _pinned.Count >= MaxPinned;
+        }
+        _pins.IsFull = full;
+        return true;
+    }
+
+    private void OnNotificationRemoved(object sender, string id)
+    {
+        bool full;
+        lock (_gate)
+        {
+            if (!_pinned.Remove(id))
+                return;
+
+            full = _pinned.Count >= MaxPinned;
+        }
+        _pins.IsFull = full;
+    }
+
+    // removes a toast, and the ones no longer displayed when they are given : the order is kept (under the gate)
+    private void RemoveToast(string removed, HashSet<string> displayed = null)
+    {
+        var count = _toasts.Count;
+        for (int i = 0; i < count; i++)
+        {
+            var id = _toasts.Dequeue();
+            if (id != removed && (displayed is null || displayed.Contains(id)))
+            {
+                _toasts.Enqueue(id); // still displayed
+            }
+        }
     }
 
 
     private void Notify(string message, NotificationStatus status)
         => _notif.Show(new ToastNotification(Resources.Resources.Main296_LiveSearch, message, status));
 
-    public void Dispose() => StopAll();
+    public void Dispose()
+    {
+        _notif.NotificationRemoved -= OnNotificationRemoved;
+        StopAll();
+    }
 }

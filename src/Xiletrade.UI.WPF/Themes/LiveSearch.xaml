@@ -45,7 +45,7 @@
                            Visibility="{Binding TypeLine, Converter={StaticResource null2CollapseConverter}}"/>
                 <!-- price, seller and travel to his hideout -->
                 <DockPanel Margin="0,6,0,0">
-                    <!-- close, on the right of the travel : both square, same size -->
+                    <!-- close, pin and travel : square, same size ; once pinned, travel and close only -->
                     <Button DockPanel.Dock="Right" Width="26" Height="26" Margin="2,0,0,0" Padding="0"
                             Command="{Binding CloseCommand}" Cursor="Hand" Focusable="False">
                         <Path Width="10" Height="10" Stretch="Uniform" StrokeThickness="1.8" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
@@ -56,6 +56,28 @@
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
                                             <Setter Property="Stroke" Value="{StaticResource ThemeFirstForegroundBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Button>
+                    <!-- pin : the toast stays at the top of the screen until it is closed, red while no more toast can be pinned -->
+                    <Button DockPanel.Dock="Right" Width="26" Height="26" Margin="2,0,0,0" Padding="0"
+                            Command="{Binding PinCommand}" Cursor="Hand" Focusable="False"
+                            Visibility="{Binding IsPinned, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                        <Path Width="9" Height="14" Stretch="Uniform"
+                              Data="M3,0 L9,0 L9,1.5 L8,1.5 L8,6 L10,8 L10,9.5 L6.6,9.5 L6,15 L5.4,9.5 L2,9.5 L2,8 L4,6 L4,1.5 L3,1.5 Z">
+                            <Path.Style>
+                                <Style TargetType="{x:Type Path}">
+                                    <Setter Property="Fill" Value="{StaticResource ForegroundMediumBrush}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
+                                            <Setter Property="Fill" Value="{StaticResource ThemeFirstForegroundBrush}"/>
+                                        </DataTrigger>
+                                        <!-- after the hover : stays red -->
+                                        <DataTrigger Binding="{Binding Pins.IsFull}" Value="True">
+                                            <Setter Property="Fill" Value="{StaticResource RedBrush}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Interop;
+using Xiletrade.Library.Shared.Interop.Windows;
 using Xiletrade.Library.ViewModels.Live;
 using Xiletrade.Library.Views;
 using Xiletrade.UI.WPF.Util;
@@ -12,13 +13,11 @@ namespace Xiletrade.UI.WPF.Views;
 /// </summary>
 /// <remarks>
 /// Created hidden at startup, displayed while a live search is running (visibility bound to its state).
-/// Clicked without being activated : the game keeps the focus. The toasts are stacked above it.
+/// Tool window clicked without being activated : not listed by Alt+Tab, the game keeps the focus.
+/// The toasts are stacked above it.
 /// </remarks>
 public partial class LiveOverlayView : ViewBase, ILiveOverlayView
 {
-    private const int WM_MOUSEACTIVATE = 0x0021;
-    private const int MA_NOACTIVATE = 3;
-
     public LiveOverlayView(LiveOverlayViewModel vm)
     {
         InitializeComponent();
@@ -28,19 +27,9 @@ public partial class LiveOverlayView : ViewBase, ILiveOverlayView
         IsVisibleChanged += (_, _) => UpdatePosition();
     }
 
-    // a click does not activate the window (no native call : message of the window answered by WPF)
+    // before the window is visible : not listed by Alt+Tab, not activated by a click
     private void OnSourceInitialized(object sender, EventArgs e)
-        => HwndSource.FromHwnd(new WindowInteropHelper(this).Handle)?.AddHook(WndProc);
-
-    private static nint WndProc(nint hwnd, int msg, nint wParam, nint lParam, ref bool handled)
-    {
-        if (msg is WM_MOUSEACTIVATE)
-        {
-            handled = true;
-            return MA_NOACTIVATE;
-        }
-        return 0;
-    }
+        => Native.AddExtendedStyle(new WindowInteropHelper(this).Handle, Native.WS_EX_TOOLWINDOW | Native.WS_EX_NOACTIVATE);
 
     // bottom right corner of the primary screen, the toasts are stacked above the buttons while they are displayed
     private void UpdatePosition()

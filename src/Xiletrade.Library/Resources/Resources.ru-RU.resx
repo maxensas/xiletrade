@@ -2553,6 +2553,9 @@
   <data name="Main307_LiveStopAll" xml:space="preserve">
     <value>Остановить живой поиск</value>
   </data>
+  <data name="Main308_Search" xml:space="preserve">
+    <value>Искать</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
   </data>

@@ -7577,6 +7577,17 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
+        ///   Localized string similar to => Search
+        /// </summary>
+        public static string Main308_Search
+        {
+            get
+            {
+                return ResourceManager.GetString("Main308_Search", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Localized string similar to => Welcome to Xiletrade.
         /// </summary>
         public static string Start001_lblWelcome {

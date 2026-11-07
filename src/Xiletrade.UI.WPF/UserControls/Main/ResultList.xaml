@@ -35,6 +35,15 @@
                 <helper:ScrollEndCommandBehavior Command="{Binding Result.FetchCommand}" IsEnabled="{Binding Result.FetchDetailIsEnabled}"/>
             </i:Interaction.Behaviors>
             <ListBox.Resources>
+                <!-- item level, quality, age, seller : darker once the hideout of the seller has been visited -->
+                <Style x:Key="SaleInfoText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="Foreground" Value="{StaticResource GrayForegoundBrush}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsVisited}" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource GrayDarkForegroundBrush}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="3"/>
                 </Style>
@@ -140,16 +149,16 @@
                                 </TextBlock.ToolTip>
                             </TextBlock>
                             <Image Margin="6,0,0,0" x:Name="tradeCur" Source="{Binding Currency, Converter={StaticResource imageSourceConverter}}" d:Source="{StaticResource ImgDivine}" Width="16" Height="16" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" d:Visibility="Visible" Visibility="{Binding Source={RelativeSource Self}, Path=Source, Converter={StaticResource null2CollapseConverter}}"/>
-                            <Button Grid.Row="0" Grid.Column="2" Height="13" Width="15" Command="{Binding DataContext.Result.TravelToHideoutCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding Info}" ToolTip="Travel to hideout" Cursor="Hand">
+                            <Button Grid.Row="0" Grid.Column="2" Height="13" Width="15" Command="{Binding DataContext.Result.TravelToHideoutCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" ToolTip="Travel to hideout" Cursor="Hand">
                                 <Viewbox Width="10" Height="10" Cursor="">
                                     <Path Style="{StaticResource HouseIcon}" Stretch="Uniform"/>
                                 </Viewbox>
                             </Button>
-                            <TextBlock Margin="0,-1,0,0" FontSize="14" d:Text="83" Text="{Binding Item.ItemLevel}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                            <TextBlock Margin="0,-1,0,0" FontSize="14" d:Text="20" Text="{Binding Info.QualityOrCount}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                            <TextBlock Margin="0,-1,0,0" FontSize="14" d:Text="5" Text="{Binding Info.Age}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                            <TextBlock Margin="8,-1,0,0" FontSize="14" d:Text="days" Text="{Binding Info.AgeLabel}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="6" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <TextBlock Margin="0,-1,0,1" FontSize="14" d:Text="Samathor" Text="{Binding Info.Account}" Foreground="{StaticResource GrayForegoundBrush}" Grid.Row="0" Grid.Column="7" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock Margin="0,-1,0,0" FontSize="14" d:Text="83" Text="{Binding Item.ItemLevel}" Style="{StaticResource SaleInfoText}" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            <TextBlock Margin="0,-1,0,0" FontSize="14" d:Text="20" Text="{Binding Info.QualityOrCount}" Style="{StaticResource SaleInfoText}" Grid.Row="0" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            <TextBlock Margin="0,-1,0,0" FontSize="14" d:Text="5" Text="{Binding Info.Age}" Style="{StaticResource SaleInfoText}" Grid.Row="0" Grid.Column="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            <TextBlock Margin="8,-1,0,0" FontSize="14" d:Text="days" Text="{Binding Info.AgeLabel}" Style="{StaticResource SaleInfoText}" Grid.Row="0" Grid.Column="6" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock Margin="0,-1,0,1" FontSize="14" d:Text="Samathor" Text="{Binding Info.Account}" Style="{StaticResource SaleInfoText}" Grid.Row="0" Grid.Column="7" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
                 </DataTemplate>

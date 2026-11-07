@@ -2551,6 +2551,9 @@ No sale is ignored.</value>
   <data name="Main307_LiveStopAll" xml:space="preserve">
     <value>Stop live search</value>
   </data>
+  <data name="Main308_Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
   </data>

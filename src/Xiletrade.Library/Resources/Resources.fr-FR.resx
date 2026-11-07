@@ -2552,6 +2552,9 @@ Aucune vente ne sera ignorée.</value>
   <data name="Main307_LiveStopAll" xml:space="preserve">
     <value>Arrêter la recherche live</value>
   </data>
+  <data name="Main308_Search" xml:space="preserve">
+    <value>Rechercher</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenue sur Xiletrade</value>
   </data>

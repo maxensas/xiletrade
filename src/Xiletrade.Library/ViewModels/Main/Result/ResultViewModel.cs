@@ -157,8 +157,9 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
     [RelayCommand]
     private async Task TravelToHideout(object commandParameter)
     {
-        if (commandParameter is SaleInfo saleInfo)
+        if (commandParameter is ResultListItemViewModel { Info: SaleInfo saleInfo } line)
         {
+            line.IsVisited = true;
             // page of the search of the results : the hideout token is checked with it
             var searchId = Data.ResultData?.Id;
             var referer = string.IsNullOrEmpty(searchId) ? null : Strings.Api.GetSearchPage(_vm.Form.League[_vm.Form.LeagueIndex], searchId);

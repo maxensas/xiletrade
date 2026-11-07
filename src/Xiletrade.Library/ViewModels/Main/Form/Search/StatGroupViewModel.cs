@@ -37,6 +37,10 @@ public sealed partial class StatGroupViewModel : ViewModelBase
     [ObservableProperty]
     private AsyncObservableCollection<CustomStatViewModel> filters = new();
 
+    /// <summary>Stats and field of the group displayed : a click on its title reduces or expands it.</summary>
+    [ObservableProperty]
+    private bool isExpanded = true;
+
     /// <summary>Stat suggestions of the field of the group : to add a stat, or to change the stat clicked.</summary>
     [ObservableProperty]
     private StatSuggestionViewModel stat;
