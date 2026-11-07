@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Raffinert.FuzzySharp;
@@ -17,8 +16,8 @@ namespace Xiletrade.Library.ViewModels.Main.Form.Search;
 public sealed partial class SuggestionSearchViewModel : SuggestionListViewModel
 {
     private const int MAX_SUGGESTIONS = 15;
-
-    private readonly ConcurrentDictionary<string, Levenshtein> _levCache = new();
+    // closest items kept : distance of 0 or 1 from the query (score 2 or 3)
+    private const int MAX_DISTANCE = 1;
 
     private readonly IEnumerable<(string Text, bool IsUnique, string Category, int Group)> _sourceData;
 
@@ -32,20 +31,42 @@ public sealed partial class SuggestionSearchViewModel : SuggestionListViewModel
 
     protected override List<SearchItem> Find(string query)
     {
-        var lev = _levCache.GetOrAdd(query, q => new Levenshtein(q.ToLower()));
+        // one per query (not cached : a query is rarely typed twice)
+        var lev = new Levenshtein(query.ToLower());
+
+        // only the items kept are sorted : starting with the query, containing it, then the closest ones
+        var found = new List<((string Text, bool IsUnique, string Category, int Group) item, int score)>();
+        foreach (var item in _sourceData)
+        {
+            var text = item.Text;
+            int index = text.IndexOf(query, StringComparison.OrdinalIgnoreCase);
+            int score;
+            if (index >= 0)
+            {
+                score = index is 0 ? 0 : 1; // max priority, then medium priority
+            }
+            else
+            {
+                // a length too different is too far, without computing the distance
+                if (Math.Abs(text.Length - query.Length) > MAX_DISTANCE)
+                {
+                    continue;
+                }
+                int distance = lev.DistanceFrom(text);
+                if (distance > MAX_DISTANCE)
+                {
+                    continue;
+                }
+                score = distance + 2; // low priority, +2 to stay behind the texts containing the query
+            }
+            found.Add((item, score));
+        }
 
         // best items, then by category (stable sort : the best first in each category)
-        var best = _sourceData
-            .Select(item =>
-            {
-                int score = item.Text.StartsWith(query, StringComparison.OrdinalIgnoreCase) ? 0 // max priority
-                    : item.Text.Contains(query, StringComparison.OrdinalIgnoreCase) ? 1 // medium priority
-                    : lev.DistanceFrom(item.Text) + 2; // Low priority, +2 to stay behind StartsWith/Contains
-                return (item, score);
-            })
+        var best = found
             .OrderBy(x => x.score)
             .ThenBy(x => x.item.Text, StringComparer.Ordinal) // alphabetical sort if equal
-            .Take(MAX_SUGGESTIONS).TakeWhile(x => x.score < 4)
+            .Take(MAX_SUGGESTIONS)
             .OrderBy(x => x.item.Group);
 
         var list = new List<SearchItem>(MAX_SUGGESTIONS * 2);

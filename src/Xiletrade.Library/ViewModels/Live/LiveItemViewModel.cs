@@ -19,6 +19,9 @@ public sealed partial class LiveItemViewModel : ViewModelBase
     private readonly Action<string> _dismiss;
     private readonly Func<LiveItemViewModel, bool> _pin;
     private readonly string _hideoutToken;
+    private readonly DataManagerService _dm;
+    private readonly ItemDataApi _item;
+    private SaleItem _saleItem;
 
     /// <summary>Id of the listing, also id of the toast.</summary>
     public string Id { get; }
@@ -40,7 +43,8 @@ public sealed partial class LiveItemViewModel : ViewModelBase
     public string Account { get; }
 
     /// <summary>Item displayed in the tooltip, as in the results of a price check.</summary>
-    public SaleItem Item { get; }
+    /// <remarks>Built when the tooltip is shown first : most of the toasts are never hovered.</remarks>
+    public SaleItem Item => _saleItem ??= new(_dm, _item);
 
     /// <summary>Instant buyout : the seller can be joined in his hideout.</summary>
     public bool CanTravel { get; }
@@ -65,7 +69,8 @@ public sealed partial class LiveItemViewModel : ViewModelBase
 
         var item = info.Item;
         Id = info.Id;
-        Item = new(dm, item);
+        _dm = dm;
+        _item = item;
         Rarity = new(item);
         var hasName = item?.Name?.Length > 0;
         Title = hasName ? item.Name : item?.TypeLine;

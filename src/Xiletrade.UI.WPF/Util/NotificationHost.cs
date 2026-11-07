@@ -34,6 +34,10 @@ public sealed class NotificationHost : INotificationHost
     private readonly ToastOptions _toast = new();
     private readonly Duration _fadeDuration;
 
+    // frozen brushes with the opacity of the options (key of the theme or color of a status), built again when it changes
+    private readonly Dictionary<string, Brush> _brushes = new(StringComparer.Ordinal);
+    private double _brushOpacity = double.NaN;
+
     private bool _disposed;
 
     /// <summary>
@@ -60,6 +64,11 @@ public sealed class NotificationHost : INotificationHost
         }
 
         var opacity = _dm.Opacity;
+        if (opacity != _brushOpacity)
+        {
+            _brushes.Clear();
+            _brushOpacity = opacity;
+        }
 
         var panel = new DockPanel
         {
@@ -243,24 +252,33 @@ public sealed class NotificationHost : INotificationHost
     }
 
     // brush of the theme (application resources) with the opacity of the options
-    private static Brush GetThemeBrush(string key, double opacity)
+    private Brush GetThemeBrush(string key, double opacity)
     {
+        if (_brushes.TryGetValue(key, out var cached))
+            return cached;
+
         if (Application.Current.TryFindResource(key) is not Brush theme)
             return null;
 
         var brush = theme.CloneCurrentValue();
         brush.Opacity = opacity;
         brush.Freeze();
+        _brushes[key] = brush;
         return brush;
     }
 
-    private SolidColorBrush GetStatusBrush(NotificationStatus status, double opacity)
+    private Brush GetStatusBrush(NotificationStatus status, double opacity)
     {
-        var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(_toast.GetStatusColor(status)))
+        var color = _toast.GetStatusColor(status);
+        if (_brushes.TryGetValue(color, out var cached))
+            return cached;
+
+        var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(color))
         {
             Opacity = opacity
         };
         brush.Freeze();
+        _brushes[color] = brush;
         return brush;
     }
 

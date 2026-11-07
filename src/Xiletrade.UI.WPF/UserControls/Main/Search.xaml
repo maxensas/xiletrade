@@ -310,10 +310,8 @@
                 </Border>
             </DataTemplate>
         </Grid.Resources>
-        <!-- title ; actions : search, live search, switch between the search criteria and the results once a search is launched -->
+        <!-- actions : search, live search, switch between the search criteria and the results once a search is launched -->
         <DockPanel DataContext="{Binding Form.CustomSearch}" Margin="6,0,8,0" Height="26" VerticalAlignment="Top" LastChildFill="False">
-            <TextBlock DockPanel.Dock="Left" VerticalAlignment="Center" FontSize="12" Style="{StaticResource TextBlockTitle}" Text="{ext:Localization Main245_SearchPreset}"
-                       Visibility="{Binding ShowCriteria, Converter={StaticResource bool2VisibilityConverter}}"/>
             <Button DockPanel.Dock="Right" Margin="6,0,0,0" Cursor="Hand" Focusable="False" Template="{StaticResource SearchActionButton}"
                     Content="{Binding ToggleText}" d:Content="Show results" Command="{Binding ToggleCriteriaCommand}"
                     Visibility="{Binding HasResults, Converter={StaticResource bool2VisibilityConverter}}"/>

@@ -63,12 +63,17 @@ public sealed partial class StatSuggestionViewModel : SuggestionListViewModel
             foreach (var entry in result.Entries)
             {
                 var text = entry.Text;
-                if (string.IsNullOrEmpty(text) || !ContainsAll(text, words))
+                if (string.IsNullOrEmpty(text))
                 {
                     continue;
                 }
-                int score = text.StartsWith(query, StringComparison.OrdinalIgnoreCase) ? 0
-                    : text.Contains(query, StringComparison.OrdinalIgnoreCase) ? 1 : 2;
+                // one scan for the query : a text containing it contains all its words
+                int index = text.IndexOf(query, StringComparison.OrdinalIgnoreCase);
+                if (index < 0 && !ContainsAll(text, words))
+                {
+                    continue;
+                }
+                int score = index is 0 ? 0 : index > 0 ? 1 : 2;
                 found.Add((entry, result.Label, group, score));
             }
         }

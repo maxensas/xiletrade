@@ -12,9 +12,14 @@ namespace Xiletrade.Library.ViewModels.Main.Form.Search;
 /// <summary>
 /// Field of the custom search with its list of suggestions, displayed by group under a title (not selectable).
 /// </summary>
-/// <remarks>The suggestions are searched outside the UI thread, the results of an older query are dropped.</remarks>
+/// <remarks>
+/// The suggestions are searched outside the UI thread once the typing pauses, the results of an older query are dropped.
+/// </remarks>
 public abstract partial class SuggestionListViewModel : ViewModelBase
 {
+    // pause of the typing before searching : the keys typed quickly do not each start a search
+    private const int TypingDelayMs = 120;
+
     // the list is opened or closed by the suggestions, not by a click outside it
     private bool _isUpdating;
 
@@ -116,6 +121,12 @@ public abstract partial class SuggestionListViewModel : ViewModelBase
                 Suggestions.Clear();
                 SetDropdown(false);
                 return;
+            }
+
+            await Task.Delay(TypingDelayMs);
+            if (version != _version)
+            {
+                return; // another key typed meanwhile
             }
 
             var results = await Task.Run(() => Find(query));

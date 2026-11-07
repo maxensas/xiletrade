@@ -2443,10 +2443,10 @@
     <value>Предмет должен иметь количество свойств этой группы между минимумом и максимумом</value>
   </data>
   <data name="Main271_AddStatGroup" xml:space="preserve">
-    <value>+ Добавить группу свойств</value>
+    <value>+ Группа свойств</value>
   </data>
   <data name="Main272_AddPreset" xml:space="preserve">
-    <value>+ Добавить предустановку</value>
+    <value>+ Пресет</value>
   </data>
   <data name="Main273_UpdatePreset" xml:space="preserve">
     <value>Обновить</value>
