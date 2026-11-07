@@ -157,61 +157,12 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
     [RelayCommand]
     private async Task TravelToHideout(object commandParameter)
     {
-        if (commandParameter is null)
-        {
-            return;
-        }
-
         if (commandParameter is SaleInfo saleInfo)
         {
-            if (saleInfo.HideoutToken is null || saleInfo.HideoutToken.Length is 0)
-            {
-                _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\nYour POESESSID is missing or expired !" +
-                    "\n\nFor advanced users : You can manually update your POESESSID " +
-                    "under settings by using the developer manager in the authentication section.",
-                    Resources.Resources.Error018_XReqAuth, MessageStatus.Exclamation);
-                return;
-            }
-
-            try
-            {
-                var json = Encoding.UTF8.GetBytes($"{{\"token\":\"{saleInfo.HideoutToken}\"}}");
-                //var urlRef = Strings.TradeUrl + _vm.Form.League[_vm.Form.LeagueIndex] + "/" + _vm.Result.Data.ResultData.Id;
-                var result = await _net.SendHTTPBytes(json, Strings.Api.Whisper, Client.Trade, isXml: true);
-                if (result.Length > 0)
-                {
-                    //{"success":true}
-                }
-            }
-            catch (Exception ex)
-            {
-                if (ex is HttpRequestException exception)
-                {
-                    if (exception.StatusCode is System.Net.HttpStatusCode.ServiceUnavailable)
-                    {
-                        return; // can be normal
-                    }
-                    if (exception.StatusCode is System.Net.HttpStatusCode.BadRequest)
-                    {
-                        _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\nIs your account correctly connected ?", 
-                            Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
-                        return;
-                    }
-                    if (exception.StatusCode is System.Net.HttpStatusCode.Forbidden)
-                    {
-                        _message.Show(Resources.Resources.Error002_CannotTravel, 
-                            Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
-                        return;
-                    }
-                    _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\nYour POESESSID is probably missing or expired !" +
-                        "\n\nYou can manually update it under settings by using the developer manager in the authentication section.",
-                        Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
-
-                }
-                _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\n" +
-                    string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace),
-                    Resources.Resources.Error010_XUnknownError, MessageStatus.Error);
-            }
+            // page of the search of the results : the hideout token is checked with it
+            var searchId = Data.ResultData?.Id;
+            var referer = string.IsNullOrEmpty(searchId) ? null : Strings.Api.GetSearchPage(_vm.Form.League[_vm.Form.LeagueIndex], searchId);
+            await _poeApi.TravelToHideoutAsync(saleInfo.HideoutToken, referer);
         }
     }
 
@@ -227,7 +178,7 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
         ResultBar result = null;
         try
         {
-            result = await _poeApi.FetchResult(this, maxFetch: 20, market, sameUser, token); // maxFetch is set to 20 by default !
+            result = await _poeApi.FetchResult(this, maxFetch: 20, market, sameUser, _vm.Form.Tab.QuickSelected, token); // maxFetch is set to 20 by default !
         }
         catch (InvalidOperationException ex)
         {
@@ -448,7 +399,7 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
                 return new ResultBar(state: ResultBarSate.NoData);
             }
             var token = _vm.TaskManager.GetPriceToken(initCts: true);
-            _vm.TaskManager.PriceTask = _poeApi.RunPriceTask(_vm.Result, pricingInfo, json, urlApi, token);
+            _vm.TaskManager.PriceTask = _poeApi.RunPriceTask(_vm.Result, pricingInfo, json, urlApi, _vm.Form.Tab.QuickSelected, token);
             return await _vm.TaskManager.PriceTask;
         }
         catch (Exception ex)

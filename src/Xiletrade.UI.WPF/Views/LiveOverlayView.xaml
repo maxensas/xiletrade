@@ -1,0 +1,68 @@
+﻿<view:ViewBase x:Class="Xiletrade.UI.WPF.Views.LiveOverlayView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:view="clr-namespace:Xiletrade.UI.WPF.Views"
+        xmlns:live="clr-namespace:Xiletrade.Library.ViewModels.Live;assembly=Xiletrade.Library"
+        xmlns:ext="clr-namespace:Xiletrade.UI.WPF.Util.Extensions"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance Type=live:LiveOverlayViewModel}"
+        Title="Xiletrade live search" SizeToContent="WidthAndHeight" WindowStyle="None" ResizeMode="NoResize"
+        AllowsTransparency="True" Background="Transparent" Topmost="True" ShowInTaskbar="False" ShowActivated="False"
+        WindowStartupLocation="Manual"
+        Visibility="{Binding IsRunning, Converter={StaticResource bool2VisibilityConverter}}">
+    <Window.Resources>
+        <!-- icon button : gray, in the color of the theme on hover, the geometry is the tag -->
+        <Style x:Key="OverlayButton" TargetType="{x:Type Button}">
+            <Setter Property="Width" Value="34"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="Transparent">
+                            <Path x:Name="Icon" Width="11" Height="11" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                  Fill="{StaticResource ForegroundMediumBrush}" Data="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Icon" Property="Fill" Value="{StaticResource ThemeFirstForegroundBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <StreamGeometry x:Key="PauseIcon">M0,0 L3.5,0 L3.5,12 L0,12 Z M7.5,0 L11,0 L11,12 L7.5,12 Z</StreamGeometry>
+        <StreamGeometry x:Key="ResumeIcon">M0,0 L11,6 L0,12 Z</StreamGeometry>
+        <StreamGeometry x:Key="StopIcon">M0,0 L11,0 L11,11 L0,11 Z</StreamGeometry>
+    </Window.Resources>
+    <!-- glued to the bottom right corner of the screen : only the top left corner is rounded -->
+    <Border Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}"
+            BorderThickness="1,1,0,0" CornerRadius="6,0,0,0" Padding="4,0">
+        <StackPanel Orientation="Horizontal">
+            <!-- pause : resume icon while paused -->
+            <Button Command="{Binding TogglePauseCommand}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource OverlayButton}">
+                        <Setter Property="Tag" Value="{StaticResource PauseIcon}"/>
+                        <Setter Property="ToolTip" Value="{ext:Localization Main305_LivePause}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsPaused}" Value="True">
+                                <Setter Property="Tag" Value="{StaticResource ResumeIcon}"/>
+                                <Setter Property="ToolTip" Value="{ext:Localization Main306_LiveResume}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <!-- stop : the live searches end, these buttons disappear -->
+            <Button Style="{StaticResource OverlayButton}" Tag="{StaticResource StopIcon}" Command="{Binding StopCommand}"
+                    ToolTip="{ext:Localization Main307_LiveStopAll}"/>
+            <!-- logo of Xiletrade -->
+            <Image Source="{StaticResource ImgLogo}" Height="22" Margin="4,3,2,3" VerticalAlignment="Center"
+                   RenderOptions.BitmapScalingMode="HighQuality"/>
+        </StackPanel>
+    </Border>
+</view:ViewBase>

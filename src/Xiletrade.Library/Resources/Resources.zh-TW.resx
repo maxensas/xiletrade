@@ -2594,6 +2594,42 @@
   <data name="Main295_PresetsExported" xml:space="preserve">
     <value>已匯出 {0} 個預設。</value>
   </data>
+  <data name="Main296_LiveSearch" xml:space="preserve">
+    <value>即時搜尋</value>
+  </data>
+  <data name="Main297_Live" xml:space="preserve">
+    <value>即時</value>
+  </data>
+  <data name="Main298_LiveNoSession" xml:space="preserve">
+    <value>即時搜尋被拒絕：需要有效的 POESESSID（設定，認證部分）。</value>
+  </data>
+  <data name="Main299_LiveNotStarted" xml:space="preserve">
+    <value>無法啟動即時搜尋。</value>
+  </data>
+  <data name="Main300_LiveStarted" xml:space="preserve">
+    <value>即時搜尋已啟動：新物品將顯示於此。</value>
+  </data>
+  <data name="Main301_LiveTooBroad" xml:space="preserve">
+    <value>即時搜尋已停止：一分鐘內新物品超過 {0} 個，請縮小搜尋範圍。</value>
+  </data>
+  <data name="Main302_LiveConnectionLost" xml:space="preserve">
+    <value>即時搜尋已停止：連線已中斷。</value>
+  </data>
+  <data name="Main303_LiveStop" xml:space="preserve">
+    <value>停止即時</value>
+  </data>
+  <data name="Main304_LiveTip" xml:space="preserve">
+    <value>通知符合條件的新物品（需要 POESESSID）。</value>
+  </data>
+  <data name="Main305_LivePause" xml:space="preserve">
+    <value>暫停即時搜尋</value>
+  </data>
+  <data name="Main306_LiveResume" xml:space="preserve">
+    <value>繼續即時搜尋</value>
+  </data>
+  <data name="Main307_LiveStopAll" xml:space="preserve">
+    <value>停止即時搜尋</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>
   </data>

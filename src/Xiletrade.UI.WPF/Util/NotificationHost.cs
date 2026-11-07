@@ -28,6 +28,12 @@ public sealed class NotificationHost : INotificationHost
 
     private bool _disposed;
 
+    /// <summary>
+    /// Height kept free at the bottom of the screen by a window glued to it (buttons of the live searches) :
+    /// the toasts are stacked above it.
+    /// </summary>
+    public static double ReservedBottom { get; set; }
+
     public NotificationHost(IUIService ui, Action<string> dismiss)
     {
         _ui = ui ?? throw new ArgumentNullException(nameof(ui));
@@ -47,37 +53,24 @@ public sealed class NotificationHost : INotificationHost
         var panel = new DockPanel
         {
             Margin = new Thickness(16),
-            Background = Brushes.Transparent,
-            Cursor = System.Windows.Input.Cursors.Hand
+            Background = Brushes.Transparent
         };
 
-        panel.MouseLeftButtonUp += (_, e) =>
+        if (message.Content is not null)
         {
-            e.Handled = true;
-            _dismiss(message.Id);
-        };
-
-        var text = new StackPanel();
-
-        text.Children.Add(new TextBlock
+            // view model displayed by its template (application resources) : closed by its own buttons
+            panel.Children.Add(new ContentControl { Content = message.Content, Focusable = false });
+        }
+        else
         {
-            Text = message.Title,
-            FontWeight = FontWeights.SemiBold,
-            FontSize = _toast.TitleFontSize,
-            Foreground = Brushes.White,
-            TextWrapping = TextWrapping.Wrap
-        });
-
-        text.Children.Add(new TextBlock
-        {
-            Text = message.Message,
-            FontSize = _toast.MessageFontSize,
-            TextWrapping = TextWrapping.Wrap,
-            Margin = new Thickness(0, 6, 0, 0),
-            Foreground = Brushes.White
-        });
-
-        panel.Children.Add(text);
+            panel.Cursor = System.Windows.Input.Cursors.Hand;
+            panel.MouseLeftButtonUp += (_, e) =>
+            {
+                e.Handled = true;
+                _dismiss(message.Id);
+            };
+            panel.Children.Add(CreateText(message));
+        }
 
         var border = new Border
         {
@@ -86,6 +79,13 @@ public sealed class NotificationHost : INotificationHost
             ClipToBounds = true,
             Child = panel
         };
+        if (message.Content is not null)
+        {
+            // same background and border as the window of Xiletrade
+            border.Background = Application.Current.TryFindResource("WindowBackgroundBrush") as Brush ?? border.Background;
+            border.BorderBrush = Application.Current.TryFindResource("WindowBorderBrush") as Brush;
+            border.BorderThickness = new Thickness(2);
+        }
 
         var window = new Window
         {
@@ -124,7 +124,37 @@ public sealed class NotificationHost : INotificationHost
         Reposition();  // placed before the fade-in starts, so nothing is visible at a wrong position
 
         window.BeginAnimation(UIElement.OpacityProperty, new DoubleAnimation(0, 1, _fadeDuration));
+        if (message.PlaySound)
+        {
+            System.Media.SystemSounds.Hand.Play();
+        }
     });
+
+    // title and message of a toast without content
+    private StackPanel CreateText(ToastNotification message)
+    {
+        var text = new StackPanel();
+
+        text.Children.Add(new TextBlock
+        {
+            Text = message.Title,
+            FontWeight = FontWeights.SemiBold,
+            FontSize = _toast.TitleFontSize,
+            Foreground = Brushes.White,
+            TextWrapping = TextWrapping.Wrap
+        });
+
+        text.Children.Add(new TextBlock
+        {
+            Text = message.Message,
+            FontSize = _toast.MessageFontSize,
+            TextWrapping = TextWrapping.Wrap,
+            Margin = new Thickness(0, 6, 0, 0),
+            Foreground = Brushes.White
+        });
+
+        return text;
+    }
 
     public void OnRemoved(object sender, string id) => _ui.Invoke(() =>
     {
@@ -154,7 +184,7 @@ public sealed class NotificationHost : INotificationHost
     private void Reposition()
     {
         var area = SystemParameters.WorkArea;
-        var bottom = area.Bottom - _toast.Margin;
+        var bottom = Math.Min(area.Bottom, SystemParameters.PrimaryScreenHeight - ReservedBottom) - _toast.Margin;
 
         // Newest first = lowest on screen.
         foreach (var window in _windows.Values.Reverse().ToArray())

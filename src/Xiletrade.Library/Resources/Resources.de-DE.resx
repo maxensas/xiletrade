@@ -2515,6 +2515,42 @@ Es werden keine Verkäufe ignoriert.</value>
   <data name="Main295_PresetsExported" xml:space="preserve">
     <value>{0} Voreinstellung(en) exportiert.</value>
   </data>
+  <data name="Main296_LiveSearch" xml:space="preserve">
+    <value>Live-Suche</value>
+  </data>
+  <data name="Main297_Live" xml:space="preserve">
+    <value>Live</value>
+  </data>
+  <data name="Main298_LiveNoSession" xml:space="preserve">
+    <value>Live-Suche abgelehnt: eine gültige POESESSID ist erforderlich (Einstellungen, Authentifizierung).</value>
+  </data>
+  <data name="Main299_LiveNotStarted" xml:space="preserve">
+    <value>Die Live-Suche konnte nicht gestartet werden.</value>
+  </data>
+  <data name="Main300_LiveStarted" xml:space="preserve">
+    <value>Live-Suche gestartet: neue Gegenstände werden hier angezeigt.</value>
+  </data>
+  <data name="Main301_LiveTooBroad" xml:space="preserve">
+    <value>Live-Suche beendet: mehr als {0} neue Gegenstände in einer Minute, verfeinere die Suche.</value>
+  </data>
+  <data name="Main302_LiveConnectionLost" xml:space="preserve">
+    <value>Live-Suche beendet: die Verbindung wurde unterbrochen.</value>
+  </data>
+  <data name="Main303_LiveStop" xml:space="preserve">
+    <value>Live beenden</value>
+  </data>
+  <data name="Main304_LiveTip" xml:space="preserve">
+    <value>Meldet neue Gegenstände, die den Kriterien entsprechen (POESESSID erforderlich).</value>
+  </data>
+  <data name="Main305_LivePause" xml:space="preserve">
+    <value>Live-Suche pausieren</value>
+  </data>
+  <data name="Main306_LiveResume" xml:space="preserve">
+    <value>Live-Suche fortsetzen</value>
+  </data>
+  <data name="Main307_LiveStopAll" xml:space="preserve">
+    <value>Live-Suche beenden</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>
   </data>

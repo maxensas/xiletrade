@@ -26,6 +26,9 @@ public class TokenService : ITokenService
     {
         _message = message;
         _dm = dm;
+        // loaded with the service : the services depending on it (trade client of NetService : POESESSID cookie)
+        // are created before the task bar refreshes the authentication state
+        LoadTokens();
 
 #if DEBUG
         logger.LogInformation("Service launched");

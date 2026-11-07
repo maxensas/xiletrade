@@ -37,6 +37,7 @@
                 <ResourceDictionary Source="Themes\SliderFlat.xaml" />
                 <!--<ResourceDictionary Source="Themes\SliderMod.xaml" />-->
                 <ResourceDictionary Source="Themes\DataGrid.xaml" />
+                <ResourceDictionary Source="Themes\LiveSearch.xaml" />
                 <!--<ResourceDictionary Source="Themes\Styles.xaml" />-->
                 <ResourceDictionary Source="Themes\ToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>

@@ -3337,6 +3337,54 @@ No sale is ignored.</comment>
     <value>{0} preset(s) exported.</value>
     <comment>{0} preset(s) exported.</comment>
   </data>
+  <data name="Main296_LiveSearch" xml:space="preserve">
+    <value>Live search</value>
+    <comment>Live search</comment>
+  </data>
+  <data name="Main297_Live" xml:space="preserve">
+    <value>Live</value>
+    <comment>Live</comment>
+  </data>
+  <data name="Main298_LiveNoSession" xml:space="preserve">
+    <value>Live search refused : a valid POESESSID is required (settings, authentication section).</value>
+    <comment>Live search refused : a valid POESESSID is required (settings, authentication section).</comment>
+  </data>
+  <data name="Main299_LiveNotStarted" xml:space="preserve">
+    <value>The live search could not be started.</value>
+    <comment>The live search could not be started.</comment>
+  </data>
+  <data name="Main300_LiveStarted" xml:space="preserve">
+    <value>Live search started : the new items will be displayed here.</value>
+    <comment>Live search started : the new items will be displayed here.</comment>
+  </data>
+  <data name="Main301_LiveTooBroad" xml:space="preserve">
+    <value>Live search stopped : more than {0} new items in one minute, refine the search.</value>
+    <comment>Live search stopped : more than {0} new items in one minute, refine the search.</comment>
+  </data>
+  <data name="Main302_LiveConnectionLost" xml:space="preserve">
+    <value>Live search stopped : the connection was lost.</value>
+    <comment>Live search stopped : the connection was lost.</comment>
+  </data>
+  <data name="Main303_LiveStop" xml:space="preserve">
+    <value>Stop live</value>
+    <comment>Stop live</comment>
+  </data>
+  <data name="Main304_LiveTip" xml:space="preserve">
+    <value>Notifies the new items matching the criteria (POESESSID required).</value>
+    <comment>Notifies the new items matching the criteria (POESESSID required).</comment>
+  </data>
+  <data name="Main305_LivePause" xml:space="preserve">
+    <value>Pause live search</value>
+    <comment>Pause live search</comment>
+  </data>
+  <data name="Main306_LiveResume" xml:space="preserve">
+    <value>Resume live search</value>
+    <comment>Resume live search</comment>
+  </data>
+  <data name="Main307_LiveStopAll" xml:space="preserve">
+    <value>Stop live search</value>
+    <comment>Stop live search</comment>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
     <comment>Welcome to Xiletrade</comment>

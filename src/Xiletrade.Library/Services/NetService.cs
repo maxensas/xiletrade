@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Poe.Contract;
@@ -20,6 +21,9 @@ public class NetService : INetService
     private readonly DataManagerService _dm;
 
     private const string USERAGENT = "User-Agent";
+
+    // cookies of the trade client (session of the user), shared with the websockets of the trade site
+    private CookieContainer _tradeCookies;
     private const int MAX_CONCURRENT_REQUEST = 5;
 
     private readonly HttpClient _default = new(new SocketsHttpHandler
@@ -95,7 +99,7 @@ public class NetService : INetService
         if (timeout >= 5 && timeout <= 120)
         {
             var handler = new SocketsHttpHandler { PooledConnectionIdleTimeout = TimeSpan.FromMilliseconds(200) };
-            TryAddCookie(handler);
+            _tradeCookies = TryAddCookie(handler) ? handler.CookieContainer : null;
             Trade = new(handler)
             {
                 Timeout = TimeSpan.FromSeconds(timeout)
@@ -121,8 +125,9 @@ public class NetService : INetService
     {
         if (_token.TryGetToken(out var token, useCustom: true) && RegexUtil.MD5().IsMatch(token))
         {
+            // every server of the site (www, fr, ru, br...) : same session whatever the language of the trade api
             var cookie = new CookieContainer();
-            cookie.Add(new Uri("https://www.pathofexile.com"), new Cookie("POESESSID", token));
+            cookie.Add(new Cookie("POESESSID", token, "/", ".pathofexile.com"));
             handler.CookieContainer = cookie;
 
             return true;
@@ -143,8 +148,9 @@ public class NetService : INetService
     /// <param name="urlString"></param>
     /// <param name="idClient"></param>
     /// <param name="isXml"></param>
+    /// <param name="referer">Page of the trade site the request comes from, some tokens are checked with it (hideout).</param>
     /// <returns></returns>
-    public virtual async Task<byte[]> SendHTTPBytes(ReadOnlyMemory<byte> json, string urlString, Client idClient, bool isXml = false)
+    public virtual async Task<byte[]> SendHTTPBytes(ReadOnlyMemory<byte> json, string urlString, Client idClient, bool isXml = false, string referer = null)
     {
         var result = Array.Empty<byte>();
         var client = GetClient(idClient);
@@ -168,7 +174,16 @@ public class NetService : INetService
             }
             if (isXml)
             {
+                // request of a script of the trade site : json expected
                 request.Headers.Add("X-Requested-With", "XMLHttpRequest");
+                if (json.IsEmpty)
+                {
+                    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                }
+            }
+            if (referer is not null)
+            {
+                request.Headers.Referrer = new Uri(referer);
             }
             if (idClient is Client.Xiletrade && _token.TryGetToken(out var token))
             {
@@ -188,7 +203,8 @@ public class NetService : INetService
         }
         catch (HttpRequestException ex)
         {
-            if (isTrade && result.Length > 0)
+            // json error of the api, not a page of the server (503 : maintenance, overloaded)
+            if (isTrade && result.Length > 0 && result[0] is (byte)'{')
             {
                 var message = _dm.Json.Deserialize<NetResponse>(result)?.Error?.Message;
                 if (!string.IsNullOrEmpty(message))
@@ -216,6 +232,35 @@ public class NetService : INetService
             _throttle.Release();
         }
         return result;
+    }
+
+    public async Task<WebSocket> ConnectTradeSocketAsync(string urlString, CancellationToken cancellation)
+    {
+        var uri = new Uri(urlString);
+        var socket = new ClientWebSocket();
+        var options = socket.Options;
+        options.Cookies = _tradeCookies ?? new CookieContainer(); // no session : refused by the server
+        options.CollectHttpResponseDetails = true; // status of a refused connection
+        options.SetRequestHeader("Origin", "https://" + uri.Host);
+        options.SetRequestHeader(USERAGENT, Strings.Net.UserAgent);
+        options.DangerousDeflateOptions = new WebSocketDeflateOptions();
+        options.KeepAliveInterval = TimeSpan.FromSeconds(30);
+        try
+        {
+            await socket.ConnectAsync(uri, cancellation).ConfigureAwait(false);
+            return socket;
+        }
+        catch (WebSocketException ex)
+        {
+            var status = socket.HttpStatusCode;
+            socket.Dispose();
+            throw new HttpRequestException($"{(int)status} {status}, {ex.Message}", ex, status);
+        }
+        catch
+        {
+            socket.Dispose();
+            throw;
+        }
     }
 
     public HttpClient GetClient(Client idClient)

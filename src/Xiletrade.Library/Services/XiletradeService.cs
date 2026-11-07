@@ -16,7 +16,7 @@ public sealed class XiletradeService
         IDataUpdaterService dataUpdater, IViewManager view, 
         IMessageAdapterService message, IAutoUpdaterService updater,
         // Instantiate singletons : 
-        IInputService input, IProtocolHandlerService protocol, IMainView main, ITaskbar taskbar)
+        IInputService input, IProtocolHandlerService protocol, IMainView main, ITaskbar taskbar, ILiveOverlayView live)
     {
 #if DEBUG
         logger.LogInformation("Launching Xiletrade service");

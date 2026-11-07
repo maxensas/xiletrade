@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Net.Http;
+using System.Net.WebSockets;
+using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Shared.Enum;
@@ -22,7 +24,14 @@ public interface INetService
 
     /// <summary>Sends a request (POST when <paramref name="json"/> is not empty) and returns the UTF-8 body as it is received.</summary>
     /// <param name="json">Json body, in UTF-8.</param>
-    Task<byte[]> SendHTTPBytes(ReadOnlyMemory<byte> json, string urlString, Client idClient, bool isXml = false);
+    /// <param name="referer">Page of the trade site the request comes from, some tokens are checked with it (hideout).</param>
+    Task<byte[]> SendHTTPBytes(ReadOnlyMemory<byte> json, string urlString, Client idClient, bool isXml = false, string referer = null);
+
+    /// <summary>
+    /// Opens a websocket of the trade site (live search) : same session cookie and user agent as the trade requests.
+    /// </summary>
+    /// <exception cref="HttpRequestException">Connection refused, with the status code of the server.</exception>
+    Task<WebSocket> ConnectTradeSocketAsync(string urlString, CancellationToken cancellation);
 
     HttpClient GetClient(Client idClient);
 

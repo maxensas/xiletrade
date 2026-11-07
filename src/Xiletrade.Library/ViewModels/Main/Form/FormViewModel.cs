@@ -244,8 +244,9 @@ public sealed partial class FormViewModel : ViewModelBase
         _vm.Result.UpdateAsync(minimumStock: 0);
     }
 
-    public FormViewModel(DataManagerService dm, MainViewModel vm, IViewManager view, IMessageAdapterService message, 
-        bool useCustomOrBulk)
+    /// <param name="live">Live searches of the custom search.</param>
+    public FormViewModel(DataManagerService dm, MainViewModel vm, IViewManager view, IMessageAdapterService message,
+        LiveSearchService live, bool useCustomOrBulk)
     {
         _dm = dm;
         _vm = vm;
@@ -262,7 +263,7 @@ public sealed partial class FormViewModel : ViewModelBase
         {
             visible = new();
             rarity = new();
-            customSearch = new(_dm, _vm, _view, _message);
+            customSearch = new(_dm, _vm, _view, _message, live);
         }
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
@@ -278,7 +279,7 @@ public sealed partial class FormViewModel : ViewModelBase
     }
 
     public FormViewModel(DataManagerService dm, MainViewModel vm, IViewManager view, IMessageAdapterService message,
-        ItemData item, InfoDescription infoDesc, bool showMinMax) : this(dm, vm, view, message, useCustomOrBulk: false)
+        LiveSearchService live, ItemData item, InfoDescription infoDesc, bool showMinMax) : this(dm, vm, view, message, live, useCustomOrBulk: false)
     {
         var flag = item.Flag;
         if (item.ModList?.Count > 0)

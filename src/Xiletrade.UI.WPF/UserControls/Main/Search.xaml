@@ -263,6 +263,35 @@
                     <MouseBinding Command="{Binding ToggleCriteriaCommand}" MouseAction="LeftClick"/>
                 </TextBlock.InputBindings>
             </TextBlock>
+            <!-- live search of the criteria : red dot while it is listening (orange while paused), click to stop it -->
+            <Button DockPanel.Dock="Right" Margin="0,0,14,0" Cursor="Hand" Focusable="False" Command="{Binding ToggleLiveCommand}"
+                    ToolTip="{ext:Localization Main304_LiveTip}">
+                <Button.Template>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <StackPanel Orientation="Horizontal" Background="Transparent">
+                            <Ellipse x:Name="Dot" Width="8" Height="8" Margin="0,0,5,0" VerticalAlignment="Center" Fill="{StaticResource GrayForegoundBrush}"/>
+                            <TextBlock x:Name="Text" FontSize="12" Style="{StaticResource TextBlockTitle}" VerticalAlignment="Center"
+                                       Foreground="{StaticResource BlueForegroundBrush}" Text="{ext:Localization Main297_Live}"/>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <DataTrigger Binding="{Binding IsLiveRunning}" Value="True">
+                                <Setter TargetName="Dot" Property="Fill" Value="Red"/>
+                                <Setter TargetName="Text" Property="Text" Value="{ext:Localization Main303_LiveStop}"/>
+                            </DataTrigger>
+                            <!-- paused : orange dot -->
+                            <DataTrigger Binding="{Binding IsLivePaused}" Value="True">
+                                <Setter TargetName="Dot" Property="Fill" Value="Orange"/>
+                            </DataTrigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Text" Property="Foreground" Value="{DynamicResource ThemeSecondForegroundBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Text" Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
         </DockPanel>
 
         <!-- results -->

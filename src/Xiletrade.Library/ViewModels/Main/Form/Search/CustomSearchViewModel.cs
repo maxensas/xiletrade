@@ -1,11 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
+using Xiletrade.Library.Models.Application.LiveSearch;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
@@ -23,6 +25,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     private readonly IMessageAdapterService _message;
     private readonly DataManagerService _dm;
     private readonly MainViewModel _vm;
+    private readonly LiveSearchService _live;
 
     private const string PRESET_EXTENSION = "json";
     private const string PRESET_FILE = "XiletradeSearchPresets.json";
@@ -103,6 +106,14 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     [ObservableProperty]
     private AsyncObservableCollection<FilterSectionViewModel> filterSections;
 
+    /// <summary>A live search is listening (live button).</summary>
+    [ObservableProperty]
+    private bool isLiveRunning;
+
+    /// <summary>The live search is paused (live button).</summary>
+    [ObservableProperty]
+    private bool isLivePaused;
+
     private bool IsPoe2 => _dm.Config.Options.GameVersion is 1;
 
     /// <summary>Category sent to the trade api, null : any category.</summary>
@@ -112,8 +123,9 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     internal UniqueUnidentified SelectedUnid => PresetIndex > 0 && PresetIndex < Presets.Count ? Presets[PresetIndex].Unid : null;
 
     public CustomSearchViewModel(DataManagerService dm, MainViewModel vm,
-        IViewManager view, IMessageAdapterService message)
+        IViewManager view, IMessageAdapterService message, LiveSearchService live)
     {
+        _live = live;
         _vm = vm;
         _dm = dm;
         _view = view;
@@ -124,6 +136,12 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
             .Select(x => (Value: x.Text ?? x.Type, IsUnique: x.Text is not null, Category: cat.Label, Group: index))).ToList();
 
         search = new(searchList);
+
+        // state of the live searches : the live search goes on when this form is closed
+        IsLiveRunning = live.IsRunning;
+        IsLivePaused = live.IsPaused;
+        WeakReferenceMessenger.Default.Register<CustomSearchViewModel, LiveSearchStateMessage>(this,
+            static (vm, state) => (vm.IsLiveRunning, vm.IsLivePaused) = (state.IsRunning, state.IsPaused));
 
         _vm.Result.Rate.ShowMin = false;
         _vm.Result.Quick.RightString = Resources.Resources.Main245_SearchPreset;
@@ -221,6 +239,27 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
             PresetIndex = 0;
         }
         LaunchCustomSearchAsync();
+    }
+
+    // live search of the criteria : started, or stopped when one is running
+    [RelayCommand]
+    private async Task ToggleLive(object commandParameter)
+    {
+        if (_live.IsRunning)
+        {
+            _live.StopAll();
+            return;
+        }
+        if (!HasCriteria())
+        {
+            return;
+        }
+        _view.ClearFocus();
+        var json = _vm.GetSerialized(_vm.Form.Market[_vm.Form.MarketIndex], customSearch: true);
+        if (json is { Length: > 0 })
+        {
+            await _live.StartAsync(json, _vm.Form.League[_vm.Form.LeagueIndex]);
+        }
     }
 
     // new search preset with the criteria of the form, added after the other search presets

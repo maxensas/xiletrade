@@ -3024,6 +3024,42 @@ A second click to load or unload all values.</comment>
   <data name="Main295_PresetsExported" xml:space="preserve">
     <value>{0} 件のプリセットをエクスポートしました。</value>
   </data>
+  <data name="Main296_LiveSearch" xml:space="preserve">
+    <value>ライブ検索</value>
+  </data>
+  <data name="Main297_Live" xml:space="preserve">
+    <value>ライブ</value>
+  </data>
+  <data name="Main298_LiveNoSession" xml:space="preserve">
+    <value>ライブ検索が拒否されました：有効な POESESSID が必要です（設定、認証セクション）。</value>
+  </data>
+  <data name="Main299_LiveNotStarted" xml:space="preserve">
+    <value>ライブ検索を開始できませんでした。</value>
+  </data>
+  <data name="Main300_LiveStarted" xml:space="preserve">
+    <value>ライブ検索を開始しました：新しいアイテムはここに表示されます。</value>
+  </data>
+  <data name="Main301_LiveTooBroad" xml:space="preserve">
+    <value>ライブ検索を停止しました：1分間に {0} 件を超える新しいアイテム、検索条件を絞り込んでください。</value>
+  </data>
+  <data name="Main302_LiveConnectionLost" xml:space="preserve">
+    <value>ライブ検索を停止しました：接続が切断されました。</value>
+  </data>
+  <data name="Main303_LiveStop" xml:space="preserve">
+    <value>ライブを停止</value>
+  </data>
+  <data name="Main304_LiveTip" xml:space="preserve">
+    <value>条件に一致する新しいアイテムを通知します（POESESSID が必要）。</value>
+  </data>
+  <data name="Main305_LivePause" xml:space="preserve">
+    <value>ライブ検索を一時停止</value>
+  </data>
+  <data name="Main306_LiveResume" xml:space="preserve">
+    <value>ライブ検索を再開</value>
+  </data>
+  <data name="Main307_LiveStopAll" xml:space="preserve">
+    <value>ライブ検索を停止</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>

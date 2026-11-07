@@ -2526,6 +2526,42 @@
   <data name="Main295_PresetsExported" xml:space="preserve">
     <value>ส่งออกการตั้งค่าล่วงหน้า {0} รายการแล้ว</value>
   </data>
+  <data name="Main296_LiveSearch" xml:space="preserve">
+    <value>ค้นหาแบบสด</value>
+  </data>
+  <data name="Main297_Live" xml:space="preserve">
+    <value>สด</value>
+  </data>
+  <data name="Main298_LiveNoSession" xml:space="preserve">
+    <value>การค้นหาแบบสดถูกปฏิเสธ: ต้องมี POESESSID ที่ถูกต้อง (การตั้งค่า, ส่วนการยืนยันตัวตน)</value>
+  </data>
+  <data name="Main299_LiveNotStarted" xml:space="preserve">
+    <value>ไม่สามารถเริ่มการค้นหาแบบสดได้</value>
+  </data>
+  <data name="Main300_LiveStarted" xml:space="preserve">
+    <value>เริ่มการค้นหาแบบสดแล้ว: ไอเทมใหม่จะแสดงที่นี่</value>
+  </data>
+  <data name="Main301_LiveTooBroad" xml:space="preserve">
+    <value>หยุดการค้นหาแบบสด: มีไอเทมใหม่มากกว่า {0} รายการในหนึ่งนาที โปรดปรับการค้นหาให้แคบลง</value>
+  </data>
+  <data name="Main302_LiveConnectionLost" xml:space="preserve">
+    <value>หยุดการค้นหาแบบสด: การเชื่อมต่อขาดหาย</value>
+  </data>
+  <data name="Main303_LiveStop" xml:space="preserve">
+    <value>หยุดแบบสด</value>
+  </data>
+  <data name="Main304_LiveTip" xml:space="preserve">
+    <value>แจ้งเตือนไอเทมใหม่ที่ตรงกับเงื่อนไข (ต้องมี POESESSID)</value>
+  </data>
+  <data name="Main305_LivePause" xml:space="preserve">
+    <value>หยุดการค้นหาแบบสดชั่วคราว</value>
+  </data>
+  <data name="Main306_LiveResume" xml:space="preserve">
+    <value>ค้นหาแบบสดต่อ</value>
+  </data>
+  <data name="Main307_LiveStopAll" xml:space="preserve">
+    <value>หยุดการค้นหาแบบสด</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>

@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Resources;
+using System.Text;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Shared.Enum;
 
@@ -53,6 +54,26 @@ public static class Extensions
             "Foil Unique" => "uniquefoil",
             _ => english.ToLowerInvariant()
         };
+    }
+
+    /// <summary>Short id of a currency of the trade api, as in the currency file (some characters replaced).</summary>
+    internal static string ReplaceCurrencyChars(this string entry)
+    {
+        // most currencies (chaos, divine, exalted...) contain none of the keys : returned as is, without allocation
+        StringBuilder sb = null;
+        foreach (var pair in Strings.Collection.dicCurrencyChars)
+        {
+            if (sb is null)
+            {
+                if (!entry.Contain(pair.Key))
+                {
+                    continue;
+                }
+                sb = new(entry);
+            }
+            sb.Replace(pair.Key, pair.Value);
+        }
+        return sb is null ? entry : sb.ToString();
     }
 
     /// <summary>Type of the stat group of the trade api : and, not, count.</summary>

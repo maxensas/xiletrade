@@ -2517,6 +2517,42 @@
   <data name="Main295_PresetsExported" xml:space="preserve">
     <value>Экспортировано предустановок: {0}.</value>
   </data>
+  <data name="Main296_LiveSearch" xml:space="preserve">
+    <value>Живой поиск</value>
+  </data>
+  <data name="Main297_Live" xml:space="preserve">
+    <value>Живой</value>
+  </data>
+  <data name="Main298_LiveNoSession" xml:space="preserve">
+    <value>Живой поиск отклонён: нужен действительный POESESSID (настройки, раздел аутентификации).</value>
+  </data>
+  <data name="Main299_LiveNotStarted" xml:space="preserve">
+    <value>Не удалось запустить живой поиск.</value>
+  </data>
+  <data name="Main300_LiveStarted" xml:space="preserve">
+    <value>Живой поиск запущен: новые предметы будут показаны здесь.</value>
+  </data>
+  <data name="Main301_LiveTooBroad" xml:space="preserve">
+    <value>Живой поиск остановлен: более {0} новых предметов за минуту, уточните поиск.</value>
+  </data>
+  <data name="Main302_LiveConnectionLost" xml:space="preserve">
+    <value>Живой поиск остановлен: соединение потеряно.</value>
+  </data>
+  <data name="Main303_LiveStop" xml:space="preserve">
+    <value>Остановить</value>
+  </data>
+  <data name="Main304_LiveTip" xml:space="preserve">
+    <value>Уведомляет о новых предметах, подходящих под критерии (нужен POESESSID).</value>
+  </data>
+  <data name="Main305_LivePause" xml:space="preserve">
+    <value>Приостановить живой поиск</value>
+  </data>
+  <data name="Main306_LiveResume" xml:space="preserve">
+    <value>Возобновить живой поиск</value>
+  </data>
+  <data name="Main307_LiveStopAll" xml:space="preserve">
+    <value>Остановить живой поиск</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>
   </data>

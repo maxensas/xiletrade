@@ -2663,6 +2663,42 @@
   <data name="Main295_PresetsExported" xml:space="preserve">
     <value>已导出 {0} 个预设。</value>
   </data>
+  <data name="Main296_LiveSearch" xml:space="preserve">
+    <value>实时搜索</value>
+  </data>
+  <data name="Main297_Live" xml:space="preserve">
+    <value>实时</value>
+  </data>
+  <data name="Main298_LiveNoSession" xml:space="preserve">
+    <value>实时搜索被拒绝：需要有效的 POESESSID（设置，认证部分）。</value>
+  </data>
+  <data name="Main299_LiveNotStarted" xml:space="preserve">
+    <value>无法启动实时搜索。</value>
+  </data>
+  <data name="Main300_LiveStarted" xml:space="preserve">
+    <value>实时搜索已启动：新物品将显示在此处。</value>
+  </data>
+  <data name="Main301_LiveTooBroad" xml:space="preserve">
+    <value>实时搜索已停止：一分钟内新物品超过 {0} 个，请缩小搜索范围。</value>
+  </data>
+  <data name="Main302_LiveConnectionLost" xml:space="preserve">
+    <value>实时搜索已停止：连接已断开。</value>
+  </data>
+  <data name="Main303_LiveStop" xml:space="preserve">
+    <value>停止实时</value>
+  </data>
+  <data name="Main304_LiveTip" xml:space="preserve">
+    <value>通知符合条件的新物品（需要 POESESSID）。</value>
+  </data>
+  <data name="Main305_LivePause" xml:space="preserve">
+    <value>暂停实时搜索</value>
+  </data>
+  <data name="Main306_LiveResume" xml:space="preserve">
+    <value>恢复实时搜索</value>
+  </data>
+  <data name="Main307_LiveStopAll" xml:space="preserve">
+    <value>停止实时搜索</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
   </data>

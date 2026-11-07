@@ -13,7 +13,6 @@ using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Main.Result;
 
 namespace Xiletrade.Library.Services;
@@ -26,24 +25,25 @@ public sealed class PoeApiService
     private readonly DataManagerService _dm;
     private readonly INetService _net;
     private readonly IMessageAdapterService _message;
-    private readonly MainViewModel _vm;
 
     // Lazzy initialization of the service.
+    // No dependency on the view models : the state of the form is given by the callers (used by the live searches too).
     public PoeApiService(ILogger<PoeApiService> logger, DataManagerService dm, 
-        IMessageAdapterService message, INetService net, MainViewModel vm)
+        IMessageAdapterService message, INetService net)
     {
         _logger = logger;
         _dm = dm;
         _net = net;
         _message = message;
-        _vm = vm;
 
 #if DEBUG
         logger.LogInformation("Service launched");
 #endif
     }
 
-    internal async Task<ResultBar> FetchResult(ResultViewModel rVm, int maxFetch, string market, bool hideSameUser, CancellationToken token)
+    /// <param name="quickSelected">Quick tab of the form selected (result bar).</param>
+    internal async Task<ResultBar> FetchResult(ResultViewModel rVm, int maxFetch, string market, bool hideSameUser,
+        bool quickSelected, CancellationToken token)
     {
         CurrencyFetch currencys = new();
         try
@@ -86,11 +86,11 @@ public sealed class PoeApiService
             _message.Show(ex.GetFormated(), "Result : " + Resources.Resources.Error008_XFetch, MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
-        return new(_dm, currencys.ListCur, _vm.Form.Tab.QuickSelected);
+        return new(_dm, currencys.ListCur, quickSelected);
     }
 
     internal async Task<ResultBar> RunPriceTask(ResultViewModel rVm, PricingInfo pricingInfo,
-        ReadOnlyMemory<byte> json, string urlApi, CancellationToken token)
+        ReadOnlyMemory<byte> json, string urlApi, bool quickSelected, CancellationToken token)
     {
         try
         {
@@ -114,7 +114,7 @@ public sealed class PoeApiService
                     return pricingInfo.IsSimpleBulk ? FillBulkVm(rVm, bulkData, pricingInfo) : FillShopVm(rVm, bulkData);
                 }
                 rVm.Data.ResultData = _dm.Json.Deserialize<ResultData>(sResult);
-                return await FetchResult(rVm, pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, token);
+                return await FetchResult(rVm, pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, quickSelected, token);
             }
             return new(state: ResultBarSate.NoData);
         }
@@ -132,6 +132,57 @@ public sealed class PoeApiService
             _message.Show(ex.GetFormated(), Resources.Resources.Error006_XUpdatePrice, MessageStatus.Error);
         }
         return new(emptyLine: true);
+    }
+
+    /// <summary>
+    /// Travel to the hideout of the seller of a listing (instant buyout), with the hideout token of its fetch.
+    /// </summary>
+    /// <remarks>Used by the results of a price check and by the live searches : the errors are displayed to the user.</remarks>
+    /// <param name="referer">Page of the search of the listing (Strings.Api.GetSearchPage) : the token is checked with it.</param>
+    internal async Task TravelToHideoutAsync(string hideoutToken, string referer)
+    {
+        if (string.IsNullOrEmpty(hideoutToken))
+        {
+            _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\nYour POESESSID is missing or expired !" +
+                "\n\nFor advanced users : You can manually update your POESESSID " +
+                "under settings by using the developer manager in the authentication section.",
+                Resources.Resources.Error018_XReqAuth, MessageStatus.Exclamation);
+            return;
+        }
+
+        try
+        {
+            var json = Encoding.UTF8.GetBytes($"{{\"token\":\"{hideoutToken}\"}}");
+            await _net.SendHTTPBytes(json, Strings.Api.Whisper, Client.Trade, isXml: true, referer); // {"success":true}
+        }
+        catch (HttpRequestException exception)
+        {
+            if (exception.StatusCode is System.Net.HttpStatusCode.ServiceUnavailable)
+            {
+                return; // can be normal
+            }
+            if (exception.StatusCode is System.Net.HttpStatusCode.BadRequest)
+            {
+                _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\nIs your account correctly connected ?",
+                    Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
+                return;
+            }
+            if (exception.StatusCode is System.Net.HttpStatusCode.Forbidden)
+            {
+                _message.Show(Resources.Resources.Error002_CannotTravel,
+                    Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
+                return;
+            }
+            _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\nYour POESESSID is probably missing or expired !" +
+                "\n\nYou can manually update it under settings by using the developer manager in the authentication section.",
+                Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
+        }
+        catch (Exception ex)
+        {
+            _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\n" +
+                string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace),
+                Resources.Resources.Error010_XUnknownError, MessageStatus.Error);
+        }
     }
 
     // private
@@ -285,10 +336,10 @@ public sealed class PoeApiService
             double amount = 0; // int val formating
             amount = info.Listing.Price.Amount;
             int tempFetch = rVm.Data.StatDetail.ResultLoaded;
-            string curShort = ReplaceCurrencyChars(keyName);
+            string curShort = keyName.ReplaceCurrencyChars();
             // need non-async
             bool addItem = true;
-            if (_vm.Form.SameUser && rVm.DetailList.Count >= 1)
+            if (hideSameUser && rVm.DetailList.Count >= 1)
             {
                 var lbi = rVm.DetailList[^1]; // liPriceDetail.Items.Count - 1]
                 if (lbi.Content.Contain(account))
@@ -299,9 +350,7 @@ public sealed class PoeApiService
 
             if (addItem)
             {
-                var entry = _dm.Currencies.FindEntryById(curShort);
-                var curInfo = entry is null ? new CurrencyInfo(curShort, isPoe2)
-                    : new CurrencyInfo(curShort, entry.Img, isPoe2);
+                var curInfo = _dm.GetCurrencyInfo(curShort, isPoe2);
                 var saleInfo = new SaleInfo(amount, GetQuality(info), age.Count, age.Unit, account, info.Listing.HideoutToken);
                 var saleItem = new SaleItem(_dm, info.Item);
 
@@ -327,9 +376,7 @@ public sealed class PoeApiService
                     rVm.DetailList.RemoveAt(iLastInd); // Remove last record from same user account found
                     var count = Resources.Resources.Main015_ListCount + ": " + itemCount;
                     var saleInfo = new SaleInfo(amount, count, age.Count, age.Unit, account, info.Listing.HideoutToken);
-                    var entry = _dm.Currencies.FindEntryById(curShort);
-                    var curInfo = entry is null ? new CurrencyInfo(curShort, isPoe2)
-                        : new CurrencyInfo(curShort, entry.Img, isPoe2);
+                    var curInfo = _dm.GetCurrencyInfo(curShort, isPoe2);
                     var saleItem = new SaleItem(_dm, info.Item);
 
                     rVm.DetailList.Add(new(saleItem, saleInfo, curInfo, info.Listing.Account.Status));
@@ -398,7 +445,7 @@ public sealed class PoeApiService
                     string keyName = key;
 
                     sbWhisper.Append('/').Append(sellerAmount).Append('/').Append(sellerCurrency).Append('/').Append(buyerAmount).Append('/').Append(buyerCurrency).Append('/').Append(sellerStock).Append('/').Append(charName);
-                    string content = string.Format(rVm.BulkFormat, sellerAmount, ReplaceCurrencyChars(sellerCurrency), buyerAmount, ReplaceCurrencyChars(buyerCurrency), sellerStock, charName); // account
+                    string content = string.Format(rVm.BulkFormat, sellerAmount, sellerCurrency.ReplaceCurrencyChars(), buyerAmount, buyerCurrency.ReplaceCurrencyChars(), sellerStock, charName); // account
                     string tag = string.Empty;
                     string tip = null;
                     if (rVm.Data.NinjaEq.ChaosGet > 0 && rVm.Data.NinjaEq.ChaosPay > 0)
@@ -494,7 +541,7 @@ public sealed class PoeApiService
                         }
                         sbWhisper.Append('/').Append(sellerAmount).Append('/').Append(sellerCurrency).Append('/').Append(buyerAmount).Append('/').Append(buyerCurrency).Append('/').Append(sellerStock).Append('/').Append(charName);
 
-                        string content = string.Format(rVm.ShopFormat, sellerStock, ReplaceCurrencyChars(sellerCurrency), sellerAmount, buyerAmount, ReplaceCurrencyChars(buyerCurrency));
+                        string content = string.Format(rVm.ShopFormat, sellerStock, sellerCurrency.ReplaceCurrencyChars(), sellerAmount, buyerAmount, buyerCurrency.ReplaceCurrencyChars());
                         itemList.Add(new(content, valData.Listing.Account.Status));
                         whisperList.Add(new(valData.Listing, offer));
 
@@ -577,24 +624,6 @@ public sealed class PoeApiService
         return ("0", "error");
     }
 
-    private static string ReplaceCurrencyChars(string entry)
-    {
-        // most currencies (chaos, divine, exalted...) contain none of the keys : returned as is, without allocation
-        StringBuilder sb = null;
-        foreach (var pair in Strings.Collection.dicCurrencyChars)
-        {
-            if (sb is null)
-            {
-                if (!entry.Contain(pair.Key))
-                {
-                    continue;
-                }
-                sb = new(entry);
-            }
-            sb.Replace(pair.Key, pair.Value);
-        }
-        return sb is null ? entry : sb.ToString();
-    }
 
     private static string GetQuality(FetchDataInfo info)
     {

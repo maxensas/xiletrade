@@ -7445,6 +7445,138 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
+        ///   Localized string similar to => Live search
+        /// </summary>
+        public static string Main296_LiveSearch
+        {
+            get
+            {
+                return ResourceManager.GetString("Main296_LiveSearch", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Live
+        /// </summary>
+        public static string Main297_Live
+        {
+            get
+            {
+                return ResourceManager.GetString("Main297_Live", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Live search refused : a valid POESESSID is required (settings, authentication section).
+        /// </summary>
+        public static string Main298_LiveNoSession
+        {
+            get
+            {
+                return ResourceManager.GetString("Main298_LiveNoSession", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => The live search could not be started.
+        /// </summary>
+        public static string Main299_LiveNotStarted
+        {
+            get
+            {
+                return ResourceManager.GetString("Main299_LiveNotStarted", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Live search started : the new items will be displayed here.
+        /// </summary>
+        public static string Main300_LiveStarted
+        {
+            get
+            {
+                return ResourceManager.GetString("Main300_LiveStarted", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Live search stopped : more than {0} new items in one minute, refine the search.
+        /// </summary>
+        public static string Main301_LiveTooBroad
+        {
+            get
+            {
+                return ResourceManager.GetString("Main301_LiveTooBroad", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Live search stopped : the connection was lost.
+        /// </summary>
+        public static string Main302_LiveConnectionLost
+        {
+            get
+            {
+                return ResourceManager.GetString("Main302_LiveConnectionLost", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Stop live
+        /// </summary>
+        public static string Main303_LiveStop
+        {
+            get
+            {
+                return ResourceManager.GetString("Main303_LiveStop", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Notifies the new items matching the criteria (POESESSID required).
+        /// </summary>
+        public static string Main304_LiveTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main304_LiveTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Pause live search
+        /// </summary>
+        public static string Main305_LivePause
+        {
+            get
+            {
+                return ResourceManager.GetString("Main305_LivePause", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Resume live search
+        /// </summary>
+        public static string Main306_LiveResume
+        {
+            get
+            {
+                return ResourceManager.GetString("Main306_LiveResume", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Stop live search
+        /// </summary>
+        public static string Main307_LiveStopAll
+        {
+            get
+            {
+                return ResourceManager.GetString("Main307_LiveStopAll", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Localized string similar to => Welcome to Xiletrade.
         /// </summary>
         public static string Start001_lblWelcome {

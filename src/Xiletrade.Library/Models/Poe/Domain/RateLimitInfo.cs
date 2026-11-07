@@ -29,6 +29,10 @@ public sealed class RateLimitInfo
     /// <summary>Active restriction, in seconds (0 when none).</summary>
     public int Restriction { get; }
 
+    /// <summary>Highest part of a limit already used, from 0 to 1 (hits / max of the most used item).</summary>
+    /// <remarks>Long periods included : 100 hits of 1000 in 3 hours is 0.1, while <see cref="Remaining"/> only tells the smallest margin.</remarks>
+    public double Usage { get; }
+
     /// <summary>Seconds to wait before the next request, from the <c>Retry-After</c> header (0 when absent).</summary>
     public int RetryAfter { get; }
 
@@ -40,12 +44,13 @@ public sealed class RateLimitInfo
     /// </summary>
     public int Spare => Restriction > 0 ? 0 : Remaining;
 
-    internal RateLimitInfo(string policy, int remaining, int restriction, int retryAfter = 0)
+    internal RateLimitInfo(string policy, int remaining, int restriction, int retryAfter = 0, double usage = 0)
     {
         RetryAfter = retryAfter;
         Policy = policy;
         Remaining = remaining;
         Restriction = restriction;
+        Usage = usage;
         ReceivedAt = Environment.TickCount64;
     }
 
@@ -96,6 +101,7 @@ public sealed class RateLimitInfo
         }
 
         int remaining = int.MaxValue, restriction = 0;
+        double usage = 0;
         var remainingRules = rules.AsSpan();
         while (NextItem(ref remainingRules, out var rule))
         {
@@ -103,12 +109,13 @@ public sealed class RateLimitInfo
             {
                 continue;
             }
-            if (!TryReadRule(limit, state, out int ruleRemaining, out int ruleRestriction))
+            if (!TryReadRule(limit, state, out int ruleRemaining, out int ruleRestriction, out double ruleUsage))
             {
                 return null;
             }
             remaining = Math.Min(remaining, ruleRemaining);
             restriction = Math.Max(restriction, ruleRestriction);
+            usage = Math.Max(usage, ruleUsage);
         }
 
         int retryAfter = 0;
@@ -116,7 +123,7 @@ public sealed class RateLimitInfo
         {
             _ = int.TryParse(retry, NumberStyles.Integer, CultureInfo.InvariantCulture, out retryAfter);
         }
-        return remaining is int.MaxValue ? null : new RateLimitInfo(policy, Math.Max(remaining, 0), restriction, Math.Max(retryAfter, 0));
+        return remaining is int.MaxValue ? null : new RateLimitInfo(policy, Math.Max(remaining, 0), restriction, Math.Max(retryAfter, 0), usage);
     }
 
     // finds the "X-Rate-Limit-{rule}" and "X-Rate-Limit-{rule}-State" headers without building their names
@@ -164,24 +171,27 @@ public sealed class RateLimitInfo
     internal static RateLimitInfo Create(string policy, IEnumerable<(string Limit, string State)> rules, int retryAfter = 0)
     {
         int remaining = int.MaxValue, restriction = 0;
+        double usage = 0;
         foreach (var (limit, state) in rules)
         {
-            if (!TryReadRule(limit, state, out int ruleRemaining, out int ruleRestriction))
+            if (!TryReadRule(limit, state, out int ruleRemaining, out int ruleRestriction, out double ruleUsage))
             {
                 return null;
             }
             remaining = Math.Min(remaining, ruleRemaining);
             restriction = Math.Max(restriction, ruleRestriction);
+            usage = Math.Max(usage, ruleUsage);
         }
-        return remaining is int.MaxValue ? null : new RateLimitInfo(policy, Math.Max(remaining, 0), restriction, retryAfter);
+        return remaining is int.MaxValue ? null : new RateLimitInfo(policy, Math.Max(remaining, 0), restriction, retryAfter, usage);
     }
 
     // limit : "max:period:penalty[,...]" / state : "hits:period:restriction[,...]" (same number of items)
-    // gives the most constrained item of the rule
-    private static bool TryReadRule(ReadOnlySpan<char> limit, ReadOnlySpan<char> state, out int remaining, out int restriction)
+    // gives the most constrained item of the rule, and the highest part of a limit used
+    private static bool TryReadRule(ReadOnlySpan<char> limit, ReadOnlySpan<char> state, out int remaining, out int restriction, out double usage)
     {
         remaining = int.MaxValue;
         restriction = 0;
+        usage = 0;
         if (limit.IsEmpty || state.IsEmpty || limit.Count(',') != state.Count(','))
         {
             return false;
@@ -196,6 +206,10 @@ public sealed class RateLimitInfo
             }
             remaining = Math.Min(remaining, max - hits);
             restriction = Math.Max(restriction, active);
+            if (max > 0)
+            {
+                usage = Math.Max(usage, (double)hits / max);
+            }
         }
         return true;
     }

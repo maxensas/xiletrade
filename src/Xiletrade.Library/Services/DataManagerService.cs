@@ -13,6 +13,7 @@ using Xiletrade.Library.Models.Application.Serialization;
 using Xiletrade.Library.Models.Serialization.SourceGeneration;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
+using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Collection;
@@ -513,5 +514,12 @@ public sealed class DataManagerService
         var tempLeague = GetLeagueAsyncCollection();
         int idx = tempLeague.IndexOf(Config.Options.League);
         return idx > -1 ? idx : 0;
+    }
+
+    /// <summary>Currency of a price of the trade api (short id, see ReplaceCurrencyChars), with its image when it is known.</summary>
+    internal CurrencyInfo GetCurrencyInfo(string curShort, bool isPoe2)
+    {
+        var entry = Currencies.FindEntryById(curShort);
+        return entry is null ? new(curShort, isPoe2) : new(curShort, entry.Img, isPoe2);
     }
 }
