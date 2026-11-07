@@ -125,14 +125,22 @@ public class NetService : INetService
     {
         if (_token.TryGetToken(out var token, useCustom: true) && RegexUtil.MD5().IsMatch(token))
         {
-            // every server of the site (www, fr, ru, br...) : same session whatever the language of the trade api
             var cookie = new CookieContainer();
-            cookie.Add(new Cookie("POESESSID", token, "/", ".pathofexile.com"));
+            cookie.Add(new Cookie("POESESSID", token, "/", GetSessionDomain()));
             handler.CookieContainer = cookie;
 
             return true;
         }
         return false;
+    }
+
+    // site of the session : every server of pathofexile.com (www, fr, ru, br...) whatever the language of the trade api,
+    // or the site of the gateway (kakao, taiwan, tencent), the trade client is created again when the gateway changes
+    private static string GetSessionDomain()
+    {
+        const string poeDomain = ".pathofexile.com";
+        var host = new Uri(Strings.Api.Trade).Host;
+        return host.EndsWith(poeDomain, StringComparison.OrdinalIgnoreCase) ? poeDomain : host;
     }
 
     /// <summary>

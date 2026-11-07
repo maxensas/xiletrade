@@ -38,8 +38,8 @@ public sealed class NotificationService : INotificationService, IDisposable
 
         _viewHost = hostFactory(id => Dismiss(id));
 
+        // removals : told to the host first (with or without fading), then to the subscribers
         NotificationAdded += _viewHost.OnAdded;
-        NotificationRemoved += _viewHost.OnRemoved;
 
         foreach (var item in Current)
             _viewHost.OnAdded(this, item);
@@ -60,7 +60,11 @@ public sealed class NotificationService : INotificationService, IDisposable
 
         CancelExpiration(notification.Id);
 
-        if (replaced) NotificationRemoved?.Invoke(this, notification.Id);
+        if (replaced)
+        {
+            _viewHost.OnRemoved(notification.Id, fade: false); // the new toast takes its place
+            NotificationRemoved?.Invoke(this, notification.Id);
+        }
         NotificationAdded?.Invoke(this, notification);
 
         if (notification.Duration is { } duration && duration > TimeSpan.Zero)
@@ -71,7 +75,7 @@ public sealed class NotificationService : INotificationService, IDisposable
         }
     }
 
-    public bool Dismiss(string id)
+    public bool Dismiss(string id, bool fade = true)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(id);
 
@@ -83,7 +87,11 @@ public sealed class NotificationService : INotificationService, IDisposable
 
         CancelExpiration(id);
 
-        if (removed) NotificationRemoved?.Invoke(this, id);
+        if (removed)
+        {
+            _viewHost.OnRemoved(id, fade);
+            NotificationRemoved?.Invoke(this, id);
+        }
         return removed;
     }
 
@@ -98,6 +106,7 @@ public sealed class NotificationService : INotificationService, IDisposable
         foreach (var id in ids)
         {
             CancelExpiration(id);
+            _viewHost.OnRemoved(id, fade: true);
             NotificationRemoved?.Invoke(this, id);
         }
     }
@@ -138,8 +147,7 @@ public sealed class NotificationService : INotificationService, IDisposable
         {
             CancelExpiration(id);
         }
-        NotificationAdded -= _viewHost.OnAdded; 
-        NotificationRemoved -= _viewHost.OnRemoved;
+        NotificationAdded -= _viewHost.OnAdded;
         _viewHost.Dispose();
     }
 }

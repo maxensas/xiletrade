@@ -82,7 +82,8 @@ public sealed partial class ConfigViewModel : ViewModelBase
         {
             _dm.TryInit();
         }
-        if (timeoutOld != Config.Options.TimeoutTradeApi)
+        // the session cookie belongs to the site of the gateway
+        if (timeoutOld != Config.Options.TimeoutTradeApi || General.GatewayIndex != idxGatewayOld)
         {
             _net.InitTradeClient(Config.Options.TimeoutTradeApi);
         }

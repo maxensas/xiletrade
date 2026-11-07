@@ -10,6 +10,7 @@ public interface INotificationService
     event EventHandler<ToastNotification> NotificationAdded;
     event EventHandler<string> NotificationRemoved;
     void Show(ToastNotification notification);
-    bool Dismiss(string id);
+    /// <param name="fade">False : the toast disappears at once, without fading.</param>
+    bool Dismiss(string id, bool fade = true);
     void DismissAll();
 }

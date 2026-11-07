@@ -4,6 +4,7 @@ using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels.Config;
 using Xiletrade.Library.ViewModels.Editor;
+using Xiletrade.Library.ViewModels.Live;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Regex;
 using Xiletrade.Library.ViewModels.Start;
@@ -33,6 +34,7 @@ public static class AvaloniaServiceRegistration
             // views
             .AddSingleton<IMainView>(sp => new MainView(sp, sp.GetRequiredService<MainViewModel>()))
             .AddSingleton<ITaskbar>(sp => new TaskbarIcon(sp.GetRequiredService<TaskBarViewModel>()))
+            .AddSingleton<ILiveOverlayView>(sp => new LiveOverlayView(sp.GetRequiredService<LiveOverlayViewModel>()))
             .AddTransient<IConfigView>(sp =>
             {
                 var scope = sp.CreateScope();

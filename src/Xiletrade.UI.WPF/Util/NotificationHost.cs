@@ -186,12 +186,18 @@ public sealed class NotificationHost : INotificationHost
         return text;
     }
 
-    public void OnRemoved(object sender, string id) => _ui.Invoke(() =>
+    public void OnRemoved(string id, bool fade) => _ui.Invoke(() =>
     {
         if (!_windows.TryGetValue(id, out var toast))
             return;
 
         var window = toast.Window;
+        if (!fade)
+        {
+            // at once : the Closed handler removes the entry and repositions the remaining toasts
+            window.Close();
+            return;
+        }
 
         // Already fading out (e.g. click then timer expiry): ignore.
         if (!_closing.Add(id))

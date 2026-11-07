@@ -29,6 +29,9 @@ public abstract partial class SuggestionListViewModel : ViewModelBase
     // incremented by each query : results of an older query are dropped
     private int _version;
 
+    // query of the suggestions displayed (trimmed), null : none
+    private string _shownQuery;
+
     [ObservableProperty]
     private AsyncObservableCollection<SearchItem> suggestions = new();
 
@@ -77,9 +80,16 @@ public abstract partial class SuggestionListViewModel : ViewModelBase
     }
 
     /// <summary>Selects the first suggestion (enter key).</summary>
+    /// <remarks>Text typed during the pause before the search : its suggestions are searched now.</remarks>
     internal void SelectFirst()
     {
-        var first = Suggestions.FirstOrDefault(x => !x.IsHeader);
+        var query = SearchQuery?.Trim() ?? string.Empty;
+        if (query.Length is 0)
+        {
+            return;
+        }
+        var suggestions = query == _shownQuery ? (IEnumerable<SearchItem>)Suggestions : Find(query);
+        var first = suggestions.FirstOrDefault(x => !x.IsHeader);
         if (first is not null)
         {
             Select(first);
@@ -99,6 +109,7 @@ public abstract partial class SuggestionListViewModel : ViewModelBase
         {
             _suppressUpdate = false;
         }
+        _shownQuery = null;
         Suggestions.Clear();
         SetDropdown(false);
     }
@@ -118,6 +129,7 @@ public abstract partial class SuggestionListViewModel : ViewModelBase
         {
             if (query.Length is 0)
             {
+                _shownQuery = null;
                 Suggestions.Clear();
                 SetDropdown(false);
                 return;
@@ -135,11 +147,13 @@ public abstract partial class SuggestionListViewModel : ViewModelBase
                 return;
             }
             Suggestions.ReplaceRange(results);
+            _shownQuery = query;
             SetDropdown(Suggestions.Count > 0);
         }
         catch (Exception)
         {
             // no suggestion : the text can still be typed again
+            _shownQuery = null;
             Suggestions.Clear();
             SetDropdown(false);
         }

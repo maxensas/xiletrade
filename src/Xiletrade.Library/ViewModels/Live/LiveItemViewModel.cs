@@ -15,13 +15,15 @@ namespace Xiletrade.Library.ViewModels.Live;
 /// </summary>
 public sealed partial class LiveItemViewModel : ViewModelBase
 {
-    private readonly Func<string, Task> _travel;
+    private readonly Func<string, string, Task<bool>> _travel;
+    private readonly string _referer;
     private readonly Action<string> _dismiss;
     private readonly Func<LiveItemViewModel, bool> _pin;
     private readonly string _hideoutToken;
     private readonly DataManagerService _dm;
     private readonly ItemDataApi _item;
     private SaleItem _saleItem;
+    private string _priceText;
 
     /// <summary>Id of the listing, also id of the toast.</summary>
     public string Id { get; }
@@ -56,11 +58,13 @@ public sealed partial class LiveItemViewModel : ViewModelBase
     [ObservableProperty]
     private bool isPinned;
 
-    /// <param name="travel">Travel with the hideout token, sent like the fetch of the live search.</param>
+    /// <param name="referer">Page of the live search : the hideout token is checked with it.</param>
+    /// <param name="travel">Travel with the hideout token and the referer : false when it failed (the error is displayed).</param>
     /// <param name="pin">Displays the toast again, pinned : false when the maximum of pinned toasts is reached.</param>
-    internal LiveItemViewModel(DataManagerService dm, FetchDataInfo info, Func<string, Task> travel,
+    internal LiveItemViewModel(DataManagerService dm, FetchDataInfo info, string referer, Func<string, string, Task<bool>> travel,
         Action<string> dismiss, Func<LiveItemViewModel, bool> pin, LivePinStateViewModel pins)
     {
+        _referer = referer;
         _travel = travel;
         _dismiss = dismiss;
         _pin = pin;
@@ -91,14 +95,16 @@ public sealed partial class LiveItemViewModel : ViewModelBase
     }
 
     /// <summary>Text version of the toast (UI without template).</summary>
-    internal string PriceText => Currency is null ? string.Empty : $"{Amount} {Currency.Name}";
+    internal string PriceText => _priceText ??= Currency is null ? string.Empty : string.Concat(Amount, " ", Currency.Name);
 
-    // the toast is closed once the request is sent
+    // the toast is closed once the travel is sent, kept when it failed
     [RelayCommand]
     private async Task TravelToHideout(object commandParameter)
     {
-        await _travel(_hideoutToken);
-        _dismiss(Id);
+        if (await _travel(_hideoutToken, _referer))
+        {
+            _dismiss(Id);
+        }
     }
 
     [RelayCommand]

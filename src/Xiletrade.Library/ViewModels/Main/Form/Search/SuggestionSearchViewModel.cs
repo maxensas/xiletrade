@@ -52,7 +52,7 @@ public sealed partial class SuggestionSearchViewModel : SuggestionListViewModel
                 {
                     continue;
                 }
-                int distance = lev.DistanceFrom(text);
+                int distance = lev.DistanceFrom(text.ToLower()); // both in lower case, as the query
                 if (distance > MAX_DISTANCE)
                 {
                     continue;

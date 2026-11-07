@@ -119,10 +119,18 @@ public sealed class NotificationHost : INotificationHost
         window.Show();
     });
 
-    public void OnRemoved(object sender, string id) => _ui.Invoke(() =>
+    public void OnRemoved(string id, bool fade) => _ui.Invoke(() =>
     {
         if (!_windows.TryGetValue(id, out var window))
             return;
+
+        if (!fade)
+        {
+            // at once : Closed removes the entry and repositions the others
+            _closing.Remove(id);
+            window.Close();
+            return;
+        }
 
         if (!_closing.Add(id))
             return;

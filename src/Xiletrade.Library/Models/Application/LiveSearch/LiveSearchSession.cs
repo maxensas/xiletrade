@@ -20,7 +20,8 @@ namespace Xiletrade.Library.Models.Application.LiveSearch;
 /// <remarks>
 /// Messages of the server : {"auth":true} once connected, then {"result":"&lt;token&gt;","count":n} for each new listing.
 /// The token (JWT, valid about 10 seconds) is given to the owner, which fetches it or skips it.
-/// The connection is restored a few times when it is lost, a search with too many results is stopped.
+/// The connection is restored a few times when it is lost (the owner is told of the first authentication only),
+/// a search with too many results is stopped (not while paused : the results are skipped).
 /// The steps are logged in debug only (no code in release).
 /// </remarks>
 internal sealed class LiveSearchSession : IDisposable
@@ -39,6 +40,10 @@ internal sealed class LiveSearchSession : IDisposable
     // timestamps (Stopwatch) of the live results of the last minute
     private readonly Queue<long> _lastMinute = new();
 
+    // authenticated once : the reconnections are not told to the owner
+    private bool _started;
+    private volatile bool _isPaused;
+
     /// <summary>Id of the search (query), sent with the fetch of the results.</summary>
     internal string SearchId { get; }
 
@@ -53,6 +58,13 @@ internal sealed class LiveSearchSession : IDisposable
 
     /// <summary>A fetch error was already displayed to the user.</summary>
     internal bool FetchErrorShown { get; set; }
+
+    /// <summary>Paused by the user : its results are skipped, they do not count as too many results.</summary>
+    internal bool IsPaused
+    {
+        get => _isPaused;
+        set => _isPaused = value;
+    }
 
     /// <param name="liveUrl">Websocket of the live search, league and search id included.</param>
     internal LiveSearchSession(INetService net, string liveUrl, string fetchUrl, string referer, string searchId,
@@ -170,12 +182,16 @@ internal sealed class LiveSearchSession : IDisposable
                             return (LiveSearchEnd.Refused, false);
                         }
                         authenticated = true;
-                        _onAuthenticated(this);
+                        if (!_started)
+                        {
+                            _started = true;
+                            _onAuthenticated(this);
+                        }
                     }
                     if (token is not null)
                     {
                         ResultCount++;
-                        if (IsTooBroad())
+                        if (!_isPaused && IsTooBroad())
                         {
                             await CloseAsync(socket).ConfigureAwait(false);
                             return (LiveSearchEnd.TooBroad, authenticated);

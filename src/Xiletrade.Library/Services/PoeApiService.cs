@@ -139,7 +139,7 @@ public sealed class PoeApiService
     /// </summary>
     /// <remarks>Used by the results of a price check and by the live searches : the errors are displayed to the user.</remarks>
     /// <param name="referer">Page of the search of the listing (Strings.Api.GetSearchPage) : the token is checked with it.</param>
-    internal async Task TravelToHideoutAsync(string hideoutToken, string referer)
+    internal async Task<bool> TravelToHideoutAsync(string hideoutToken, string referer)
     {
         if (string.IsNullOrEmpty(hideoutToken))
         {
@@ -147,42 +147,56 @@ public sealed class PoeApiService
                 "\n\nFor advanced users : You can manually update your POESESSID " +
                 "under settings by using the developer manager in the authentication section.",
                 Resources.Resources.Error018_XReqAuth, MessageStatus.Exclamation);
-            return;
+            return false;
         }
 
         try
         {
-            var json = Encoding.UTF8.GetBytes($"{{\"token\":\"{hideoutToken}\"}}");
-            await _net.SendHTTPBytes(json, Strings.Api.Whisper, Client.Trade, isXml: true, referer); // {"success":true}
+            await _net.SendHTTPBytes(CreateTokenJson(hideoutToken), Strings.Api.Whisper, Client.Trade, isXml: true, referer); // {"success":true}
+            return true;
         }
         catch (HttpRequestException exception)
         {
             if (exception.StatusCode is System.Net.HttpStatusCode.ServiceUnavailable)
             {
-                return; // can be normal
+                return true; // can be normal
             }
             if (exception.StatusCode is System.Net.HttpStatusCode.BadRequest)
             {
                 _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\nIs your account correctly connected ?",
                     Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
-                return;
+                return false;
             }
             if (exception.StatusCode is System.Net.HttpStatusCode.Forbidden)
             {
                 _message.Show(Resources.Resources.Error002_CannotTravel,
                     Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
-                return;
+                return false;
             }
             _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\nYour POESESSID is probably missing or expired !" +
                 "\n\nYou can manually update it under settings by using the developer manager in the authentication section.",
                 Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
+            return false;
         }
         catch (Exception ex)
         {
             _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\n" +
                 string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace),
                 Resources.Resources.Error010_XUnknownError, MessageStatus.Error);
+            return false;
         }
+    }
+
+    // {"token":"<hideout token>"} written in UTF-8, without intermediate string
+    private static byte[] CreateTokenJson(string hideoutToken)
+    {
+        ReadOnlySpan<byte> prefix = "{\"token\":\""u8;
+        ReadOnlySpan<byte> suffix = "\"}"u8;
+        var json = new byte[prefix.Length + Encoding.UTF8.GetByteCount(hideoutToken) + suffix.Length];
+        prefix.CopyTo(json);
+        var written = Encoding.UTF8.GetBytes(hideoutToken, json.AsSpan(prefix.Length));
+        suffix.CopyTo(json.AsSpan(prefix.Length + written));
+        return json;
     }
 
     // private

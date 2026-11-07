@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.LiveSearch;
@@ -50,7 +49,6 @@ public sealed class LiveSearchService : IDisposable
     private readonly INetService _net;
     private readonly ITokenService _token;
     private readonly INotificationService _notif;
-    private readonly PoeApiService _poeApi;
 
     private readonly Lock _gate = new();
     private readonly List<LiveSearchSession> _sessions = [];
@@ -59,6 +57,11 @@ public sealed class LiveSearchService : IDisposable
     // ids of the pinned toasts, out of the toasts above
     private readonly HashSet<string> _pinned = new(StringComparer.Ordinal);
     private readonly LivePinStateViewModel _pins = new();
+
+    // given to the toasts of the live results : created once
+    private readonly Func<string, string, Task<bool>> _travelToHideout;
+    private readonly Action<string> _dismissToast;
+    private readonly Func<LiveItemViewModel, bool> _tryPin;
 
     // timestamp (Stopwatch) from which a fetch may start, 1 : fetch running
     private long _nextFetch;
@@ -90,7 +93,9 @@ public sealed class LiveSearchService : IDisposable
         _net = net;
         _token = token;
         _notif = notif;
-        _poeApi = poeApi;
+        _travelToHideout = poeApi.TravelToHideoutAsync;
+        _dismissToast = DismissToast;
+        _tryPin = TryPin;
 
         // toasts closed or expired : out of the toasts, a pinned one frees its place
         _notif.NotificationRemoved += OnNotificationRemoved;
@@ -119,7 +124,7 @@ public sealed class LiveSearchService : IDisposable
             var result = await _net.SendHTTPBytes(query, Strings.Api.Trade + league, Client.Trade).ConfigureAwait(false);
             searchId = result.Length > 0 ? _dm.Json.Deserialize<ResultData>(result)?.Id : null;
         }
-        catch (Exception ex) when (ex is HttpRequestException or TimeoutException or System.Text.Json.JsonException)
+        catch (Exception ex) // network, timeout, json, or any other error of the net service : never thrown to the command
         {
 #if DEBUG
             _logger.LogDebug("Live search : search failed, {Exception} {Message}", ex.GetType().Name, ex.Message);
@@ -151,7 +156,7 @@ public sealed class LiveSearchService : IDisposable
                 _sessions.RemoveAt(0);
             }
             _sessions.Add(session);
-            _isPaused = false;
+            _isPaused = false; // a new session is not paused
         }
         SendState();
         _ = RunAsync(session);
@@ -180,7 +185,14 @@ public sealed class LiveSearchService : IDisposable
     /// <summary>Pauses the live searches (results skipped) or resumes them.</summary>
     internal void SetPaused(bool paused)
     {
-        _isPaused = paused;
+        lock (_gate)
+        {
+            _isPaused = paused;
+            foreach (var session in _sessions)
+            {
+                session.IsPaused = paused;
+            }
+        }
         SendState();
     }
 
@@ -299,8 +311,7 @@ public sealed class LiveSearchService : IDisposable
                 {
                     continue; // no longer listed
                 }
-                Show(new LiveItemViewModel(_dm, info, hideoutToken => _poeApi.TravelToHideoutAsync(hideoutToken, session.Referer),
-                    id => _notif.Dismiss(id), TryPin, _pins), sound);
+                Show(new LiveItemViewModel(_dm, info, session.Referer, _travelToHideout, _dismissToast, _tryPin, _pins), sound);
                 sound = false;
 #if DEBUG
                 shown++;
@@ -328,10 +339,26 @@ public sealed class LiveSearchService : IDisposable
         }
     }
 
-    // at most MaxToasts toasts of the live searches : the oldest is closed
+    // at most MaxToasts toasts of the live searches : the oldest disappear at once (no fading), before the new one is displayed
     private void Show(LiveItemViewModel item, bool sound)
     {
-        // displayed first : a toast of the same listing replaced is removed from the toasts (event) before it is added
+        List<string> dismiss = null;
+        lock (_gate)
+        {
+            RemoveToast(item.Id); // same listing displayed again : replaced, not counted twice
+            while (_toasts.Count >= MaxToasts)
+            {
+                (dismiss ??= []).Add(_toasts.Dequeue());
+            }
+        }
+        if (dismiss is not null)
+        {
+            foreach (var id in dismiss)
+            {
+                _notif.Dismiss(id, fade: false);
+            }
+        }
+
         _notif.Show(new ToastNotification
         {
             Id = item.Id,
@@ -344,23 +371,14 @@ public sealed class LiveSearchService : IDisposable
             Placement = NotificationPlacement.LowerQuarterRight
         });
 
-        List<string> dismiss = null;
+        // after it is displayed : the removal of the toast replaced (event) does not remove it
         lock (_gate)
         {
             _toasts.Enqueue(item.Id);
-            while (_toasts.Count > MaxToasts)
-            {
-                (dismiss ??= []).Add(_toasts.Dequeue());
-            }
-        }
-        if (dismiss is null)
-            return;
-
-        foreach (var id in dismiss)
-        {
-            _notif.Dismiss(id);
         }
     }
+
+    private void DismissToast(string id) => _notif.Dismiss(id);
 
     // pinned : out of the MaxToasts toasts, displayed again at the top of the screen until it is closed (MaxPinned at most)
     private bool TryPin(LiveItemViewModel item)

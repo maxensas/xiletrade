@@ -159,11 +159,13 @@ public sealed partial class ResultViewModel(IMessageAdapterService message, INet
     {
         if (commandParameter is ResultListItemViewModel { Info: SaleInfo saleInfo } line)
         {
-            line.IsVisited = true;
             // page of the search of the results : the hideout token is checked with it
             var searchId = Data.ResultData?.Id;
             var referer = string.IsNullOrEmpty(searchId) ? null : Strings.Api.GetSearchPage(_vm.Form.League[_vm.Form.LeagueIndex], searchId);
-            await _poeApi.TravelToHideoutAsync(saleInfo.HideoutToken, referer);
+            if (await _poeApi.TravelToHideoutAsync(saleInfo.HideoutToken, referer))
+            {
+                line.IsVisited = true; // darker line : the travel was sent
+            }
         }
     }
 
