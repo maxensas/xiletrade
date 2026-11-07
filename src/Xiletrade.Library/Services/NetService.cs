@@ -100,13 +100,27 @@ public class NetService : INetService
         {
             var handler = new SocketsHttpHandler { PooledConnectionIdleTimeout = TimeSpan.FromMilliseconds(200) };
             _tradeCookies = TryAddCookie(handler) ? handler.CookieContainer : null;
-            Trade = new(handler)
+            var client = new HttpClient(handler)
             {
                 Timeout = TimeSpan.FromSeconds(timeout)
             };
-            Trade.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
-            Trade.DefaultRequestHeaders.ConnectionClose = true;
+            client.DefaultRequestHeaders.Add(USERAGENT, Strings.Net.UserAgent);
+            client.DefaultRequestHeaders.ConnectionClose = true;
+
+            var old = Trade;
+            Trade = client;
+            if (old is not null)
+            {
+                _ = DisposeLaterAsync(old);
+            }
         }
+    }
+
+    // the requests sent with the previous client end first : disposed once its timeout is over
+    private static async Task DisposeLaterAsync(HttpClient client)
+    {
+        await Task.Delay(client.Timeout + TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+        client.Dispose();
     }
 
     public RateLimitInfo GetRateLimit(string policy)
@@ -136,7 +150,7 @@ public class NetService : INetService
 
     // site of the session : every server of pathofexile.com (www, fr, ru, br...) whatever the language of the trade api,
     // or the site of the gateway (kakao, taiwan, tencent), the trade client is created again when the gateway changes
-    private static string GetSessionDomain()
+    internal static string GetSessionDomain()
     {
         const string poeDomain = ".pathofexile.com";
         var host = new Uri(Strings.Api.Trade).Host;

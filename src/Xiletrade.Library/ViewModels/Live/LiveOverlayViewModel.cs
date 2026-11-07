@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Xiletrade.Library.Models.Application.LiveSearch;
+using Xiletrade.Library.Models.Application.Notification;
 using Xiletrade.Library.Services;
 
 namespace Xiletrade.Library.ViewModels.Live;
@@ -13,13 +14,23 @@ namespace Xiletrade.Library.ViewModels.Live;
 /// Own state of the live searches : the buttons stay while the forms change (the custom search can be closed,
 /// a price check has no custom search).
 /// </remarks>
+[ViewModelCreation(ViewModelCreation.Container)]
 public sealed partial class LiveOverlayViewModel : ViewModelBase
 {
     private readonly LiveSearchService _live;
 
-    /// <summary>A live search is listening : the buttons are displayed.</summary>
+    /// <summary>A live search is listening.</summary>
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsDisplayed))]
     private bool isRunning;
+
+    /// <summary>The game or a window of Xiletrade has the focus.</summary>
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsDisplayed))]
+    private bool hasGameFocus = true;
+
+    /// <summary>The buttons are displayed : a live search is listening, over the game.</summary>
+    public bool IsDisplayed => IsRunning && HasGameFocus;
 
     [ObservableProperty]
     private bool isPaused;
@@ -31,6 +42,8 @@ public sealed partial class LiveOverlayViewModel : ViewModelBase
         IsPaused = live.IsPaused;
         WeakReferenceMessenger.Default.Register<LiveOverlayViewModel, LiveSearchStateMessage>(this,
             static (vm, state) => (vm.IsRunning, vm.IsPaused) = (state.IsRunning, state.IsPaused));
+        WeakReferenceMessenger.Default.Register<LiveOverlayViewModel, GameFocusMessage>(this,
+            static (vm, focus) => vm.HasGameFocus = focus.HasFocus);
     }
 
     [RelayCommand]

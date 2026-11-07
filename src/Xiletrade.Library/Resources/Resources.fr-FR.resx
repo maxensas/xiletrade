@@ -2555,6 +2555,12 @@ Aucune vente ne sera ignorée.</value>
   <data name="Main308_Search" xml:space="preserve">
     <value>Rechercher</value>
   </data>
+  <data name="Main309_LiveNoCriteria" xml:space="preserve">
+    <value>Ajoutez au moins un critère (objet, catégorie, filtre ou stat) pour lancer une recherche live.</value>
+  </data>
+  <data name="Main310_TravelToHideout" xml:space="preserve">
+    <value>Aller au repaire</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenue sur Xiletrade</value>
   </data>
@@ -2821,5 +2827,18 @@ Serveur Garena: Chinois traditionnel.</value>
 
 Voulez-vous ouvrir un rapport de bug prérempli sur GitHub ?
 Aucune donnée n'est envoyée automatiquement : vous pouvez vérifier et modifier le rapport avant de le soumettre.</value>
+  </data>
+  <data name="Error036_TravelNoToken" xml:space="preserve">
+    <value>Votre POESESSID est absent ou expiré !
+
+Utilisateurs avancés : vous pouvez mettre à jour votre POESESSID manuellement dans les paramètres, avec le gestionnaire développeur de la section authentification.</value>
+  </data>
+  <data name="Error037_TravelAccount" xml:space="preserve">
+    <value>Votre compte est-il bien connecté ?</value>
+  </data>
+  <data name="Error038_TravelSession" xml:space="preserve">
+    <value>Votre POESESSID est probablement absent ou expiré !
+
+Vous pouvez le mettre à jour manuellement dans les paramètres, avec le gestionnaire développeur de la section authentification.</value>
   </data>
 </root>

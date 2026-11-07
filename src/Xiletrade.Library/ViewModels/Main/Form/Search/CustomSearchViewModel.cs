@@ -252,6 +252,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         }
         if (!HasCriteria())
         {
+            _live.NotifyNoCriteria();
             return;
         }
         _view.ClearFocus();

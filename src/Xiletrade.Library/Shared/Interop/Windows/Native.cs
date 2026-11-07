@@ -12,6 +12,7 @@ public static partial class Native
     public const int WM_KEYUP = 0x0101;
     public const int WM_CLOSE = 0x0010;
     public const int WM_HOTKEY = 0x312;
+    public const uint MONITOR_DEFAULTTOPRIMARY = 1;
     public const uint MONITOR_DEFAULTTONEAREST = 2;
     //public const int WM_CLIPBOARDUPDATE = 0x031D;
     //public const int WM_DRAWCLIPBOARD = 0x0308;

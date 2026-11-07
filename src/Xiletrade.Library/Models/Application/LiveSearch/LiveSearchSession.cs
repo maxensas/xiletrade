@@ -225,7 +225,7 @@ internal sealed class LiveSearchSession : IDisposable
     }
 
     // {"auth":true} or {"result":"<token>","count":n} : read without document
-    private static bool TryReadMessage(ReadOnlySpan<byte> json, out bool? auth, out string token)
+    internal static bool TryReadMessage(ReadOnlySpan<byte> json, out bool? auth, out string token)
     {
         auth = null;
         token = null;
@@ -263,7 +263,7 @@ internal sealed class LiveSearchSession : IDisposable
     }
 
     // more live results in one minute than allowed : the search is too broad
-    private bool IsTooBroad()
+    internal bool IsTooBroad()
     {
         if (_maxResultsPerMinute <= 0)
         {

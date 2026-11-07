@@ -2633,6 +2633,12 @@
   <data name="Main308_Search" xml:space="preserve">
     <value>搜尋</value>
   </data>
+  <data name="Main309_LiveNoCriteria" xml:space="preserve">
+    <value>請至少新增一個條件（物品、類別、篩選或屬性）以開始即時搜尋。</value>
+  </data>
+  <data name="Main310_TravelToHideout" xml:space="preserve">
+    <value>前往藏身處</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>
   </data>
@@ -2895,5 +2901,18 @@ Garena服務器：繁體中文。</value>
 
 您要在 GitHub 上開啟一份已預先填寫內容的錯誤回報嗎？
 不會自動傳送任何資料：您可以在提交前檢查並編輯回報內容。</value>
+  </data>
+  <data name="Error036_TravelNoToken" xml:space="preserve">
+    <value>您的 POESESSID 遺失或已過期！
+
+進階使用者：可以在設定的驗證區塊，使用開發者管理器手動更新 POESESSID。</value>
+  </data>
+  <data name="Error037_TravelAccount" xml:space="preserve">
+    <value>您的帳戶是否已正確連線？</value>
+  </data>
+  <data name="Error038_TravelSession" xml:space="preserve">
+    <value>您的 POESESSID 可能遺失或已過期！
+
+可以在設定的驗證區塊，使用開發者管理器手動更新。</value>
   </data>
 </root>

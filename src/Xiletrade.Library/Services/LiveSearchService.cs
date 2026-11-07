@@ -163,6 +163,9 @@ public sealed class LiveSearchService : IDisposable
         return true;
     }
 
+    /// <summary>The criteria of the form are empty : nothing to listen to.</summary>
+    internal void NotifyNoCriteria() => Notify(Resources.Resources.Main309_LiveNoCriteria, NotificationStatus.Warning);
+
     // the live search really started : the server accepted the session of the user
     private void OnAuthenticated(LiveSearchSession session)
         => Notify(Resources.Resources.Main300_LiveStarted, NotificationStatus.Success);

@@ -2556,6 +2556,12 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="Main308_Search" xml:space="preserve">
     <value>검색</value>
   </data>
+  <data name="Main309_LiveNoCriteria" xml:space="preserve">
+    <value>실시간 검색을 시작하려면 조건(아이템, 카테고리, 필터 또는 속성)을 하나 이상 추가하세요.</value>
+  </data>
+  <data name="Main310_TravelToHideout" xml:space="preserve">
+    <value>은신처로 이동</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>
   </data>
@@ -2822,5 +2828,18 @@ Garena 서버 : 중국어 번체.</value>
 
 GitHub에서 미리 작성된 버그 보고서를 여시겠습니까?
 데이터는 자동으로 전송되지 않습니다. 제출하기 전에 보고서를 검토하고 수정할 수 있습니다.</value>
+  </data>
+  <data name="Error036_TravelNoToken" xml:space="preserve">
+    <value>POESESSID가 없거나 만료되었습니다!
+
+고급 사용자: 설정의 인증 섹션에 있는 개발자 관리자에서 POESESSID를 직접 업데이트할 수 있습니다.</value>
+  </data>
+  <data name="Error037_TravelAccount" xml:space="preserve">
+    <value>계정이 올바르게 연결되어 있습니까?</value>
+  </data>
+  <data name="Error038_TravelSession" xml:space="preserve">
+    <value>POESESSID가 없거나 만료되었을 수 있습니다!
+
+설정의 인증 섹션에 있는 개발자 관리자에서 직접 업데이트할 수 있습니다.</value>
   </data>
 </root>

@@ -143,9 +143,7 @@ public sealed class PoeApiService
     {
         if (string.IsNullOrEmpty(hideoutToken))
         {
-            _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\nYour POESESSID is missing or expired !" +
-                "\n\nFor advanced users : You can manually update your POESESSID " +
-                "under settings by using the developer manager in the authentication section.",
+            _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\n" + Resources.Resources.Error036_TravelNoToken,
                 Resources.Resources.Error018_XReqAuth, MessageStatus.Exclamation);
             return false;
         }
@@ -163,7 +161,7 @@ public sealed class PoeApiService
             }
             if (exception.StatusCode is System.Net.HttpStatusCode.BadRequest)
             {
-                _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\nIs your account correctly connected ?",
+                _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\n" + Resources.Resources.Error037_TravelAccount,
                     Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
                 return false;
             }
@@ -173,8 +171,7 @@ public sealed class PoeApiService
                     Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
                 return false;
             }
-            _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\nYour POESESSID is probably missing or expired !" +
-                "\n\nYou can manually update it under settings by using the developer manager in the authentication section.",
+            _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\n" + Resources.Resources.Error038_TravelSession,
                 Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
             return false;
         }

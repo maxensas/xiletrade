@@ -3063,6 +3063,12 @@ A second click to load or unload all values.</comment>
   <data name="Main308_Search" xml:space="preserve">
     <value>検索</value>
   </data>
+  <data name="Main309_LiveNoCriteria" xml:space="preserve">
+    <value>ライブ検索を開始するには、条件（アイテム、カテゴリ、フィルター、ステータス）を1つ以上追加してください。</value>
+  </data>
+  <data name="Main310_TravelToHideout" xml:space="preserve">
+    <value>隠れ家へ移動</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>
@@ -3354,5 +3360,18 @@ Garena server : Traditional Chinese.</comment>
 
 GitHubで事前入力済みのバグレポートを開きますか？
 データが自動的に送信されることはありません。送信する前にレポートを確認・編集できます。</value>
+  </data>
+  <data name="Error036_TravelNoToken" xml:space="preserve">
+    <value>POESESSIDがないか、期限切れです！
+
+上級者向け：設定の認証セクションにある開発者マネージャーから、POESESSIDを手動で更新できます。</value>
+  </data>
+  <data name="Error037_TravelAccount" xml:space="preserve">
+    <value>アカウントは正しく接続されていますか？</value>
+  </data>
+  <data name="Error038_TravelSession" xml:space="preserve">
+    <value>POESESSIDがないか、期限切れの可能性があります！
+
+設定の認証セクションにある開発者マネージャーから手動で更新できます。</value>
   </data>
 </root>

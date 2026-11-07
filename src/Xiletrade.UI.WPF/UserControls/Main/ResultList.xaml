@@ -149,7 +149,7 @@
                                 </TextBlock.ToolTip>
                             </TextBlock>
                             <Image Margin="6,0,0,0" x:Name="tradeCur" Source="{Binding Currency, Converter={StaticResource imageSourceConverter}}" d:Source="{StaticResource ImgDivine}" Width="16" Height="16" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" d:Visibility="Visible" Visibility="{Binding Source={RelativeSource Self}, Path=Source, Converter={StaticResource null2CollapseConverter}}"/>
-                            <Button Grid.Row="0" Grid.Column="2" Height="13" Width="15" Command="{Binding DataContext.Result.TravelToHideoutCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" ToolTip="Travel to hideout" Cursor="Hand">
+                            <Button Grid.Row="0" Grid.Column="2" Height="13" Width="15" Command="{Binding DataContext.Result.TravelToHideoutCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" ToolTip="{ext:Localization Main310_TravelToHideout}" Cursor="Hand">
                                 <Viewbox Width="10" Height="10" Cursor="">
                                     <Path Style="{StaticResource HouseIcon}" Stretch="Uniform"/>
                                 </Viewbox>

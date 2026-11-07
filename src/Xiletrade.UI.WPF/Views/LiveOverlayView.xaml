@@ -10,7 +10,7 @@
         Title="Xiletrade live search" SizeToContent="WidthAndHeight" WindowStyle="None" ResizeMode="NoResize"
         AllowsTransparency="True" Background="Transparent" Topmost="True" ShowInTaskbar="False" ShowActivated="False"
         WindowStartupLocation="Manual"
-        Visibility="{Binding IsRunning, Converter={StaticResource bool2VisibilityConverter}}">
+        Visibility="{Binding IsDisplayed, Converter={StaticResource bool2VisibilityConverter}}">
     <Window.Resources>
         <!-- icon button : gray, in the color of the theme on hover, the geometry is the tag -->
         <Style x:Key="OverlayButton" TargetType="{x:Type Button}">
@@ -39,7 +39,7 @@
         <StreamGeometry x:Key="StopIcon">M0,0 L11,0 L11,11 L0,11 Z</StreamGeometry>
     </Window.Resources>
     <!-- glued to the bottom right corner of the screen : only the top left corner is rounded -->
-    <Border Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}"
+    <Border x:Name="Root" Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}"
             BorderThickness="1,1,0,0" CornerRadius="6,0,0,0" Padding="4,0">
         <StackPanel Orientation="Horizontal">
             <!-- pause : resume icon while paused -->

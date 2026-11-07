@@ -7588,6 +7588,28 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
+        ///   Localized string similar to => Add at least one criterion (item, category, filter or stat) to start a live search.
+        /// </summary>
+        public static string Main309_LiveNoCriteria
+        {
+            get
+            {
+                return ResourceManager.GetString("Main309_LiveNoCriteria", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Travel to hideout
+        /// </summary>
+        public static string Main310_TravelToHideout
+        {
+            get
+            {
+                return ResourceManager.GetString("Main310_TravelToHideout", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Localized string similar to => Welcome to Xiletrade.
         /// </summary>
         public static string Start001_lblWelcome {
@@ -8236,6 +8258,39 @@ namespace Xiletrade.Library.Resources {
         public static string Error035_ReportOnGithub {
             get {
                 return ResourceManager.GetString("Error035_ReportOnGithub", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Your POESESSID is missing or expired !
+        /// </summary>
+        public static string Error036_TravelNoToken
+        {
+            get
+            {
+                return ResourceManager.GetString("Error036_TravelNoToken", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Is your account correctly connected ?
+        /// </summary>
+        public static string Error037_TravelAccount
+        {
+            get
+            {
+                return ResourceManager.GetString("Error037_TravelAccount", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Your POESESSID is probably missing or expired !
+        /// </summary>
+        public static string Error038_TravelSession
+        {
+            get
+            {
+                return ResourceManager.GetString("Error038_TravelSession", resourceCulture);
             }
         }
     }

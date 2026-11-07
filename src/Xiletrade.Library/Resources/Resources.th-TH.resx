@@ -2565,6 +2565,12 @@
   <data name="Main308_Search" xml:space="preserve">
     <value>ค้นหา</value>
   </data>
+  <data name="Main309_LiveNoCriteria" xml:space="preserve">
+    <value>เพิ่มเงื่อนไขอย่างน้อยหนึ่งรายการ (ไอเทม หมวดหมู่ ตัวกรอง หรือค่าสถานะ) เพื่อเริ่มการค้นหาแบบสด</value>
+  </data>
+  <data name="Main310_TravelToHideout" xml:space="preserve">
+    <value>เดินทางไปยังที่ซ่อน</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>
@@ -2780,5 +2786,18 @@
 
 คุณต้องการเปิดรายงานข้อผิดพลาดที่กรอกข้อมูลไว้ล่วงหน้าบน GitHub หรือไม่?
 ไม่มีการส่งข้อมูลโดยอัตโนมัติ คุณสามารถตรวจสอบและแก้ไขรายงานก่อนส่งได้</value>
+  </data>
+  <data name="Error036_TravelNoToken" xml:space="preserve">
+    <value>POESESSID ของคุณไม่มีหรือหมดอายุแล้ว!
+
+สำหรับผู้ใช้ขั้นสูง: คุณสามารถอัปเดต POESESSID ด้วยตนเองในการตั้งค่า โดยใช้ตัวจัดการนักพัฒนาในส่วนการยืนยันตัวตน</value>
+  </data>
+  <data name="Error037_TravelAccount" xml:space="preserve">
+    <value>บัญชีของคุณเชื่อมต่ออย่างถูกต้องหรือไม่?</value>
+  </data>
+  <data name="Error038_TravelSession" xml:space="preserve">
+    <value>POESESSID ของคุณอาจไม่มีหรือหมดอายุแล้ว!
+
+คุณสามารถอัปเดตด้วยตนเองในการตั้งค่า โดยใช้ตัวจัดการนักพัฒนาในส่วนการยืนยันตัวตน</value>
   </data>
 </root>
