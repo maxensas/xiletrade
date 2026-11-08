@@ -9,6 +9,10 @@ strings:
   maintained: projeto é mantido por
   generated: Esta página foi gerada por
   download: Baixar
+  portable: Portátil (.7z)
+  installer: Instalador (.exe)
+  alt_customsearch: Janela de pesquisa personalizada do Xiletrade com o formulário de pesquisa, uma predefinição, a categoria do item e os filtros de atributos com sugestões
+  alt_history: Janela do histórico de moedas do Xiletrade com gráficos de volume e taxa de câmbio da moeda selecionada
   repository: Ver no GitHub
   footer: Serviço gratuito que requer manutenção contínua para funcionar corretamente.
   issue: e usar
@@ -25,8 +29,8 @@ strings:
 
 #### {% include youtube.svg %} &nbsp; [Visão geral](https://youtu.be/NygCZvZyUX0)<br>
 
-Baixo uso de CPU.  
-Usa no máximo 250 MB de RAM, sem picos.  
+Uso de CPU muito baixo.  
+Uso médio de 170 MB de RAM, sem picos.  
 Nenhum dado é gravado em segundo plano.   
 
 * * * 
@@ -43,7 +47,7 @@ Nenhum dado é gravado em segundo plano.
 
 ### {% include knife.svg %} Informações principais
 
-- Plataforma: **Windows** de 64 bits, portátil (não requer instalação).
+- Plataforma: **Windows** de 64 bits, arquivo **portátil** ou **instalador web** (não requer direitos de administrador).
 - Custo e licença: gratuito e de código aberto (GPLv3), [código-fonte no GitHub]({{ site.github.repository_url }}).
 - Jogos compatíveis: Path of Exile e Path of Exile 2.
 
@@ -61,13 +65,48 @@ Nenhum dado é gravado em segundo plano.
 - Utilitário **Gestor de Regex**.
 	- Gerir uma lista definida de **expressões regulares**.
 	- Colar automaticamente na barra de destaque.  
+- **Histórico de moedas** que permite ver as tendências atuais do mercado para a moeda selecionada.
+- Utilitário de **pesquisa personalizada** com **predefinições** e notificações de **pesquisa ao vivo**.
+
+{% include history.html %}
 
 {% include regex.html %}
 <br>
 
+### {% include adjust.svg %} Utilitário de pesquisa personalizada
+
+<h2 class="keywords"><i>🧭 Pesquisas de troca simplificadas, diretamente sobre o seu jogo.</i></h2>
+
+Uma **interface minimalista** com tudo o que é necessário, aberta com ***CTRL+E*** *por defeito*.
+
+- **Formulário de pesquisa** com uma lista de resultados.
+	- Faça uma pesquisa simples, tal como no site de trocas ou no jogo: vai sentir-se em casa.
+	- Nome ou tipo base do item, categoria, raridade, filtros, preço de compra imediata e **grupos de atributos**.
+- **Gestão de predefinições**.
+	- Guarde as suas pesquisas, **exporte**-as e **importe**-as para as partilhar com os seus amigos.
+	- A compatibilidade com as **próximas ligas** está garantida: as predefinições são verificadas e reparadas quando os filtros de troca mudam.
+- **Pesquisa ao vivo**, apenas para **utilizadores avançados**, enquanto joga.
+	- **Várias pesquisas ao vivo**, que pode pausar, retomar ou parar, mesmo com a janela fechada.
+	- Os novos itens são apresentados como **notificações**, com uma vasta gama de ações a explorar:  
+viajar para o esconderijo do vendedor, fechar ou **fixar** os itens a que não pode responder diretamente.
+
+{% include customsearch.html %}
+
+A pesquisa ao vivo é **segura por conceção** e mantém-no nas boas graças da GGG:
+
+- **Pedidos seguros**: os limites enviados pela API de trocas são respeitados, nunca é consultada para além das suas regras, o que **evita os timeouts**.
+- **Intervalo entre obtenções**: os novos itens são obtidos com um intervalo entre pedidos, apenas os resultados mais recentes chegam às suas notificações.
+- **Otimizada com o verificador de preços**: as pesquisas ao vivo usam apenas uma parte dos limites de pedidos, as suas **verificações de preços mantêm a prioridade**.
+- **Pausa automática**: uma pesquisa que recebe demasiados resultados é pausada, **refine** os seus critérios e depois retome-a.
+- **Sem automatismos**: ir ao esconderijo de um vendedor exige sempre um clique na notificação.
+
+<br>
+
+
 ### {% include install.svg %} Instalação e configuração
 
-1. [**Descarregue**]({% include download.html %}) a versão mais recente e **extraia** o ficheiro **`.7zip`** para o directório pretendido.
+1. [**Descarregue**]({% include installer.html %}) e execute o **instalador web** mais recente *(não requer direitos de administrador)*,  
+ou [**descarregue**]({% include download.html %}) a versão **portátil** e **extraia** o ficheiro **`.7z`** para o diretório pretendido.  
 2. **Clique com o botão direito do rato** no ícone da bandeja do sistema para configurar ou fechar o programa.
 3. Selecione a **versão** do jogo, o **idioma** e a **liga** pretendidos na janela de arranque ou nas definições.
 4. **Passe o rato** sobre cada recurso até que apareça uma dica de ferramenta para uma explicação mais detalhada.   

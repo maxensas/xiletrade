@@ -1,647 +1,661 @@
 @import "normalize";
-@import "rouge-github";
-@import "variables";
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
 
-@mixin large {
-  @media screen and (min-width: #{$large-breakpoint}) {
-    @content;
-  }
-}
+// Native dark theme of the site (no runtime recoloring) : plain CSS rules, colors of the application.
 
-@mixin medium {
-  @media screen and (min-width: #{$medium-breakpoint}) and (max-width: #{$large-breakpoint}) {
-    @content;
-  }
-}
-
-@mixin small {
-  @media screen and (max-width: #{$medium-breakpoint}) {
-    @content;
-  }
+:root {
+    color-scheme: dark;
+    --bg: #0e0f12;
+    --surface: #16181d;
+    --surface-2: #1c1f26;
+    --border: #2a2e37;
+    --text: #c9cdd4;
+    --text-muted: #8b919c;
+    --heading: #e8c27a;
+    --accent: #4fb3f6;
+    --accent-hover: #7fc8ff;
+    --radius: 0.7rem;
+    --shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+    --font: "Segoe UI", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-mono: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    background-color: var(--bg);
 }
 
 body {
-  padding: 0;
-  margin: 0;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  color: $body-text-color;
-}
-
-#skip-to-content {
-  height: 1px;
-  width: 1px;
-  position: absolute;
-  overflow: hidden;
-  top: 0px;
-
-  &:focus {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    height: auto;
-    width: auto;
-    background: invert($body-link-color);
-    outline: thick solid invert($body-link-color);
-  }
+    margin: 0;
+    padding: 0;
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    background-color: var(--bg);
 }
 
 a {
-  color: $body-link-color;
-  text-decoration: none;
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.15s;
+}
 
-  &:hover {
+a:hover {
+    color: var(--accent-hover);
     text-decoration: underline;
-  }
 }
 
-.btn {
-    display: inline-block;
-    margin-bottom: 0.2rem;
-    color: rgba(255, 255, 255, 0.8);
-    text-shadow: 0 0 6px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.6);
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.3);
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 0.3rem;
-    transition: color 0.2s, background-color 0.2s, border-color 0.2s;
-    vertical-align: middle; /* not work */
-
-    &:hover {
-        color: rgba(255, 255, 255, 1);
-        text-decoration: none;
-        background-color: rgba(255, 255, 255, 0.5);
-        border-color: rgba(255, 255, 255, 0.4);
-
-        .svg-logo {
-            fill: rgba(255, 255, 255, 1);
-            fill-rule: nonzero;
-            transition: fill 0.2s;
-        }
-
-        .svg-donate {
-            opacity: 1;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .svg-logo {
-                fill: rgba(255, 255, 255, 1);
-                fill-rule: nonzero;
-            }
-        }
-    }
-
-    + .btn {
-        margin-left: 1rem;
-    }
-
-    @include large {
-        padding: 0.3rem 0.3rem 0 0.3rem;
-    }
-
-    @include medium {
-        padding: 0.3rem 0.3rem 0 0.3rem;
-        font-size: 0.9rem;
-    }
-
-    @include small {
-        display: block;
-        width: 100%;
-        padding: 0.2rem;
-        font-size: 0.9rem;
-
-        + .btn {
-            margin-top: 1rem;
-            margin-left: 0;
-        }
-    }
-
-    .svg-donate {
-        opacity: 0.6;
-        transition: opacity 0.2s;
-    }
+::selection {
+    color: #fff;
+    background-color: rgba(79, 179, 246, 0.35);
 }
 
-.btn2 {
-    display: inline-block;
-    margin-bottom: 0.2rem;
-    color: rgba(255, 255, 255, 0.8);
-    text-shadow: 0 0 6px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.6);
-    // old background-color: rgba(255, 255, 255, 0.2);
-    background-color: rgba(30, 107, 184, 0.5); // $section-headings-color
-    border-color: rgba(255, 255, 255, 0.3);
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 0.3rem;
-    transition: color 0.2s, background-color 0.2s, border-color 0.2s;
-
-    &:hover {
-        color: rgba(255, 255, 255, 1);
-        text-decoration: none;
-        background-color: rgba(255, 255, 255, 0.75);
-        border-color: rgba(255, 255, 255, 0.4);
-
-        .svg-logo {
-            fill: rgba(255, 255, 255, 1);
-            fill-rule: nonzero;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .svg-logo {
-                fill: rgba(255, 255, 255, 1);
-                fill-rule: nonzero;
-            }
-        }
-
-        svg {
-            opacity: 1;
-        }
-    }
-
-    + .btn2 {
-        margin-left: 1rem;
-    }
-
-    @include large {
-        padding: 0.75rem 1rem;
-    }
-
-    @include medium {
-        padding: 0.6rem 0.9rem;
-        font-size: 0.9rem;
-    }
-
-    @include small {
-        display: block;
-        width: 100%;
-        padding: 0.75rem;
-        font-size: 0.9rem;
-
-        + .btn2 {
-            margin-top: 1rem;
-            margin-left: 0;
-        }
-    }
-
-    svg {
-        opacity: 0.8;
-        transition: opacity 0.2s;
-    }
-}
-
-.svg-logo {
-    fill: rgba(255, 255, 255, 0.7);
-    fill-rule: nonzero;
-    transition: fill 0.2s;
-}
-
-.span-align {
+// icons of the sections : black outlines of the original artwork made readable on the dark background
+svg.icon {
     vertical-align: middle;
-    display: inline-block;
 }
 
-@media (prefers-color-scheme: dark) {
-    .svg-logo {
-        fill: rgba(255, 255, 255, 0.7);
-        fill-rule: nonzero;
-    }
+svg.icon [stroke="#000000"] {
+    stroke: #dfe3ea;
 }
+
+svg.icon [fill="#000000"],
+svg.icon [fill="#010101"] {
+    fill: #dfe3ea;
+}
+
+// ----------------------------------------------------------------------------------------------------------------
+// Header : banner, languages, links, title and downloads
+// ----------------------------------------------------------------------------------------------------------------
 
 .page-header {
-    color: $header-heading-color;
+    position: relative;
+    color: #fff;
     text-align: center;
-    margin-bottom: 0;
-    /*
-    background-color: $header-bg-color;
-    background-image: linear-gradient(120deg, $header-bg-color-secondary, $header-bg-color);
-    */
-    background-image: url("../images/banner.png");
+    background-color: var(--bg);
+    background-image: linear-gradient(180deg, rgba(14, 15, 18, 0.15) 0%, rgba(14, 15, 18, 0.45) 60%, var(--bg) 100%),
+        url("../images/banner.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.page-header-padding {
-    @include large {
-        padding: 3rem 4rem 0.2rem 4rem; // top right bottom left
-    }
-
-    @include medium {
-        padding: 3rem 4rem 0.2rem 4rem;
-    }
-
-    @include small {
-        padding: 2rem 1rem 0.1rem 1rem;
-    }
-
-    img {
-        vertical-align: middle;
-    }
+.page-topbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding: 0.7rem 1.2rem;
+    background-color: rgba(14, 15, 18, 0.55);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .page-lang {
-    padding: 0.2rem 0.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
 
-    img {
-        opacity: 0.6;
-    }
+.page-lang a {
+    display: inline-flex;
+    line-height: 0;
+}
 
-    img:hover {
-        opacity: 1;
-    }
+.page-lang img {
+    border-radius: 2px;
+    opacity: 0.55;
+    transition: opacity 0.15s, transform 0.15s;
+}
+
+.page-lang a:hover img {
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+.page-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.75rem;
+    color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    transition: background-color 0.15s, border-color 0.15s;
+}
+
+.btn:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.svg-logo {
+    fill: rgba(255, 255, 255, 0.75);
+    fill-rule: nonzero;
+    transition: fill 0.15s;
+}
+
+.btn:hover .svg-logo {
+    fill: #fff;
+}
+
+.svg-donate {
+    opacity: 0.7;
+    transition: opacity 0.15s;
+}
+
+.btn:hover .svg-donate {
+    opacity: 1;
+}
+
+.page-header-padding {
+    padding: 3rem 4rem 2.5rem;
+}
+
+.page-header-padding > br {
+    display: none;
 }
 
 .project-name {
-    margin-top: 0;
-    margin-bottom: 0.1rem;
-    text-shadow: 0 0 6px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.6);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 0.3rem;
+    font-size: 3.25rem;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+}
 
-    @include large {
-        font-size: 3.25rem;
-    }
-
-    @include medium {
-        font-size: 2.25rem;
-    }
-
-    @include small {
-        font-size: 1.75rem;
-    }
+.project-name img {
+    width: 0.9em;
+    height: 0.9em;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.7));
 }
 
 .project-tagline {
-    margin-bottom: 1rem;
-    font-weight: normal;
-    opacity: 0.9;
-    text-shadow: 0 0 6px rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.6);
+    max-width: 40rem;
+    margin: 0 auto 1.6rem;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.88);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+}
 
-    @include large {
-        font-size: 1.25rem;
-    }
+// download buttons : portable archive (blue) and web installer (purple)
+.download-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+}
 
-    @include medium {
-        font-size: 1.15rem;
-    }
+.btn2 {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 13rem;
+    padding: 0.6rem 1.3rem 0.6rem 0.7rem;
+    color: #fff;
+    text-align: left;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    background-image: linear-gradient(135deg, rgba(43, 127, 212, 0.95), rgba(19, 79, 140, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 0.8rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+}
 
-    @include small {
-        font-size: 1rem;
-    }
+.btn2.btn2-installer {
+    background-image: linear-gradient(135deg, rgba(138, 92, 240, 0.95), rgba(79, 42, 158, 0.95));
+}
+
+.btn2:hover {
+    color: #fff;
+    text-decoration: none;
+    filter: brightness(1.12);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.btn2:active {
+    transform: translateY(0);
+}
+
+.btn2-icon {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.16);
+}
+
+.btn2-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.btn2-text small {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.btn2-text strong {
+    font-size: 1.05rem;
 }
 
 .page-latest-release {
-    text-shadow: 0 3px 6px rgba(0,0,0,0.6);
-
-    i {
-        opacity: 0.7;
-    }
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.75);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
 }
+
+// ----------------------------------------------------------------------------------------------------------------
+// Content
+// ----------------------------------------------------------------------------------------------------------------
 
 .main-content {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 2rem 6rem;
+    font-size: 1.05rem;
     word-wrap: break-word;
-
-    :first-child {
-        margin-top: 0;
-    }
-
-    @include large {
-        max-width: 64rem;
-        padding: 2rem 6rem;
-        margin: 0 auto;
-        font-size: 1.1rem;
-    }
-
-    @include medium {
-        padding: 2rem 4rem;
-        font-size: 1.1rem;
-    }
-
-    @include small {
-        padding: 2rem 1rem;
-        font-size: 1rem;
-    }
-
-    kbd {
-        background-color: #fafbfc;
-        border: 1px solid #c6cbd1;
-        border-bottom-color: #959da5;
-        border-radius: 3px;
-        box-shadow: inset 0 -1px 0 #959da5;
-        color: #444d56;
-        display: inline-block;
-        font-size: 11px;
-        line-height: 10px;
-        padding: 3px 5px;
-        vertical-align: middle;
-    }
-
-    img {
-        max-width: 100%;
-        transition: transform .2s; /* Animation */
-    }
-
-    img:hover {
-        transform: scale(1.05);
-    }
-
-    .shot {
-        margin-right: 2rem;
-    }
-
-    #hp {
-        float: left;
-        margin: 0 0 0 15px;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        font-weight: normal;
-        color: $section-headings-color;
-    }
-
-    h3 {
-        font-size: 2rem;
-        font-weight: 600;
-        line-height: 1.2;
-    }
-
-    h4 {
-        font-size: 1.5rem;
-        line-height: 1.25;
-    }
-
-    h2.keywords {
-        font-size: 1.1rem;
-        line-height: 1.25;
-        font-weight: 400;
-        margin-top: 0;
-        margin-bottom: 1rem;
-        color: $body-text-color;
-    }
-
-    p {
-        margin-bottom: 1em;
-    }
-
-    code {
-        padding: 2px 4px;
-        font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-        font-size: 0.9rem;
-        color: $code-text-color;
-        background-color: $code-bg-color;
-        border-radius: 0.3rem;
-    }
-
-    pre {
-        padding: 0.8rem;
-        margin-top: 0;
-        margin-bottom: 1rem;
-        font: 1rem Consolas, "Liberation Mono", Menlo, Courier, monospace;
-        color: $code-text-color;
-        word-wrap: normal;
-        background-color: $code-bg-color;
-        border: solid 1px $border-color;
-        border-radius: 0.3rem;
-
-        > code {
-            padding: 0;
-            margin: 0;
-            font-size: 0.9rem;
-            color: $code-text-color;
-            word-break: normal;
-            white-space: pre;
-            background: transparent;
-            border: 0;
-        }
-    }
-
-    .highlight {
-        margin-bottom: 1rem;
-
-        pre {
-            margin-bottom: 0;
-            word-break: normal;
-        }
-    }
-
-    .highlight pre,
-    pre {
-        padding: 0.8rem;
-        overflow: auto;
-        font-size: 0.9rem;
-        line-height: 1.45;
-        border-radius: 0.3rem;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    pre code,
-    pre tt {
-        display: inline;
-        max-width: initial;
-        padding: 0;
-        margin: 0;
-        overflow: initial;
-        line-height: inherit;
-        word-wrap: normal;
-        background-color: transparent;
-        border: 0;
-
-        &:before,
-        &:after {
-            content: normal;
-        }
-    }
-
-    ul,
-    ol {
-        margin-top: 0;
-    }
-
-    blockquote {
-        padding: 0 1rem;
-        margin-left: 0;
-        color: $blockquote-text-color;
-        border-left: 0.3rem solid $border-color;
-
-        > :first-child {
-            margin-top: 0;
-        }
-
-        > :last-child {
-            margin-bottom: 0;
-        }
-    }
-
-    table {
-        display: block;
-        width: 100%;
-        overflow: auto;
-        word-break: normal;
-        word-break: keep-all; // For Firefox to horizontally scroll wider tables.
-        -webkit-overflow-scrolling: touch;
-
-        th {
-            font-weight: bold;
-        }
-
-        th,
-        td {
-            padding: 0.5rem 1rem;
-            border: 1px solid $table-border-color;
-        }
-    }
-
-    dl {
-        padding: 0;
-
-        dt {
-            padding: 0;
-            margin-top: 1rem;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        dd {
-            padding: 0;
-            margin-bottom: 1rem;
-        }
-    }
-
-    hr {
-        height: 2px;
-        padding: 0;
-        margin: 1rem 0;
-        background-color: $hr-border-color;
-        border: 0;
-    }
-    /* FAQ */
-    /* Style the element that is used to open and close the accordion class */
-    p.accordion {
-        background-color: #eee;
-        color: #444;
-        cursor: pointer;
-        padding: 18px;
-        width: 100%;
-        text-align: left;
-        border: none;
-        outline: none;
-        transition: 0.4s;
-        margin-bottom: 10px;
-    }
-    /* Add a background color to the accordion if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-    p.accordion.active, p.accordion:hover {
-        background-color: #ddd;
-    }
-    /* Unicode character for "plus" sign (+) */
-    p.accordion:after {
-        content: '\2795';
-        font-size: 13px;
-        color: #777;
-        float: right;
-        margin-left: 5px;
-    }
-    /* Unicode character for "minus" sign (-) */
-    p.accordion.active:after {
-        content: "\2796";
-    }
-    /* Style the element that is used for the panel class */
-
-    div.panel {
-        padding: 0 18px;
-        background-color: white;
-        max-height: 0;
-        overflow: hidden;
-        transition: 0.4s ease-in-out;
-        opacity: 0;
-        margin-bottom: 10px;
-    }
-
-    div.panel.show {
-        opacity: 1;
-        max-height: 500px; /* Whatever you like, as long as its more than the height of the content (on all screen sizes) */
-    }
-    /* Style the element that is used to open and close the accordion class */
-    p.accordion {
-        background-color: #eee;
-        color: #444;
-        cursor: pointer;
-        padding: 18px;
-        width: 100%;
-        text-align: left;
-        border: none;
-        outline: none;
-        transition: 0.4s;
-        margin-bottom: 10px;
-    }
-    /* Add a background color to the accordion if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-    p.accordion.active, p.accordion:hover {
-        background-color: #ddd;
-    }
-    /* Unicode character for "plus" sign (+) */
-    p.accordion:after {
-        content: '\2795';
-        font-size: 13px;
-        color: #777;
-        float: right;
-        margin-left: 5px;
-    }
-    /* Unicode character for "minus" sign (-) */
-    p.accordion.active:after {
-        content: "\2796";
-    }
-    /* Style the element that is used for the panel class */
-
-    div.panel {
-        padding: 0 18px;
-        background-color: white;
-        max-height: 0;
-        overflow: hidden;
-        transition: 0.4s ease-in-out;
-        opacity: 0;
-        margin-bottom: 10px;
-    }
-
-    div.panel.show {
-        opacity: 1;
-        max-height: 500px; /* Whatever you like, as long as its more than the height of the content (on all screen sizes) */
-    }
 }
 
+.main-content > :first-child {
+    margin-top: 0;
+}
+
+.main-content h1,
+.main-content h2,
+.main-content h3,
+.main-content h4,
+.main-content h5,
+.main-content h6 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--heading);
+}
+
+.main-content h2 {
+    font-size: 1.6rem;
+}
+
+// titles of the sections, with their icon
+.main-content h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 3rem;
+    padding-bottom: 0.6rem;
+    font-size: 1.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.main-content h3 svg {
+    flex: none;
+}
+
+.main-content h4 {
+    font-size: 1.3rem;
+    color: var(--text);
+}
+
+// short catchphrases under the titles
+.main-content h2.keywords {
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+.main-content h2.keywords strong {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.main-content p {
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+.main-content strong,
+.main-content b {
+    font-weight: 600;
+    color: #e6e9ee;
+}
+
+.main-content ul,
+.main-content ol {
+    margin-top: 0;
+    padding-left: 1.4rem;
+}
+
+.main-content li {
+    margin-bottom: 0.25rem;
+}
+
+.main-content li::marker {
+    color: var(--accent);
+}
+
+.main-content li > ul {
+    margin-top: 0.25rem;
+}
+
+.main-content hr {
+    height: 1px;
+    margin: 2rem 0;
+    padding: 0;
+    background-color: var(--border);
+    border: 0;
+}
+
+.main-content kbd {
+    display: inline-block;
+    padding: 2px 6px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 1.2;
+    color: var(--text);
+    vertical-align: middle;
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+}
+
+.main-content code {
+    padding: 2px 5px;
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    color: #e6e9ee;
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+}
+
+// notice (fenced block) : a callout
+.main-content pre {
+    margin: 1.5rem 0;
+    padding: 1rem 1.2rem;
+    overflow: auto;
+    font-family: var(--font);
+    font-size: 0.95rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--text-muted);
+    white-space: pre-wrap;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--heading);
+    border-radius: var(--radius);
+}
+
+.main-content pre code {
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    white-space: pre-wrap;
+    background: transparent;
+    border: 0;
+}
+
+.main-content .highlight {
+    margin-bottom: 1rem;
+    background: transparent;
+}
+
+.main-content .highlight pre {
+    margin: 0;
+}
+
+// "How it works" : a card
+.main-content blockquote {
+    margin: 1.5rem 0;
+    padding: 1.2rem 1.5rem;
+    color: var(--text);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+}
+
+.main-content blockquote > :first-child {
+    margin-top: 0;
+}
+
+.main-content blockquote > :last-child {
+    margin-bottom: 0;
+}
+
+.main-content blockquote h3 {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.main-content table {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    word-break: keep-all;
+    border-collapse: collapse;
+}
+
+.main-content th,
+.main-content td {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+}
+
+.main-content th {
+    font-weight: 600;
+    background-color: var(--surface);
+}
+
+// screenshots
+.main-content img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+// zoom on hover, as on the former design
+.main-content img:hover {
+    transform: scale(1.05);
+}
+
+.main-content a > img,
+.main-content p > img {
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.main-content a:hover > img,
+.main-content p > img:hover {
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
+}
+
+.main-content .shot {
+    margin: 0 2rem 1rem 0;
+}
+
+// centered screenshots, spaced from each other
+.main-content p[align="center"] {
+    margin: 2.5rem 0;
+}
+
+// accordions (details and FAQ)
+.main-content p.accordion {
+    position: relative;
+    margin: 0 0 0.5rem;
+    padding: 0.9rem 2.8rem 0.9rem 1.1rem;
+    color: var(--text);
+    cursor: pointer;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: background-color 0.15s, border-color 0.15s;
+    user-select: none;
+}
+
+.main-content p.accordion:hover,
+.main-content p.accordion.active {
+    background-color: var(--surface-2);
+    border-color: #3a404c;
+}
+
+// chevron, turned when open
+.main-content p.accordion::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 1.2rem;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-top: -0.4rem;
+    border-right: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+    transform: rotate(45deg);
+    transition: transform 0.2s, margin-top 0.2s;
+}
+
+.main-content p.accordion.active::after {
+    margin-top: -0.1rem;
+    transform: rotate(-135deg);
+}
+
+.main-content div.panel {
+    max-height: 0;
+    margin: 0 0 0.5rem;
+    padding: 0 1.1rem;
+    overflow: hidden;
+    opacity: 0;
+    color: var(--text);
+    background-color: var(--surface);
+    border-radius: var(--radius);
+    transition: max-height 0.35s ease-in-out, opacity 0.35s ease-in-out, padding 0.35s ease-in-out;
+}
+
+.main-content div.panel.show {
+    max-height: 500px;
+    padding: 1rem 1.1rem;
+    opacity: 1;
+}
+
+// ----------------------------------------------------------------------------------------------------------------
+// Footer
+// ----------------------------------------------------------------------------------------------------------------
+
 .site-footer {
-  padding-top: 2rem;
-  margin-top: 2rem;
-  border-top: solid 1px $hr-border-color;
-
-  @include large {
-    font-size: 1rem;
-  }
-
-  @include medium {
-    font-size: 1rem;
-  }
-
-  @include small {
-    font-size: 0.9rem;
-  }
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
 }
 
 .site-footer-owner {
-  display: block;
-  font-weight: bold;
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--text);
 }
 
 .site-footer-credits {
-  color: $blockquote-text-color;
+    color: var(--text-muted);
+}
+
+// ----------------------------------------------------------------------------------------------------------------
+// Screen sizes
+// ----------------------------------------------------------------------------------------------------------------
+
+@media screen and (min-width: 42em) and (max-width: 64em) {
+    .main-content {
+        padding: 2rem 3rem;
+    }
+
+    .project-name {
+        font-size: 2.5rem;
+    }
+
+    .project-tagline {
+        font-size: 1.15rem;
+    }
+}
+
+@media screen and (max-width: 42em) {
+    .page-topbar,
+    .page-lang {
+        justify-content: center;
+    }
+
+    .page-header-padding {
+        padding: 2rem 1rem 1.5rem;
+    }
+
+    .project-name {
+        font-size: 2rem;
+    }
+
+    .project-tagline {
+        font-size: 1rem;
+    }
+
+    .download-buttons {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .btn2 {
+        display: flex;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .main-content {
+        padding: 1.5rem 1rem;
+        font-size: 1rem;
+    }
+
+    .main-content h3 {
+        font-size: 1.45rem;
+    }
+
+    .main-content .shot {
+        float: none;
+        display: block;
+        margin: 0 auto 1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
 }

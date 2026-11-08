@@ -5,7 +5,8 @@
 
 **Xiletrade** は、**POE** (Path Of Exile) シリーズ用のオープンソースのオーバーレイ、価格チェッカー、ヘルパー ツールです。
 
-[<img src="https://github.com/user-attachments/assets/7e2ad410-7508-4348-b968-cc0dbbf5b10e" alt="公式サイトを開く" />](https://maxensas.github.io/xiletrade/)
-[<img src="https://github.com/user-attachments/assets/c3664da6-b66b-49ef-b3c9-992ae7749dd7" alt="最新バージョンをダウンロード" />](https://github.com/maxensas/xiletrade/releases/latest/download/Xiletrade_win-x64.7z)
+[<img src="assets/btn-website.svg" alt="公式サイトを開く" />](https://maxensas.github.io/xiletrade/)
+[<img src="assets/btn-portable.svg" alt="ポータブル版アーカイブをダウンロード (.7z)" />](https://github.com/maxensas/xiletrade/releases/latest/download/Xiletrade_win-x64.7z)
+[<img src="assets/btn-installer.svg" alt="Webインストーラーをダウンロード (.exe)" />](https://github.com/maxensas/xiletrade/releases/latest/download/Xiletrade_win-x64_Setup.exe)
 
 <img width="275" height="332" alt="Xiletrade overview" src="https://maxensas.github.io/xiletrade/jp/assets/images/screenshot.png">

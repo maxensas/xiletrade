@@ -9,6 +9,10 @@ strings:
   maintained: projekt wird gepflegt von
   generated: Diese Seite wurde generiert von
   download: Herunterladen
+  portable: Portabel (.7z)
+  installer: Installer (.exe)
+  alt_customsearch: Fenster der benutzerdefinierten Suche von Xiletrade mit Suchformular, einer Voreinstellung, der Gegenstandskategorie und Stat-Filtern mit Vorschlägen
+  alt_history: Währungsverlauf-Fenster von Xiletrade mit Diagrammen zu Volumen und Wechselkurs der ausgewählten Währung
   repository: Auf GitHub anzeigen
   footer: Kostenloser Service, der für seine ordnungsgemäße Funktion fortlaufende Wartung erfordert.
   issue: und verwenden
@@ -24,8 +28,8 @@ strings:
 
 #### {% include youtube.svg %} &nbsp; [Kurzübersicht ansehen](https://youtu.be/NygCZvZyUX0)<br>
 
-Geringe CPU-Auslastung.  
-Verwendet maximal 250 MB RAM, keine Spitzen.  
+Sehr geringe CPU-Auslastung.  
+Durchschnittlich 170 MB RAM-Nutzung, ohne Spitzen.  
 Keine Daten werden im Hintergrund geschrieben.  
 
 * * *
@@ -42,7 +46,7 @@ Keine Daten werden im Hintergrund geschrieben.
 
 ### {% include knife.svg %} Wichtigste Fakten
 
-- Plattform: **Windows** 64-Bit, portabel (keine Installation erforderlich).
+- Plattform: **Windows** 64-Bit, **portables** Archiv oder **Web-Installer** (keine Administratorrechte erforderlich).
 - Kosten und Lizenz: kostenlos und Open Source (GPLv3), [Quellcode auf GitHub]({{ site.github.repository_url }}).
 - Unterstützte Spiele: Path of Exile und Path of Exile 2.
 
@@ -60,13 +64,48 @@ Keine Daten werden im Hintergrund geschrieben.
 - Dienstprogramm **Regex-Manager**.
 	- Verwalten Sie eine definierte Liste von **regulären Ausdrücken**.
 	- Automatisches Einfügen in die Markierungsleiste.  
+- **Währungsverlauf**, der die aktuellen Markttrends der ausgewählten Währung zeigt.
+- Dienstprogramm **Benutzerdefinierte Suche** mit **Voreinstellungen** und Benachrichtigungen der **Live-Suche**.
+
+{% include history.html %}
 
 {% include regex.html %}
 <br>
 
+### {% include adjust.svg %} Dienstprogramm für benutzerdefinierte Suche
+
+<h2 class="keywords"><i>🧭 Handelssuchen leicht gemacht, direkt über Ihrem Spiel.</i></h2>
+
+Eine **minimalistische Oberfläche** mit allem Nötigen, standardmäßig mit ***STRG+E*** geöffnet.
+
+- **Suchformular** mit einer Ergebnisliste.
+	- Führen Sie eine einfache Suche durch, genau wie auf der Handelsseite oder im Spiel: Sie werden sich sofort zurechtfinden.
+	- Name oder Basistyp des Gegenstands, Kategorie, Seltenheit, Filter, Sofortkaufpreis und **Stat-Gruppen**.
+- **Verwaltung der Voreinstellungen**.
+	- Speichern Sie Ihre Suchen, **exportieren** und **importieren** Sie sie, um sie mit Freunden zu teilen.
+	- Die Kompatibilität mit **kommenden Ligen** ist gewährleistet: Voreinstellungen werden geprüft und repariert, wenn sich die Handelsfilter ändern.
+- **Live-Suche**, nur für **fortgeschrittene Benutzer**, während Sie spielen.
+	- **Mehrere Live-Suchen**, die Sie pausieren, fortsetzen oder beenden können, auch bei geschlossenem Fenster.
+	- Neue Gegenstände werden als **Benachrichtigungen** angezeigt, mit vielen Aktionen zum Entdecken:  
+zum Versteck des Verkäufers reisen, schließen oder Gegenstände **anheften**, auf die Sie nicht sofort antworten können.
+
+{% include customsearch.html %}
+
+Die Live-Suche ist **von Grund auf sicher** und hält Sie bei GGG in gutem Ansehen:
+
+- **Gesicherte Anfragen**: Die von der Handels-API gesendeten Ratenlimits werden eingehalten, sie wird nie über ihre Regeln hinaus abgefragt, so werden **Timeouts vermieden**.
+- **Abruf-Cooldown**: Neue Gegenstände werden mit einer Wartezeit zwischen den Anfragen abgerufen, nur die aktuellsten Ergebnisse erreichen Ihre Benachrichtigungen.
+- **Optimiert für den Preisprüfer**: Live-Suchen nutzen nur einen Teil der Anfragelimits, Ihre **Preisprüfungen behalten Vorrang**.
+- **Auto-Pause**: Eine Suche mit zu vielen Ergebnissen wird pausiert, **verfeinern** Sie ihre Kriterien und setzen Sie sie dann fort.
+- **Keine Automatisierung**: Um zum Versteck eines Verkäufers zu gelangen, ist immer ein Klick auf die Benachrichtigung nötig.
+
+<br>
+
+
 ### {% include install.svg %} Installation und Einrichtung
 
-1. [**Laden Sie**]({% include download.html %}) die neueste Version herunter und **entpacken** Sie das **`.7zip`**-Archiv in das gewünschte Verzeichnis.
+1. [**Laden Sie**]({% include installer.html %}) den neuesten **Web-Installer** herunter und starten Sie ihn *(keine Administratorrechte erforderlich)*,  
+oder [**laden Sie**]({% include download.html %}) die **portable** Version herunter und **entpacken** Sie das **`.7z`**-Archiv in das gewünschte Verzeichnis.  
 2. **Rechtsklick** auf das Taskleistensymbol, um das Programm zu konfigurieren oder zu schließen.
 3. Wählen Sie im Start- oder Einstellungsfenster die gewünschte **Spielversion**, **Sprache** und **Liga** aus.
 4. Bewegen Sie den Mauszeiger über jede Funktion, bis ein Tooltip erscheint, um eine ausführliche Erklärung zu erhalten.  

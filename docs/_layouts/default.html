@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     {% seo title=false %}
     <title>{{ page.title | default: site.title }} : {{ page.minidesc | default: site.minidesc }}</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#157878">
+    <meta name="theme-color" content="#0e0f12">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     {% unless page.lang %}
@@ -47,9 +45,7 @@
         })();
     </script>
     {% endunless %}
-    <script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.31/darkreader.min.js"></script>
     <script>
-        if (window.DarkReader) { DarkReader.enable(); }
         document.addEventListener("DOMContentLoaded", function (event) {
             /* Toggle between adding and removing the "active" and "show" classes when the user clicks on one of the "Section" buttons. The "active" class is used to add a background color to the current button when its belonging panel is open. The "show" class is used to open the specific accordion panel */
             var acc = document.getElementsByClassName("accordion");
@@ -93,8 +89,9 @@
 </head>
 <body>
     <header class="page-header" role="banner">
+        <div class="page-topbar">
         <div class="page-lang">{% include flags.md %}</div>
-        <div>
+        <div class="page-links">
             {% if site.github.is_project_page %}
             <a class="btn" target="_blank" rel="noopener noreferrer"
                href="{{ site.github.repository_url }}"
@@ -120,55 +117,58 @@
                href="{{ site.github.paypal_url }}"
                aria-label="{{ page.strings.support | default: site.strings.support }}"
                title="{{ page.strings.support | default: site.strings.support }}">
-                <svg class="svg-donate" height="16" width="16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0.016 0 125.835 125.867" xml:space="preserve" style="--darkreader-inline-fill:var(--darkreader-background-000000, #000000)"><g stroke-width="0" /><g stroke-linecap="round" stroke-linejoin="round" />
-                <path style="fill:#aab1ba;--darkreader-inline-fill:var(--darkreader-text-aab1ba, #b7b1a8)" d="M0.833 124.55V69.083h12.8c2.347 0 4.267 1.92 4.267 4.267v46.934c0 2.347 -1.92 4.267 -4.267 4.267H0.833z" transform="translate(1 1)" />
-                <path style="fill:#ff7474;--darkreader-inline-fill:var(--darkreader-text-ff7474, #ff6b6b)" d="M83.179 7.857c3.84 -4.267 9.6 -7.04 15.787 -7.04 11.733 0 21.333 9.6 21.333 21.333 0 12.8 -12.8 34.133 -36.267 46.933C60.566 56.283 47.766 34.95 47.766 22.15c0 -11.733 9.6 -21.333 21.333 -21.333 2.987 0 5.973 0.64 8.533 1.707 0 0 3.84 2.133 5.333 4.907z" transform="translate(1 1)" />
-                <path style="fill:#ffd0a1;--darkreader-inline-fill:var(--darkreader-text-ffd0a1, #ffc58a)" d="M88.513 99.803c0.64 -0.213 1.28 -0.427 1.92 -0.853l24.533 -11.947c2.987 -1.707 7.04 -0.64 8.747 2.347s0.64 7.04 -2.347 8.747l-28.8 17.92s-6.4 4.267 -21.333 4.267c-12.8 0 -32 -10.667 -32 -10.667s-4.267 -2.133 -12.8 -2.133H17.899V77.617h25.6c6.4 0 17.067 12.8 23.467 12.8h12.8c4.267 0 6.4 2.133 6.4 2.133s2.133 2.133 2.133 6.4z" transform="translate(1 1)" />
-                <path style="fill:#51565f;--darkreader-inline-fill:var(--darkreader-text-51565f, #b0aa9f)" d="M13.883 125.867H1.083c-0.64 0 -1.067 -0.427 -1.067 -1.067s0.427 -1.067 1.067 -1.067h12.8c1.707 0 3.2 -1.493 3.2 -3.2V73.6c0 -1.707 -1.493 -3.2 -3.2 -3.2H1.083c-0.64 0 -1.067 -0.427 -1.067 -1.067s0.427 -1.067 1.067 -1.067h12.8c2.987 0 5.333 2.347 5.333 5.333v46.933c0 2.987 -2.347 5.334 -5.333 5.334m57.6 -4.267c-13.013 0 -31.787 -10.453 -32.427 -10.88 0 0 -4.267 -1.92 -12.373 -1.92 -0.64 0 -1.067 -0.427 -1.067 -1.067s0.427 -1.067 1.067 -1.067c8.747 0 13.013 2.133 13.227 2.347 0.213 0.213 19.2 10.453 31.573 10.453 14.293 0 20.693 -4.053 20.693 -4.053l28.8 -17.92c2.56 -1.493 3.413 -4.693 1.92 -7.253s-4.693 -3.413 -7.253 -1.92l-24.533 11.947c-4.48 2.347 -8.747 2.347 -17.493 2.347 -8.533 0 -20.907 -2.133 -21.547 -2.133s-1.067 -0.64 -0.853 -1.28c0 -0.64 0.64 -1.067 1.28 -0.853 0.213 0 12.8 2.133 21.12 2.133s12.587 0 16.64 -1.92l24.533 -11.947c3.413 -1.92 8.107 -0.853 10.027 2.773 2.133 3.627 0.853 8.107 -2.773 10.24l-28.8 17.92c-0.214 -0.213 -6.614 4.053 -21.76 4.053M6.416 115.2c-1.28 0 -2.133 -0.853 -2.133 -2.133s0.853 -2.133 2.133 -2.133 2.133 0.853 2.133 2.133 -0.853 2.133 -2.133 2.133m80 -21.333c-0.213 0 -0.64 0 -0.853 -0.213 0 0 -1.92 -1.92 -5.547 -1.92h-12.8c-3.627 0 -7.893 -3.2 -12.373 -6.613 -4.053 -2.987 -8.32 -6.187 -11.093 -6.187H26.683c-0.64 0 -1.067 -0.427 -1.067 -1.067s0.427 -1.067 1.067 -1.067h17.067c3.627 0 7.893 3.2 12.373 6.613 4.053 2.987 8.32 6.187 11.093 6.187h12.8c4.693 0 7.04 2.347 7.253 2.347 0.427 0.427 0.427 1.067 0 1.493 -0.213 0.427 -0.64 0.427 -0.853 0.427M84.282 70.4c-0.213 0 -0.427 0 -0.427 -0.213C60.816 57.6 46.949 36.053 46.949 22.4c0 -12.373 10.027 -22.4 22.4 -22.4q4.8 0 8.96 1.92c0.64 0.213 0.853 0.853 0.64 1.493s-0.853 0.853 -1.493 0.64c-2.56 -1.067 -5.333 -1.707 -8.107 -1.707 -11.093 0 -20.267 9.173 -20.267 20.267 0 13.013 13.227 33.493 35.2 45.653 21.973 -12.16 35.2 -32.853 35.2 -45.653 0 -11.093 -9.173 -20.267 -20.267 -20.267 -7.893 0 -15.147 4.693 -18.347 11.733 -0.213 0.64 -0.853 0.853 -1.493 0.427 -0.64 -0.213 -0.853 -0.853 -0.427 -1.493C82.576 5.12 90.683 0 99.216 0c12.373 0 22.4 10.027 22.4 22.4 0 13.653 -13.867 35.2 -36.907 47.787 0 0.213 -0.213 0.213 -0.426 0.213M111.376 19.2c-0.427 0 -0.853 -0.213 -1.067 -0.64 -1.28 -3.413 -3.84 -5.973 -7.04 -7.04 -0.64 -0.213 -0.853 -0.853 -0.64 -1.28 0.213 -0.64 0.853 -0.853 1.28 -0.64 4.053 1.493 7.04 4.48 8.533 8.533q0.32 0.96 -0.64 1.28c-0.213 -0.213 -0.426 -0.213 -0.426 -0.213" />
+                <svg class="svg-donate" height="16" width="16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0.016 0 125.835 125.867" xml:space="preserve"><g stroke-width="0" /><g stroke-linecap="round" stroke-linejoin="round" />
+                <path style="fill:#aab1ba" d="M0.833 124.55V69.083h12.8c2.347 0 4.267 1.92 4.267 4.267v46.934c0 2.347 -1.92 4.267 -4.267 4.267H0.833z" transform="translate(1 1)" />
+                <path style="fill:#ff7474" d="M83.179 7.857c3.84 -4.267 9.6 -7.04 15.787 -7.04 11.733 0 21.333 9.6 21.333 21.333 0 12.8 -12.8 34.133 -36.267 46.933C60.566 56.283 47.766 34.95 47.766 22.15c0 -11.733 9.6 -21.333 21.333 -21.333 2.987 0 5.973 0.64 8.533 1.707 0 0 3.84 2.133 5.333 4.907z" transform="translate(1 1)" />
+                <path style="fill:#ffd0a1" d="M88.513 99.803c0.64 -0.213 1.28 -0.427 1.92 -0.853l24.533 -11.947c2.987 -1.707 7.04 -0.64 8.747 2.347s0.64 7.04 -2.347 8.747l-28.8 17.92s-6.4 4.267 -21.333 4.267c-12.8 0 -32 -10.667 -32 -10.667s-4.267 -2.133 -12.8 -2.133H17.899V77.617h25.6c6.4 0 17.067 12.8 23.467 12.8h12.8c4.267 0 6.4 2.133 6.4 2.133s2.133 2.133 2.133 6.4z" transform="translate(1 1)" />
+                <path style="fill:#b0aa9f" d="M13.883 125.867H1.083c-0.64 0 -1.067 -0.427 -1.067 -1.067s0.427 -1.067 1.067 -1.067h12.8c1.707 0 3.2 -1.493 3.2 -3.2V73.6c0 -1.707 -1.493 -3.2 -3.2 -3.2H1.083c-0.64 0 -1.067 -0.427 -1.067 -1.067s0.427 -1.067 1.067 -1.067h12.8c2.987 0 5.333 2.347 5.333 5.333v46.933c0 2.987 -2.347 5.334 -5.333 5.334m57.6 -4.267c-13.013 0 -31.787 -10.453 -32.427 -10.88 0 0 -4.267 -1.92 -12.373 -1.92 -0.64 0 -1.067 -0.427 -1.067 -1.067s0.427 -1.067 1.067 -1.067c8.747 0 13.013 2.133 13.227 2.347 0.213 0.213 19.2 10.453 31.573 10.453 14.293 0 20.693 -4.053 20.693 -4.053l28.8 -17.92c2.56 -1.493 3.413 -4.693 1.92 -7.253s-4.693 -3.413 -7.253 -1.92l-24.533 11.947c-4.48 2.347 -8.747 2.347 -17.493 2.347 -8.533 0 -20.907 -2.133 -21.547 -2.133s-1.067 -0.64 -0.853 -1.28c0 -0.64 0.64 -1.067 1.28 -0.853 0.213 0 12.8 2.133 21.12 2.133s12.587 0 16.64 -1.92l24.533 -11.947c3.413 -1.92 8.107 -0.853 10.027 2.773 2.133 3.627 0.853 8.107 -2.773 10.24l-28.8 17.92c-0.214 -0.213 -6.614 4.053 -21.76 4.053M6.416 115.2c-1.28 0 -2.133 -0.853 -2.133 -2.133s0.853 -2.133 2.133 -2.133 2.133 0.853 2.133 2.133 -0.853 2.133 -2.133 2.133m80 -21.333c-0.213 0 -0.64 0 -0.853 -0.213 0 0 -1.92 -1.92 -5.547 -1.92h-12.8c-3.627 0 -7.893 -3.2 -12.373 -6.613 -4.053 -2.987 -8.32 -6.187 -11.093 -6.187H26.683c-0.64 0 -1.067 -0.427 -1.067 -1.067s0.427 -1.067 1.067 -1.067h17.067c3.627 0 7.893 3.2 12.373 6.613 4.053 2.987 8.32 6.187 11.093 6.187h12.8c4.693 0 7.04 2.347 7.253 2.347 0.427 0.427 0.427 1.067 0 1.493 -0.213 0.427 -0.64 0.427 -0.853 0.427M84.282 70.4c-0.213 0 -0.427 0 -0.427 -0.213C60.816 57.6 46.949 36.053 46.949 22.4c0 -12.373 10.027 -22.4 22.4 -22.4q4.8 0 8.96 1.92c0.64 0.213 0.853 0.853 0.64 1.493s-0.853 0.853 -1.493 0.64c-2.56 -1.067 -5.333 -1.707 -8.107 -1.707 -11.093 0 -20.267 9.173 -20.267 20.267 0 13.013 13.227 33.493 35.2 45.653 21.973 -12.16 35.2 -32.853 35.2 -45.653 0 -11.093 -9.173 -20.267 -20.267 -20.267 -7.893 0 -15.147 4.693 -18.347 11.733 -0.213 0.64 -0.853 0.853 -1.493 0.427 -0.64 -0.213 -0.853 -0.853 -0.427 -1.493C82.576 5.12 90.683 0 99.216 0c12.373 0 22.4 10.027 22.4 22.4 0 13.653 -13.867 35.2 -36.907 47.787 0 0.213 -0.213 0.213 -0.426 0.213M111.376 19.2c-0.427 0 -0.853 -0.213 -1.067 -0.64 -1.28 -3.413 -3.84 -5.973 -7.04 -7.04 -0.64 -0.213 -0.853 -0.853 -0.64 -1.28 0.213 -0.64 0.853 -0.853 1.28 -0.64 4.053 1.493 7.04 4.48 8.533 8.533q0.32 0.96 -0.64 1.28c-0.213 -0.213 -0.426 -0.213 -0.426 -0.213" />
                 </svg>
                 <svg class="svg-donate" width="16" height="16" viewBox="-3.5 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
                     <g stroke-width="0" />
                     <g stroke-linecap="round" stroke-linejoin="round" />
-                    <g fill-rule="evenodd" fill="#022B87">
+                    <g fill-rule="evenodd" fill="#169bd7">
                         <path d="M838.912 663.62c-2.241-2.534-6.29-3.62-11.472-3.62h-15.035a2.15 2.15 0 0 0-2.128 1.801l-6.26 39.393a1.284 1.284 0 0 0 1.275 1.48h9.282l2.332-14.67-.073.46a2.14 2.14 0 0 1 2.12-1.802h4.41c8.668 0 15.452-3.492 17.434-13.593.06-.3.154-.874.154-.874.563-3.738-.004-6.275-2.04-8.576m4.389 10.488c-2.156 9.945-9.03 15.208-19.937 15.208h-3.956L816.458 708h6.416a1.88 1.88 0 0 0 1.86-1.576l.075-.396 1.476-9.273.095-.512a1.88 1.88 0 0 1 1.858-1.576h1.172c7.58 0 13.516-3.056 15.25-11.89.696-3.547.362-6.52-1.359-8.669" transform="translate(-804 -660)" />
                     </g>
                 </svg>
             </a>
             {% endif %}
         </div>
+        </div>
         <div class="page-header-padding">
             <h1 class="project-name"><img src="{{ site.github.base_url }}/assets/images/logo.png" alt=""> {{ page.title | default: site.title | default: site.github.repository_name }}</h1>
             <br>
             <h2 class="project-tagline">{{ page.tagline | default: page.description | default: site.tagline | default: site.description | default: site.github.project_tagline }}</h2>
             {% if site.show_downloads %}
-            <a class="btn2" href="{% include download.html %}">
-                <span>
-                    <span class="span-align">
-                        <!--
-                        <svg width="22px" height="22px" viewBox="0 0 24 24" class="svg-logo" xmlns="http://www.w3.org/2000/svg">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0" />
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
-                            <g id="SVGRepo_iconCarrier">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.163 2.819C9 3.139 9 3.559 9 4.4V11H7.803c-.883 0-1.325 0-1.534.176a.75.75 0 0 0-.266.62c.017.274.322.593.931 1.232l4.198 4.401c.302.318.453.476.63.535a.749.749 0 0 0 .476 0c.177-.059.328-.217.63-.535l4.198-4.4c.61-.64.914-.96.93-1.233a.75.75 0 0 0-.265-.62C17.522 11 17.081 11 16.197 11H15V4.4c0-.84 0-1.26-.164-1.581a1.5 1.5 0 0 0-.655-.656C13.861 2 13.441 2 12.6 2h-1.2c-.84 0-1.26 0-1.581.163a1.5 1.5 0 0 0-.656.656zM5 21a1 1 0 0 0 1 1h12a1 1 0 1 0 0-2H6a1 1 0 0 0-1 1z" fill="#000000" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-000000, #000000);" />
-                            </g>
-                        </svg>
-                        -->
-                        <svg width="18px" height="18px" viewBox="0 0 16 16" class="svg-logo" xmlns="http://www.w3.org/2000/svg" fill="none">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0" />
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
-                            <g id="SVGRepo_iconCarrier">
-                                <path fill="#F35325" d="M1 1h6.5v6.5H1V1z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-f35325, #f35325);" />
-                                <path fill="#81BC06" d="M8.5 1H15v6.5H8.5V1z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-81bc06, #81bc06);" />
-                                <path fill="#05A6F0" d="M1 8.5h6.5V15H1V8.5z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-05a6f0, #05a6f0);" />
-                                <path fill="#FFBA08" d="M8.5 8.5H15V15H8.5V8.5z" data-darkreader-inline-fill="" style="--darkreader-inline-fill: var(--darkreader-background-ffba08, #ffba08);" />
-                            </g>
+            <!-- latest release : portable archive or web installer -->
+            <div class="download-buttons">
+                <a class="btn2" href="{% include download.html %}">
+                    <span class="btn2-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="2.5" y="3" width="19" height="5.5" rx="1.2" />
+                            <path d="M4.5 8.5v10.3c0 1.2 1 2.2 2.2 2.2h10.6c1.2 0 2.2-1 2.2-2.2V8.5" />
+                            <path d="M9.5 12.5h5" />
                         </svg>
                     </span>
-                    <span class="span-align">
-                        {{ page.strings.download | default: site.strings.download }}
+                    <span class="btn2-text">
+                        <small>{{ page.strings.download | default: site.strings.download }}</small>
+                        <strong>{{ page.strings.portable | default: site.strings.portable }}</strong>
                     </span>
-                </span>
-            </a>
+                </a>
+                <a class="btn2 btn2-installer" href="{% include installer.html %}">
+                    <span class="btn2-icon">
+                        <svg width="20" height="20" viewBox="0 0 16 16" aria-hidden="true">
+                            <path fill="#F35325" d="M1 1h6.5v6.5H1V1z" />
+                            <path fill="#81BC06" d="M8.5 1H15v6.5H8.5V1z" />
+                            <path fill="#05A6F0" d="M1 8.5h6.5V15H1V8.5z" />
+                            <path fill="#FFBA08" d="M8.5 8.5H15V15H8.5V8.5z" />
+                        </svg>
+                    </span>
+                    <span class="btn2-text">
+                        <small>{{ page.strings.download | default: site.strings.download }}</small>
+                        <strong>{{ page.strings.installer | default: site.strings.installer }}</strong>
+                    </span>
+                </a>
+            </div>
             <div id="latest-release" class="page-latest-release"><i><a href="{{ site.github.repository_url }}/releases/latest" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none">{{ page.strings.latest | default: site.strings.latest }}</a> : </i> </div>
             <!--<img class="img-release" alt="{{ page.strings.latest | default: site.strings.latest }}" src="https://img.shields.io/github/v/release/maxensas/xiletrade?style=for-the-badge">-->
             {% endif %}

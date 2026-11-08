@@ -9,6 +9,10 @@ strings:
   maintained: proyecto es mantenido por
   generated: Esta página fue generada por
   download: Descargar
+  portable: Portátil (.7z)
+  installer: Instalador (.exe)
+  alt_customsearch: Ventana de búsqueda personalizada de Xiletrade con el formulario de búsqueda, un ajuste preestablecido, la categoría del objeto y los filtros de estadísticas con sugerencias
+  alt_history: Ventana del historial de divisas de Xiletrade con gráficos de volumen y tipo de cambio de la divisa seleccionada
   repository: Ver en GitHub
   footer: Servicio gratuito que requiere mantenimiento constante para funcionar correctamente.
   issue: y utilizar
@@ -24,8 +28,8 @@ strings:
 
 #### {% include youtube.svg %} &nbsp; [Ver resumen rápido](https://youtu.be/NygCZvZyUX0)<br>
 
-Bajo uso de CPU.  
-Usa un máximo de 250 MB de RAM, sin picos.  
+Uso de CPU muy bajo.  
+170 MB de RAM de media, sin picos.  
 No se escriben datos en segundo plano.  
 
 * * *
@@ -42,7 +46,7 @@ No se escriben datos en segundo plano.
 
 ### {% include knife.svg %} Datos clave
 
-- Plataforma: **Windows** 64 bits, portable (no requiere instalación).
+- Plataforma: **Windows** 64 bits, archivo **portable** o **instalador web** (no requiere derechos de administrador).
 - Coste y licencia: **gratis** y de **código abierto** (GPLv3), [código fuente en GitHub]({{ site.github.repository_url }}).
 - Juegos compatibles: Path of Exile y Path of Exile 2.
 
@@ -61,13 +65,48 @@ como viaje rápido a **escondites** o acciones de **intercambio**.
 - Utilidad de **administrador de expresiones regulares**.
 	- Administrar una lista definida de **expresiones regulares**.
 	- Pegar automáticamente en la barra de resaltado.  
+- **Historial de divisas** que te permite ver las tendencias actuales del mercado para la divisa seleccionada.
+- Utilidad de **búsqueda personalizada** con **ajustes preestablecidos** y notificaciones de **búsqueda en vivo**.
+
+{% include history.html %}
 
 {% include regex.html %}
 <br>
 
+### {% include adjust.svg %} Utilidad de búsqueda personalizada
+
+<h2 class="keywords"><i>🧭 Búsquedas de comercio simplificadas, directamente sobre tu juego.</i></h2>
+
+Una **interfaz minimalista** con todo lo necesario, que se abre con ***CTRL+E*** *por defecto*.
+
+- **Formulario de búsqueda** con una lista de resultados.
+	- Realiza una búsqueda sencilla, igual que en el sitio de comercio o en el juego: te sentirás como en casa.
+	- Nombre o tipo base del objeto, categoría, rareza, filtros, precio de compra inmediata y **grupos de estadísticas**.
+- **Gestión de ajustes preestablecidos**.
+	- Guarda tus búsquedas, **expórtalas** e **impórtalas** para compartirlas con tus amigos.
+	- La compatibilidad con las **próximas ligas** está garantizada: los ajustes se comprueban y reparan cuando cambian los filtros del comercio.
+- **Búsqueda en vivo**, solo para **usuarios avanzados**, mientras juegas.
+	- **Varias búsquedas en vivo**, que puedes pausar, reanudar o detener, incluso con la ventana cerrada.
+	- Los nuevos objetos se muestran como **notificaciones**, con una amplia gama de acciones por descubrir:  
+viajar al escondite del vendedor, cerrar o **fijar** los objetos que no puedes atender directamente.
+
+{% include customsearch.html %}
+
+La búsqueda en vivo es **segura por diseño** y te mantiene en buenos términos con GGG:
+
+- **Peticiones seguras**: se respetan los límites enviados por la API de comercio, nunca se consulta más allá de sus reglas, por lo que se **evitan los timeouts**.
+- **Tiempo de espera entre recuperaciones**: los nuevos objetos se recuperan con un intervalo entre peticiones, solo los resultados más recientes llegan a tus notificaciones.
+- **Optimizada con el verificador de precios**: las búsquedas en vivo solo usan una parte de los límites de peticiones, tus **consultas de precios mantienen la prioridad**.
+- **Pausa automática**: una búsqueda que recibe demasiados resultados se pausa, **afina** sus criterios y luego reanúdala.
+- **Sin automatismos**: ir al escondite de un vendedor siempre requiere un clic en la notificación.
+
+<br>
+
+
 ### {% include install.svg %} Instalación y configuración
 
-1. [**Descarga**]({% include download.html %}) la última versión y **extrae** el archivo **`.7zip`** en el directorio deseado.
+1. [**Descarga**]({% include installer.html %}) y ejecuta el último **instalador web** *(no requiere derechos de administrador)*,  
+o [**descarga**]({% include download.html %}) la versión **portable** y **extrae** el archivo **`.7z`** en el directorio deseado.  
 2. **Haz clic derecho** en el ícono de la bandeja del sistema para configurar o cerrar el programa.
 3. Selecciona la **versión del juego**, el **idioma** y la **liga** que desees en la ventana de inicio o configuración.
 4. **Pasa el mouse por encima** de cada función hasta que aparezca una información sobre herramientas para obtener una explicación detallada.  

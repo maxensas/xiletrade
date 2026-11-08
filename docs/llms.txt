@@ -3,11 +3,11 @@
 > Free, open-source price check overlay for Path of Exile (PoE 1) and Path of Exile 2, for Windows. Hover an item in game, press a hotkey (Ctrl+D by default) and Xiletrade shows estimated prices based on the official PoE trade websites.
 
 Key facts:
-- Platform: Windows 64-bit (win-x64 build). Portable .7z archive, nothing to install.
+- Platform: Windows 64-bit (win-x64 build). Portable .7z archive (nothing to install) or web installer (no admin rights required).
 - Games: Path of Exile 1 and Path of Exile 2.
 - Cost and license: free and open source (GPLv3).
 - Languages: supports all Path of Exile client languages. The website exists in 11 languages (en, fr, de, es, pt-BR, ru, th, ko, ja, zh-Hans, zh-Hant).
-- Footprint: low CPU usage, max 250 MB of RAM, no data written in the background.
+- Footprint: very low CPU usage, 170 MB of RAM on average with no spikes, no data written in the background.
 - Requirement: the game must run in windowed or borderless full screen mode.
 - First released in 2020, maintained by maxensas.
 
@@ -18,11 +18,13 @@ Key facts:
 - Update check and filter refresh on startup.
 - Hotkeys for chat console messages and mouse wheel / left click binding, following the single action rule of the PoE third-party policy as stated by the project.
 - Regex manager utility.
+- Custom search utility: search form with results, presets (export / import), multiple live searches with notifications for advanced users; requests follow the trade API rate limits with a fetch cooldown, price checks keep the priority, a live search with too many results is paused, travelling to a hideout always requires a click.
 - Designed to limit requests to the official trade website and warns when limits are approached.
 
 ## Links
 - [Website](https://maxensas.github.io/xiletrade/): overview, installation, FAQ
 - [Download latest release (.7z)](https://github.com/maxensas/xiletrade/releases/latest/download/Xiletrade_win-x64.7z)
+- [Download latest web installer (.exe)](https://github.com/maxensas/xiletrade/releases/latest/download/Xiletrade_win-x64_Setup.exe)
 - [All releases](https://github.com/maxensas/xiletrade/releases)
 - [Source code](https://github.com/maxensas/xiletrade)
 - [Issues and support](https://github.com/maxensas/xiletrade/issues)

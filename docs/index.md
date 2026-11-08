@@ -10,8 +10,8 @@ layout: default
 
 #### {% include youtube.svg %} &nbsp; [Watch overview](https://youtu.be/NygCZvZyUX0)<br>
 
-Low CPU usage.  
-Uses max ***250 MB of RAM***, no spikes.  
+Very low CPU usage.  
+***170 MB*** use on average, with no spikes.  
 ***No data*** written in the background.  
 
 * * *
@@ -28,7 +28,7 @@ Uses max ***250 MB of RAM***, no spikes.
 
 ### {% include knife.svg %} Key facts
 
-- Platform: **Windows** 64-bit, **portable** (no installation required).
+- Platform: **Windows** 64-bit, **portable** archive or **web installer** (no admin rights required).
 - Cost and license: **free** and **open source** (GPLv3), [source code on GitHub]({{ site.github.repository_url }}).
 - Games supported: Path of Exile and Path of Exile 2.
 
@@ -47,13 +47,48 @@ such as fast travel to **hideouts** or **trading** actions.
 - **Regex manager** utility.
 	- Manage a defined list of **regular expressions**.
 	- Auto paste into the highlight bar.
+- **Currency history** that allows you to see current market trends for the selected currency.
+- **Custom search** utility with **presets** and **live search** notifications.
+
+{% include history.html %}
 
 {% include regex.html %}
 <br>
 
+### {% include adjust.svg %} Custom search utility
+
+<h2 class="keywords"><i>🧭 Trade searches made simple, right over your game.</i></h2>
+
+A **minimalist interface** containing everything necessary, opened with ***CTRL+E*** *by default*.
+
+- **Search form** with a result list.
+	- Perform a simple search, just like on the trade site or in-game : you'll feel right at home.
+	- Item name or base type, category, rarity, filters, buyout price and **stat groups**.
+- **Preset management**.
+	- Save your searches, **export** and **import** them to share with friends.
+	- Compatibility with **upcoming leagues** is ensured : presets are checked and repaired when the trade filters change.
+- **Live search**, for **advanced users** only, while you play.
+	- **Multiple live searches**, can pause, resume or stop, even with the window closed.
+	- New items are displayed as **notifications**, with a wide range of actions to explore :  
+travel to the seller's hideout, close or **pin** item results you can't answer directly.
+
+{% include customsearch.html %}
+
+Live search is **safe by design** and keeps you in GGG's good graces :
+
+- **Secured requests** : the rate limits sent by the trade API are followed, it is never queried beyond its rules, so **timeouts are avoided**.
+- **Fetch cooldown** : new items are fetched with a cooldown between requests, only the freshest results reach your notifications.
+- **Optimized with the price checker** : live searches only use a part of the request limits, your **price checks keep the priority**.
+- **Auto pause** : a search receiving too many results is paused, **refine** its criteria then resume it.
+- **No automation** : going to a seller's hideout always requires a click on the notification.
+
+<br>
+
+
 ### {% include install.svg %} Installation and Setup
 
-1. [**Download**]({% include download.html %}) the latest version and **extract** **`.7zip`** archive in desired directory.  
+1. [**Download**]({% include installer.html %}) and run the latest **web installer** *(no admin rights required)*,  
+or [**download**]({% include download.html %}) the **portable** version and **extract** the **`.7z`** archive in desired directory.  
 2. **Right click** on system tray icon to configure or close the program.  
 3. Select desired **game version**, **language** and **league** under startup or settings window.
 4. **Mouse hover** on each feature until a tooltip appears for a detailed explanation.   
