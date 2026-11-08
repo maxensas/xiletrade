@@ -110,7 +110,7 @@ public sealed class NotificationHost : INotificationHost
 
         var panel = new DockPanel
         {
-            Margin = new Thickness(16),
+            Margin = new Thickness(message.Content is null ? _toast.Padding : _toast.ContentPadding),
             Background = Brushes.Transparent
         };
 

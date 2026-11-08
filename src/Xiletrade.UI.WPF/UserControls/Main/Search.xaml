@@ -144,13 +144,13 @@
                     </Trigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
-            <!-- live search listening : red dot (orange while paused), pause / resume and stop, its label in tooltip.
+            <!-- live search listening : green dot (orange while paused), pause / resume and stop, its label in tooltip.
                  Only the buttons react to a click -->
             <DataTemplate x:Key="LiveSlot">
                 <Border Height="26" Margin="6,0,0,0" Padding="7,0,2,0" Background="{StaticResource DarkBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}"
                         BorderThickness="1" CornerRadius="2" ToolTip="{Binding Label}">
                     <StackPanel Orientation="Horizontal">
-                        <Ellipse x:Name="Dot" Width="8" Height="8" Margin="0,0,3,0" VerticalAlignment="Center" Fill="Red"/>
+                        <Ellipse x:Name="Dot" Width="8" Height="8" Margin="0,0,3,0" VerticalAlignment="Center" Fill="{StaticResource LiveRunningBrush}"/>
                         <Button x:Name="Pause" Style="{StaticResource LiveSlotButton}" Tag="{StaticResource PauseIcon}"
                                 Command="{Binding TogglePauseCommand}" ToolTip="{ext:Localization Main305_LivePause}"/>
                         <Button Style="{StaticResource LiveSlotButton}" Tag="{StaticResource StopIcon}"
@@ -159,7 +159,7 @@
                 </Border>
                 <DataTemplate.Triggers>
                     <DataTrigger Binding="{Binding IsPaused}" Value="True">
-                        <Setter TargetName="Dot" Property="Fill" Value="Orange"/>
+                        <Setter TargetName="Dot" Property="Fill" Value="{StaticResource LivePausedBrush}"/>
                         <Setter TargetName="Pause" Property="Tag" Value="{StaticResource ResumeIcon}"/>
                         <Setter TargetName="Pause" Property="ToolTip" Value="{ext:Localization Main306_LiveResume}"/>
                     </DataTrigger>

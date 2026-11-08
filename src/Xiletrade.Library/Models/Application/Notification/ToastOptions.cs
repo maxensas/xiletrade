@@ -11,6 +11,10 @@ public sealed record ToastOptions
     public double Width { get; init; } = 360;
     public double Margin { get; init; } = 16;
     public double Gap { get; init; } = 10;
+    /// <summary>Space between the border of a text toast and its text.</summary>
+    public double Padding { get; init; } = 12;
+    /// <summary>Space between the border of a toast with a content (live search) and its content.</summary>
+    public double ContentPadding { get; init; } = 8;
     public double TitleFontSize { get; init; } = 14;
     public double MessageFontSize { get; init; } = 13;
     /// <summary>

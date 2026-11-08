@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.LiveSearch;
+using Xiletrade.Library.Models.Application.Notification;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
@@ -37,6 +38,7 @@ public sealed class PoeApiService
     private readonly DataManagerService _dm;
     private readonly INetService _net;
     private readonly IMessageAdapterService _message;
+    private readonly INotificationService _notif;
 
     // told by the live search service (weak messenger)
     private volatile bool _isLiveRunning;
@@ -44,8 +46,9 @@ public sealed class PoeApiService
     // Lazzy initialization of the service.
     // No dependency on the view models : the state of the form is given by the callers (used by the live searches too).
     public PoeApiService(ILogger<PoeApiService> logger, DataManagerService dm, 
-        IMessageAdapterService message, INetService net)
+        IMessageAdapterService message, INetService net, INotificationService notif)
     {
+        _notif = notif;
         _logger = logger;
         _dm = dm;
         _net = net;
@@ -178,15 +181,17 @@ public sealed class PoeApiService
     /// <summary>
     /// Travel to the hideout of the seller of a listing (instant buyout), with the hideout token of its fetch.
     /// </summary>
-    /// <remarks>Used by the results of a price check and by the live searches : the errors are displayed to the user.</remarks>
+    /// <remarks>
+    /// Used by the results of a price check and by the live searches : the errors are displayed in a toast (in game,
+    /// no message box to close), with the message of the trade api when it gives one (listing no longer available...).
+    /// </remarks>
     /// <param name="referer">Page of the search of the listing (Strings.Api.GetSearchPage) : the token is checked with it.</param>
+    /// <returns>False when the travel failed.</returns>
     internal async Task<bool> TravelToHideoutAsync(string hideoutToken, string referer)
     {
         if (string.IsNullOrEmpty(hideoutToken))
         {
-            _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\n" + Resources.Resources.Error036_TravelNoToken,
-                Resources.Resources.Error018_XReqAuth, MessageStatus.Exclamation);
-            return false;
+            return TravelFailed(Resources.Resources.Error036_TravelNoToken);
         }
 
         try
@@ -200,29 +205,28 @@ public sealed class PoeApiService
             {
                 return true; // can be normal
             }
-            if (exception.StatusCode is System.Net.HttpStatusCode.BadRequest)
+            // message of the trade api (json error read by the net service) : told as it is
+            if (exception.InnerException is HttpRequestException)
             {
-                _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\n" + Resources.Resources.Error037_TravelAccount,
-                    Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
-                return false;
+                return TravelFailed(exception.Message);
             }
-            if (exception.StatusCode is System.Net.HttpStatusCode.Forbidden)
+            return TravelFailed(exception.StatusCode switch
             {
-                _message.Show(Resources.Resources.Error002_CannotTravel,
-                    Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
-                return false;
-            }
-            _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\n" + Resources.Resources.Error038_TravelSession,
-                Resources.Resources.Error021_XErrorCode + exception.StatusCode, MessageStatus.Error);
-            return false;
+                System.Net.HttpStatusCode.BadRequest => Resources.Resources.Error037_TravelAccount,
+                System.Net.HttpStatusCode.Forbidden => Resources.Resources.Error021_XErrorCode + exception.StatusCode,
+                _ => Resources.Resources.Error038_TravelSession
+            });
         }
         catch (Exception ex)
         {
-            _message.Show(Resources.Resources.Error002_CannotTravel + " :\n\n" +
-                string.Format("{0} Error:  {1}\r\n\r\n{2}\r\n\r\n", ex.Source, ex.Message, ex.StackTrace),
-                Resources.Resources.Error010_XUnknownError, MessageStatus.Error);
-            return false;
+            return TravelFailed(ex.Message);
         }
+    }
+
+    private bool TravelFailed(string message)
+    {
+        _notif.Show(new ToastNotification(Resources.Resources.Error002_CannotTravel, message, NotificationStatus.Error, TimeSpan.FromSeconds(8)));
+        return false;
     }
 
     // {"token":"<hideout token>"} written in UTF-8, without intermediate string

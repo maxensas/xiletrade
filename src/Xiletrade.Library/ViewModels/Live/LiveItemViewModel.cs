@@ -54,8 +54,8 @@ public sealed partial class LiveItemViewModel : ViewModelBase
     /// <summary>Instant buyout : the seller can be joined in his hideout.</summary>
     public bool CanTravel { get; }
 
-    /// <summary>Pinned toasts of the live searches : the pin is red while no more toast can be pinned.</summary>
-    public LivePinStateViewModel Pins { get; }
+    /// <summary>State shared by the toasts : pin red while no more toast can be pinned, number shown with several lives.</summary>
+    public LiveToastStateViewModel State { get; }
 
     /// <summary>Pinned : kept at the top of the screen until it is closed, the pin button is hidden.</summary>
     [ObservableProperty]
@@ -66,14 +66,14 @@ public sealed partial class LiveItemViewModel : ViewModelBase
     /// <param name="pin">Displays the toast again, pinned : false when the maximum of pinned toasts is reached.</param>
     /// <param name="number">Number of its live search.</param>
     internal LiveItemViewModel(DataManagerService dm, FetchDataInfo info, int number, string referer, Func<string, string, Task<bool>> travel,
-        Action<string> dismiss, Func<LiveItemViewModel, bool> pin, LivePinStateViewModel pins)
+        Action<string> dismiss, Func<LiveItemViewModel, bool> pin, LiveToastStateViewModel state)
     {
         _referer = referer;
         Number = number;
         _travel = travel;
         _dismiss = dismiss;
         _pin = pin;
-        Pins = pins;
+        State = state;
         _hideoutToken = info.Listing?.HideoutToken;
 
         var item = info.Item;

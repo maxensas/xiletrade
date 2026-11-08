@@ -35,8 +35,8 @@ public sealed class LiveSearchService : IDisposable
     /// <summary>Live searches at the same time.</summary>
     internal const int MaxSessions = 4;
 
-    private const int MaxToasts = 5;
-    private const int MaxPinned = 2;
+    private const int MaxToasts = 6;
+    private const int MaxPinned = 3;
     private const int MaxResultsPerMinute = 60;
     /// <summary>Part of each window of the fetch limits the live searches can use.</summary>
     internal const double MaxFetchUsage = 0.6;
@@ -56,7 +56,7 @@ public sealed class LiveSearchService : IDisposable
     private readonly Queue<string> _toasts = new();
     // ids of the pinned toasts, out of the toasts above
     private readonly HashSet<string> _pinned = new(StringComparer.Ordinal);
-    private readonly LivePinStateViewModel _pins = new();
+    private readonly LiveToastStateViewModel _toastState = new();
 
     // given to the toasts of the live results : created once
     private readonly Func<string, string, Task<bool>> _travelToHideout;
@@ -317,7 +317,13 @@ public sealed class LiveSearchService : IDisposable
         SendState();
     }
 
-    private void SendState() => WeakReferenceMessenger.Default.Send(new LiveSearchStateMessage(GetSessions(), IsPaused));
+    // the toasts show the number of their live search while several are running
+    private void SendState()
+    {
+        var sessions = GetSessions();
+        _toastState.HasSeveralLives = sessions.Length > 1;
+        WeakReferenceMessenger.Default.Send(new LiveSearchStateMessage(sessions, IsPaused));
+    }
 
     private async Task RunAsync(LiveSearchSession session)
     {
@@ -417,7 +423,7 @@ public sealed class LiveSearchService : IDisposable
                 {
                     continue; // no longer listed
                 }
-                Show(new LiveItemViewModel(_dm, info, session.Number, session.Referer, _travelToHideout, _dismissToast, _tryPin, _pins), sound);
+                Show(new LiveItemViewModel(_dm, info, session.Number, session.Referer, _travelToHideout, _dismissToast, _tryPin, _toastState), sound);
                 sound = false;
 #if DEBUG
                 shown++;
@@ -516,7 +522,7 @@ public sealed class LiveSearchService : IDisposable
             _pinned.Add(item.Id);
             full = _pinned.Count >= MaxPinned;
         }
-        _pins.IsFull = full;
+        _toastState.IsPinFull = full;
         return true;
     }
 
@@ -533,7 +539,7 @@ public sealed class LiveSearchService : IDisposable
             }
             full = _pinned.Count >= MaxPinned;
         }
-        _pins.IsFull = full;
+        _toastState.IsPinFull = full;
     }
 
     // the order of the others is kept (under the gate)

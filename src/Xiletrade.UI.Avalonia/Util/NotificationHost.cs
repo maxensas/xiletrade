@@ -61,7 +61,7 @@ public sealed class NotificationHost : INotificationHost
 
         var card = new Border
         {
-            Padding = new Thickness(12),
+            Padding = new Thickness(_toast.Padding),
             CornerRadius = new CornerRadius(8),
             Child = body,
             Background = GetStatusBrush(message.Status),

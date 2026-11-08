@@ -3,7 +3,14 @@
                     xmlns:live="clr-namespace:Xiletrade.Library.ViewModels.Live;assembly=Xiletrade.Library"
                     xmlns:uc="clr-namespace:Xiletrade.UI.WPF.UserControls.Main">
     <!-- buttons of the live searches : overlay over the game (pause all, stop all) and live searches of the custom search -->
-    <!-- icon button : gray, in the color of the theme on hover, the geometry is the tag -->
+    <!-- colors of the live searches : dot running or paused, stop -->
+    <SolidColorBrush x:Key="LiveRunningBrush" Color="#FF3CB043"/>
+    <SolidColorBrush x:Key="LivePausedBrush" Color="#FFFFA000"/>
+    <SolidColorBrush x:Key="LiveStopBrush" Color="#FFE53935"/>
+    <StreamGeometry x:Key="PauseIcon">M0,0 L3.5,0 L3.5,12 L0,12 Z M7.5,0 L11,0 L11,12 L7.5,12 Z</StreamGeometry>
+    <StreamGeometry x:Key="ResumeIcon">M0,0 L11,6 L0,12 Z</StreamGeometry>
+    <StreamGeometry x:Key="StopIcon">M0,0 L11,0 L11,11 L0,11 Z</StreamGeometry>
+    <!-- icon button, the geometry is the tag : gray (stop in red), in the color of the theme on hover -->
     <Style x:Key="OverlayButton" TargetType="{x:Type Button}">
         <Setter Property="Width" Value="34"/>
         <Setter Property="Height" Value="28"/>
@@ -17,6 +24,10 @@
                               Fill="{StaticResource ForegroundMediumBrush}" Data="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="Tag" Value="{StaticResource StopIcon}">
+                            <Setter TargetName="Icon" Property="Fill" Value="{StaticResource LiveStopBrush}"/>
+                        </Trigger>
+                        <!-- after the colors : the hover wins -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Icon" Property="Fill" Value="{StaticResource ThemeFirstForegroundBrush}"/>
                         </Trigger>
@@ -25,9 +36,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <StreamGeometry x:Key="PauseIcon">M0,0 L3.5,0 L3.5,12 L0,12 Z M7.5,0 L11,0 L11,12 L7.5,12 Z</StreamGeometry>
-    <StreamGeometry x:Key="ResumeIcon">M0,0 L11,6 L0,12 Z</StreamGeometry>
-    <StreamGeometry x:Key="StopIcon">M0,0 L11,0 L11,11 L0,11 Z</StreamGeometry>
     <!-- smaller, in a live search of the custom search -->
     <Style x:Key="LiveSlotButton" TargetType="{x:Type Button}" BasedOn="{StaticResource OverlayButton}">
         <Setter Property="Width" Value="20"/>
@@ -47,9 +55,10 @@
                         <uc:ResultItem DataContext="{Binding Item}" />
                     </ToolTip>
                 </StackPanel.ToolTip>
-                <!-- name, then the number of its live search (several live searches) on the right, above the buttons -->
+                <!-- name, then the number of its live search on the right, above the buttons : only while several live searches are running -->
                 <DockPanel>
                     <Border DockPanel.Dock="Right" MinWidth="18" Height="18" Margin="6,0,4,0" Padding="4,0" VerticalAlignment="Center" CornerRadius="9"
+                            Visibility="{Binding State.HasSeveralLives, Converter={StaticResource bool2VisibilityConverter}}"
                             Background="Transparent" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1">
                         <TextBlock Text="{Binding Number}" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center"
                                    Foreground="{StaticResource GrayForegoundBrush}"/>
@@ -84,15 +93,15 @@
                 <TextBlock Text="{Binding TypeLine}" FontSize="12" Foreground="{StaticResource GrayForegoundBrush}" TextTrimming="CharacterEllipsis"
                            Visibility="{Binding TypeLine, Converter={StaticResource null2CollapseConverter}}"/>
                 <!-- price, seller and travel to his hideout -->
-                <DockPanel Margin="0,6,0,0">
-                    <!-- close, pin and travel : square, same size ; once pinned, travel and close only -->
+                <DockPanel Margin="0,4,0,0">
+                    <!-- close (red), pin and travel (green) : square, same size, in the color of the theme on hover ; once pinned, travel and close only -->
                     <Button DockPanel.Dock="Right" Width="26" Height="26" Margin="2,0,0,0" Padding="0"
                             Command="{Binding CloseCommand}" Cursor="Hand" Focusable="False">
                         <Path Width="10" Height="10" Stretch="Uniform" StrokeThickness="1.8" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
                               Data="M0,0 L9,9 M9,0 L0,9">
                             <Path.Style>
                                 <Style TargetType="{x:Type Path}">
-                                    <Setter Property="Stroke" Value="{StaticResource ForegroundMediumBrush}"/>
+                                    <Setter Property="Stroke" Value="{StaticResource LiveStopBrush}"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
                                             <Setter Property="Stroke" Value="{StaticResource ThemeFirstForegroundBrush}"/>
@@ -102,10 +111,22 @@
                             </Path.Style>
                         </Path>
                     </Button>
-                    <!-- pin : the toast stays at the top of the screen until it is closed, red while no more toast can be pinned -->
+                    <!-- pin : the toast stays at the top of the screen until it is closed ; hidden while no more toast can be pinned
+                         (its place is kept), removed once pinned -->
                     <Button DockPanel.Dock="Right" Width="26" Height="26" Margin="2,0,0,0" Padding="0"
-                            Command="{Binding PinCommand}" Cursor="Hand" Focusable="False"
-                            Visibility="{Binding IsPinned, Converter={StaticResource inverseBool2VisibilityConverter}}">
+                            Command="{Binding PinCommand}" Cursor="Hand" Focusable="False">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding State.IsPinFull}" Value="True">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsPinned}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
                         <Path Width="9" Height="14" Stretch="Uniform"
                               Data="M3,0 L9,0 L9,1.5 L8,1.5 L8,6 L10,8 L10,9.5 L6.6,9.5 L6,15 L5.4,9.5 L2,9.5 L2,8 L4,6 L4,1.5 L3,1.5 Z">
                             <Path.Style>
@@ -114,10 +135,6 @@
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
                                             <Setter Property="Fill" Value="{StaticResource ThemeFirstForegroundBrush}"/>
-                                        </DataTrigger>
-                                        <!-- after the hover : stays red -->
-                                        <DataTrigger Binding="{Binding Pins.IsFull}" Value="True">
-                                            <Setter Property="Fill" Value="{StaticResource RedBrush}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -128,10 +145,18 @@
                             Command="{Binding TravelToHideoutCommand}"
                             Visibility="{Binding CanTravel, Converter={StaticResource bool2VisibilityConverter}}">
                         <Viewbox Width="15" Height="15">
-                            <Path Style="{StaticResource HouseIcon}" Stretch="Uniform"/>
+                            <Path Stretch="Uniform">
+                                <Path.Style>
+                                    <!-- green, the hover and the click of the house icon kept -->
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource HouseIcon}">
+                                        <Setter Property="Fill" Value="{StaticResource LiveRunningBrush}"/>
+                                    </Style>
+                                </Path.Style>
+                            </Path>
                         </Viewbox>
                     </Button>
-                    <TextBlock Text="{Binding Amount}" FontSize="15" Foreground="White" VerticalAlignment="Center"/>
+                    <!-- price : the main information, bigger and bold -->
+                    <TextBlock Text="{Binding Amount}" FontSize="16" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
                     <Image Source="{Binding Currency, Converter={StaticResource imageSourceConverter}}" Width="22" Height="22" Margin="4,0,0,0"
                            VerticalAlignment="Center"
                            Visibility="{Binding Source={RelativeSource Self}, Path=Source, Converter={StaticResource null2CollapseConverter}}"/>
