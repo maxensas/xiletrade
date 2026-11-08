@@ -22,7 +22,8 @@ namespace Xiletrade.UI.WPF.Util;
 /// <remarks>
 /// The backgrounds take the opacity set by the user in the options.
 /// The toasts with a content (live searches) are scaled with the screen : same proportions whatever its size.
-/// Hidden while another application than the game or Xiletrade is in the foreground (as the shortcuts, <see cref="GameFocusMessage"/>).
+/// The toasts with a content (live searches) are hidden while another application than the game or Xiletrade is in the foreground
+/// (as the shortcuts, <see cref="GameFocusMessage"/>) : the messages of the application (update of the data...) are always displayed.
 /// The toasts are tool windows not activated by a click : not listed by Alt+Tab, the game keeps the focus.
 /// </remarks>
 public sealed class NotificationHost : INotificationHost
@@ -45,7 +46,7 @@ public sealed class NotificationHost : INotificationHost
     // a window is being closed by the host : not a closing to tell to the notification service
     private bool _hostClosing;
 
-    // the game or Xiletrade has the focus : the toasts are displayed
+    // the game or Xiletrade has the focus : the toasts with a content are displayed
     private bool _hasGameFocus = true;
 
     private bool _disposed;
@@ -68,7 +69,8 @@ public sealed class NotificationHost : INotificationHost
             static (host, focus) => host.OnGameFocus(focus.HasFocus));
     }
 
-    // hidden with the shortcuts, displayed again over the game (Topmost set again : at the top of the topmost windows)
+    // toasts with a content hidden with the shortcuts, displayed again over the game (Topmost set again : at the top of the
+    // topmost windows)
     private void OnGameFocus(bool hasFocus) => _ui.Invoke(() =>
     {
         if (_hasGameFocus == hasFocus)
@@ -77,6 +79,10 @@ public sealed class NotificationHost : INotificationHost
         _hasGameFocus = hasFocus;
         foreach (var (window, _) in _windows.Values)
         {
+            if (window.Tag is null)
+            {
+                continue; // message of the application : always displayed
+            }
             if (!hasFocus)
             {
                 window.Hide();
@@ -174,7 +180,8 @@ public sealed class NotificationHost : INotificationHost
             AllowsTransparency = true,
             WindowStartupLocation = WindowStartupLocation.Manual,
             ShowActivated = false,
-            Opacity = 0
+            Opacity = 0,
+            Tag = message.Content // null : message of the application, not hidden with the focus of the game
         };
 
         window.Closed += (_, _) =>
@@ -201,7 +208,7 @@ public sealed class NotificationHost : INotificationHost
 
         window.Show(); // synchronous layout: ActualWidth/ActualHeight are valid right after
         Reposition();  // placed before the fade-in starts, so nothing is visible at a wrong position
-        if (!_hasGameFocus)
+        if (!_hasGameFocus && message.Content is not null)
         {
             window.Hide(); // still transparent (fade-in not started) : displayed when the game has the focus again
         }
