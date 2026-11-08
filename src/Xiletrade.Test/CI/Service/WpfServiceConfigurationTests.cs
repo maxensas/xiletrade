@@ -21,6 +21,7 @@ public class WpfServiceConfigurationTests : ServiceConfigurationBase
             .Replace(ServiceDescriptor.Singleton(Mock.Of<IViewManager>())) // null object
             .Replace(ServiceDescriptor.Singleton(Mock.Of<ITaskbar>()))
             .Replace(ServiceDescriptor.Singleton(Mock.Of<IMainView>()))
+            .Replace(ServiceDescriptor.Singleton(Mock.Of<ILiveOverlayView>()))
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IConfigView>()))
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IRegexView>()))
             .Replace(ServiceDescriptor.Transient(_ => Mock.Of<IStartView>()))

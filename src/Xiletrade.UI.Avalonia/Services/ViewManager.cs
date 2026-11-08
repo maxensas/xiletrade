@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Platform.Storage;
 using Avalonia.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -130,6 +131,45 @@ public class ViewManager : IViewManager
             win?.Focus();
         }
     }
+
+    public async Task<string> ShowOpenFileViewAsync(string title, string filterName, string extension)
+    {
+        if (MainView is not TopLevel topLevel)
+        {
+            return null;
+        }
+        var storage = topLevel.StorageProvider;
+        var files = await storage.OpenFilePickerAsync(new FilePickerOpenOptions
+        {
+            Title = title,
+            AllowMultiple = false,
+            FileTypeFilter = [GetFileType(filterName, extension)],
+            SuggestedStartLocation = await storage.TryGetWellKnownFolderAsync(WellKnownFolder.Documents)
+        });
+        return files.Count > 0 ? files[0].TryGetLocalPath() : null;
+    }
+
+    public async Task<string> ShowSaveFileViewAsync(string title, string filterName, string extension, string fileName)
+    {
+        if (MainView is not TopLevel topLevel)
+        {
+            return null;
+        }
+        var storage = topLevel.StorageProvider;
+        var file = await storage.SaveFilePickerAsync(new FilePickerSaveOptions
+        {
+            Title = title,
+            SuggestedFileName = fileName,
+            DefaultExtension = extension,
+            ShowOverwritePrompt = true,
+            FileTypeChoices = [GetFileType(filterName, extension)],
+            SuggestedStartLocation = await storage.TryGetWellKnownFolderAsync(WellKnownFolder.Documents)
+        });
+        return file?.TryGetLocalPath();
+    }
+
+    private static FilePickerFileType GetFileType(string filterName, string extension)
+        => new(filterName) { Patterns = [$"*.{extension}"] };
 
     public void ShutDownNativeApp(int exitCode = 0)
     {

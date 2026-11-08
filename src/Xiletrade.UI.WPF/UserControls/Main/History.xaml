@@ -73,7 +73,8 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <TextBlock Margin="0,3,0,0" Text="{ext:Localization General212_ChartNavigate}" Foreground="{StaticResource GrayForegoundBrush}" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TextBlock Margin="0,3,0,0" Text="{ext:Localization General212_ChartNavigate}" Foreground="{StaticResource GrayForegoundBrush}" HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Visibility="{Binding Ninja.HistoryLoaded, Converter={StaticResource bool2VisibilityConverter}}"/>
         <StackPanel>
             <ListBox FontFamily="Consolas" BorderThickness="1" Height="436"
                      ItemsSource="{Binding Path=Ninja.Detail.Pairs}" d:ItemsSource="{d:SampleData ItemCount=3}"
@@ -131,6 +132,14 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             
+        </StackPanel>
+        <!-- no history : low price or currency not managed -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Visibility="{Binding Ninja.HistoryMissing, Converter={StaticResource bool2VisibilityConverter}}">
+            <TextBlock Text="{ext:Localization Main256_unmanagedMissing}" FontSize="22" FontFamily="{DynamicResource FontinSmallCaps}"
+                       Foreground="{StaticResource ThemeSecondForegroundBrush}" HorizontalAlignment="Center"/>
+            <TextBlock Margin="0,5,0,0" Text="{ext:Localization Main257_unmanagedMissingFull}" Foreground="{StaticResource GrayForegoundBrush}"
+                       TextAlignment="Center" HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </UserControl>

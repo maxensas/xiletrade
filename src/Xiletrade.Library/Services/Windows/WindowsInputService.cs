@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Globalization;
 using System.Runtime.Versioning;
+using Xiletrade.Library.Models.Application.Notification;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Interop.Windows;
@@ -31,6 +33,8 @@ public sealed class WindowsInputService : IInputService
     private static bool _firstHotkeyRegistering = true;
     private static bool _capturingMouse = false;
     private static bool _configViewOpened = false;
+    // the toasts and the live buttons are displayed with the shortcuts
+    private bool _hasGameFocus = true;
 
     public WindowsInputService(ILogger<WindowsInputService> logger, 
         IViewManager view, IHookService hook,
@@ -76,12 +80,14 @@ public sealed class WindowsInputService : IInputService
             if (_firstHotkeyRegistering || !_isAllHotKeysRegistered && (isPoeFocused || IsXiletradeWindowOpened()))
             {
                 InstallRegisterHotKey();
+                SetGameFocus(true);
                 return;
             }
 
             if (_isAllHotKeysRegistered && !isPoeFocused && !IsXiletradeWindowOpened())
             {
                 RemoveRegisterHotKey(false);
+                SetGameFocus(false);
             }
 
             if (dm.Config.Options.Autopaste)
@@ -109,6 +115,16 @@ public sealed class WindowsInputService : IInputService
     }
 
     private void OnRegisterTimerElapsed(object sender, EventArgs e) => _ui.Invoke(_inputHandler);
+
+    // another application in the foreground : the toasts and the live buttons are hidden, as the shortcuts are removed
+    private void SetGameFocus(bool hasFocus)
+    {
+        if (_hasGameFocus == hasFocus)
+            return;
+
+        _hasGameFocus = hasFocus;
+        WeakReferenceMessenger.Default.Send(new GameFocusMessage(hasFocus));
+    }
 
     public void EnableHotkeys() => InstallRegisterHotKey();
 

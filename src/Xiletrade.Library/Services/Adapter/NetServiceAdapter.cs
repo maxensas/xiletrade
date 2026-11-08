@@ -20,7 +20,7 @@ public sealed class NetServiceAdapter : NetService
     }
 
     // TODO add other mock APIs.
-    public override async Task<byte[]> SendHTTPBytes(ReadOnlyMemory<byte> json, string urlString, Client idClient, bool isXml = false)
+    public override async Task<byte[]> SendHTTPBytes(ReadOnlyMemory<byte> json, string urlString, Client idClient, bool isXml = false, string referer = null)
     {
         if (idClient is Client.Trade)
         {
@@ -28,6 +28,6 @@ public sealed class NetServiceAdapter : NetService
             return "{\"id\":\"bG2Xa5QRIL\",\"complexity\":22,\"result\":[],\"total\":0}"u8.ToArray();
         }
 
-        return await base.SendHTTPBytes(json, urlString, idClient, isXml);
+        return await base.SendHTTPBytes(json, urlString, idClient, isXml, referer);
     }
 }

@@ -34,6 +34,9 @@ public sealed class MinMaxModel(string text)
             { StatPanel.CommonSocketGem, new(Resources.Resources.ItemClass_supportGems) },
             { StatPanel.CommonIntangibility, new(Resources.Resources.General218_Intangibility) },
 
+            { StatPanel.WeaponDamage, new(Resources.Resources.Main277_Damage) },
+            { StatPanel.WeaponAttacksPerSecond, new(Resources.Resources.General061_AttacksPerSecond) },
+            { StatPanel.WeaponCriticalChance, new(Resources.Resources.General147_CriticalHitChance) },
             { StatPanel.DamageTotal, new(Resources.Resources.Main073_tbTotalDps) },
             { StatPanel.DamagePhysical, new(Resources.Resources.Main074_tbPhysDps) },
             { StatPanel.DamageElemental, new(Resources.Resources.Main075_tbElemDps) },
@@ -52,6 +55,8 @@ public sealed class MinMaxModel(string text)
             { StatPanel.CommonRequiresLevel, new(Resources.Resources.General155_Requires) },
             { StatPanel.CommonMemoryStrand, new(Resources.Resources.ItemClass_memory) },
 
+            { StatPanel.MapTier, new(Resources.Resources.General034_MaTier) },
+            { StatPanel.AreaLevel, new(Resources.Resources.General067_AreaLevel) },
             { StatPanel.MapQuantity, new(Resources.Resources.General133_Iiq) },
             { StatPanel.MapRarity, new(Resources.Resources.General134_Iir) },
             { StatPanel.MapPackSize, new(Resources.Resources.General138_MonsterPackSize) },

@@ -90,6 +90,7 @@ public sealed class JsonHelper
         //options.Converters.Add(new ArrayStringJsonConverter());
         //options.Converters.Add(new FlexibleStringConverter());
         options.Converters.Add(new ModAffixConverter(_defaultContext));
+        options.Converters.Add(new BuiltInSupportConverter(_defaultContext));
         options.Converters.Add(new ItemExtendedOrEmptyArrayConverter(_defaultContext));
         options.Converters.Add(new ValueTupleListConverter());
         options.Converters.Add(new HashMapConverter());

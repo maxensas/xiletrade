@@ -12,14 +12,18 @@ public static partial class Native
     public const int WM_KEYUP = 0x0101;
     public const int WM_CLOSE = 0x0010;
     public const int WM_HOTKEY = 0x312;
+    public const uint MONITOR_DEFAULTTOPRIMARY = 1;
     public const uint MONITOR_DEFAULTTONEAREST = 2;
     //public const int WM_CLIPBOARDUPDATE = 0x031D;
     //public const int WM_DRAWCLIPBOARD = 0x0308;
     //public const int WM_CHANGECBCHAIN = 0x030D;
     //public const int WM_INPUT = 0x00FF;
     //public const int WM_DRAWITEM = 0x1C;
-    //public const int GWL_EXSTYLE = -20;
-    //public const int WS_EX_NOACTIVATE = 0x08000000;
+    public const int GWL_EXSTYLE = -20;
+    /// <summary>Not listed by Alt+Tab nor in the taskbar.</summary>
+    public const int WS_EX_TOOLWINDOW = 0x00000080;
+    /// <summary>Not activated by a click : the foreground window (the game) keeps the focus.</summary>
+    public const int WS_EX_NOACTIVATE = 0x08000000;
 
     // -------- Struct --------
     [StructLayout(LayoutKind.Sequential)]
@@ -128,10 +132,34 @@ public static partial class Native
     [return: MarshalAs(UnmanagedType.Bool)]
     private static partial bool SetForegroundWindow(nint hWnd);
 
+    // 64-bit only, GetWindowLongW / SetWindowLongW in 32-bit
+    [LibraryImport("user32.dll", EntryPoint = "GetWindowLongPtrW")]
+    private static partial nint GetWindowLongPtr(nint hWnd, int nIndex);
+
+    [LibraryImport("user32.dll", EntryPoint = "SetWindowLongPtrW")]
+    private static partial nint SetWindowLongPtr(nint hWnd, int nIndex, nint dwNewLong);
+
+    [LibraryImport("user32.dll", EntryPoint = "GetWindowLongW")]
+    private static partial int GetWindowLong(nint hWnd, int nIndex);
+
+    [LibraryImport("user32.dll", EntryPoint = "SetWindowLongW")]
+    private static partial int SetWindowLong(nint hWnd, int nIndex, int dwNewLong);
+
     // -------- delegate --------
     internal delegate nint WndProcDelegate(nint hWnd, uint msg, nint wParam, nint lParam);
 
     //helper
+    /// <summary>Adds extended styles (WS_EX_*) to a window, before it is shown.</summary>
+    public static void AddExtendedStyle(nint hWnd, int style)
+    {
+        if (nint.Size is 8)
+        {
+            SetWindowLongPtr(hWnd, GWL_EXSTYLE, GetWindowLongPtr(hWnd, GWL_EXSTYLE) | style);
+            return;
+        }
+        SetWindowLong(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) | style);
+    }
+
     internal static bool SwitchWindow(nint windowHandle)
     {
         if (GetForegroundWindow() == windowHandle)

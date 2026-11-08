@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Main.Form;
+using Xiletrade.Library.ViewModels.Main.Form.Search;
 
 namespace Xiletrade.Library.Models.Poe.Domain;
 
@@ -15,9 +17,8 @@ internal record class XiletradeItem
 {
     internal bool SynthesisBlight { get; }
     internal bool BlightRavaged { get; }
-    internal bool ChaosDivOnly { get; }
-    internal bool ExaltOnly { get; }
-    internal bool ChaosOnly { get; }
+    /// <summary>Currencies of the buyout price, option of the trade site (see <see cref="BuyoutPrice"/>), null : all currencies.</summary>
+    internal string PriceOption { get; }
     internal bool ByType { get; }
     internal bool SocketColors { get; }
 
@@ -36,6 +37,13 @@ internal record class XiletradeItem
     internal XiletradeOption Quality { get; } = new();
     internal XiletradeOption Lvl { get; } = new();
     internal XiletradeOption DpsTotal { get; } = new();
+    internal XiletradeOption WeaponDamage { get; } = new();
+    internal XiletradeOption AttacksPerSecond { get; } = new();
+    internal XiletradeOption CriticalChance { get; } = new();
+    internal XiletradeOption MapTier { get; } = new();
+    internal XiletradeOption AreaLevel { get; } = new();
+    /// <summary>Buyout price min / max (custom search), in the currency of the buyout price option.</summary>
+    internal XiletradeOption Price { get; } = new();
     internal XiletradeOption DpsPhys { get; } = new();
     internal XiletradeOption DpsElem { get; } = new();
     internal XiletradeOption Armour { get; } = new();
@@ -94,6 +102,12 @@ internal record class XiletradeItem
     internal DefaultOption Desecrated { get; }
     internal DefaultOption Sanctified { get; }
 
+    /// <summary>Custom search : item category of the trade site, null : any.</summary>
+    internal string Category { get; }
+
+    /// <summary>Custom search : stat groups (and, not, count), null : no stat filter.</summary>
+    internal Stats[] CustomStats { get; }
+
     internal string RewardType { get; }
     internal string Reward { get; }
     internal string Rarity { get; }
@@ -142,14 +156,19 @@ internal record class XiletradeItem
 
         RewardType = form.Panel?.Reward?.Tip.Length > 0 ? form.Panel.Reward.Tip : null;
         Reward = form.Panel?.Reward?.Text.Length > 0 ? form.Panel.Reward.Text : null;
-        ChaosDivOnly = form.ChaosDiv;
-        ExaltOnly = form.Exalt;
-        ChaosOnly = form.Chaos;
+        // buyout price option, see FormViewModel.BuyoutPriceIndex (0 : all currencies, no option sent)
+        PriceOption = new BuyoutPrice(form.IsPoeTwo).GetOption(form.BuyoutPriceIndex);
         Rarity = form.Rarity.Index >= 0 && form.Rarity.Index < form.Rarity.ComboBox.Count ?
             form.Rarity.ComboBox[form.Rarity.Index] : form.Rarity.Item;
         UniqueName = form.GetUniqueName();
 
         PriceMin = 0; // not used
+
+        if (customSearch && form.CustomSearch is not null)
+        {
+            Category = form.CustomSearch.CategoryId;
+            CustomStats = GetCustomStats(form.CustomSearch);
+        }
 
         SocketColors = form.Condition is not null && form.Condition.SocketColors;
 
@@ -214,6 +233,11 @@ internal record class XiletradeItem
             (StatPanel.DamageElemental, DpsElem),
             (StatPanel.DamagePhysical, DpsPhys),
             (StatPanel.DamageTotal, DpsTotal),
+            (StatPanel.WeaponDamage, WeaponDamage),
+            (StatPanel.WeaponAttacksPerSecond, AttacksPerSecond),
+            (StatPanel.WeaponCriticalChance, CriticalChance),
+            (StatPanel.MapTier, MapTier),
+            (StatPanel.AreaLevel, AreaLevel),
             (StatPanel.DefenseArmour, Armour),
             (StatPanel.DefenseEnergy, Energy),
             (StatPanel.DefenseEvasion, Evasion),
@@ -248,7 +272,8 @@ internal record class XiletradeItem
             (StatPanel.HeistEngineering, HeistEngineering),
             (StatPanel.HeistBruteForce, HeistBruteForce),
             (StatPanel.HeistPerception, HeistPerception),
-            (StatPanel.HeistDeception, HeistDeception)
+            (StatPanel.HeistDeception, HeistDeception),
+            (StatPanel.TradePrice, Price)
         };
 
         foreach ((var stat, var option) in stats)
@@ -256,7 +281,8 @@ internal record class XiletradeItem
             var vm = listPanel?.FirstOrDefault(x => x.Id == stat);
             if (vm is not null)
             {
-                option.Enable = vm.Selected;
+                // custom search : a filter is used as soon as it has a value, as on the trade site
+                option.Enable = vm.Selected || customSearch && (vm.Min.Length > 0 || vm.Max.Length > 0);
                 option.Min = vm.ItemMin;
                 option.Max = vm.ItemMax;
             }
@@ -357,6 +383,42 @@ internal record class XiletradeItem
             1 => DefaultOption.False,
             2 => DefaultOption.True,
             _ => DefaultOption.Any,
+        };
+    }
+
+    // stat groups with at least one stat, unchecked groups and stats are sent disabled as on the trade site
+    private static Stats[] GetCustomStats(CustomSearchViewModel search)
+    {
+        var groups = new List<Stats>(search.StatGroups.Count);
+        foreach (var group in search.StatGroups)
+        {
+            if (group.Filters.Count is 0)
+            {
+                continue;
+            }
+            groups.Add(new(group.Type.ToApi())
+            {
+                Filters = [.. group.Filters.Select(x => new StatsFilters { Id = x.Id, Value = GetMinMax(x.Min, x.Max), Disabled = !x.Enabled })],
+                Value = group.IsCount ? GetMinMax(group.Min, group.Max) : null,
+                Disabled = !group.Enabled
+            });
+        }
+        return groups.Count > 0 ? [.. groups] : null;
+    }
+
+    // null when min and max are empty
+    private static MinMax GetMinMax(string min, string max)
+    {
+        var minValue = min.ToNullableDouble();
+        var maxValue = max.ToNullableDouble();
+        if (minValue is null && maxValue is null)
+        {
+            return null;
+        }
+        return new()
+        {
+            Min = minValue,
+            Max = maxValue
         };
     }
 }

@@ -12,6 +12,18 @@ public sealed record ToastNotification
     public TimeSpan? Duration { get; init; } = TimeSpan.FromSeconds(5);
     public DateTimeOffset CreatedAt { get; init; } = DateTimeOffset.UtcNow;
 
+    /// <summary>
+    /// View model displayed by its template instead of the title and the message, which stay as a text version
+    /// (UI without template). Such a toast is closed by its own buttons, not by a click.
+    /// </summary>
+    public object Content { get; init; }
+
+    /// <summary>A sound is played when the toast is displayed.</summary>
+    public bool PlaySound { get; init; }
+
+    /// <summary>Place of the toast on the screen : bottom right by default.</summary>
+    public NotificationPlacement Placement { get; init; } = NotificationPlacement.BottomRight;
+
     public ToastNotification() 
     { 
 

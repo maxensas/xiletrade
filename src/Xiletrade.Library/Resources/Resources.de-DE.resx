@@ -1408,6 +1408,9 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General245_ScryingOrb" xml:space="preserve">
     <value>Tauschsphäre</value>
   </data>
+  <data name="General246_CannotUse" xml:space="preserve">
+    <value>Du kannst diesen Gegenstand nicht benutzen. Seine Eigenschaften werden ignoriert.</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>
@@ -2401,6 +2404,180 @@ oder wird derzeit nicht verwaltet</value>
   <data name="Main259_SelectDesiredUnique" xml:space="preserve">
     <value>Wählen Sie den gewünschten eindeutigen Artikel aus</value>
   </data>
+  <data name="Main260_BuyoutPrice" xml:space="preserve">
+    <value>Sofortkaufpreis :</value>
+  </data>
+  <data name="Main261_ExaltDivTip" xml:space="preserve">
+    <value>Ermöglicht Ihnen, Preise nur in Exalted oder Divine Orbs zu prüfen.
+Verkaufspreise in anderen Währungen werden ignoriert.</value>
+  </data>
+  <data name="Main262_DivineOnlyTip" xml:space="preserve">
+    <value>Ermöglicht Ihnen, Preise nur in Divine Orbs zu prüfen.
+Verkaufspreise in anderen Währungen werden ignoriert.</value>
+  </data>
+  <data name="Main263_AllCurrenciesTip" xml:space="preserve">
+    <value>Ermöglicht Ihnen, Preise in allen Währungen zu prüfen.
+Es werden keine Verkäufe ignoriert.</value>
+  </data>
+  <data name="Main264_SearchCategory" xml:space="preserve">
+    <value>Gegenstandskategorie</value>
+  </data>
+  <data name="Main265_ShowFilters" xml:space="preserve">
+    <value>Filter anzeigen</value>
+  </data>
+  <data name="Main266_ShowResults" xml:space="preserve">
+    <value>Ergebnisse anzeigen</value>
+  </data>
+  <data name="Main267_StatGroupAnd" xml:space="preserve">
+    <value>Stat-Filter</value>
+  </data>
+  <data name="Main268_StatGroupNot" xml:space="preserve">
+    <value>Nicht</value>
+  </data>
+  <data name="Main269_StatGroupCount" xml:space="preserve">
+    <value>Anzahl</value>
+  </data>
+  <data name="Main270_StatGroupCountTip" xml:space="preserve">
+    <value>Der Gegenstand muss eine Anzahl an Stats dieser Gruppe zwischen Min und Max haben</value>
+  </data>
+  <data name="Main271_AddStatGroup" xml:space="preserve">
+    <value>+ Stat-Gruppe hinzufügen</value>
+  </data>
+  <data name="Main272_AddPreset" xml:space="preserve">
+    <value>+ Voreinstellung hinzufügen</value>
+  </data>
+  <data name="Main273_UpdatePreset" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+  <data name="Main274_PresetName" xml:space="preserve">
+    <value>Name der Voreinstellung</value>
+  </data>
+  <data name="Main275_DeletePreset" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="Main276_DeletePresetConfirm" xml:space="preserve">
+    <value>Voreinstellung „{0}“ löschen?</value>
+  </data>
+  <data name="Main277_Damage" xml:space="preserve">
+    <value>Schaden</value>
+  </data>
+  <data name="Main278_TypeFilters" xml:space="preserve">
+    <value>Typ-Filter</value>
+  </data>
+  <data name="Main279_WeaponFilters" xml:space="preserve">
+    <value>Waffen-Filter</value>
+  </data>
+  <data name="Main280_EquipmentFilters" xml:space="preserve">
+    <value>Ausrüstungs-Filter</value>
+  </data>
+  <data name="Main281_ArmourFilters" xml:space="preserve">
+    <value>Rüstungs-Filter</value>
+  </data>
+  <data name="Main282_SocketFilters" xml:space="preserve">
+    <value>Sockel-Filter</value>
+  </data>
+  <data name="Main283_Requirements" xml:space="preserve">
+    <value>Anforderungen</value>
+  </data>
+  <data name="Main284_MapFilters" xml:space="preserve">
+    <value>Karten-Filter</value>
+  </data>
+  <data name="Main285_EndgameFilters" xml:space="preserve">
+    <value>Endgame-Filter</value>
+  </data>
+  <data name="Main286_Miscellaneous" xml:space="preserve">
+    <value>Verschiedenes</value>
+  </data>
+  <data name="Main287_ImportPresets" xml:space="preserve">
+    <value>Suchvoreinstellungen importieren</value>
+  </data>
+  <data name="Main288_ExportPresets" xml:space="preserve">
+    <value>Suchvoreinstellungen exportieren</value>
+  </data>
+  <data name="Main289_SearchPresets" xml:space="preserve">
+    <value>Suchvoreinstellungen</value>
+  </data>
+  <data name="Main290_PresetsImported" xml:space="preserve">
+    <value>{0} Voreinstellung(en) importiert.</value>
+  </data>
+  <data name="Main291_PresetsUpdated" xml:space="preserve">
+    <value>Die Suchvoreinstellungen wurden aktualisiert, um mit den aktuellen Filtern kompatibel zu sein:</value>
+  </data>
+  <data name="Main292_PresetStatReplaced" xml:space="preserve">
+    <value>{0}: {1} ersetzt durch {2}</value>
+  </data>
+  <data name="Main293_PresetStatRemoved" xml:space="preserve">
+    <value>{0}: {1} entfernt</value>
+  </data>
+  <data name="Main294_NoPresetFound" xml:space="preserve">
+    <value>Keine Suchvoreinstellung gefunden.</value>
+  </data>
+  <data name="Main295_PresetsExported" xml:space="preserve">
+    <value>{0} Voreinstellung(en) exportiert.</value>
+  </data>
+  <data name="Main296_LiveSearch" xml:space="preserve">
+    <value>Live-Suche</value>
+  </data>
+  <data name="Main297_Live" xml:space="preserve">
+    <value>Live</value>
+  </data>
+  <data name="Main298_LiveNoSession" xml:space="preserve">
+    <value>Live-Suche abgelehnt: eine gültige POESESSID ist erforderlich (Einstellungen, Authentifizierung).</value>
+  </data>
+  <data name="Main299_LiveNotStarted" xml:space="preserve">
+    <value>Die Live-Suche konnte nicht gestartet werden.</value>
+  </data>
+  <data name="Main300_LiveStarted" xml:space="preserve">
+    <value>Live-Suche gestartet: neue Gegenstände werden hier angezeigt.</value>
+  </data>
+  <data name="Main302_LiveConnectionLost" xml:space="preserve">
+    <value>Live-Suche beendet: die Verbindung wurde unterbrochen.</value>
+  </data>
+  <data name="Main304_LiveTip" xml:space="preserve">
+    <value>Meldet neue Gegenstände, die den Kriterien entsprechen (POESESSID erforderlich).</value>
+  </data>
+  <data name="Main305_LivePause" xml:space="preserve">
+    <value>Live-Suche pausieren</value>
+  </data>
+  <data name="Main306_LiveResume" xml:space="preserve">
+    <value>Live-Suche fortsetzen</value>
+  </data>
+  <data name="Main307_LiveStopAll" xml:space="preserve">
+    <value>Live-Suche beenden</value>
+  </data>
+  <data name="Main308_Search" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
+  <data name="Main309_LiveNoCriteria" xml:space="preserve">
+    <value>Fügen Sie mindestens ein Kriterium (Gegenstand, Kategorie, Filter oder Wert) hinzu, um eine Live-Suche zu starten.</value>
+  </data>
+  <data name="Main310_TravelToHideout" xml:space="preserve">
+    <value>Zum Versteck reisen</value>
+  </data>
+  <data name="Main311_TradeFilters" xml:space="preserve">
+    <value>Handelsfilter</value>
+  </data>
+  <data name="Main312_LiveDuplicate" xml:space="preserve">
+    <value>Diese Live-Suche läuft bereits.</value>
+  </data>
+  <data name="Main313_LivePauseAll" xml:space="preserve">
+    <value>Alle Live-Suchen pausieren</value>
+  </data>
+  <data name="Main314_LiveResumeAll" xml:space="preserve">
+    <value>Alle Live-Suchen fortsetzen</value>
+  </data>
+  <data name="Main315_LiveStopAll" xml:space="preserve">
+    <value>Alle Live-Suchen beenden</value>
+  </data>
+  <data name="Main316_LiveFetchLimit" xml:space="preserve">
+    <value>Live-Suche: Limit der Handels-API fast erreicht</value>
+  </data>
+  <data name="Main317_PriceCheckIn" xml:space="preserve">
+    <value>Preisprüfung in {0} s verfügbar</value>
+  </data>
+  <data name="Main318_LiveTooBroadPaused" xml:space="preserve">
+    <value>Live-Suche pausiert: mehr als {0} neue Gegenstände in einer Minute, verfeinern Sie die Suche oder setzen Sie sie fort.</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>
   </data>
@@ -2667,5 +2844,18 @@ Garena Server: Traditionelles Chinesisch.</value>
 
 Möchten Sie einen vorausgefüllten Fehlerbericht auf GitHub öffnen?
 Es werden keine Daten automatisch gesendet: Sie können den Bericht vor dem Absenden überprüfen und bearbeiten.</value>
+  </data>
+  <data name="Error036_TravelNoToken" xml:space="preserve">
+    <value>Ihre POESESSID fehlt oder ist abgelaufen!
+
+Für fortgeschrittene Benutzer: Sie können Ihre POESESSID in den Einstellungen über den Entwickler-Manager im Bereich Authentifizierung manuell aktualisieren.</value>
+  </data>
+  <data name="Error037_TravelAccount" xml:space="preserve">
+    <value>Ist Ihr Konto richtig verbunden?</value>
+  </data>
+  <data name="Error038_TravelSession" xml:space="preserve">
+    <value>Ihre POESESSID fehlt wahrscheinlich oder ist abgelaufen!
+
+Sie können sie in den Einstellungen über den Entwickler-Manager im Bereich Authentifizierung manuell aktualisieren.</value>
   </data>
 </root>

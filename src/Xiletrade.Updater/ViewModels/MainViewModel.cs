@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading;
 using SharpCompress.Readers;
 using SharpCompress.Archives.SevenZip;
@@ -33,6 +35,9 @@ public partial class MainViewModel : ViewModelBase
     private static readonly List<string> _removedFolders = new();
     private static readonly StringBuilder _logBuilder = new();
     private static readonly string _extracting = "Extracting {0}";
+    // presets of the custom search in the configuration : "search_presets" > "custom_search" (user presets)
+    private const string SEARCH_PRESETS = "search_presets";
+    private const string CUSTOM_SEARCH = "custom_search";
     // Run from %LOCALAPPDATA% (see Util/Relocation.cs) : no installed file is locked, none is skipped.
     // Run in place (relocation failed) : its own files are locked, they are skipped as before.
     private static readonly List<string> _listFilesToSkip = Relocation.IsRelocated
@@ -326,11 +331,57 @@ public partial class MainViewModel : ViewModelBase
                 File.WriteAllBytes(_configFilePath, _configFile);
                 _logBuilder.AppendLine("Config file saved successfully : " + _configFilePath);
             }
+            else
+            {
+                KeepSearchPresets(_configFile, _configFilePath);
+            }
 
             string suffix = ".bak";
             File.WriteAllBytes(_configFilePath + suffix, _configFile);
             _logBuilder.AppendLine("Config file backup saved successfully : " + _configFilePath + suffix);
         }
+    }
+
+    /// <summary>
+    /// The package ships a new configuration (its format changed) : the presets of the custom search of the user
+    /// are put in it, the other settings are the new ones (the former configuration is kept as .bak).
+    /// </summary>
+    /// <remarks>No serialization of types : the json nodes are copied (trimmed / AOT).</remarks>
+    private static void KeepSearchPresets(byte[] userConfig, string configPath)
+    {
+        try
+        {
+            var userPresets = ParseJson(userConfig)?[SEARCH_PRESETS]?[CUSTOM_SEARCH];
+            if (userPresets is null || ParseJson(File.ReadAllBytes(configPath)) is not JsonObject config)
+            {
+                return;
+            }
+            if (config[SEARCH_PRESETS] is not JsonObject presets)
+            {
+                presets = new JsonObject();
+                config[SEARCH_PRESETS] = presets;
+            }
+            presets[CUSTOM_SEARCH] = userPresets.DeepClone();
+
+            using var stream = new FileStream(configPath, FileMode.Create, FileAccess.Write, FileShare.Read);
+            stream.Write(Encoding.UTF8.Preamble);
+            using (var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true }))
+            {
+                config.WriteTo(writer);
+            }
+            _logBuilder.AppendLine("Search presets kept in the new config file : " + configPath);
+        }
+        catch (Exception ex)
+        {
+            _logBuilder.AppendLine("Search presets not kept in the new config file : " + ex.Message);
+        }
+    }
+
+    // a byte order mark is skipped by the parsing of a stream
+    private static JsonNode? ParseJson(byte[] json)
+    {
+        using var stream = new MemoryStream(json);
+        return JsonNode.Parse(stream);
     }
 
     /// <summary>

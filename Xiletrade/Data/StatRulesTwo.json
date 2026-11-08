@@ -1,0 +1,717 @@
+{
+	"mode": "all",
+	"rules": [
+		{
+			"comment": "ids not empty",
+			"match": {
+				"minLength": 1
+			},
+			"mode": "all",
+			"rules": [
+				{
+					"comment": "waystones and tablets",
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "waystone" ],
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "explicit.stat_3666934677" ]
+									},
+									"id": "explicit.stat_57434274"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_1174954559" ]
+									},
+									"id": "explicit.stat_3226351972"
+								}
+							]
+						},
+						{
+							"when": [ "tablet" ],
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "explicit.stat_3666934677" ]
+									},
+									"id": "explicit.stat_57434274"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_1174954559" ]
+									},
+									"id": "explicit.stat_3226351972"
+								}
+							]
+						},
+						{
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "explicit.stat_57434274" ]
+									},
+									"id": "explicit.stat_3666934677"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_3226351972" ]
+									},
+									"id": "explicit.stat_1174954559"
+								}
+							]
+						}
+					]
+				},
+				{
+					"when": [ "flask" ],
+					"mode": "all",
+					"rules": [
+						{
+							"match": {
+								"ids": [ "explicit.stat_2541588185" ]
+							},
+							"id": "explicit.stat_1256719186"
+						}
+					]
+				},
+				{
+					"when": [ "charm" ],
+					"mode": "all",
+					"rules": [
+						{
+							"match": {
+								"ids": [ "explicit.stat_1256719186" ]
+							},
+							"id": "explicit.stat_2541588185"
+						}
+					]
+				},
+				{
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique", "amulet" ],
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "skill.lightning_bolt" ]
+									},
+									"id": "skill.unique_breach_lightning_bolt"
+								}
+							]
+						},
+						{
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "skill.unique_breach_lightning_bolt" ]
+									},
+									"id": "skill.lightning_bolt"
+								}
+							]
+						}
+					]
+				},
+				{
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "jewel" ],
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "explicit.stat_1030153674" ]
+									},
+									"id": "explicit.stat_1604736568"
+								}
+							]
+						},
+						{
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "explicit.stat_1604736568" ]
+									},
+									"id": "explicit.stat_1030153674"
+								}
+							]
+						}
+					]
+				},
+				{
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "shield" ],
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "explicit.stat_4147897060" ]
+									},
+									"id": "explicit.stat_2481353198"
+								}
+							]
+						},
+						{
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "explicit.stat_2481353198" ]
+									},
+									"id": "explicit.stat_4147897060"
+								}
+							]
+						}
+					]
+				},
+				{
+					"comment": "weapons",
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "weapon" ],
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "explicit.stat_681332047" ]
+									},
+									"id": "explicit.stat_210067635"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_803737631" ]
+									},
+									"id": "explicit.stat_691932474"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_795138349" ]
+									},
+									"id": "explicit.stat_3885634897"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_720908147", "explicit.stat_2241560081" ]
+									},
+									"id": "explicit.stat_889691035"
+								},
+								{
+									"match": {
+										"suffix": [ "stat_1379411836" ]
+									},
+									"suffixId": "stat_2897413282"
+								}
+							]
+						},
+						{
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "explicit.stat_210067635" ]
+									},
+									"id": "explicit.stat_681332047"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_691932474" ]
+									},
+									"id": "explicit.stat_803737631"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_3885634897" ]
+									},
+									"id": "explicit.stat_795138349"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_889691035", "explicit.stat_2241560081" ]
+									},
+									"id": "explicit.stat_720908147"
+								},
+								{
+									"match": {
+										"suffix": [ "stat_2897413282" ]
+									},
+									"suffixId": "stat_1379411836"
+								}
+							]
+						}
+					]
+				},
+				{
+					"comment": "armours",
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "armour" ],
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "explicit.stat_2866361420" ]
+									},
+									"id": "explicit.stat_1062208444"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_2106365538" ]
+									},
+									"id": "explicit.stat_124859000"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_2144192055" ]
+									},
+									"id": "explicit.stat_53045048"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_809229260" ]
+									},
+									"id": "explicit.stat_3484657501"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_3489782002" ]
+									},
+									"id": "explicit.stat_4052037485"
+								},
+								{
+									"match": {
+										"ids": [ "enchant.stat_2866361420" ]
+									},
+									"id": "enchant.stat_1062208444"
+								},
+								{
+									"match": {
+										"ids": [ "enchant.stat_2106365538" ]
+									},
+									"id": "enchant.stat_124859000"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_1416292992" ]
+									},
+									"id": "explicit.stat_554899692"
+								}
+							]
+						},
+						{
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "explicit.stat_1062208444" ]
+									},
+									"id": "explicit.stat_2866361420"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_124859000" ]
+									},
+									"id": "explicit.stat_2106365538"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_53045048" ]
+									},
+									"id": "explicit.stat_2144192055"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_3484657501" ]
+									},
+									"id": "explicit.stat_809229260"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_4052037485" ]
+									},
+									"id": "explicit.stat_3489782002"
+								},
+								{
+									"match": {
+										"ids": [ "enchant.stat_2866361420" ]
+									},
+									"id": "enchant.stat_1062208444"
+								},
+								{
+									"match": {
+										"ids": [ "enchant.stat_124859000" ]
+									},
+									"id": "enchant.stat_2106365538"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_554899692" ]
+									},
+									"id": "explicit.stat_1416292992"
+								}
+							]
+						}
+					]
+				},
+				{
+					"comment": "tablets",
+					"match": {
+						"ids": [ "explicit.stat_3042527515", "explicit.stat_1468737867" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "typeEn:Overseer Tablet" ],
+							"id": "explicit.stat_3042527515"
+						},
+						{
+							"id": "explicit.stat_1468737867"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_2162684861", "explicit.stat_395808938" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "typeEn:Overseer Tablet" ],
+							"id": "explicit.stat_2162684861"
+						},
+						{
+							"id": "explicit.stat_395808938"
+						}
+					]
+				},
+				{
+					"comment": "uniques",
+					"match": {
+						"suffix": [ "stat_2704225257", "stat_3981240776" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:The Unborn Lich" ],
+							"suffixId": "stat_2704225257"
+						},
+						{
+							"suffixId": "stat_3981240776"
+						}
+					]
+				},
+				{
+					"match": {
+						"suffix": [ "stat_1416406066", "stat_3984865854" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Grip of Kulemak" ],
+							"suffixId": "stat_1416406066"
+						},
+						{
+							"when": [ "unique:Idol of Uldurn" ],
+							"suffixId": "stat_1416406066"
+						},
+						{
+							"suffixId": "stat_3984865854"
+						}
+					]
+				},
+				{
+					"match": {
+						"suffix": [ "stat_774059442", "stat_3336230913" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Svalinn" ],
+							"suffixId": "stat_774059442"
+						},
+						{
+							"suffixId": "stat_3336230913"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_1315418254", "explicit.stat_3831171903|33" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Geofri's Sanctuary" ],
+							"id": "explicit.stat_1315418254"
+						},
+						{
+							"id": "explicit.stat_3831171903|33"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_2080373320", "explicit.stat_1464727508" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Vestige of Darkness" ],
+							"id": "explicit.stat_2080373320"
+						},
+						{
+							"id": "explicit.stat_1464727508"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_2261942307", "explicit.stat_1602191394", "explicit.stat_3917489142" ]
+					},
+					"when": [ "unique" ],
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Loreweave" ],
+							"id": "explicit.stat_2261942307"
+						},
+						{
+							"when": [ "unique:Gravebind" ],
+							"id": "explicit.stat_1602191394"
+						},
+						{
+							"id": "explicit.stat_3917489142"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_2257118425", "explicit.stat_3831171903|20" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Atziri's Acuity" ],
+							"id": "explicit.stat_2257118425"
+						},
+						{
+							"id": "explicit.stat_3831171903|20"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_2933846633", "explicit.stat_3146310524" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Nazir's Judgement" ],
+							"id": "explicit.stat_2933846633"
+						},
+						{
+							"id": "explicit.stat_3146310524"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_1157523820", "explicit.stat_2045949233" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Hrimnor's Hymn" ],
+							"id": "explicit.stat_2045949233"
+						},
+						{
+							"id": "explicit.stat_1157523820"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_2625554454", "explicit.stat_2879778895" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:The Hammer of Faith" ],
+							"id": "explicit.stat_2879778895"
+						},
+						{
+							"id": "explicit.stat_2625554454"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_2582079000", "explicit.stat_554899692" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Elevore" ],
+							"id": "explicit.stat_554899692"
+						},
+						{
+							"id": "explicit.stat_2582079000"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "skill.corpse_cloud_triggered", "skill.corpse_cloud" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Corpsewade" ],
+							"id": "skill.corpse_cloud_triggered"
+						},
+						{
+							"id": "skill.corpse_cloud"
+						}
+					]
+				},
+				{
+					"comment": "deprecated ids",
+					"match": {
+						"ids": [ "explicit.stat_448592698|160" ]
+					},
+					"id": "explicit.stat_448592698|161"
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_448592698|186" ]
+					},
+					"id": "explicit.stat_448592698|199"
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_448592698|193" ]
+					},
+					"id": "explicit.stat_448592698|201"
+				},
+				{
+					"comment": "Flesh Crucible",
+					"match": {
+						"ids": [ "explicit.stat_3831171903|7", "explicit.stat_98977150" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Flesh Crucible" ],
+							"id": "explicit.stat_3831171903|7"
+						},
+						{
+							"id": "explicit.stat_98977150"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_3831171903|2", "explicit.stat_1875158664" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Flesh Crucible" ],
+							"id": "explicit.stat_3831171903|2"
+						},
+						{
+							"id": "explicit.stat_1875158664"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_3831171903|3", "explicit.stat_1683578560" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Flesh Crucible" ],
+							"id": "explicit.stat_3831171903|3"
+						},
+						{
+							"id": "explicit.stat_1683578560"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_3831171903|9", "explicit.stat_2262736444" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Flesh Crucible" ],
+							"id": "explicit.stat_3831171903|9"
+						},
+						{
+							"id": "explicit.stat_2262736444"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_3831171903|5", "explicit.stat_2801937280" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Flesh Crucible" ],
+							"id": "explicit.stat_3831171903|5"
+						},
+						{
+							"id": "explicit.stat_2801937280"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_3831171903|21", "explicit.stat_326965591" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Flesh Crucible" ],
+							"id": "explicit.stat_3831171903|21"
+						},
+						{
+							"id": "explicit.stat_326965591"
+						}
+					]
+				},
+				{
+					"match": {
+						"ids": [ "explicit.stat_3831171903|22", "explicit.stat_4266776872" ]
+					},
+					"mode": "first",
+					"rules": [
+						{
+							"when": [ "unique:Flesh Crucible" ],
+							"id": "explicit.stat_3831171903|22"
+						},
+						{
+							"id": "explicit.stat_4266776872"
+						}
+					]
+				}
+			]
+		}
+	]
+}

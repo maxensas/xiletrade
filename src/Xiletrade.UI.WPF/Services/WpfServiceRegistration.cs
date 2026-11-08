@@ -5,6 +5,7 @@ using Xiletrade.Library.Services.Extension;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.ViewModels.Config;
 using Xiletrade.Library.ViewModels.Editor;
+using Xiletrade.Library.ViewModels.Live;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Regex;
 using Xiletrade.Library.ViewModels.Start;
@@ -28,10 +29,11 @@ public static class WpfServiceRegistration
     {
         return sc.AddSingleton<IViewManager, ViewManager>()
             .AddSingleton<INotificationService>(sp => new NotificationService(dismiss
-                => new NotificationHost(sp.GetRequiredService<IUIService>(), dismiss)))
+                => new NotificationHost(sp.GetRequiredService<IUIService>(), sp.GetRequiredService<DataManagerService>(), dismiss)))
             // views
             .AddSingleton<IMainView>(sp => new MainView(sp.GetRequiredService<MainViewModel>()))
             .AddSingleton<ITaskbar>(sp => new TaskbarIcon(sp.GetRequiredService<TaskBarViewModel>()))
+            .AddSingleton<ILiveOverlayView>(sp => new LiveOverlayView(sp.GetRequiredService<LiveOverlayViewModel>()))
             .AddTransient<IConfigView>(sp =>
             {
                 var scope = sp.CreateScope();

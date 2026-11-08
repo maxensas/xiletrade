@@ -65,14 +65,21 @@ public sealed partial class TabViewModel : ViewModelBase
         if (!value)
             return;
 
+        // custom search / bulk view : title of the tab selected (custom search, exchange or shop)
+        if (CustomSearchEnable)
+        {
+            _form.ItemBaseType = useBulk ? Resources.Resources.Main032_cbTotalExchange : Resources.Resources.Main247_CustomSearch;
+        }
         _form.UpdateMarket(useBulk);
     }
 
-    internal TabViewModel(FormViewModel form)
+    internal TabViewModel(FormViewModel form, bool useCustomOrBulk = false)
     {
         _form = form;
-
-        bulkEnable = shopEnable = customSearchEnable = customSearchSelected = true;
+        if (useCustomOrBulk)
+        {
+            bulkEnable = shopEnable = customSearchEnable = customSearchSelected = true;
+        }
     }
 
     internal TabViewModel(FormViewModel form, ItemData item)
@@ -83,20 +90,23 @@ public sealed partial class TabViewModel : ViewModelBase
         if (item.State.ExchangeCurrency && (!flag.Rarity.Unique || flag.Map.IsMap))
         {
             bulkEnable = true;
+            HistoryEnable = true;
+            HistorySelected = true;
         }
-        quickEnable = true;
-        detailEnable = true;
-        quickSelected = true;
+        if (!item.State.ExchangeCurrency)
+        {
+            quickEnable = true;
+            detailEnable = true;
 
-        // Open Xiletrade with Quick or Detail view tab
-        var selectDetail = !(flag.Map.IsMap && flag.Tag.Corrupted) && (flag.StackableCurrency
-            || flag.Map.IsMap || flag.Gem.IsGem || flag.Tag.CapturedBeast || flag.UltimatumPoe2
-            || flag.Gem.Uncut || flag.Wombgift || flag.Area.TrialCoins || flag.Area.SanctumResearch
-            || item.State.ExchangeCurrency);
-        detailSelected = selectDetail;
-        quickSelected = !selectDetail;
-
-        if (flag.Rarity.Rare && !flag.Map.IsMap && !flag.Tag.CapturedBeast) poePriceEnable = true;
+            // Open Xiletrade with Quick or Detail view tab
+            var selectDetail = !(flag.Map.IsMap && flag.Tag.Corrupted) && (flag.StackableCurrency
+                || flag.Map.IsMap || flag.Gem.IsGem || flag.Tag.CapturedBeast || flag.UltimatumPoe2
+                || flag.Gem.Uncut || flag.Wombgift || flag.Area.TrialCoins || flag.Area.SanctumResearch
+                || item.State.ExchangeCurrency);
+            detailSelected = selectDetail;
+            quickSelected = !selectDetail;
+            if (flag.Rarity.Rare && !flag.Map.IsMap && !flag.Tag.CapturedBeast) poePriceEnable = true;
+        }
     }
 
     [RelayCommand]

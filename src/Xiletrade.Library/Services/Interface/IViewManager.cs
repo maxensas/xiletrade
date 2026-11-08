@@ -30,6 +30,17 @@ public interface IViewManager
     void CloseOpenedView(ConfigShortcut shortcut);
     PoeState GetPoeWindowState();
     void ClearFocus();
+
+    /// <summary>File selection of the system, in the documents folder by default.</summary>
+    /// <param name="filterName">Name of the file type displayed.</param>
+    /// <param name="extension">Extension of the files, without dot (e.g. "json").</param>
+    /// <returns>Path of the file selected, null : cancelled.</returns>
+    Task<string> ShowOpenFileViewAsync(string title, string filterName, string extension);
+
+    /// <summary>File creation of the system, in the documents folder by default.</summary>
+    /// <param name="fileName">Name of the file suggested.</param>
+    /// <returns>Path of the file to write, null : cancelled.</returns>
+    Task<string> ShowSaveFileViewAsync(string title, string filterName, string extension, string fileName);
     void SetMainHandle(object view);
     void ShutDownNativeApp(int exitCode = 0);
 }

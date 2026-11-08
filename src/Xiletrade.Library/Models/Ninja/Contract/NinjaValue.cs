@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using Xiletrade.Library.Models.Ninja.Contract.Exchange.Detail;
 
 namespace Xiletrade.Library.Models.Ninja.Contract;
 
@@ -19,6 +18,4 @@ public sealed class NinjaValue
 
     [JsonPropertyName("divineValue")]
     public double DivinePrice { get; set; } = 0;
-
-    public NinjaDetail Detail { get; set; }
 }

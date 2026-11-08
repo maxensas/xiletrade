@@ -1,0 +1,656 @@
+{
+	"mode": "all",
+	"rules": [
+		{
+			"comment": "ids with a stat part (length > 1)",
+			"match": {
+				"minLength": 2
+			},
+			"mode": "all",
+			"rules": [
+				{
+					"comment": "aura mods not searchable",
+					"match": {
+						"stat": [
+							"stat_1920370417",
+							"stat_1803598623",
+							"stat_2721871046",
+							"stat_3484910620",
+							"stat_2963485753",
+							"stat_4216444167",
+							"stat_3266567165",
+							"stat_1761642973",
+							"stat_1692887998",
+							"stat_3059700363",
+							"stat_3819451758",
+							"stat_1542765265",
+							"stat_1284151528",
+							"stat_3959101898",
+							"stat_2605040931",
+							"stat_1135152940",
+							"stat_1450978702",
+							"stat_2665518524",
+							"delve_corrupted_implicit"
+						]
+					},
+					"skip": true
+				},
+				{
+					"comment": "socketed gems level : Forbidden Shako and Lioneye's Vision only",
+					"match": {
+						"contains": [ "indexable_support" ]
+					},
+					"mode": "all",
+					"rules": [
+						{
+							"when": [ "!unique:Forbidden Shako", "!unique:Lioneye's Vision" ],
+							"skip": true
+						},
+						{
+							"match": {
+								"ids": [ "explicit.indexable_support_33" ]
+							},
+							"when": [ "unique:Lioneye's Vision" ],
+							"id": "explicit.stat_254728692"
+						},
+						{
+							"match": {
+								"ids": [ "explicit.indexable_support_24" ]
+							},
+							"when": [ "unique:Bitterdream" ],
+							"id": "explicit.stat_749770518"
+						}
+					]
+				},
+				{
+					"comment": "first rule that applies only",
+					"mode": "first",
+					"rules": [
+						{
+							"comment": "local stat on weapons",
+							"match": {
+								"ids": [ "explicit.stat_803737631", "explicit.stat_691932474" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "weapon" ],
+									"id": "explicit.stat_691932474"
+								},
+								{
+									"id": "explicit.stat_803737631"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_809229260", "explicit.stat_3484657501" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "armour" ],
+									"id": "explicit.stat_3484657501"
+								},
+								{
+									"id": "explicit.stat_809229260"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_3489782002", "explicit.stat_4052037485" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "armour" ],
+									"id": "explicit.stat_4052037485"
+								},
+								{
+									"id": "explicit.stat_3489782002"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_2144192055", "explicit.stat_53045048" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "armour" ],
+									"id": "explicit.stat_53045048"
+								},
+								{
+									"id": "explicit.stat_2144192055"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_3503466234", "explicit.stat_3565956680" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "armour" ],
+									"id": "explicit.stat_3565956680"
+								},
+								{
+									"id": "explicit.stat_3503466234"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_2361218755", "explicit.stat_2695527599" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "unique" ],
+									"id": "explicit.stat_2695527599"
+								},
+								{
+									"id": "explicit.stat_2361218755"
+								}
+							]
+						},
+						{
+							"comment": "deprecated ids",
+							"match": {
+								"ids": [ "explicit.stat_3382957283" ]
+							},
+							"id": "explicit.stat_3924520095"
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_1269219558" ]
+							},
+							"id": "explicit.stat_4237190083"
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_492027537" ]
+							},
+							"id": "explicit.stat_3680664274"
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_2858921304" ]
+							},
+							"id": "explicit.stat_3738001379"
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_1291925008" ]
+							},
+							"id": "explicit.stat_3859865977"
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_2530372417", "explicit.stat_1702195217" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "jewel", "unique" ],
+									"id": "explicit.stat_1702195217"
+								},
+								{
+									"id": "explicit.stat_2530372417"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_561307714", "explicit.stat_19803471" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "jewel", "unique" ],
+									"id": "explicit.stat_19803471"
+								},
+								{
+									"id": "explicit.stat_561307714"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_1004011302", "explicit.stat_239144" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "tincture" ],
+									"id": "explicit.stat_239144"
+								},
+								{
+									"id": "explicit.stat_1004011302"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_165218607" ]
+							},
+							"when": [ "jewel", "unique" ],
+							"id": "explicit.stat_4270096386"
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_2653955271", "explicit.stat_1123291426" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "tincture" ],
+									"id": "explicit.stat_1123291426"
+								},
+								{
+									"id": "explicit.stat_2653955271"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_3417711605", "explicit.stat_1211769158" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "tincture" ],
+									"id": "explicit.stat_1211769158"
+								},
+								{
+									"id": "explicit.stat_3417711605"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_818778753", "explicit.stat_3301510262" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "tincture" ],
+									"id": "explicit.stat_3301510262"
+								},
+								{
+									"id": "explicit.stat_818778753"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_1368271171", "explicit.stat_782259898" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "tincture" ],
+									"id": "explicit.stat_782259898"
+								},
+								{
+									"id": "explicit.stat_1368271171"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_3481736410", "explicit.stat_923608573" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "tincture" ],
+									"id": "explicit.stat_923608573"
+								},
+								{
+									"id": "explicit.stat_3481736410"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_2355615476", "explicit.stat_3735443206" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "tincture" ],
+									"id": "explicit.stat_3735443206"
+								},
+								{
+									"id": "explicit.stat_2355615476"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_2918708827", "explicit.stat_3669845133" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "tincture" ],
+									"id": "explicit.stat_3669845133"
+								},
+								{
+									"id": "explicit.stat_2918708827"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_3135669941", "explicit.stat_4278270018" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "tincture" ],
+									"id": "explicit.stat_4278270018"
+								},
+								{
+									"id": "explicit.stat_3135669941"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_2264295449" ]
+							},
+							"when": [ "tincture" ],
+							"id": "explicit.stat_3369332977"
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_1535626285" ]
+							},
+							"when": [ "charm" ],
+							"id": "explicit.stat_2543977012"
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_2530372417", "explicit.stat_1702195217" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "charm" ],
+									"id": "explicit.stat_1702195217"
+								},
+								{
+									"when": [ "jewel" ],
+									"id": "explicit.stat_1702195217"
+								},
+								{
+									"id": "explicit.stat_2530372417"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_3023957681", "explicit.stat_665823128", "explicit.stat_2453026567" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "charm" ],
+									"id": "explicit.stat_665823128"
+								},
+								{
+									"when": [ "weapon" ],
+									"id": "explicit.stat_665823128"
+								},
+								{
+									"when": [ "amulet", "unique" ],
+									"id": "explicit.stat_2453026567"
+								},
+								{
+									"id": "explicit.stat_3023957681"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_3859593448", "explicit.stat_983989924" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "unique:Gorgon's Gaze" ],
+									"id": "explicit.stat_983989924"
+								},
+								{
+									"id": "explicit.stat_3859593448"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.stat_424549222", "explicit.stat_1640259660" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "unique:Esh's Mirror" ],
+									"id": "explicit.stat_1640259660"
+								},
+								{
+									"id": "explicit.stat_424549222"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.indexable_skill_16", "explicit.stat_2739830820" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "unique:Bones of Ullr" ],
+									"id": "explicit.stat_2739830820"
+								},
+								{
+									"id": "explicit.indexable_skill_16"
+								}
+							]
+						},
+						{
+							"match": {
+								"ids": [ "explicit.indexable_skill_29", "explicit.stat_3235814433" ]
+							},
+							"mode": "first",
+							"rules": [
+								{
+									"when": [ "unique:Bones of Ullr" ],
+									"id": "explicit.stat_3235814433"
+								},
+								{
+									"id": "explicit.indexable_skill_29"
+								}
+							]
+						},
+						{
+							"comment": "unique flasks",
+							"when": [ "flask", "unique" ],
+							"mode": "first",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "explicit.stat_1740200922" ]
+									},
+									"when": [ "unique:Cinderswallow Urn" ],
+									"id": "explicit.stat_3251705960"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_3251705960" ]
+									},
+									"when": [ "unique:Divination Distillate" ],
+									"id": "explicit.stat_1740200922"
+								}
+							]
+						},
+						{
+							"comment": "unique jewels",
+							"when": [ "jewel", "unique" ],
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "explicit.stat_1224928411" ]
+									},
+									"when": [ "unique:The Blue Dream" ],
+									"id": "explicit.stat_926444104"
+								}
+							]
+						},
+						{
+							"comment": "unique armours",
+							"when": [ "armour", "unique" ],
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "explicit.stat_1029319062" ]
+									},
+									"id": "explicit.stat_3205239847"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_151975117" ]
+									},
+									"id": "explicit.stat_4193390599"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_3716281760" ]
+									},
+									"id": "explicit.stat_3970432307"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_1141249906" ]
+									},
+									"id": "explicit.stat_3822878124"
+								}
+							]
+						},
+						{
+							"comment": "chronicle : temple rooms only",
+							"when": [ "chronicle" ],
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"notContains": [
+											"pseudo_temple_apex",
+											"pseudo_temple_breeding_room_3",
+											"pseudo_temple_workshop_3",
+											"pseudo_temple_explosives_room_3",
+											"pseudo_temple_breach_room_3",
+											"pseudo_temple_currency_vault_3",
+											"pseudo_temple_weapon_room_3",
+											"pseudo_temple_armour_room_3",
+											"pseudo_temple_trinket_room_3",
+											"pseudo_temple_cartography_room_3",
+											"pseudo_temple_gem_room_3",
+											"pseudo_temple_torment_3",
+											"pseudo_temple_strongbox_3",
+											"pseudo_temple_legion_3",
+											"pseudo_temple_sacrifice_room_3",
+											"pseudo_temple_chests_3",
+											"pseudo_temple_corruption_room_3",
+											"pseudo_temple_empowering_room_3",
+											"pseudo_temple_storm_room_3",
+											"pseudo_temple_poison_room_3",
+											"pseudo_temple_trap_room_3",
+											"pseudo_temple_healing_room_3",
+											"pseudo_temple_boss_fire_3",
+											"pseudo_temple_boss_lightning_3",
+											"pseudo_temple_boss_minions_3",
+											"pseudo_temple_queens_chambers_3"
+										]
+									},
+									"skip": true
+								}
+							]
+						},
+						{
+							"comment": "unique weapons",
+							"when": [ "weapon", "unique" ],
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "explicit.stat_2523146878" ]
+									},
+									"id": "explicit.stat_768124628"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_2397408229" ]
+									},
+									"when": [ "unique:The Dancing Dervish" ],
+									"skip": true
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_691932474" ]
+									},
+									"when": [ "unique:Replica Trypanon" ],
+									"id": "explicit.stat_803737631"
+								},
+								{
+									"match": {
+										"ids": [ "explicit.stat_3967845372" ]
+									},
+									"when": [ "unique:Uul-Netol's Kiss" ],
+									"id": "explicit.stat_2213584313"
+								}
+							]
+						},
+						{
+							"comment": "sanctum relics : sanctum entries only",
+							"when": [ "sanctumRelic" ],
+							"mode": "all",
+							"rules": [
+								{
+									"when": [ "!entryType:sanctum" ],
+									"skip": true
+								}
+							]
+						},
+						{
+							"comment": "cluster jewels",
+							"when": [ "cluster" ],
+							"mode": "all",
+							"rules": [
+								{
+									"match": {
+										"ids": [ "enchant.stat_3948993189|25" ]
+									},
+									"id": "enchant.stat_3948993189|55"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"comment": "logbooks : boss, area and twice mods only",
+			"match": {
+				"notContains": [ "stat_3159649981", "stat_1160596338", "stat_3239978999" ]
+			},
+			"when": [ "logbook" ],
+			"skip": true
+		}
+	]
+}

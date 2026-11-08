@@ -23,4 +23,7 @@ public sealed class ExtendedHashes
 
     [JsonPropertyName("rune")]
     public List<HashMap> Rune { get; set; }
+
+    [JsonPropertyName("imbued")]
+    public List<HashMap> Imbued { get; set; }
 }

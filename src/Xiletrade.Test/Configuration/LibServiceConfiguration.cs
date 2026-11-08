@@ -20,6 +20,7 @@ public class LibServiceConfiguration : ServiceConfigurationBase
             .Replace(ServiceDescriptor.Singleton(Mock.Of<INotificationService>()))
             .Replace(ServiceDescriptor.Singleton(Mock.Of<ITaskbar>()))
             .Replace(ServiceDescriptor.Singleton(Mock.Of<IMainView>()))
+            .Replace(ServiceDescriptor.Singleton(Mock.Of<ILiveOverlayView>()))
             // lib
             .Replace(ServiceDescriptor.Singleton(Mock.Of<IUIService>())) // STA
             .Replace(ServiceDescriptor.Singleton(Mock.Of<IDataUpdaterService>()))

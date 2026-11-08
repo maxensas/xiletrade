@@ -25,6 +25,7 @@ public sealed partial class EditorViewModel : ViewModelBase
     private readonly DataManagerService _dm;
     private readonly TaskBarViewModel _taskBarVm;
     private readonly INotificationService _notif;
+    private readonly INetService _net;
 
     [ObservableProperty]
     private AsyncObservableCollection<ConfigMods> dangerousMods = new();
@@ -60,8 +61,9 @@ public sealed partial class EditorViewModel : ViewModelBase
     private string poeSessId;
 
     public EditorViewModel(ITokenService tokenService, IMessageAdapterService message,
-        DataManagerService dm, TaskBarViewModel taskBarVm, INotificationService notif)
+        DataManagerService dm, TaskBarViewModel taskBarVm, INotificationService notif, INetService net)
     {
+        _net = net;
         _dm = dm;
         _tokenService = tokenService;
         _message = message;
@@ -103,7 +105,9 @@ public sealed partial class EditorViewModel : ViewModelBase
             var validity = _tokenService.CustomToken is not null;
             if (validity)
             {
-                _message.Show("You entered a valid token.\n\n You need to restart the application to take effect.", "Token validation", MessageStatus.Information);
+                // the trade client takes the new session at once (cookie), no restart
+                _net.InitTradeClient(_dm.Config.Options.TimeoutTradeApi);
+                _message.Show("You entered a valid token.", "Token validation", MessageStatus.Information);
                 return;
             }
         }
@@ -117,6 +121,7 @@ public sealed partial class EditorViewModel : ViewModelBase
         var auth = _tokenService.CacheToken is not null ? "\n0Auth token removed." : string.Empty;
         var poeid = _tokenService.CustomToken is not null ? "\nPOESESSID token removed." : string.Empty;
         _tokenService.ClearTokens();
+        _net.InitTradeClient(_dm.Config.Options.TimeoutTradeApi); // session cookie removed
         
         _message.Show(string.Format("All tokens are now removed from your device.\n{0}{1}", auth, poeid)
             , "Token removal", MessageStatus.Information);

@@ -132,20 +132,13 @@ internal sealed record NinjaInfoExchangeTwo : NinjaInfoBase
             chaosPrice = exaltedPrice * jsonItem.Core.Rates.Chaos.Value;
         }
 
-        var jsonDetail = await _ninja.GetCurrencyHistory(this);
-        if (jsonDetail is not null)
+        return new()
         {
-            return new()
-            {
-                Id = line.Id,
-                Name = jsonItem.Items.FirstOrDefault(x => x.Id == line.Id)?.Name,
-                ChaosPrice = chaosPrice,
-                ExaltPrice = exaltedPrice,
-                DivinePrice = divinePrice,
-                Detail = jsonDetail
-            };
-        }
-
-        return null;
+            Id = line.Id,
+            Name = jsonItem.Items.FirstOrDefault(x => x.Id == line.Id)?.Name,
+            ChaosPrice = chaosPrice,
+            ExaltPrice = exaltedPrice,
+            DivinePrice = divinePrice
+        };
     }
 }

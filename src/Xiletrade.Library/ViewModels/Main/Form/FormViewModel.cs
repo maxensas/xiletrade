@@ -21,7 +21,6 @@ namespace Xiletrade.Library.ViewModels.Main.Form;
 public sealed partial class FormViewModel : ViewModelBase
 {
     private readonly IViewManager _view;
-    private readonly IKeyboardAdapterService _keyboard;
     private readonly IMessageAdapterService _message;
     private readonly DataManagerService _dm;
     private readonly MainViewModel _vm;
@@ -200,14 +199,13 @@ public sealed partial class FormViewModel : ViewModelBase
     [ObservableProperty]
     private bool sameUser;
 
+    /// <summary>
+    /// Buyout price option (index of the combobox) : 0 = all currencies.
+    /// PoE 1 : 1 = chaos, 2 = chaos or divine, 3 = divine. PoE 2 : 1 = exalted, 2 = exalted or divine, 3 = chaos, 4 = divine.
+    /// See <see cref="Models.Poe.Domain.BuyoutPrice"/>.
+    /// </summary>
     [ObservableProperty]
-    private bool chaosDiv;
-
-    [ObservableProperty]
-    private bool exalt;
-
-    [ObservableProperty]
-    private bool chaos;
+    private int buyoutPriceIndex;
 
     [ObservableProperty]
     private bool autoClose;
@@ -220,6 +218,17 @@ public sealed partial class FormViewModel : ViewModelBase
 
     [ObservableProperty]
     private bool unidentifiedUnique;
+
+    // buyout price changed by the user : the search is done again, as with a click on the result bar (quick and detail views,
+    // a criterion of the next search in the custom search)
+    partial void OnBuyoutPriceIndexChanged(int value)
+    {
+        if (value < 0 || Freeze || !(Tab?.QuickSelected is true || Tab?.DetailSelected is true))
+        {
+            return;
+        }
+        RefreshSearch(null);
+    }
 
     partial void OnUniqueIndexChanged(int value)
     {
@@ -237,27 +246,26 @@ public sealed partial class FormViewModel : ViewModelBase
         _vm.Result.UpdateAsync(minimumStock: 0);
     }
 
-    public FormViewModel(DataManagerService dm, MainViewModel vm,
-        IViewManager view, IKeyboardAdapterService keyboard,
-        IMessageAdapterService message, bool useCustomOrBulk)
+    /// <param name="live">Live searches of the custom search.</param>
+    public FormViewModel(DataManagerService dm, MainViewModel vm, IViewManager view, IMessageAdapterService message,
+        LiveSearchService live, bool useCustomOrBulk)
     {
         _dm = dm;
         _vm = vm;
         _view = view;
-        _keyboard = keyboard;
         _message = message;
 
-        itemBaseType = useCustomOrBulk ? Resources.Resources.Main247_CustomSearch + " / "
-            + Resources.Resources.Main032_cbTotalExchange : string.Empty;
+        // title of the tab selected (see TabViewModel) : custom search first
+        itemBaseType = useCustomOrBulk ? Resources.Resources.Main247_CustomSearch : string.Empty;
         itemBaseTypeColor = useCustomOrBulk ? Strings.Color.Moccasin : string.Empty;
         baseTypeFontSize = useCustomOrBulk ? 16 : 12; // FontSize cannot be equal to 0
         itemExchange = new(_dm, _vm, _view, _message, useCustomOrBulk);
+        tab = new(this, useCustomOrBulk);
         if (useCustomOrBulk)
         {
             visible = new();
             rarity = new();
-            tab = new(this);
-            customSearch = new(_dm, _vm, _view, _message);
+            customSearch = new(_dm, _vm, this, _view, _message, live);
         }
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;
@@ -272,10 +280,8 @@ public sealed partial class FormViewModel : ViewModelBase
         league = _dm.GetLeagueAsyncCollection();
     }
 
-    public FormViewModel(DataManagerService dm, MainViewModel vm, 
-        IViewManager view, IKeyboardAdapterService keyboard, IMessageAdapterService message,
-        ItemData item, InfoDescription infoDesc, bool showMinMax) 
-        : this(dm, vm, view, keyboard, message, useCustomOrBulk: false)
+    public FormViewModel(DataManagerService dm, MainViewModel vm, IViewManager view, IMessageAdapterService message,
+        LiveSearchService live, ItemData item, InfoDescription infoDesc, bool showMinMax) : this(dm, vm, view, message, live, useCustomOrBulk: false)
     {
         var flag = item.Flag;
         if (item.ModList?.Count > 0)
@@ -362,10 +368,36 @@ public sealed partial class FormViewModel : ViewModelBase
         }
         foreach (var mod in ModList)
         {
-            if (mod.Min.Length > 0)
+            if (!mod.IsSlidable || mod.PreferMinMax == _vm.ShowMinMax)
             {
-                mod.PreferMinMax = _vm.ShowMinMax;
+                continue;
             }
+            if (_vm.ShowMinMax)
+            {
+                // reversed slider (right click) : the value goes to max
+                if (mod.IsSlideReversed)
+                {
+                    mod.Max = mod.SlideValue.ToStr();
+                    mod.Min = string.Empty;
+                }
+                else
+                {
+                    mod.Min = mod.SlideValue.ToStr();
+                }
+            }
+            else
+            {
+                var value = mod.IsSlideReversed ? mod.Max : mod.Min;
+                if (value.Length > 0)
+                {
+                    mod.SlideValue = value.ToDoubleDefault();
+                }
+                if (mod.IsSlideReversed)
+                {
+                    mod.Max = mod.DefaultMax; // reversed slider : the max field is sent as min (see XiletradeItem)
+                }
+            }
+            mod.PreferMinMax = _vm.ShowMinMax;
         }
     }
 
@@ -392,10 +424,11 @@ public sealed partial class FormViewModel : ViewModelBase
 
         foreach (var mod in ModList)
         {
-            sameText.Add(mod.Min == mod.Current);
-            if (!mod.PreferMinMax && mod.Max.Length is 0)
+            sameText.Add((mod.IsDefaultMax ? mod.Max : mod.Min) == mod.Current);
+            ResetMax(mod);
+            if (mod.IsDefaultMax || mod.Max.Length is 0)
             {
-                mod.Min = mod.Current;
+                SetModValue(mod, mod.Current);
             }
             mod.SlideValue = mod.Current.ToDoubleDefault();
         }
@@ -407,6 +440,11 @@ public sealed partial class FormViewModel : ViewModelBase
         }
         foreach (var mod in ModList)
         {
+            if (mod.IsDefaultMax)
+            {
+                mod.Max = string.Empty;
+                continue;
+            }
             if (mod.Min.Length > 0)
             {
                 mod.Min = string.Empty;
@@ -435,37 +473,55 @@ public sealed partial class FormViewModel : ViewModelBase
             {
                 continue;
             }
-            if (Double.TryParse(mod.TierTip[0].Text, out double val))
-            {
-                mod.Min = val.ToStr();
-                mod.SlideValue = val;
-                continue;
-            }
-            string[] range = mod.TierTip[0].Text.Split("-");
-            if (range.Length is 2)
-            {
-                mod.Min = range[0];
-                mod.SlideValue = range[0].ToDoubleEmptyField();
-                continue;
-            }
-            if (range.Length is 3 or 4)
-            {
-                if (range[0].Length > 0)
-                {
-                    mod.Min = range[0];
-                    mod.SlideValue = range[0].ToDoubleEmptyField();
-                    continue;
-                }
-                if (range[1].Length > 0 && !range[1].Contain('+'))
-                {
-                    mod.Min = "-" + range[1];
-                    mod.SlideValue = -range[1].ToDoubleEmptyField();
-                    continue;
-                }
-            }
-            mod.Min = mod.Current;
-            mod.SlideValue = mod.Current.ToDoubleEmptyField();
+            ResetMax(mod);
+            var value = GetTierValue(mod.TierTip[0].Text) ?? mod.Current;
+            SetModValue(mod, value);
+            mod.SlideValue = value.ToDoubleEmptyField();
         }
+    }
+
+    // before tier and real values : the slider direction and the max value (min/max display) are reset to default
+    private static void ResetMax(ModLineViewModel mod)
+    {
+        mod.IsSlideReversed = false;
+        if (mod.PreferMinMax)
+        {
+            mod.Max = mod.DefaultMax;
+        }
+    }
+
+    // first value of the tier : number, range "a-b" or negative range "-a-b" / "-a--b", null otherwise
+    private static string GetTierValue(string tier)
+    {
+        if (Double.TryParse(tier, out double val))
+        {
+            return val.ToStr();
+        }
+        var span = tier.AsSpan();
+        var count = span.Count('-');
+        if (count is < 1 or > 3)
+        {
+            return null;
+        }
+        var first = span.IndexOf('-');
+        if (count is 1 || first > 0)
+        {
+            return span[..first].ToString();
+        }
+        // negative value : leading '-' kept up to the next separator
+        var negative = span[..(span[1..].IndexOf('-') + 1)];
+        return negative.Length > 1 && !negative.Contains('+') ? negative.ToString() : null;
+    }
+
+    // tier and real values : max value for the mods filled by default with a max value, min value otherwise
+    private static void SetModValue(ModLineViewModel mod, string value)
+    {
+        if (mod.IsDefaultMax)
+        {
+            mod.Max = value;
+            return;
+        }
+        mod.Min = value;
     }
 
     [RelayCommand]

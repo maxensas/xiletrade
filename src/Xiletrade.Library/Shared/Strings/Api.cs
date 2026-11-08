@@ -18,6 +18,15 @@ public static partial class Strings
         internal static string Exchange { get => IsPoe2 ? _exchange2[Gateway] : _exchange1[Gateway]; }
         internal static string Whisper { get => IsPoe2 ? _whisper2[Gateway] : _whisper1[Gateway]; }
 
+        /// <summary>Page of a search on the trade site : trade/search/{league}/{id}, trade2/search/poe2/{league}/{id}.</summary>
+        /// <remarks>Referer of the requests made from this page (hideout tokens are checked with it).</remarks>
+        internal static string GetSearchPage(string league, string searchId)
+            => string.Concat(Trade.Replace("/api/", "/"), IsPoe2 ? "poe2/" : string.Empty, league, "/", searchId);
+
+        /// <summary>Websocket of the live searches : same server as the search, the league and the search id are added.</summary>
+        /// <remarks>Same paths as the trade site : api/trade/live/{league}/{id}, api/trade2/live/poe2/{league}/{id}.</remarks>
+        internal static string Live => string.Concat(Trade.Replace("https://", "wss://").Replace("/search/", "/live/"), IsPoe2 ? "poe2/" : string.Empty);
+
         internal static string GetUpdate(int idxLang) => GetUpdate(idxLang, IsPoe2);
 
         /// <summary>Trade data api of a language (and of its server), for the given game.</summary>

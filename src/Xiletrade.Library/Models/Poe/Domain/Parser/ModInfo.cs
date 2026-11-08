@@ -13,6 +13,9 @@ internal record ModInfo
 {
     internal readonly DataManagerService _dm;
 
+    // shared empty result (evaluated once : read only afterwards)
+    private static readonly MatchCollection _emptyMatch = CreateEmptyMatch();
+
     internal string ModKind { get; set; }
     internal MatchCollection Match { get; }
 
@@ -32,44 +35,43 @@ internal record ModInfo
     internal ModInfo(DataManagerService dm, string mod)
     {
         _dm = dm;
-        if (mod.StartsWith('(') && mod.EndsWith(')'))
+        if (mod.Length is 0 
+            || mod.StartsWith('(') && mod.EndsWith(')') 
+            || mod.StartsWith('{') && mod.EndsWith('}'))
         {
-            var emptyMatch = RegexUtil.GenerateEmptyMatch().Matches(string.Empty);
             ModKind = string.Empty;
-            Match = emptyMatch;
+            Match = _emptyMatch;
             return;
         }
-        var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
-        if (match.Count is 0)
+        if (mod.AsSpan().IndexOfAnyInRange('0', '9') < 0)
         {
             ModKind = mod;
-            Match = match;
+            Match = _emptyMatch;
             return;
         }
 
+        var match = RegexUtil.DecimalNoPlusPattern().Matches(mod);
         if (match.Count > 0 && _dm.Filter.ContainModifier(mod))
         {
-            var emptyMatch = RegexUtil.GenerateEmptyMatch().Matches(string.Empty);
             ModKind = mod;
-            Match = emptyMatch;
+            Match = _emptyMatch;
             return;
         }
-
         if (match.Count > 1)
         {
             var lMods = new List<Tuple<string, MatchCollection>>();
-            bool uniqueMatchs = match.Cast<Match>()
-                .Select(m => m.Value).Distinct().Count() == match.Count;
+            bool uniqueMatchs = AreUniqueValues(match);
             if (uniqueMatchs)
             {
                 string modKind = RegexUtil.DecimalNoPlusPattern().Replace(mod, "#");
                 lMods.Add(new(modKind, match));
                 for (int i = 0; i < match.Count; i++)
                 {
+                    var current = match[i];
                     var tempMod = RegexUtil.DecimalNoPlusPattern()
-                        .Replace(mod, m => m.Value != match[i].Value ? "#" : m.Value);
+                        .Replace(mod, m => !m.ValueSpan.SequenceEqual(current.ValueSpan) ? "#" : m.Value);
                     var reverseMod = RegexUtil.DecimalNoPlusPattern()
-                        .Replace(mod, m => m.Value == match[i].Value ? "#" : m.Value);
+                        .Replace(mod, m => m.ValueSpan.SequenceEqual(current.ValueSpan) ? "#" : m.Value);
                     var tempMatch = RegexUtil.DecimalNoPlusPattern().Matches(tempMod);
                     lMods.Add(new(reverseMod, tempMatch));
                 }
@@ -91,6 +93,30 @@ internal record ModInfo
         // TO DO : identify restrictive cases to find new avenue OR invalidate this change 
         ModKind = RegexUtil.DecimalNoPlusPattern().Replace(mod, "#");
         Match = match;
+    }
+
+    private static MatchCollection CreateEmptyMatch()
+    {
+        var emptyMatch = RegexUtil.GenerateEmptyMatch().Matches(string.Empty);
+        _ = emptyMatch.Count; // forces the evaluation
+        return emptyMatch;
+    }
+
+    // true if all match values are different, without string allocation
+    private static bool AreUniqueValues(MatchCollection match)
+    {
+        for (int i = 0; i < match.Count; i++)
+        {
+            var value = match[i].ValueSpan;
+            for (int j = i + 1; j < match.Count; j++)
+            {
+                if (value.SequenceEqual(match[j].ValueSpan))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     protected static string ReplaceHashes(MatchCollection match, MatchCollection nextMatch, string parsed, bool multiLine = false)

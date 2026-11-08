@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Services;
@@ -30,29 +31,34 @@ internal sealed record ModInfoParse : ModInfo
         _item = item;
         ParsedMod = mod;
 
-        var reduced = Resources.Resources.General102_reduced.Split('/');
-        var increased = Resources.Resources.General101_increased.Split('/');
-        if (reduced.Length != increased.Length)
+        // '/' separated variants read on spans : strings only allocated for the variant found
+        ReadOnlySpan<char> reducedVariants = Resources.Resources.General102_reduced;
+        ReadOnlySpan<char> increasedVariants = Resources.Resources.General101_increased;
+        if (reducedVariants.Count('/') != increasedVariants.Count('/'))
         {
             return;
         }
 
-        for (int j = 0; j < reduced.Length; j++)
+        var increasedRanges = increasedVariants.Split('/');
+        foreach (Range reducedRange in reducedVariants.Split('/'))
         {
-            if (!ModKind.Contain(reduced[j]))
+            increasedRanges.MoveNext();
+            if (!ModKind.Contain(reducedVariants[reducedRange]))
             {
                 continue;
             }
             if (!IsKindFilter) // mod with reduced stat not found
             {
-                string modIncreased = ModKind.Replace(reduced[j], increased[j]);
+                string reduced = reducedVariants[reducedRange].ToString();
+                string increased = increasedVariants[increasedRanges.Current].ToString();
+                string modIncreased = ModKind.Replace(reduced, increased);
                 if (_dm.Filter.ContainModifier(modIncreased)) // mod with increased stat found
                 {
                     IsNegative = true;
                     if (Match.Count > 0)
                     {
                         StringBuilder sbInc = new(modIncreased);
-                        sbInc.Replace(reduced[j], increased[j]);
+                        sbInc.Replace(reduced, increased);
                         for (int i = 0; i < Match.Count; i++)
                         {
                             int idx = sbInc.ToString().IndexOf('#', StringComparison.Ordinal);
@@ -308,29 +314,25 @@ internal sealed record ModInfoParse : ModInfo
     {
         returnMod = string.Empty;
 
-        StringBuilder sb = new();
-        var parseEntry = _dm.Parser.Mods.Where(parse => !parse.Disabled &&
-            (ModKind.Contain(parse.Old) && parse.Replace is Strings.Word.contains
-            || ModKind == parse.Old && parse.Replace is Strings.Word.equals)).FirstOrDefault();
+        ModOption parseEntry = null;
+        foreach (var parse in _dm.Parser.Mods)
+        {
+            if (!parse.Disabled && (ModKind.Contain(parse.Old) && parse.Replace is Strings.Word.contains
+                || ModKind == parse.Old && parse.Replace is Strings.Word.equals))
+            {
+                parseEntry = parse;
+                break;
+            }
+        }
         if (parseEntry is null)
         {
             return false;
         }
 
-        if (parseEntry.Replace is Strings.Word.contains)
-        {
-            sb.Append(ModKind);
-            sb.Replace(parseEntry.Old, parseEntry.New);
-        }
-        else if (parseEntry.Replace is Strings.Word.equals)
-        {
-            sb.Append(parseEntry.New);
-        }
-        else
-        {
-            sb.Append(ModKind); // should never go here
-        }
-        returnMod = sb.ToString();
+        // string.Replace : all ordinal occurrences, as StringBuilder.Replace
+        returnMod = parseEntry.Replace is Strings.Word.contains ? ModKind.Replace(parseEntry.Old, parseEntry.New)
+            : parseEntry.Replace is Strings.Word.equals ? parseEntry.New
+            : ModKind; // should never go here
         return true;
     }
 }

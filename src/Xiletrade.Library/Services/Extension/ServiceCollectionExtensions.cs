@@ -11,6 +11,7 @@ using Xiletrade.Library.Services.Linux;
 using Xiletrade.Library.Services.Windows;
 using Xiletrade.Library.ViewModels.Config;
 using Xiletrade.Library.ViewModels.Editor;
+using Xiletrade.Library.ViewModels.Live;
 using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Main.Result;
 using Xiletrade.Library.ViewModels.Regex;
@@ -63,6 +64,7 @@ public static class ServiceCollectionExtensions
             .AddSingleton<XiletradeService>()
             .AddSingleton<DataManagerService>()
             .AddSingleton<PoeApiService>()
+            .AddSingleton<LiveSearchService>()
             .AddSingleton<PoeNinjaService>()
             .AddSingleton<LocalizationService>()
             .AddSingleton<FeatureProvider>()
@@ -91,6 +93,7 @@ public static class ServiceCollectionExtensions
             // with attribute [ViewModelCreation(ViewModelCreation.Container)]
             .AddSingleton<MainViewModel>()
             .AddSingleton<TaskBarViewModel>()
+            .AddSingleton<LiveOverlayViewModel>()
             .AddScoped<ConfigViewModel>()
             .AddTransient<EditorViewModel>()
             .AddTransient<RegexViewModel>()

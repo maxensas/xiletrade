@@ -7,6 +7,8 @@ internal class Program
     static void Main(string[] args)
     {
         //BenchmarkRunner.Run<JsonSerializerBenchmarks>();
-        BenchmarkRunner.Run<ItemDataBenchMark>();
+        BenchmarkRunner.Run<ContainModifierBenchmark>();
+        //BenchmarkRunner.Run<StringCacheBenchmark>();
+        //BenchmarkRunner.Run<ItemDataBenchMark>();
     }
 }

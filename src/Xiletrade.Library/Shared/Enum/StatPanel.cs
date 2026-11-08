@@ -68,5 +68,14 @@ public enum StatPanel
     HeistEngineering,
     HeistBruteForce,
     HeistPerception,
-    HeistDeception
+    HeistDeception,
+
+    WeaponDamage,
+    WeaponAttacksPerSecond,
+    WeaponCriticalChance,
+    MapTier,
+    AreaLevel,
+
+    /// <summary>Buyout price (trade filters of the custom search) : min / max in the currency of the buyout price option.</summary>
+    TradePrice
 }

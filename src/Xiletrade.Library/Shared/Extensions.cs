@@ -2,7 +2,9 @@
 using System.Globalization;
 using System.Linq;
 using System.Resources;
+using System.Text;
 using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Shared;
 
@@ -20,6 +22,75 @@ public static class Extensions
     {
         return StrToDouble(str, false);
     }
+
+    /// <summary>Value of a min / max field, null if empty or not a number.</summary>
+    internal static double? ToNullableDouble(this string str)
+    {
+        var value = StrToDouble(str, true);
+        return value.IsEmpty() ? null : value;
+    }
+
+    /// <summary>Rarity of the trade api (normal, uniquefoil, nonunique...) of a rarity in the language used, empty : unknown.</summary>
+    internal static string ToRarityApi(this ReadOnlySpan<char> rarityLang)
+    {
+        var rm = Resources.Resources.ResourceManager;
+
+        string matchedKey = null;
+        foreach (var key in Strings.Collection.RarityResourceKeys)
+        {
+            if (rarityLang.SequenceEqual(rm.GetString(key)))
+            {
+                matchedKey = key;
+                break;
+            }
+        }
+        if (matchedKey is null) return string.Empty;
+
+        var english = rm.GetEnglish(matchedKey);
+
+        return english switch
+        {
+            "Any N-U" => "nonunique",
+            "Foil Unique" => "uniquefoil",
+            _ => english.ToLowerInvariant()
+        };
+    }
+
+    /// <summary>Short id of a currency of the trade api, as in the currency file (some characters replaced).</summary>
+    internal static string ReplaceCurrencyChars(this string entry)
+    {
+        // most currencies (chaos, divine, exalted...) contain none of the keys : returned as is, without allocation
+        StringBuilder sb = null;
+        foreach (var pair in Strings.Collection.dicCurrencyChars)
+        {
+            if (sb is null)
+            {
+                if (!entry.Contain(pair.Key))
+                {
+                    continue;
+                }
+                sb = new(entry);
+            }
+            sb.Replace(pair.Key, pair.Value);
+        }
+        return sb is null ? entry : sb.ToString();
+    }
+
+    /// <summary>Type of the stat group of the trade api : and, not, count.</summary>
+    internal static string ToApi(this StatGroup group) => group switch
+    {
+        StatGroup.Not => Strings.Word.not,
+        StatGroup.Count => Strings.Word.count,
+        _ => Strings.Word.and
+    };
+
+    /// <summary>Stat group of a type of the trade api, and by default.</summary>
+    internal static StatGroup ToStatGroup(this string group) => group switch
+    {
+        Strings.Word.not => StatGroup.Not,
+        Strings.Word.count => StatGroup.Count,
+        _ => StatGroup.And
+    };
 
     /// <summary>Return true if equal to EMPTYFIELD = 99999</summary>
     public static bool IsEmpty(this double value)
@@ -64,10 +135,15 @@ public static class Extensions
         return string.Concat(text.AsSpan(0, pos), replace, text.AsSpan(pos + search.Length));
     }
     
+    /// <summary>Removes the longest string of the array found in input, then trims. Input returned as is if none is found (empty if null, as before).</summary>
     public static string RemoveStringFromArrayDesc(this string input, ReadOnlySpan<string> array)
-        => input.AsSpan().RemoveStringFromArrayDesc(array);
+        => FindLongestString(input, array, out int idx, out int length) ? RemoveAndTrim(input, idx, length) : input ?? string.Empty;
     
     public static string RemoveStringFromArrayDesc(this ReadOnlySpan<char> input, ReadOnlySpan<string> array)
+        => FindLongestString(input, array, out int idx, out int length) ? RemoveAndTrim(input, idx, length) : input.ToString();
+
+    // first occurrence of the longest string found (same order as before : longest first, then array order)
+    private static bool FindLongestString(ReadOnlySpan<char> input, ReadOnlySpan<string> array, out int idx, out int length)
     {
         int maxLen = 0;
 
@@ -82,25 +158,56 @@ public static class Extensions
                 if (s.Length != len)
                     continue;
 
-                ReadOnlySpan<char> needle = s.AsSpan();
-                int idx = input.IndexOf(needle);
-
-                if (idx < 0)
-                    continue;
-
-                int newLen = input.Length - needle.Length;
-
-                char[] buffer = new char[newLen];
-
-                input[..idx].CopyTo(buffer);
-                input[(idx + needle.Length)..].CopyTo(buffer.AsSpan(idx));
-
-                return new string(buffer).Trim();
+                idx = input.IndexOf(s.AsSpan());
+                if (idx >= 0)
+                {
+                    length = len;
+                    return true;
+                }
             }
         }
 
-        return input.ToString();
+        idx = -1;
+        length = 0;
+        return false;
     }
+
+    // only the returned string is allocated (buffer on the stack when small)
+    private static string RemoveAndTrim(ReadOnlySpan<char> input, int idx, int length)
+    {
+        int newLen = input.Length - length;
+        Span<char> buffer = newLen <= 256 ? stackalloc char[newLen] : new char[newLen];
+
+        input[..idx].CopyTo(buffer);
+        input[(idx + length)..].CopyTo(buffer[idx..]);
+
+        return new string(buffer.Trim());
+    }
+
+    /// <summary>
+    /// Stat part of an id containing exactly one '.' ("explicit.stat_1" -> "stat_1"), 
+    /// same condition as Split('.') returning 2 parts, without allocation.
+    /// </summary>
+    internal static bool TryGetStatId(this string id, out ReadOnlySpan<char> stat)
+    {
+        ReadOnlySpan<char> span = id;
+        int dot = span.IndexOf('.');
+        if (dot < 0 || span[(dot + 1)..].Contains('.'))
+        {
+            stat = default;
+            return false;
+        }
+        stat = span[(dot + 1)..];
+        return true;
+    }
+
+    /// <summary>Key lookup with a span : without allocation when the dictionary supports it (string comparers of .NET 9+).</summary>
+    internal static bool ContainsSpanKey<TValue>(this System.Collections.Generic.Dictionary<string, TValue> dic, ReadOnlySpan<char> key)
+        => dic.TryGetAlternateLookup<ReadOnlySpan<char>>(out var lookup) ? lookup.ContainsKey(key) : dic.ContainsKey(key.ToString());
+
+    /// <summary>Value lookup with a span : without allocation when the dictionary supports it (string comparers of .NET 9+).</summary>
+    internal static bool TryGetSpanValue<TValue>(this System.Collections.Generic.Dictionary<string, TValue> dic, ReadOnlySpan<char> key, out TValue value)
+        => dic.TryGetAlternateLookup<ReadOnlySpan<char>>(out var lookup) ? lookup.TryGetValue(key, out value) : dic.TryGetValue(key.ToString(), out value);
 
     public static bool Contain(this string source, ReadOnlySpan<char> toCheck) => source.AsSpan().Contains(toCheck, StringComparison.Ordinal);
 

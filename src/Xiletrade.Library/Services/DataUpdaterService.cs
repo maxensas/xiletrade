@@ -78,6 +78,7 @@ public sealed class DataUpdaterService : IDataUpdaterService
 
             taskList.Add(GithubUpdate<DivTiersData>(Strings.File.Divination));
             taskList.Add(GithubUpdate<DustData>(Strings.File.DustLevel));
+            taskList.Add(GithubUpdate<StatRule>(Strings.File.StatRules));
 
             var timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeoutSecond));
             var allTasks = Task.WhenAll(taskList);

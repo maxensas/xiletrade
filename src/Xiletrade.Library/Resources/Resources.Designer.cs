@@ -11,7 +11,6 @@
 namespace Xiletrade.Library.Resources {
     using System;
 
-
     /// <summary>
     ///   A strongly-typed resource class for looking up localized strings, among other things.
     /// </summary>
@@ -4031,6 +4030,15 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General245_ScryingOrb", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => You cannot use this item. Its stats will be ignored.
+        /// </summary>
+        public static string General246_CannotUse {
+            get {
+                return ResourceManager.GetString("General246_CannotUse", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.
@@ -7040,6 +7048,633 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
+        ///   Localized string similar to => Buyout Price :.
+        /// </summary>
+        public static string Main260_BuyoutPrice
+        {
+            get
+            {
+                return ResourceManager.GetString("Main260_BuyoutPrice", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => ExaltDivTip.
+        /// </summary>
+        public static string Main261_ExaltDivTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main261_ExaltDivTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => DivineOnlyTip.
+        /// </summary>
+        public static string Main262_DivineOnlyTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main262_DivineOnlyTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => AllCurrenciesTip.
+        /// </summary>
+        public static string Main263_AllCurrenciesTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main263_AllCurrenciesTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Item category.
+        /// </summary>
+        public static string Main264_SearchCategory
+        {
+            get
+            {
+                return ResourceManager.GetString("Main264_SearchCategory", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Show filters.
+        /// </summary>
+        public static string Main265_ShowFilters
+        {
+            get
+            {
+                return ResourceManager.GetString("Main265_ShowFilters", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Show results.
+        /// </summary>
+        public static string Main266_ShowResults
+        {
+            get
+            {
+                return ResourceManager.GetString("Main266_ShowResults", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Stat filters.
+        /// </summary>
+        public static string Main267_StatGroupAnd
+        {
+            get
+            {
+                return ResourceManager.GetString("Main267_StatGroupAnd", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Not.
+        /// </summary>
+        public static string Main268_StatGroupNot
+        {
+            get
+            {
+                return ResourceManager.GetString("Main268_StatGroupNot", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Count.
+        /// </summary>
+        public static string Main269_StatGroupCount
+        {
+            get
+            {
+                return ResourceManager.GetString("Main269_StatGroupCount", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => The item must have a number of the stats of this group between the min and the max.
+        /// </summary>
+        public static string Main270_StatGroupCountTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main270_StatGroupCountTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => + Add Stat Group.
+        /// </summary>
+        public static string Main271_AddStatGroup
+        {
+            get
+            {
+                return ResourceManager.GetString("Main271_AddStatGroup", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => + Add Preset.
+        /// </summary>
+        public static string Main272_AddPreset
+        {
+            get
+            {
+                return ResourceManager.GetString("Main272_AddPreset", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Update Preset.
+        /// </summary>
+        public static string Main273_UpdatePreset
+        {
+            get
+            {
+                return ResourceManager.GetString("Main273_UpdatePreset", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Preset name.
+        /// </summary>
+        public static string Main274_PresetName
+        {
+            get
+            {
+                return ResourceManager.GetString("Main274_PresetName", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Delete Preset.
+        /// </summary>
+        public static string Main275_DeletePreset
+        {
+            get
+            {
+                return ResourceManager.GetString("Main275_DeletePreset", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Delete the preset "{0}" ?.
+        /// </summary>
+        public static string Main276_DeletePresetConfirm
+        {
+            get
+            {
+                return ResourceManager.GetString("Main276_DeletePresetConfirm", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Damage.
+        /// </summary>
+        public static string Main277_Damage
+        {
+            get
+            {
+                return ResourceManager.GetString("Main277_Damage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Type Filters.
+        /// </summary>
+        public static string Main278_TypeFilters
+        {
+            get
+            {
+                return ResourceManager.GetString("Main278_TypeFilters", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Weapon Filters.
+        /// </summary>
+        public static string Main279_WeaponFilters
+        {
+            get
+            {
+                return ResourceManager.GetString("Main279_WeaponFilters", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Equipment Filters.
+        /// </summary>
+        public static string Main280_EquipmentFilters
+        {
+            get
+            {
+                return ResourceManager.GetString("Main280_EquipmentFilters", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Armour Filters.
+        /// </summary>
+        public static string Main281_ArmourFilters
+        {
+            get
+            {
+                return ResourceManager.GetString("Main281_ArmourFilters", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Socket Filters.
+        /// </summary>
+        public static string Main282_SocketFilters
+        {
+            get
+            {
+                return ResourceManager.GetString("Main282_SocketFilters", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Requirements.
+        /// </summary>
+        public static string Main283_Requirements
+        {
+            get
+            {
+                return ResourceManager.GetString("Main283_Requirements", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Map/Chart Filters.
+        /// </summary>
+        public static string Main284_MapFilters
+        {
+            get
+            {
+                return ResourceManager.GetString("Main284_MapFilters", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Endgame Filters.
+        /// </summary>
+        public static string Main285_EndgameFilters
+        {
+            get
+            {
+                return ResourceManager.GetString("Main285_EndgameFilters", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Miscellaneous.
+        /// </summary>
+        public static string Main286_Miscellaneous
+        {
+            get
+            {
+                return ResourceManager.GetString("Main286_Miscellaneous", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Import search presets
+        /// </summary>
+        public static string Main287_ImportPresets
+        {
+            get
+            {
+                return ResourceManager.GetString("Main287_ImportPresets", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Export search presets
+        /// </summary>
+        public static string Main288_ExportPresets
+        {
+            get
+            {
+                return ResourceManager.GetString("Main288_ExportPresets", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Search presets
+        /// </summary>
+        public static string Main289_SearchPresets
+        {
+            get
+            {
+                return ResourceManager.GetString("Main289_SearchPresets", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => {0} preset(s) imported.
+        /// </summary>
+        public static string Main290_PresetsImported
+        {
+            get
+            {
+                return ResourceManager.GetString("Main290_PresetsImported", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => The search presets have been updated to be compatible with the current filters :
+        /// </summary>
+        public static string Main291_PresetsUpdated
+        {
+            get
+            {
+                return ResourceManager.GetString("Main291_PresetsUpdated", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => {0} : {1} replaced by {2}
+        /// </summary>
+        public static string Main292_PresetStatReplaced
+        {
+            get
+            {
+                return ResourceManager.GetString("Main292_PresetStatReplaced", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => {0} : {1} removed
+        /// </summary>
+        public static string Main293_PresetStatRemoved
+        {
+            get
+            {
+                return ResourceManager.GetString("Main293_PresetStatRemoved", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => No search preset found.
+        /// </summary>
+        public static string Main294_NoPresetFound
+        {
+            get
+            {
+                return ResourceManager.GetString("Main294_NoPresetFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => {0} preset(s) exported.
+        /// </summary>
+        public static string Main295_PresetsExported
+        {
+            get
+            {
+                return ResourceManager.GetString("Main295_PresetsExported", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Live search
+        /// </summary>
+        public static string Main296_LiveSearch
+        {
+            get
+            {
+                return ResourceManager.GetString("Main296_LiveSearch", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Live
+        /// </summary>
+        public static string Main297_Live
+        {
+            get
+            {
+                return ResourceManager.GetString("Main297_Live", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Live search refused : a valid POESESSID is required (settings, authentication section).
+        /// </summary>
+        public static string Main298_LiveNoSession
+        {
+            get
+            {
+                return ResourceManager.GetString("Main298_LiveNoSession", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => The live search could not be started.
+        /// </summary>
+        public static string Main299_LiveNotStarted
+        {
+            get
+            {
+                return ResourceManager.GetString("Main299_LiveNotStarted", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Live search started : the new items will be displayed here.
+        /// </summary>
+        public static string Main300_LiveStarted
+        {
+            get
+            {
+                return ResourceManager.GetString("Main300_LiveStarted", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Live search stopped : the connection was lost.
+        /// </summary>
+        public static string Main302_LiveConnectionLost
+        {
+            get
+            {
+                return ResourceManager.GetString("Main302_LiveConnectionLost", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Notifies the new items matching the criteria (POESESSID required).
+        /// </summary>
+        public static string Main304_LiveTip
+        {
+            get
+            {
+                return ResourceManager.GetString("Main304_LiveTip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Pause live search
+        /// </summary>
+        public static string Main305_LivePause
+        {
+            get
+            {
+                return ResourceManager.GetString("Main305_LivePause", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Resume live search
+        /// </summary>
+        public static string Main306_LiveResume
+        {
+            get
+            {
+                return ResourceManager.GetString("Main306_LiveResume", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Stop live search
+        /// </summary>
+        public static string Main307_LiveStopAll
+        {
+            get
+            {
+                return ResourceManager.GetString("Main307_LiveStopAll", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Search
+        /// </summary>
+        public static string Main308_Search
+        {
+            get
+            {
+                return ResourceManager.GetString("Main308_Search", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Add at least one criterion (item, category, filter or stat) to start a live search.
+        /// </summary>
+        public static string Main309_LiveNoCriteria
+        {
+            get
+            {
+                return ResourceManager.GetString("Main309_LiveNoCriteria", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Travel to hideout
+        /// </summary>
+        public static string Main310_TravelToHideout
+        {
+            get
+            {
+                return ResourceManager.GetString("Main310_TravelToHideout", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Trade Filters
+        /// </summary>
+        public static string Main311_TradeFilters
+        {
+            get
+            {
+                return ResourceManager.GetString("Main311_TradeFilters", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => This live search is already running.
+        /// </summary>
+        public static string Main312_LiveDuplicate
+        {
+            get
+            {
+                return ResourceManager.GetString("Main312_LiveDuplicate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Pause all live searches
+        /// </summary>
+        public static string Main313_LivePauseAll
+        {
+            get
+            {
+                return ResourceManager.GetString("Main313_LivePauseAll", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Resume all live searches
+        /// </summary>
+        public static string Main314_LiveResumeAll
+        {
+            get
+            {
+                return ResourceManager.GetString("Main314_LiveResumeAll", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Stop all live searches
+        /// </summary>
+        public static string Main315_LiveStopAll
+        {
+            get
+            {
+                return ResourceManager.GetString("Main315_LiveStopAll", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Live search : trade API limit nearly reached
+        /// </summary>
+        public static string Main316_LiveFetchLimit
+        {
+            get
+            {
+                return ResourceManager.GetString("Main316_LiveFetchLimit", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Price check available in {0} s
+        /// </summary>
+        public static string Main317_PriceCheckIn
+        {
+            get
+            {
+                return ResourceManager.GetString("Main317_PriceCheckIn", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Live search paused : more than {0} new items in one minute, refine the search or resume it.
+        /// </summary>
+        public static string Main318_LiveTooBroadPaused
+        {
+            get
+            {
+                return ResourceManager.GetString("Main318_LiveTooBroadPaused", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Localized string similar to => Welcome to Xiletrade.
         /// </summary>
         public static string Start001_lblWelcome {
@@ -7688,6 +8323,39 @@ namespace Xiletrade.Library.Resources {
         public static string Error035_ReportOnGithub {
             get {
                 return ResourceManager.GetString("Error035_ReportOnGithub", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Your POESESSID is missing or expired !
+        /// </summary>
+        public static string Error036_TravelNoToken
+        {
+            get
+            {
+                return ResourceManager.GetString("Error036_TravelNoToken", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Is your account correctly connected ?
+        /// </summary>
+        public static string Error037_TravelAccount
+        {
+            get
+            {
+                return ResourceManager.GetString("Error037_TravelAccount", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Your POESESSID is probably missing or expired !
+        /// </summary>
+        public static string Error038_TravelSession
+        {
+            get
+            {
+                return ResourceManager.GetString("Error038_TravelSession", resourceCulture);
             }
         }
     }

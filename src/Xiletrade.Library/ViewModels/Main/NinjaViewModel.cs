@@ -30,6 +30,14 @@ public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNi
     [ObservableProperty]
     private NinjaDetail detail;
 
+    /// <summary>The currency history is loaded : its charts are displayed.</summary>
+    [ObservableProperty]
+    private bool historyLoaded;
+
+    /// <summary>No currency history : low price or currency not managed.</summary>
+    [ObservableProperty]
+    private bool historyMissing;
+
     private NinjaInfoBase NinjaInfoBase { get; set; }
 
     /// <summary>
@@ -54,6 +62,9 @@ public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNi
             if (NinjaInfoBase is null || !NinjaInfoBase.VerifiedLink)
                 return;
 
+            // currency history (exchange only) : requested in parallel with the price, displayed after it, not cached
+            var historyTask = NinjaInfoBase.UrlDetails?.Length > 0 ? _ninja.GetCurrencyHistory(NinjaInfoBase) : null;
+
             var ninja = await NinjaInfoBase.GetNinjaValueAsync();
             if (ninja is not null)
             {
@@ -61,18 +72,6 @@ public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNi
                 {
                     NinjaInfoBase.Link += ninja.Id;
                 }
-                if (ninja.Detail is not null)
-                {
-                    Detail = ninja.Detail;
-
-                    if (!_vm.Form.Tab.HistoryEnable)
-                    {
-                        _vm.Form.Tab.HistoryEnable = _vm.Form.Tab.HistorySelected = true;
-                        _vm.Form.Visible.Poeprices = false;
-                        _vm.Form.Tab.QuickEnable = _vm.Form.Tab.DetailEnable = false;
-                    }
-                }
-
                 _vm.Form.Visible.Ninja = true;
 
                 double value = ninja.DivinePrice > 1 ? Math.Round(ninja.DivinePrice, 2)
@@ -87,11 +86,22 @@ public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNi
             {
                 UpdateUniqueListIcons();
             }
+
+            if (historyTask is not null)
+            {
+                Detail = await historyTask;
+            }
         }
         catch (Exception ex)
         {
             if (_logger.IsEnabled(LogLevel.Debug))
                 _logger.LogDebug("Exception raised : {Message}", ex.Message);
+        }
+        finally
+        {
+            // history tab : the charts when there is a history, the reason otherwise
+            HistoryLoaded = Detail?.Pairs?.Count > 0;
+            HistoryMissing = !HistoryLoaded;
         }
     }
 

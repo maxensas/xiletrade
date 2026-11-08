@@ -59,6 +59,23 @@ internal static class FilterResultExtensions
         return null;
     }
 
+    /// <summary>
+    /// Returns all entries matching the modifier (see <see cref="IsModMatch"/>), null if none : no allocation without result.
+    /// </summary>
+    internal static List<FilterResultEntrie> GetModMatchEntries(this FilterResult filter, ReadOnlySpan<char> mod)
+    {
+        List<FilterResultEntrie> result = null;
+        var entries = filter.Entries;
+        for (int i = 0; i < entries.Length; i++)
+        {
+            if (IsModMatch(mod, entries[i].Text))
+            {
+                (result ??= new()).Add(entries[i]);
+            }
+        }
+        return result;
+    }
+
     internal static List<FilterResultEntrie> GetMatchEntriesList(this FilterResult filter, Regex regex)
     {
         var result = new List<FilterResultEntrie>();
@@ -96,12 +113,13 @@ internal static class FilterResultExtensions
         return list;
     }
 
+    /// <returns>Entries found, null or empty if none.</returns>
     internal static List<FilterResultEntrie> FindEntries(this FilterResult filter,
-        ItemModifier mod, ItemData item, Regex inputRegex)
+        ItemModifier mod, ItemData item)
     {
-        // a) simple match with the regex
-        var entries = filter.GetMatchEntriesList(inputRegex);
-        if (entries.Count > 0)
+        // a) simple match
+        var entries = filter.GetModMatchEntries(mod.Parsed);
+        if (entries is not null)
             return entries;
 
         // b) multi-line mod (first line)
@@ -129,10 +147,114 @@ internal static class FilterResultExtensions
             entries = filter.GetMultiLineEntrieList(mod);
         }
 
-        return entries ?? new List<FilterResultEntrie>();
+        return entries;
     }
 
     // private
+    /// <summary>
+    /// Same result as the regex : "^" + Escape(mod with numbers replaced by '#') + "$" (ignore case),
+    /// each '#' being replaced by "[+-]?([0-9]+\.[0-9]+|[0-9]+|\#)", without any allocation.
+    /// </summary>
+    /// <param name="mod">Parsed modifier : its numbers and '#' match a signed number or '#' in text.</param>
+    /// <param name="text">Filter entry text.</param>
+    internal static bool IsModMatch(ReadOnlySpan<char> mod, ReadOnlySpan<char> text)
+    {
+        while (true)
+        {
+            int tokenLength = GetNumberTokenLength(mod);
+            if (tokenLength > 0)
+            {
+                mod = mod[tokenLength..];
+                // [+-]? : with the sign, then without (regex backtracking)
+                if (text.Length > 0 && text[0] is '+' or '-' && IsNumberMatch(mod, text[1..]))
+                {
+                    return true;
+                }
+                return IsNumberMatch(mod, text);
+            }
+            if (mod.IsEmpty)
+            {
+                return text.IsEmpty || text is ['\n']; // '$' also matches before a final line feed
+            }
+            if (text.IsEmpty || !EqualsIgnoreCase(mod[0], text[0]))
+            {
+                return false;
+            }
+            mod = mod[1..];
+            text = text[1..];
+        }
+    }
+
+    // ([0-9]+\.[0-9]+|[0-9]+|\#) then the rest of the modifier
+    private static bool IsNumberMatch(ReadOnlySpan<char> mod, ReadOnlySpan<char> text)
+    {
+        if (text.Length > 0 && text[0] is '#')
+        {
+            return IsModMatch(mod, text[1..]);
+        }
+        int intLength = CountDigits(text);
+        if (intLength is 0)
+        {
+            return false;
+        }
+        if (intLength < text.Length && text[intLength] is '.')
+        {
+            for (int length = CountDigits(text[(intLength + 1)..]); length > 0; length--)
+            {
+                if (IsModMatch(mod, text[(intLength + 1 + length)..]))
+                {
+                    return true;
+                }
+            }
+        }
+        for (int length = intLength; length > 0; length--)
+        {
+            if (IsModMatch(mod, text[length..]))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // number at the start of the modifier (same as RegexUtil.DecimalPattern) or '#', 0 if none
+    private static int GetNumberTokenLength(ReadOnlySpan<char> mod)
+    {
+        if (mod.IsEmpty)
+        {
+            return 0;
+        }
+        if (mod[0] is '#')
+        {
+            return 1;
+        }
+        int sign = mod[0] is '+' or '-' ? 1 : 0;
+        int intLength = CountDigits(mod[sign..]);
+        if (intLength is 0)
+        {
+            return 0;
+        }
+        int length = sign + intLength;
+        if (length < mod.Length && mod[length] is '.')
+        {
+            int decLength = CountDigits(mod[(length + 1)..]);
+            if (decLength > 0)
+            {
+                length += 1 + decLength;
+            }
+        }
+        return length;
+    }
+
+    private static int CountDigits(ReadOnlySpan<char> text)
+    {
+        int count = text.IndexOfAnyExceptInRange('0', '9');
+        return count < 0 ? text.Length : count;
+    }
+
+    private static bool EqualsIgnoreCase(char a, char b)
+        => a == b || char.ToLowerInvariant(a) == char.ToLowerInvariant(b);
+
     private static FilterResultEntrie GetConfluxEntrie(this FilterResult filter, ItemModifier mod)
     {
         var ConfluxEntrie = filter.FindEntryById(Strings.StatPoe1.Conflux);

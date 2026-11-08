@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Xiletrade.Library.Shared;
 
 namespace Xiletrade.Library.Models.Poe.Contract.Extension;
@@ -7,6 +8,9 @@ namespace Xiletrade.Library.Models.Poe.Contract.Extension;
 // without factoring loops
 internal static class FilterDataExtensions
 {
+    // exact texts of the entries, indexed once per filter data (entries are not modified once loaded, see ArrangeFilter)
+    private static readonly ConditionalWeakTable<FilterData, EntryTextIndex> _textIndexes = new();
+
     internal static IEnumerable<FilterResultEntrie> EnumerateEntries(this FilterData filter)
     {
         var results = filter.Result;
@@ -77,6 +81,12 @@ internal static class FilterDataExtensions
 
     internal static bool ContainModifier(this FilterData filter, ReadOnlySpan<char> modText, bool sequenceEquality = true)
     {
+        if (sequenceEquality)
+        {
+            // hash lookup instead of a scan of all the entries
+            return _textIndexes.GetValue(filter, static f => new EntryTextIndex(f)).Contains(modText);
+        }
+
         var results = filter.Result;
 
         for (int i = 0; i < results.Length; i++)
@@ -142,6 +152,32 @@ internal static class FilterDataExtensions
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// Ordinal set of the entry texts : same result as SequenceEqual on each entry text (a null text is compared as empty).
+    /// </summary>
+    private sealed class EntryTextIndex
+    {
+        private readonly HashSet<string> _texts = new(StringComparer.Ordinal);
+        private readonly HashSet<string>.AlternateLookup<ReadOnlySpan<char>> _lookup;
+        private readonly bool _useLookup;
+
+        internal EntryTextIndex(FilterData filter)
+        {
+            foreach (var result in filter.Result ?? [])
+            {
+                foreach (var entry in result.Entries ?? [])
+                {
+                    _texts.Add(entry.Text ?? string.Empty);
+                }
+            }
+            _useLookup = _texts.TryGetAlternateLookup(out _lookup);
+        }
+
+        // span lookup without allocation (supported by StringComparer.Ordinal), string lookup otherwise
+        internal bool Contains(ReadOnlySpan<char> text) 
+            => _useLookup ? _lookup.Contains(text) : _texts.Contains(text.ToString());
     }
 
     /// <summary>

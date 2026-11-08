@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,56 +8,80 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Xiletrade.Library.Models.Application.LiveSearch;
+using Xiletrade.Library.Models.Application.Notification;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
-using Xiletrade.Library.ViewModels.Main;
 using Xiletrade.Library.ViewModels.Main.Result;
 
 namespace Xiletrade.Library.Services;
 
 /// <summary>Service used to handle behaviours when querying PoE trade APIs.</summary>
-/// <remarks>Responsible for updating ResultViewModel based on API's results</remarks>
+/// <remarks>
+/// Responsible for updating ResultViewModel based on API's results.
+/// While live searches are running, a price check which would exceed a fetch limit is refused (<see cref="FetchLimitException"/>,
+/// displayed in the result bar) : the live searches stop at <see cref="LiveSearchService.MaxFetchUsage"/> of each window,
+/// the price checks can use the rest but one request.
+/// </remarks>
 public sealed class PoeApiService
 {
+    // results of a fetch request
+    private const int FetchPageSize = 10;
+    // fetch requests kept free by a price check while live searches are running
+    private const int FetchMargin = 1;
+
     private readonly ILogger<PoeApiService> _logger;
     private readonly DataManagerService _dm;
     private readonly INetService _net;
     private readonly IMessageAdapterService _message;
-    private readonly MainViewModel _vm;
+    private readonly INotificationService _notif;
+
+    // told by the live search service (weak messenger)
+    private volatile bool _isLiveRunning;
 
     // Lazzy initialization of the service.
+    // No dependency on the view models : the state of the form is given by the callers (used by the live searches too).
     public PoeApiService(ILogger<PoeApiService> logger, DataManagerService dm, 
-        IMessageAdapterService message, INetService net, MainViewModel vm)
+        IMessageAdapterService message, INetService net, INotificationService notif)
     {
+        _notif = notif;
         _logger = logger;
         _dm = dm;
         _net = net;
         _message = message;
-        _vm = vm;
+
+        WeakReferenceMessenger.Default.Register<PoeApiService, LiveSearchStateMessage>(this,
+            static (api, state) => api._isLiveRunning = state.IsRunning);
 
 #if DEBUG
         logger.LogInformation("Service launched");
 #endif
     }
 
-    internal async Task<ResultBar> FetchResult(ResultViewModel rVm, int maxFetch, string market, bool hideSameUser, CancellationToken token)
+    /// <param name="quickSelected">Quick tab of the form selected (result bar).</param>
+    /// <param name="checkLimit">Fetch limits checked while live searches are running (already done by a price check).</param>
+    internal async Task<ResultBar> FetchResult(ResultViewModel rVm, int maxFetch, string market, bool hideSameUser,
+        bool quickSelected, CancellationToken token, bool checkLimit = true)
     {
         CurrencyFetch currencys = new();
         try
         {
-            int fetchNbMax = 10; // previously 5
             int beginFetch = rVm.Data.StatDetail.Begin;
             var dataToFetch = rVm.Data.ResultData;
             int resultCount = dataToFetch.Result.Length;
             if (dataToFetch.Result.Length > 0)
             {
-                var pages = GetFetchPages(dataToFetch, beginFetch, maxFetch, fetchNbMax);
+                var pages = GetFetchPages(dataToFetch, beginFetch, maxFetch, FetchPageSize);
                 if (pages.Count > 0)
                 {
+                    if (checkLimit)
+                    {
+                        CheckFetchLimit(pages.Count);
+                    }
                     beginFetch = await FetchPagesAsync(rVm, pages, beginFetch, hideSameUser, currencys, token);
                 }
             }
@@ -79,21 +104,24 @@ public sealed class PoeApiService
             }
             bool abort = ex.Message.ToLowerInvariant().Contain("thread");
             if (abort || ex is ThreadAbortException
-                or HttpRequestException or TimeoutException or JsonException)
+                or HttpRequestException or TimeoutException or JsonException or FetchLimitException)
             {
                 return new(ex, abort);
             }
             _message.Show(ex.GetFormated(), "Result : " + Resources.Resources.Error008_XFetch, MessageStatus.Error);
             return new(state: ResultBarSate.NoResult); // added
         }
-        return new(_dm, currencys.ListCur, _vm.Form.Tab.QuickSelected);
+        return new(_dm, currencys.ListCur, quickSelected);
     }
 
     internal async Task<ResultBar> RunPriceTask(ResultViewModel rVm, PricingInfo pricingInfo,
-        ReadOnlyMemory<byte> json, string urlApi, CancellationToken token)
+        ReadOnlyMemory<byte> json, string urlApi, bool quickSelected, CancellationToken token)
     {
         try
         {
+            // before the search : the pages of results it will fetch
+            CheckFetchLimit(Math.Max(1, (pricingInfo.MaximumFetch + FetchPageSize - 1) / FetchPageSize));
+
             var sResult = await _net.SendHTTPBytes(json, urlApi + pricingInfo.League, Client.Trade); // use cooldown
 
             token.ThrowIfCancellationRequested();
@@ -114,7 +142,8 @@ public sealed class PoeApiService
                     return pricingInfo.IsSimpleBulk ? FillBulkVm(rVm, bulkData, pricingInfo) : FillShopVm(rVm, bulkData);
                 }
                 rVm.Data.ResultData = _dm.Json.Deserialize<ResultData>(sResult);
-                return await FetchResult(rVm, pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, token);
+                return await FetchResult(rVm, pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, quickSelected, token,
+                    checkLimit: false);
             }
             return new(state: ResultBarSate.NoData);
         }
@@ -124,7 +153,7 @@ public sealed class PoeApiService
             {
                 return new(ex, abort: true);
             }
-            if (ex is HttpRequestException or TimeoutException or JsonException)
+            if (ex is HttpRequestException or TimeoutException or JsonException or FetchLimitException)
             {
                 return new(ex, false);
             }
@@ -132,6 +161,84 @@ public sealed class PoeApiService
             _message.Show(ex.GetFormated(), Resources.Resources.Error006_XUpdatePrice, MessageStatus.Error);
         }
         return new(emptyLine: true);
+    }
+
+    // live searches running : a price check is refused rather than sending a request which would exceed a fetch limit
+    // (its penalty would stop the live searches too), the time to wait is displayed in the result bar
+    private void CheckFetchLimit(int fetchCount)
+    {
+        if (!_isLiveRunning)
+        {
+            return;
+        }
+        var wait = _net.GetFetchWait(fetchCount + FetchMargin, 1);
+        if (wait > TimeSpan.Zero)
+        {
+            throw new FetchLimitException(wait);
+        }
+    }
+
+    /// <summary>
+    /// Travel to the hideout of the seller of a listing (instant buyout), with the hideout token of its fetch.
+    /// </summary>
+    /// <remarks>
+    /// Used by the results of a price check and by the live searches : the errors are displayed in a toast (in game,
+    /// no message box to close), with the message of the trade api when it gives one (listing no longer available...).
+    /// </remarks>
+    /// <param name="referer">Page of the search of the listing (Strings.Api.GetSearchPage) : the token is checked with it.</param>
+    /// <returns>False when the travel failed.</returns>
+    internal async Task<bool> TravelToHideoutAsync(string hideoutToken, string referer)
+    {
+        if (string.IsNullOrEmpty(hideoutToken))
+        {
+            return TravelFailed(Resources.Resources.Error036_TravelNoToken);
+        }
+
+        try
+        {
+            await _net.SendHTTPBytes(CreateTokenJson(hideoutToken), Strings.Api.Whisper, Client.Trade, isXml: true, referer); // {"success":true}
+            return true;
+        }
+        catch (HttpRequestException exception)
+        {
+            if (exception.StatusCode is System.Net.HttpStatusCode.ServiceUnavailable)
+            {
+                return true; // can be normal
+            }
+            // message of the trade api (json error read by the net service) : told as it is
+            if (exception.InnerException is HttpRequestException)
+            {
+                return TravelFailed(exception.Message);
+            }
+            return TravelFailed(exception.StatusCode switch
+            {
+                System.Net.HttpStatusCode.BadRequest => Resources.Resources.Error037_TravelAccount,
+                System.Net.HttpStatusCode.Forbidden => Resources.Resources.Error021_XErrorCode + exception.StatusCode,
+                _ => Resources.Resources.Error038_TravelSession
+            });
+        }
+        catch (Exception ex)
+        {
+            return TravelFailed(ex.Message);
+        }
+    }
+
+    private bool TravelFailed(string message)
+    {
+        _notif.Show(new ToastNotification(Resources.Resources.Error002_CannotTravel, message, NotificationStatus.Error, TimeSpan.FromSeconds(8)));
+        return false;
+    }
+
+    // {"token":"<hideout token>"} written in UTF-8, without intermediate string
+    private static byte[] CreateTokenJson(string hideoutToken)
+    {
+        ReadOnlySpan<byte> prefix = "{\"token\":\""u8;
+        ReadOnlySpan<byte> suffix = "\"}"u8;
+        var json = new byte[prefix.Length + Encoding.UTF8.GetByteCount(hideoutToken) + suffix.Length];
+        prefix.CopyTo(json);
+        var written = Encoding.UTF8.GetBytes(hideoutToken, json.AsSpan(prefix.Length));
+        suffix.CopyTo(json.AsSpan(prefix.Length + written));
+        return json;
     }
 
     // private
@@ -254,6 +361,9 @@ public sealed class PoeApiService
     {
         var cur = new CurrencyFetch();
         var isPoe2 = _dm.Config.Options.GameVersion is 1;
+#if DEBUG
+        var debug = Encoding.UTF8.GetString(sResult);
+#endif
         var fetchData = _dm.Json.Deserialize<FetchData>(sResult, replace: true);
         for (int i = 0; i < fetchData.Result.Length; i++)
         {
@@ -276,17 +386,16 @@ public sealed class PoeApiService
 
             string account = info.Listing.Account.Name;
             bool addedData = false;
-            string ageIndex = GetAgeIndex(info.Listing.Indexed);
+            var age = GetAgeIndex(info.Listing.Indexed);
             string key = info.Listing.Price.Currency;
             string keyName = key;
             double amount = 0; // int val formating
             amount = info.Listing.Price.Amount;
             int tempFetch = rVm.Data.StatDetail.ResultLoaded;
-            string curShort = ReplaceCurrencyChars(keyName);
-            var age = ageIndex.Split('-');
+            string curShort = keyName.ReplaceCurrencyChars();
             // need non-async
             bool addItem = true;
-            if (_vm.Form.SameUser && rVm.DetailList.Count >= 1)
+            if (hideSameUser && rVm.DetailList.Count >= 1)
             {
                 var lbi = rVm.DetailList[^1]; // liPriceDetail.Items.Count - 1]
                 if (lbi.Content.Contain(account))
@@ -297,10 +406,8 @@ public sealed class PoeApiService
 
             if (addItem)
             {
-                var entry = _dm.Currencies.FindEntryById(curShort);
-                var curInfo = entry is null ? new CurrencyInfo(curShort, isPoe2)
-                    : new CurrencyInfo(curShort, entry.Img, isPoe2);
-                var saleInfo = new SaleInfo(amount, GetQuality(info), age[0], age[1], account, info.Listing.HideoutToken);
+                var curInfo = _dm.GetCurrencyInfo(curShort, isPoe2);
+                var saleInfo = new SaleInfo(amount, GetQuality(info), age.Count, age.Unit, account, info.Listing.HideoutToken);
                 var saleItem = new SaleItem(_dm, info.Item);
 
                 rVm.DetailList.Add(new(saleItem, saleInfo, curInfo, info.Listing.Account.Status));
@@ -317,17 +424,15 @@ public sealed class PoeApiService
                     if (idCount > 0)
                     {
                         var idx = idCount + Resources.Resources.Main015_ListCount.Length;
-                        string trimmed = lbi.Content.AsSpan(idx, lbi.Content.Length - idx).ToString().Trim();
-                        itemCount = int.Parse(trimmed.AsSpan(0, trimmed.IndexOf(' ')).ToString(), System.Globalization.CultureInfo.InvariantCulture);
+                        var trimmed = lbi.Content.AsSpan(idx).Trim();
+                        itemCount = int.Parse(trimmed[..trimmed.IndexOf(' ')], System.Globalization.CultureInfo.InvariantCulture);
                     }
 
                     itemCount = itemCount is 0 ? 2 : itemCount + 1;
                     rVm.DetailList.RemoveAt(iLastInd); // Remove last record from same user account found
                     var count = Resources.Resources.Main015_ListCount + ": " + itemCount;
-                    var saleInfo = new SaleInfo(amount, count, age[0], age[1], account, info.Listing.HideoutToken);
-                    var entry = _dm.Currencies.FindEntryById(curShort);
-                    var curInfo = entry is null ? new CurrencyInfo(curShort, isPoe2)
-                        : new CurrencyInfo(curShort, entry.Img, isPoe2);
+                    var saleInfo = new SaleInfo(amount, count, age.Count, age.Unit, account, info.Listing.HideoutToken);
+                    var curInfo = _dm.GetCurrencyInfo(curShort, isPoe2);
                     var saleItem = new SaleItem(_dm, info.Item);
 
                     rVm.DetailList.Add(new(saleItem, saleInfo, curInfo, info.Listing.Account.Status));
@@ -396,7 +501,7 @@ public sealed class PoeApiService
                     string keyName = key;
 
                     sbWhisper.Append('/').Append(sellerAmount).Append('/').Append(sellerCurrency).Append('/').Append(buyerAmount).Append('/').Append(buyerCurrency).Append('/').Append(sellerStock).Append('/').Append(charName);
-                    string content = string.Format(rVm.BulkFormat, sellerAmount, ReplaceCurrencyChars(sellerCurrency), buyerAmount, ReplaceCurrencyChars(buyerCurrency), sellerStock, charName); // account
+                    string content = string.Format(rVm.BulkFormat, sellerAmount, sellerCurrency.ReplaceCurrencyChars(), buyerAmount, buyerCurrency.ReplaceCurrencyChars(), sellerStock, charName); // account
                     string tag = string.Empty;
                     string tip = null;
                     if (rVm.Data.NinjaEq.ChaosGet > 0 && rVm.Data.NinjaEq.ChaosPay > 0)
@@ -492,7 +597,7 @@ public sealed class PoeApiService
                         }
                         sbWhisper.Append('/').Append(sellerAmount).Append('/').Append(sellerCurrency).Append('/').Append(buyerAmount).Append('/').Append(buyerCurrency).Append('/').Append(sellerStock).Append('/').Append(charName);
 
-                        string content = string.Format(rVm.ShopFormat, sellerStock, ReplaceCurrencyChars(sellerCurrency), sellerAmount, buyerAmount, ReplaceCurrencyChars(buyerCurrency));
+                        string content = string.Format(rVm.ShopFormat, sellerStock, sellerCurrency.ReplaceCurrencyChars(), sellerAmount, buyerAmount, buyerCurrency.ReplaceCurrencyChars());
                         itemList.Add(new(content, valData.Listing.Account.Status));
                         whisperList.Add(new(valData.Listing, offer));
 
@@ -533,7 +638,8 @@ public sealed class PoeApiService
         return new();
     }
 
-    private static string GetAgeIndex(string indexTime)
+    // count and unit of the listing age : no concatenation then split
+    private static (string Count, string Unit) GetAgeIndex(string indexTime)
     {
         DateTime indexTimeDate = DateTime.Parse(indexTime);
         TimeSpan intervalIndex = DateTime.Now - indexTimeDate;
@@ -544,57 +650,57 @@ public sealed class PoeApiService
             if (daysCount >= 365)
             {
                 double yearCount = Math.Round((double)daysCount / 365, MidpointRounding.ToEven);
-                return yearCount.ToString() + "-" + (yearCount > 1 ? Resources.Resources.Main140_Years : Resources.Resources.Main139_Year);// + " ago";
+                return (yearCount.ToString(), yearCount > 1 ? Resources.Resources.Main140_Years : Resources.Resources.Main139_Year);// + " ago";
             }
             if (daysCount >= 30)
             {
                 double monthCount = Math.Round((double)daysCount / 30, MidpointRounding.ToEven);
-                return monthCount.ToString() + "-" + (monthCount > 1 ? Resources.Resources.Main138_Months : Resources.Resources.Main137_Month);// + " ago";
+                return (monthCount.ToString(), monthCount > 1 ? Resources.Resources.Main138_Months : Resources.Resources.Main137_Month);// + " ago";
             }
             if (daysCount >= 1 && daysCount < 30)
             {
-                return daysCount.ToString() + "-" + (daysCount > 1 ? Resources.Resources.Main136_Days : Resources.Resources.Main135_Day);// + " ago";
+                return (daysCount.ToString(), daysCount > 1 ? Resources.Resources.Main136_Days : Resources.Resources.Main135_Day);// + " ago";
             }
         }
         if (intervalIndex.Hours > 0)
         {
             int hoursCount = intervalIndex.Hours;
-            return hoursCount.ToString() + "-" + (hoursCount > 1 ? Resources.Resources.Main134_Hours : Resources.Resources.Main133_Hour);// + " ago";
+            return (hoursCount.ToString(), hoursCount > 1 ? Resources.Resources.Main134_Hours : Resources.Resources.Main133_Hour);// + " ago";
         }
         if (intervalIndex.Minutes > 0)
         {
             int minutesCount = intervalIndex.Minutes;
-            return minutesCount.ToString() + "-" + (minutesCount > 1 ? Resources.Resources.Main132_Minutes : Resources.Resources.Main131_Minute);// + " ago";
+            return (minutesCount.ToString(), minutesCount > 1 ? Resources.Resources.Main132_Minutes : Resources.Resources.Main131_Minute);// + " ago";
         }
         if (intervalIndex.Seconds > 0)
         {
             int secondsCount = intervalIndex.Seconds;
-            return secondsCount.ToString() + "-" + (secondsCount > 1 ? Resources.Resources.Main130_Seconds : Resources.Resources.Main129_Second);// + " ago";
+            return (secondsCount.ToString(), secondsCount > 1 ? Resources.Resources.Main130_Seconds : Resources.Resources.Main129_Second);// + " ago";
         }
-        return "0-error";
+        return ("0", "error");
     }
 
-    private static string ReplaceCurrencyChars(string entry)
-    {
-        StringBuilder sb = new(entry);
-
-        foreach (var item in Strings.Collection.dicCurrencyChars.Keys)
-        {
-            sb.Replace(item, Strings.Collection.dicCurrencyChars[item]);
-        }
-
-        return sb.ToString();
-    }
 
     private static string GetQuality(FetchDataInfo info)
     {
         var qual = info.Item.Properties?.FirstOrDefault(x => x.Name.Contain(Strings.ItemApi.Quality));
         if (qual?.Values[0] is not null)
         {
-            var match = RegexUtil.DecimalNoPlusDiezePattern().Matches(qual.Values[0].Item1);
-            if (match.Count is 1)
+            // exactly one value expected : counted without MatchCollection
+            string text = qual.Values[0].Item1;
+            int count = 0;
+            Range value = default;
+            foreach (var match in RegexUtil.DecimalNoPlusDiezePattern().EnumerateMatches(text))
             {
-                return match[0].Value;
+                if (++count > 1)
+                {
+                    return string.Empty;
+                }
+                value = new(match.Index, match.Index + match.Length);
+            }
+            if (count is 1)
+            {
+                return text[value];
             }
         }
         return string.Empty;

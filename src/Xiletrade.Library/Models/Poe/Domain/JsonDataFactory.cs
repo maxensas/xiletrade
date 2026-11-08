@@ -44,9 +44,11 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
         json.Query.Filters.Requirement = GetRequirementFilters(xItem);
         json.Query.Filters.Armour = GetArmourFilters(xItem);
         json.Query.Filters.Weapon = GetWeaponFilters(xItem);
+        json.Query.Filters.Map = GetMapFilters(xItem);
         json.Query.Filters.Misc = GetMiscFilters(xItem);
         json.Query.Filters.Type = GetTypeFilters(xItem);
         json.Query.Filters.Trade = GetTradeFilters(xItem, _dm.Config.Options.SearchBeforeDay, useSaleType: true);
+        json.Query.Stats = xItem.CustomStats;
 
         return json;
     }
@@ -119,13 +121,23 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
     private static TypeF GetTypeFilters(XiletradeItem xItem)
     {
         var rarityEn = GetEnglishRarity(xItem.Rarity);
-        if (rarityEn.Length > 0 && rarityEn is not Strings.Word.any)
+        var isRarity = rarityEn.Length > 0 && rarityEn is not Strings.Word.any;
+        var isCategory = xItem.Category?.Length > 0;
+        if (!(isRarity || isCategory))
         {
-            TypeF type = new();
-            type.Filters.Rarity = new(rarityEn);
-            return type;
+            return null;
         }
-        return null;
+
+        TypeF type = new();
+        if (isCategory)
+        {
+            type.Filters.Category = new(xItem.Category);
+        }
+        if (isRarity)
+        {
+            type.Filters.Rarity = new(rarityEn);
+        }
+        return type;
     }
 
     private static TypeF GetTypeFilters(XiletradeItem xItem, ItemData item)
@@ -190,6 +202,38 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
         }
 
         return ultimatum;
+    }
+
+    // custom search : map / chart filters with a value
+    private static Map GetMapFilters(XiletradeItem xItem)
+    {
+        if (!(xItem.MapTier.Enable || xItem.MapPack.Enable || xItem.MapIiq.Enable || xItem.MapIir.Enable || xItem.AreaLevel.Enable))
+        {
+            return null;
+        }
+
+        Map map = new();
+        if (xItem.MapTier.Enable)
+        {
+            map.Filters.Tier = new() { Min = xItem.MapTier.Min, Max = xItem.MapTier.Max };
+        }
+        if (xItem.MapPack.Enable)
+        {
+            map.Filters.PackSize = new() { Min = xItem.MapPack.Min, Max = xItem.MapPack.Max };
+        }
+        if (xItem.MapIiq.Enable)
+        {
+            map.Filters.Iiq = new() { Min = xItem.MapIiq.Min, Max = xItem.MapIiq.Max };
+        }
+        if (xItem.MapIir.Enable)
+        {
+            map.Filters.Iir = new() { Min = xItem.MapIir.Min, Max = xItem.MapIir.Max };
+        }
+        if (xItem.AreaLevel.Enable)
+        {
+            map.Filters.Area = new() { Min = xItem.AreaLevel.Min, Max = xItem.AreaLevel.Max };
+        }
+        return map;
     }
 
     private static Map GetMapFilters(XiletradeItem xItem, ItemData item)
@@ -425,15 +469,20 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
             trade.Filters.Price.Min = xItem.PriceMin;
         }
 
-        if (xItem.ChaosDivOnly)
+        if (xItem.PriceOption is not null)
         {
             trade.Disabled = false;
+            trade.Filters.Price ??= new();
+            trade.Filters.Price.Option = xItem.PriceOption;
+        }
 
-            if (trade.Filters.Price is null)
-            {
-                trade.Filters.Price = new();
-            }
-            trade.Filters.Price.Option = new("chaos_divine");
+        // custom search : min / max of the buyout price, in the currency of the option
+        if (xItem.Price.Enable)
+        {
+            trade.Disabled = false;
+            trade.Filters.Price ??= new();
+            trade.Filters.Price.Min = xItem.Price.Min;
+            trade.Filters.Price.Max = xItem.Price.Max;
         }
 
         return trade.Disabled ? null : trade;
@@ -441,7 +490,8 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
 
     private static Weapon GetWeaponFilters(XiletradeItem xItem)
     {
-        if (!(xItem.DpsTotal.Enable || xItem.DpsPhys.Enable || xItem.DpsElem.Enable))
+        if (!(xItem.DpsTotal.Enable || xItem.DpsPhys.Enable || xItem.DpsElem.Enable
+            || xItem.WeaponDamage.Enable || xItem.AttacksPerSecond.Enable || xItem.CriticalChance.Enable))
         {
             return null;
         }
@@ -459,6 +509,19 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
         if (xItem.DpsElem.Enable)
         {
             weapon.Filters.Edps = new() { Min = xItem.DpsElem.Min, Max = xItem.DpsElem.Max };
+        }
+
+        if (xItem.WeaponDamage.Enable)
+        {
+            weapon.Filters.BaseDamage = new() { Min = xItem.WeaponDamage.Min, Max = xItem.WeaponDamage.Max };
+        }
+        if (xItem.AttacksPerSecond.Enable)
+        {
+            weapon.Filters.AttacksPerSecond = new() { Min = xItem.AttacksPerSecond.Min, Max = xItem.AttacksPerSecond.Max };
+        }
+        if (xItem.CriticalChance.Enable)
+        {
+            weapon.Filters.CriticalChance = new() { Min = xItem.CriticalChance.Min, Max = xItem.CriticalChance.Max };
         }
 
         return weapon;

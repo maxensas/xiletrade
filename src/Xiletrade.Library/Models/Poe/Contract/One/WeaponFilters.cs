@@ -15,4 +15,16 @@ public sealed class WeaponFilters
     [JsonPropertyName("edps")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public MinMax Edps { get; set; }
+
+    [JsonPropertyName("damage")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax BaseDamage { get; set; }
+
+    [JsonPropertyName("aps")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax AttacksPerSecond { get; set; }
+
+    [JsonPropertyName("crit")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax CriticalChance { get; set; }
 }

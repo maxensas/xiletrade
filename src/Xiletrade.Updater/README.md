@@ -28,6 +28,7 @@ A pre-release is never returned by `releases/latest` : the application updater d
 * The installation folder is always named `Xiletrade`, as required by the updater.
 * The uninstaller is kept in `%LOCALAPPDATA%\Xiletrade\Uninstall` : an update replaces every file of the installation folder.
 * Running the setup on an existing installation replaces it with the latest release, as the updater does : `Data\Config.json` is kept, and saved as `Config.json.bak`.
+* `Data\Config.json` also holds the presets of the custom search (`search_presets`) : when a release ships a new `Config.json` (format changed), the updater copies the presets of the user (`custom_search`) into it. The installer does not : they stay in `Config.json.bak`.
 * Uninstalling removes the whole installation folder, including the files added by later updates.
 * Silent mode : `Xiletrade_win-x64_Setup.exe /S`, and `Uninstall.exe /S`.
 * Xiletrade logo (`Assets/app-icon.ico`, `Installer/header.bmp`, `Installer/wizard.bmp`) and license of the WPF project (GPLv3).

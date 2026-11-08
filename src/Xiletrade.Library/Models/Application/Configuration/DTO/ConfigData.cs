@@ -24,4 +24,9 @@ public sealed class ConfigData
 
     [JsonPropertyName("regular_expressions")]
     public ConfigRegex[] RegularExpressions { get; set; } = null;
+
+    /// <summary>Presets of the custom search : in the configuration, they are kept by the updates of Xiletrade.</summary>
+    /// <remarks>Never null : empty for a configuration without them.</remarks>
+    [JsonPropertyName("search_presets")]
+    public SearchPresetData SearchPreset { get; set; } = new();
 }

@@ -53,8 +53,10 @@ public class ViewManager : IViewManager
         {
             try
             {
-                MainWindow.Show();
-                MainWindow.ShowActivated = false;
+                if (MainWindow is MainView view)
+                {
+                    view.Reveal();
+                }
             }
             catch (Exception ex)
             {
@@ -137,6 +139,40 @@ public class ViewManager : IViewManager
     }
 
     public void ClearFocus() => System.Windows.Input.Keyboard.ClearFocus(); // UI responsibility, contrary to what code say.
+
+    public Task<string> ShowOpenFileViewAsync(string title, string filterName, string extension)
+    {
+        var dialog = new Microsoft.Win32.OpenFileDialog
+        {
+            Title = title,
+            Filter = GetFileFilter(filterName, extension),
+            InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            CheckFileExists = true,
+            Multiselect = false
+        };
+        return Task.FromResult(ShowFileDialog(dialog) ? dialog.FileName : null);
+    }
+
+    public Task<string> ShowSaveFileViewAsync(string title, string filterName, string extension, string fileName)
+    {
+        var dialog = new Microsoft.Win32.SaveFileDialog
+        {
+            Title = title,
+            Filter = GetFileFilter(filterName, extension),
+            InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            FileName = fileName,
+            DefaultExt = extension,
+            AddExtension = true,
+            OverwritePrompt = true
+        };
+        return Task.FromResult(ShowFileDialog(dialog) ? dialog.FileName : null);
+    }
+
+    private static string GetFileFilter(string filterName, string extension) => $"{filterName} (*.{extension})|*.{extension}";
+
+    // owned by the main view when displayed : stays above it (topmost)
+    private static bool ShowFileDialog(Microsoft.Win32.CommonDialog dialog)
+        => (MainWindow is { IsVisible: true } owner ? dialog.ShowDialog(owner) : dialog.ShowDialog()) is true;
 
     public PoeState GetPoeWindowState()
     {
