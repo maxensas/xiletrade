@@ -192,7 +192,8 @@ public sealed class DataUpdaterService : IDataUpdaterService
         {
             if (ex.InnerException is not HttpRequestException)
             {
-                var lang = Strings.Culture[idxLang].Split('-').Last();
+                // files common to the languages : no culture
+                var lang = idxLang < 0 ? "all" : Strings.Culture[idxLang].Split('-').Last();
                 ErrorMsg += $"{Strings.LF}[{lang} : {fileName} Update] Exception with Json writting : {Common.GetInnerExceptionMessages(ex)}{Strings.LF}";
             }
         }
