@@ -31,7 +31,7 @@
                 </Button.Style>
             </Button>
             <!-- stop : the live searches end, these buttons disappear -->
-            <Button Style="{StaticResource OverlayButton}" Tag="{StaticResource StopIcon}" Command="{Binding StopCommand}"
+            <Button Style="{StaticResource OverlayButton}" Tag="{StaticResource StopIcon}" Foreground="{StaticResource LiveStopBrush}" Command="{Binding StopCommand}"
                     ToolTip="{ext:Localization Main315_LiveStopAll}"/>
             <!-- logo of Xiletrade -->
             <Image Source="{StaticResource ImgLogo}" Height="22" Margin="4,3,2,3" VerticalAlignment="Center"

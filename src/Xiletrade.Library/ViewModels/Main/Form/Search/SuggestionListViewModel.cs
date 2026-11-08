@@ -97,7 +97,7 @@ public abstract partial class SuggestionListViewModel : ViewModelBase
     }
 
     /// <summary>Text of the field without searching its suggestions : the list is closed.</summary>
-    protected void SetQuery(string text)
+    protected internal void SetQuery(string text)
     {
         _version++; // a search in progress is dropped
         _suppressUpdate = true;

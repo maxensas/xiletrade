@@ -6,12 +6,13 @@
     <!-- colors of the live searches : dot running or paused, stop -->
     <SolidColorBrush x:Key="LiveRunningBrush" Color="#FF3CB043"/>
     <SolidColorBrush x:Key="LivePausedBrush" Color="#FFFFA000"/>
-    <SolidColorBrush x:Key="LiveStopBrush" Color="#FFE53935"/>
+    <SolidColorBrush x:Key="LiveStopBrush" Color="#FFC62828"/>
     <StreamGeometry x:Key="PauseIcon">M0,0 L3.5,0 L3.5,12 L0,12 Z M7.5,0 L11,0 L11,12 L7.5,12 Z</StreamGeometry>
     <StreamGeometry x:Key="ResumeIcon">M0,0 L11,6 L0,12 Z</StreamGeometry>
     <StreamGeometry x:Key="StopIcon">M0,0 L11,0 L11,11 L0,11 Z</StreamGeometry>
-    <!-- icon button, the geometry is the tag : gray (stop in red), in the color of the theme on hover -->
+    <!-- icon button, the geometry is the tag : in the foreground (gray by default), in the color of the theme on hover -->
     <Style x:Key="OverlayButton" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="{StaticResource ForegroundMediumBrush}"/>
         <Setter Property="Width" Value="34"/>
         <Setter Property="Height" Value="28"/>
         <Setter Property="Cursor" Value="Hand"/>
@@ -21,13 +22,9 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border Background="Transparent">
                         <Path x:Name="Icon" Width="11" Height="11" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"
-                              Fill="{StaticResource ForegroundMediumBrush}" Data="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
+                              Fill="{TemplateBinding Foreground}" Data="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Tag" Value="{StaticResource StopIcon}">
-                            <Setter TargetName="Icon" Property="Fill" Value="{StaticResource LiveStopBrush}"/>
-                        </Trigger>
-                        <!-- after the colors : the hover wins -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Icon" Property="Fill" Value="{StaticResource ThemeFirstForegroundBrush}"/>
                         </Trigger>
@@ -41,129 +38,148 @@
         <Setter Property="Width" Value="20"/>
         <Setter Property="Height" Value="22"/>
     </Style>
-    <!-- toast of a new listing of a live search (NotificationHost) : name in the color of the rarity and number of its live search,
-         price, travel, pin and close -->
+    <!-- toast of a new listing of a live search (NotificationHost), condensed : name in the color of the rarity, type and
+         number of its live search, price then travel, pin and close (same place in all the toasts) -->
     <DataTemplate DataType="{x:Type live:LiveItemViewModel}">
-        <DockPanel>
-            <!-- name, price and seller : tooltip of the item as in the results of a price check, on the left of the toast
-                 (the margin of the toast and its border are skipped), the only tooltip of the toast -->
-            <StackPanel Background="Transparent"
-                        ToolTipService.BetweenShowDelay="0" ToolTipService.InitialShowDelay="0"
-                        ToolTipService.Placement="Left" ToolTipService.HorizontalOffset="-24">
-                <StackPanel.ToolTip>
-                    <ToolTip Style="{StaticResource resultItem}">
-                        <uc:ResultItem DataContext="{Binding Item}" />
-                    </ToolTip>
-                </StackPanel.ToolTip>
-                <!-- name, then the number of its live search on the right, above the buttons : only while several live searches are running -->
-                <DockPanel>
-                    <Border DockPanel.Dock="Right" MinWidth="18" Height="18" Margin="6,0,4,0" Padding="4,0" VerticalAlignment="Center" CornerRadius="9"
-                            Visibility="{Binding State.HasSeveralLives, Converter={StaticResource bool2VisibilityConverter}}"
-                            Background="Transparent" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1">
-                        <TextBlock Text="{Binding Number}" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   Foreground="{StaticResource GrayForegoundBrush}"/>
-                    </Border>
-                    <!-- name, in the color of the rarity -->
-                    <TextBlock Text="{Binding Title}" FontSize="15" FontWeight="SemiBold" TextTrimming="CharacterEllipsis">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Foreground" Value="{StaticResource NormalWebBrush}"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Rarity.Magic}" Value="True">
-                                        <Setter Property="Foreground" Value="{StaticResource MagicWebBrush}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Rarity.Rare}" Value="True">
-                                        <Setter Property="Foreground" Value="{StaticResource RareWebBrush}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Rarity.Unique}" Value="True">
-                                        <Setter Property="Foreground" Value="{StaticResource UniqueWebBrush}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Rarity.UniqueFoil}" Value="True">
-                                        <Setter Property="Foreground" Value="{StaticResource UniqueFoilWebBrush}"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Rarity.NoRarity}" Value="True">
-                                        <Setter Property="Foreground" Value="{StaticResource NoteWebBrush}"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                </DockPanel>
-                <!-- type of a named item -->
-                <TextBlock Text="{Binding TypeLine}" FontSize="12" Foreground="{StaticResource GrayForegoundBrush}" TextTrimming="CharacterEllipsis"
-                           Visibility="{Binding TypeLine, Converter={StaticResource null2CollapseConverter}}"/>
-                <!-- price, seller and travel to his hideout -->
-                <DockPanel Margin="0,4,0,0">
-                    <!-- close (red), pin and travel (green) : square, same size, in the color of the theme on hover ; once pinned, travel and close only -->
-                    <Button DockPanel.Dock="Right" Width="26" Height="26" Margin="2,0,0,0" Padding="0"
-                            Command="{Binding CloseCommand}" Cursor="Hand" Focusable="False">
-                        <Path Width="10" Height="10" Stretch="Uniform" StrokeThickness="1.8" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
-                              Data="M0,0 L9,9 M9,0 L0,9">
-                            <Path.Style>
-                                <Style TargetType="{x:Type Path}">
-                                    <Setter Property="Stroke" Value="{StaticResource LiveStopBrush}"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
-                                            <Setter Property="Stroke" Value="{StaticResource ThemeFirstForegroundBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Path.Style>
-                        </Path>
-                    </Button>
-                    <!-- pin : the toast stays at the top of the screen until it is closed ; hidden while no more toast can be pinned
-                         (its place is kept), removed once pinned -->
-                    <Button DockPanel.Dock="Right" Width="26" Height="26" Margin="2,0,0,0" Padding="0"
-                            Command="{Binding PinCommand}" Cursor="Hand" Focusable="False">
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding State.IsPinFull}" Value="True">
-                                        <Setter Property="Visibility" Value="Hidden"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding IsPinned}" Value="True">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                        <Path Width="9" Height="14" Stretch="Uniform"
-                              Data="M3,0 L9,0 L9,1.5 L8,1.5 L8,6 L10,8 L10,9.5 L6.6,9.5 L6,15 L5.4,9.5 L2,9.5 L2,8 L4,6 L4,1.5 L3,1.5 Z">
-                            <Path.Style>
-                                <Style TargetType="{x:Type Path}">
-                                    <Setter Property="Fill" Value="{StaticResource ForegroundMediumBrush}"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
-                                            <Setter Property="Fill" Value="{StaticResource ThemeFirstForegroundBrush}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Path.Style>
-                        </Path>
-                    </Button>
-                    <Button DockPanel.Dock="Right" Width="26" Height="26" Padding="0" Cursor="Hand" Focusable="False"
-                            Command="{Binding TravelToHideoutCommand}"
-                            Visibility="{Binding CanTravel, Converter={StaticResource bool2VisibilityConverter}}">
-                        <Viewbox Width="15" Height="15">
-                            <Path Stretch="Uniform">
-                                <Path.Style>
-                                    <!-- green, the hover and the click of the house icon kept -->
-                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource HouseIcon}">
-                                        <Setter Property="Fill" Value="{StaticResource LiveRunningBrush}"/>
-                                    </Style>
-                                </Path.Style>
-                            </Path>
-                        </Viewbox>
-                    </Button>
-                    <!-- price : the main information, bigger and bold -->
-                    <TextBlock Text="{Binding Amount}" FontSize="16" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
-                    <Image Source="{Binding Currency, Converter={StaticResource imageSourceConverter}}" Width="22" Height="22" Margin="4,0,0,0"
-                           VerticalAlignment="Center"
-                           Visibility="{Binding Source={RelativeSource Self}, Path=Source, Converter={StaticResource null2CollapseConverter}}"/>
-                    <TextBlock Text="{Binding Account}" FontSize="12" Foreground="{StaticResource GrayForegoundBrush}" Margin="10,0,6,0"
-                               VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
-                </DockPanel>
+        <!-- tooltip of the item as in the results of a price check, on the left of the toast (the margin of the toast and
+             its border are skipped), the only tooltip of the toast -->
+        <Grid Background="Transparent"
+              ToolTipService.BetweenShowDelay="0" ToolTipService.InitialShowDelay="0"
+              ToolTipService.Placement="Left" ToolTipService.HorizontalOffset="-20">
+            <Grid.ToolTip>
+                <ToolTip Style="{StaticResource resultItem}">
+                    <uc:ResultItem DataContext="{Binding Item}" />
+                </ToolTip>
+            </Grid.ToolTip>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <!-- name, in the color of the rarity : the whole width -->
+            <TextBlock Grid.ColumnSpan="2" Text="{Binding Title}" FontSize="15" FontWeight="SemiBold" TextTrimming="CharacterEllipsis">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Foreground" Value="{StaticResource NormalWebBrush}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Rarity.Magic}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource MagicWebBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Rarity.Rare}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource RareWebBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Rarity.Unique}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource UniqueWebBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Rarity.UniqueFoil}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource UniqueFoilWebBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Rarity.NoRarity}" Value="True">
+                                <Setter Property="Foreground" Value="{StaticResource NoteWebBrush}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <!-- type of a named item -->
+            <TextBlock Grid.Row="1" Text="{Binding TypeLine}" FontSize="12" Foreground="{StaticResource GrayForegoundBrush}" TextTrimming="CharacterEllipsis"
+                       Visibility="{Binding TypeLine, Converter={StaticResource null2CollapseConverter}}"/>
+            <!-- number of its live search, above the buttons : only while several live searches are running -->
+            <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Margin="6,0,4,0" FontSize="11"
+                       Text="{Binding Number}" Foreground="{StaticResource GrayForegoundBrush}"
+                       Visibility="{Binding State.HasSeveralLives, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <!-- price : the main information, bigger and bold, its width grows with the amount -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,3,0,0" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Amount}" FontSize="16" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
+                <Image Source="{Binding Currency, Converter={StaticResource imageSourceConverter}}" Width="22" Height="22" Margin="4,0,0,0"
+                       VerticalAlignment="Center"
+                       Visibility="{Binding Source={RelativeSource Self}, Path=Source, Converter={StaticResource null2CollapseConverter}}"/>
             </StackPanel>
-        </DockPanel>
+            <!-- travel (green), pin and close (red) : square, same size, in the color of the theme on hover ; a button
+                 not available keeps its place, the buttons stay aligned from a toast to another -->
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="6,3,0,0">
+                <Button Width="26" Height="26" Padding="0" Cursor="Hand" Focusable="False" Command="{Binding TravelToHideoutCommand}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CanTravel}" Value="False">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Viewbox Width="15" Height="15">
+                        <Path Stretch="Uniform">
+                            <Path.Style>
+                                <!-- green, the hover and the click of the house icon kept -->
+                                <Style TargetType="{x:Type Path}" BasedOn="{StaticResource HouseIcon}">
+                                    <Setter Property="Fill" Value="{StaticResource LiveRunningBrush}"/>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Viewbox>
+                </Button>
+                <!-- pin : the toast stays at the top of the screen until it is closed ; hidden while no more toast can be pinned
+                     (its place is kept), replaced by the pinned mark once pinned -->
+                <Button Width="26" Height="26" Margin="2,0,0,0" Padding="0"
+                        Command="{Binding PinCommand}" Cursor="Hand" Focusable="False">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding State.IsPinFull}" Value="True">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsPinned}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Path Width="9" Height="14" Stretch="Uniform"
+                          Data="M3,0 L9,0 L9,1.5 L8,1.5 L8,6 L10,8 L10,9.5 L6.6,9.5 L6,15 L5.4,9.5 L2,9.5 L2,8 L4,6 L4,1.5 L3,1.5 Z">
+                        <Path.Style>
+                            <Style TargetType="{x:Type Path}">
+                                <Setter Property="Fill" Value="{StaticResource ForegroundMediumBrush}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
+                                        <Setter Property="Fill" Value="{StaticResource ThemeFirstForegroundBrush}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
+                    </Path>
+                </Button>
+                <!-- pinned mark, in the place of the pin : filled in the color of the theme, rotated as stuck -->
+                <Border Width="26" Height="26" Margin="2,0,0,0"
+                        Visibility="{Binding IsPinned, Converter={StaticResource bool2VisibilityConverter}}">
+                    <Path Width="9" Height="14" Stretch="Uniform" Fill="{DynamicResource ThemeFirstForegroundBrush}" RenderTransformOrigin="0.5,0.5"
+                          Data="M3,0 L9,0 L9,1.5 L8,1.5 L8,6 L10,8 L10,9.5 L6.6,9.5 L6,15 L5.4,9.5 L2,9.5 L2,8 L4,6 L4,1.5 L3,1.5 Z">
+                        <Path.RenderTransform>
+                            <RotateTransform Angle="30"/>
+                        </Path.RenderTransform>
+                    </Path>
+                </Border>
+                <Button Width="26" Height="26" Margin="2,0,0,0" Padding="0"
+                        Command="{Binding CloseCommand}" Cursor="Hand" Focusable="False">
+                    <Path Width="10" Height="10" Stretch="Uniform" StrokeThickness="1.8" StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                          Data="M0,0 L9,9 M9,0 L0,9">
+                        <Path.Style>
+                            <Style TargetType="{x:Type Path}">
+                                <Setter Property="Stroke" Value="{StaticResource LiveStopBrush}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
+                                        <Setter Property="Stroke" Value="{StaticResource ThemeFirstForegroundBrush}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
+                    </Path>
+                </Button>
+            </StackPanel>
+        </Grid>
     </DataTemplate>
 </ResourceDictionary>

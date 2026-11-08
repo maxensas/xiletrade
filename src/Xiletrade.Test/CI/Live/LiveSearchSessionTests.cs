@@ -43,7 +43,7 @@ public class LiveSearchSessionTests
     }
 
     [Fact]
-    public void _04_Too_Many_Results_In_One_Minute_Should_Stop_The_Search()
+    public void _04_Too_Many_Results_In_One_Minute_Should_Pause_The_Search()
     {
         using var session = CreateSession(maxResultsPerMinute: 3);
         session.IsTooBroad().Should().BeFalse();
@@ -64,5 +64,5 @@ public class LiveSearchSessionTests
 
     private static LiveSearchSession CreateSession(int maxResultsPerMinute)
         => new(Mock.Of<INetService>(), "wss://localhost/live", "https://localhost/fetch/", "https://localhost/search",
-            "id", maxResultsPerMinute, (_, _) => { }, _ => { }, NullLogger.Instance);
+            "id", maxResultsPerMinute, (_, _) => { }, _ => { }, _ => { }, NullLogger.Instance);
 }

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared.Collection;
@@ -52,15 +53,26 @@ public sealed partial class StatGroupViewModel : ViewModelBase
     // stat being changed, null : the stat selected is added
     private CustomStatViewModel _editing;
 
-    internal StatGroupViewModel(DataManagerService dm, StatGroup type)
+    // criteria of the group changed : checked, min / max, stats and their values
+    private readonly Action _onChanged;
+
+    /// <param name="onChanged">Criteria of the group changed by the user.</param>
+    internal StatGroupViewModel(DataManagerService dm, StatGroup type, Action onChanged)
     {
         Type = type;
+        _onChanged = onChanged;
         stat = new(dm, OnStatSelected, EndEdit);
     }
 
+    partial void OnEnabledChanged(bool value) => _onChanged?.Invoke();
+
+    partial void OnMinChanged(string value) => _onChanged?.Invoke();
+
+    partial void OnMaxChanged(string value) => _onChanged?.Invoke();
+
     internal void AddStat(string id, string text, string kind, string kindType, string min, string max)
     {
-        Filters.Add(new(id, text, kind, kindType, BeginEdit) { Min = min, Max = max });
+        Filters.Add(new(id, text, kind, kindType, BeginEdit, _onChanged) { Min = min, Max = max });
     }
 
     private void OnStatSelected(SearchItem item)
@@ -73,9 +85,11 @@ public sealed partial class StatGroupViewModel : ViewModelBase
         {
             _editing.Replace(item);
             EndEdit();
+            _onChanged?.Invoke();
             return;
         }
-        Filters.Add(new(item.Id, item.Text, item.Kind, item.KindType, BeginEdit));
+        Filters.Add(new(item.Id, item.Text, item.Kind, item.KindType, BeginEdit, _onChanged));
+        _onChanged?.Invoke();
     }
 
     // the text of the stat in the field of the group : its suggestions are displayed
@@ -108,6 +122,7 @@ public sealed partial class StatGroupViewModel : ViewModelBase
                 EndEdit();
             }
             Filters.Remove(statFilter);
+            _onChanged?.Invoke();
         }
     }
 

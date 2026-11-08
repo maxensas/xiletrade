@@ -21,9 +21,6 @@ public sealed record ToastNotification
     /// <summary>A sound is played when the toast is displayed.</summary>
     public bool PlaySound { get; init; }
 
-    /// <summary>Pinned by the user : golden border (its duration and placement are set by its sender).</summary>
-    public bool IsPinned { get; init; }
-
     /// <summary>Place of the toast on the screen : bottom right by default.</summary>
     public NotificationPlacement Placement { get; init; } = NotificationPlacement.BottomRight;
 

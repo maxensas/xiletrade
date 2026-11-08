@@ -2541,9 +2541,6 @@
   <data name="Main300_LiveStarted" xml:space="preserve">
     <value>เริ่มการค้นหาแบบสดแล้ว: ไอเทมใหม่จะแสดงที่นี่</value>
   </data>
-  <data name="Main301_LiveTooBroad" xml:space="preserve">
-    <value>หยุดการค้นหาแบบสด: มีไอเทมใหม่มากกว่า {0} รายการในหนึ่งนาที โปรดปรับการค้นหาให้แคบลง</value>
-  </data>
   <data name="Main302_LiveConnectionLost" xml:space="preserve">
     <value>หยุดการค้นหาแบบสด: การเชื่อมต่อขาดหาย</value>
   </data>
@@ -2588,6 +2585,9 @@
   </data>
   <data name="Main317_PriceCheckIn" xml:space="preserve">
     <value>ตรวจสอบราคาได้ในอีก {0} วินาที</value>
+  </data>
+  <data name="Main318_LiveTooBroadPaused" xml:space="preserve">
+    <value>หยุดการค้นหาแบบสดชั่วคราว: มีไอเทมใหม่เกิน {0} รายการในหนึ่งนาที ปรับการค้นหาให้แคบลงหรือค้นหาต่อ</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>

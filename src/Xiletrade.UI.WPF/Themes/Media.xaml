@@ -19,7 +19,6 @@
     <Color x:Key="DisabledForegroundColor">#FF999999</Color>
     <Color x:Key="GrayForegoundColor">#FFB2B0B0</Color>
     <Color x:Key="GrayDarkForegroundColor">#FF757373</Color>
-    <Color x:Key="PinnedBorderColor">#FFD4AF37</Color>
     <Color x:Key="ForegroundTextColor">#FFDBDCDC</Color>
     <Color x:Key="TitleForegroundColor">#FF999999</Color>
     <Color x:Key="ForegroundColor">#FFFFFFFF</Color>
@@ -86,7 +85,6 @@
     <SolidColorBrush x:Key="DisabledForegroundBrush" Color="{StaticResource DisabledForegroundColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="GrayForegoundBrush" Color="{StaticResource GrayForegoundColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="GrayDarkForegroundBrush" Color="{StaticResource GrayDarkForegroundColor}" options:Freeze="True"/>
-    <SolidColorBrush x:Key="PinnedBorderBrush" Color="{StaticResource PinnedBorderColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="SoftBackgroundBrush" Color="{StaticResource SoftBackgroundColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="TitleForegroundBrush" Color="{StaticResource TitleForegroundColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="ForegroundTextBrush" Color="{StaticResource ForegroundTextColor}" options:Freeze="True"/>

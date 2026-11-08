@@ -123,11 +123,11 @@
                     </EventTrigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
-            <!-- new live search, as the buttons above : gray dot (the live searches listening are LiveSlot) -->
+            <!-- new live search, as the buttons above : red dot as the stop of the live searches (the ones listening are LiveSlot) -->
             <ControlTemplate x:Key="LiveActionButton" TargetType="{x:Type Button}">
                 <Border x:Name="Bd" Height="26" Padding="8,0" Background="{StaticResource DarkBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1" CornerRadius="2">
                     <StackPanel Orientation="Horizontal">
-                        <Ellipse x:Name="Dot" Width="8" Height="8" Margin="0,0,6,0" VerticalAlignment="Center" Fill="{StaticResource GrayForegoundBrush}"/>
+                        <Ellipse x:Name="Dot" Width="8" Height="8" Margin="0,0,6,0" VerticalAlignment="Center" Fill="{StaticResource LiveStopBrush}"/>
                         <TextBlock x:Name="Text" VerticalAlignment="Center" FontSize="12" FontFamily="{StaticResource FontinSmallCaps}"
                                    Foreground="{StaticResource ForegroundBrush}" Text="{ext:Localization Main297_Live}"/>
                     </StackPanel>
@@ -145,12 +145,22 @@
                 </ControlTemplate.Triggers>
             </ControlTemplate>
             <!-- live search listening : green dot (orange while paused), pause / resume and stop, its label in tooltip.
-                 Only the buttons react to a click -->
+                 A click on the dot gives its criteria back to the search (in the color of the theme on hover) -->
             <DataTemplate x:Key="LiveSlot">
                 <Border Height="26" Margin="6,0,0,0" Padding="7,0,2,0" Background="{StaticResource DarkBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}"
                         BorderThickness="1" CornerRadius="2" ToolTip="{Binding Label}">
                     <StackPanel Orientation="Horizontal">
-                        <Ellipse x:Name="Dot" Width="8" Height="8" Margin="0,0,3,0" VerticalAlignment="Center" Fill="{StaticResource LiveRunningBrush}"/>
+                        <Button x:Name="DotButton" Margin="0,0,1,0" Padding="0,0,2,0" Cursor="Hand" Focusable="False" VerticalAlignment="Center"
+                                Command="{Binding RestoreCommand}">
+                            <Button.Template>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="Transparent" Padding="{TemplateBinding Padding}" Height="22" VerticalAlignment="Center">
+                                        <ContentPresenter VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <Ellipse x:Name="Dot" Width="8" Height="8" Fill="{StaticResource LiveRunningBrush}" StrokeThickness="1.5"/>
+                        </Button>
                         <Button x:Name="Pause" Style="{StaticResource LiveSlotButton}" Tag="{StaticResource PauseIcon}"
                                 Command="{Binding TogglePauseCommand}" ToolTip="{ext:Localization Main305_LivePause}"/>
                         <Button Style="{StaticResource LiveSlotButton}" Tag="{StaticResource StopIcon}"
@@ -158,6 +168,9 @@
                     </StackPanel>
                 </Border>
                 <DataTemplate.Triggers>
+                    <Trigger SourceName="DotButton" Property="IsMouseOver" Value="True">
+                        <Setter TargetName="Dot" Property="Stroke" Value="{DynamicResource ThemeFirstForegroundBrush}"/>
+                    </Trigger>
                     <DataTrigger Binding="{Binding IsPaused}" Value="True">
                         <Setter TargetName="Dot" Property="Fill" Value="{StaticResource LivePausedBrush}"/>
                         <Setter TargetName="Pause" Property="Tag" Value="{StaticResource ResumeIcon}"/>
@@ -850,7 +863,7 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                         <!-- delete preset : only with a search preset selected, after confirmation -->
                         <Button DockPanel.Dock="Left" Margin="6,0,0,0" Content="{ext:Localization Main275_DeletePreset}" Cursor="Hand" Focusable="False" Template="{StaticResource SearchActionButton}"
                                 Command="{Binding DeletePresetCommand}"
-                                Visibility="{Binding CanUpdatePreset, Converter={StaticResource bool2VisibilityConverter}}"/>
+                                Visibility="{Binding CanDeletePreset, Converter={StaticResource bool2VisibilityConverter}}"/>
                     </DockPanel>
                 </StackPanel>
             </ScrollViewer>

@@ -12,6 +12,7 @@ namespace Xiletrade.Library.ViewModels.Main.Form.Search;
 public sealed partial class CustomStatViewModel : ViewModelBase
 {
     private readonly Action<CustomStatViewModel> _onEdit;
+    private readonly Action _onChanged;
 
     /// <summary>Id of the stat sent to the trade api.</summary>
     internal string Id { get; private set; }
@@ -45,14 +46,23 @@ public sealed partial class CustomStatViewModel : ViewModelBase
     [ObservableProperty]
     private bool isEditing;
 
-    internal CustomStatViewModel(string id, string text, string kind, string kindType, Action<CustomStatViewModel> onEdit)
+    /// <param name="onChanged">Checked, min or max changed by the user.</param>
+    internal CustomStatViewModel(string id, string text, string kind, string kindType, Action<CustomStatViewModel> onEdit,
+        Action onChanged)
     {
+        _onChanged = onChanged;
         Id = id;
         this.text = text;
         this.kind = kind;
         this.kindType = kindType;
         _onEdit = onEdit;
     }
+
+    partial void OnEnabledChanged(bool value) => _onChanged?.Invoke();
+
+    partial void OnMinChanged(string value) => _onChanged?.Invoke();
+
+    partial void OnMaxChanged(string value) => _onChanged?.Invoke();
 
     [RelayCommand]
     private void Edit(object commandParameter) => _onEdit?.Invoke(this);

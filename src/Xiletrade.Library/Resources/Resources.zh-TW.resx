@@ -2609,9 +2609,6 @@
   <data name="Main300_LiveStarted" xml:space="preserve">
     <value>即時搜尋已啟動：新物品將顯示於此。</value>
   </data>
-  <data name="Main301_LiveTooBroad" xml:space="preserve">
-    <value>即時搜尋已停止：一分鐘內新物品超過 {0} 個，請縮小搜尋範圍。</value>
-  </data>
   <data name="Main302_LiveConnectionLost" xml:space="preserve">
     <value>即時搜尋已停止：連線已中斷。</value>
   </data>
@@ -2656,6 +2653,9 @@
   </data>
   <data name="Main317_PriceCheckIn" xml:space="preserve">
     <value>{0} 秒後可查詢價格</value>
+  </data>
+  <data name="Main318_LiveTooBroadPaused" xml:space="preserve">
+    <value>即時搜尋已暫停：一分鐘內新物品超過 {0} 個，請縮小搜尋範圍或繼續搜尋。</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>

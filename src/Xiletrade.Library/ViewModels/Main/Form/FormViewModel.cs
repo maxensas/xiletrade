@@ -265,7 +265,7 @@ public sealed partial class FormViewModel : ViewModelBase
         {
             visible = new();
             rarity = new();
-            customSearch = new(_dm, _vm, _view, _message, live);
+            customSearch = new(_dm, _vm, this, _view, _message, live);
         }
 
         isPoeTwo = _dm.Config.Options.GameVersion is 1;

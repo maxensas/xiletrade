@@ -11,7 +11,6 @@
 namespace Xiletrade.Library.Resources {
     using System;
 
-
     /// <summary>
     ///   A strongly-typed resource class for looking up localized strings, among other things.
     /// </summary>
@@ -7500,17 +7499,6 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Localized string similar to => Live search stopped : more than {0} new items in one minute, refine the search.
-        /// </summary>
-        public static string Main301_LiveTooBroad
-        {
-            get
-            {
-                return ResourceManager.GetString("Main301_LiveTooBroad", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Localized string similar to => Live search stopped : the connection was lost.
         /// </summary>
         public static string Main302_LiveConnectionLost
@@ -7672,6 +7660,17 @@ namespace Xiletrade.Library.Resources {
             get
             {
                 return ResourceManager.GetString("Main317_PriceCheckIn", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Live search paused : more than {0} new items in one minute, refine the search or resume it.
+        /// </summary>
+        public static string Main318_LiveTooBroadPaused
+        {
+            get
+            {
+                return ResourceManager.GetString("Main318_LiveTooBroadPaused", resourceCulture);
             }
         }
 

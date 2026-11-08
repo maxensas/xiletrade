@@ -106,8 +106,9 @@ public sealed class LiveSearchService : IDisposable
     /// </summary>
     /// <param name="query">Json of the search (same as the custom search).</param>
     /// <param name="label">Name of the preset or search text, null : "Live" and its number.</param>
+    /// <param name="criteria">Criteria of the custom search, given back to the form.</param>
     /// <returns>False when it could not start (the reason is displayed).</returns>
-    internal async Task<bool> StartAsync(byte[] query, string league, string label)
+    internal async Task<bool> StartAsync(byte[] query, string league, string label, LiveSearchCriteria criteria)
     {
         if (!CanStart(query))
         {
@@ -157,11 +158,12 @@ public sealed class LiveSearchService : IDisposable
             var number = GetFreeNumber();
             session = new LiveSearchSession(_net, Strings.Api.Live + league + "/" + searchId, Strings.Api.Fetch,
                 Strings.Api.GetSearchPage(league, searchId) + "/live", searchId,
-                MaxResultsPerMinute, OnResult, OnAuthenticated, _logger)
+                MaxResultsPerMinute, OnResult, OnAuthenticated, OnTooBroad, _logger)
             {
                 Number = number,
                 Label = string.IsNullOrWhiteSpace(label) ? null : label,
-                Query = query
+                Query = query,
+                Criteria = criteria
             };
             _sessions.Add(session);
         }
@@ -229,6 +231,13 @@ public sealed class LiveSearchService : IDisposable
     private void OnAuthenticated(LiveSearchSession session)
         => Notify(session, Resources.Resources.Main300_LiveStarted, NotificationStatus.Success);
 
+    // paused by the session : the user refines the search or resumes it
+    private void OnTooBroad(LiveSearchSession session)
+    {
+        SendState();
+        Notify(session, string.Format(Resources.Resources.Main318_LiveTooBroadPaused, MaxResultsPerMinute), NotificationStatus.Warning);
+    }
+
     /// <summary>Live searches listening, oldest first.</summary>
     internal LiveSearchInfo[] GetSessions()
     {
@@ -239,7 +248,8 @@ public sealed class LiveSearchService : IDisposable
             {
                 var session = _sessions[i];
                 sessions[i] = new(session.Number,
-                    session.Label ?? string.Concat(Resources.Resources.Main297_Live, " ", session.Number.ToString()), session.IsPaused);
+                    session.Label ?? string.Concat(Resources.Resources.Main297_Live, " ", session.Number.ToString()), session.IsPaused,
+                    session.Criteria);
             }
             return sessions;
         }
@@ -367,14 +377,13 @@ public sealed class LiveSearchService : IDisposable
 
         var message = end switch
         {
-            LiveSearchEnd.TooBroad => string.Format(Resources.Resources.Main301_LiveTooBroad, MaxResultsPerMinute),
             LiveSearchEnd.Refused => Resources.Resources.Main298_LiveNoSession,
             LiveSearchEnd.ConnectionLost => Resources.Resources.Main302_LiveConnectionLost,
             _ => null // stopped by the user : nothing to say
         };
         if (message is not null)
         {
-            Notify(session, message, end is LiveSearchEnd.TooBroad ? NotificationStatus.Warning : NotificationStatus.Error);
+            Notify(session, message, NotificationStatus.Error);
         }
     }
 
@@ -511,7 +520,6 @@ public sealed class LiveSearchService : IDisposable
             Status = NotificationStatus.Information,
             Duration = null,
             Content = item,
-            IsPinned = true,
             Placement = NotificationPlacement.TopRight
         });
 

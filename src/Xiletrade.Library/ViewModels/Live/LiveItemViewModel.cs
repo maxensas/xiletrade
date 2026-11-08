@@ -45,8 +45,6 @@ public sealed partial class LiveItemViewModel : ViewModelBase
     /// <summary>Currency of the price (image displayed), null without price.</summary>
     public CurrencyInfo Currency { get; }
 
-    public string Account { get; }
-
     /// <summary>Item displayed in the tooltip, as in the results of a price check.</summary>
     /// <remarks>Built when the tooltip is shown first : most of the toasts are never hovered.</remarks>
     public SaleItem Item => _saleItem ??= new(_dm, _item);
@@ -84,7 +82,6 @@ public sealed partial class LiveItemViewModel : ViewModelBase
         var hasName = item?.Name?.Length > 0;
         Title = hasName ? item.Name : item?.TypeLine;
         TypeLine = hasName ? item.TypeLine : null;
-        Account = info.Listing?.Account?.Name;
         CanTravel = _hideoutToken?.Length > 0;
 
         var price = info.Listing?.Price;

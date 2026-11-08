@@ -3039,9 +3039,6 @@ A second click to load or unload all values.</comment>
   <data name="Main300_LiveStarted" xml:space="preserve">
     <value>ライブ検索を開始しました：新しいアイテムはここに表示されます。</value>
   </data>
-  <data name="Main301_LiveTooBroad" xml:space="preserve">
-    <value>ライブ検索を停止しました：1分間に {0} 件を超える新しいアイテム、検索条件を絞り込んでください。</value>
-  </data>
   <data name="Main302_LiveConnectionLost" xml:space="preserve">
     <value>ライブ検索を停止しました：接続が切断されました。</value>
   </data>
@@ -3086,6 +3083,9 @@ A second click to load or unload all values.</comment>
   </data>
   <data name="Main317_PriceCheckIn" xml:space="preserve">
     <value>価格チェックは {0} 秒後に利用できます</value>
+  </data>
+  <data name="Main318_LiveTooBroadPaused" xml:space="preserve">
+    <value>ライブ検索を一時停止しました：1分間に新しいアイテムが{0}件を超えました。検索を絞り込むか、再開してください。</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>

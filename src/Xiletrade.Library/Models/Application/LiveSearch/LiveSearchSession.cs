@@ -21,12 +21,16 @@ namespace Xiletrade.Library.Models.Application.LiveSearch;
 /// Messages of the server : {"auth":true} once connected, then {"result":"&lt;token&gt;","count":n} for each new listing.
 /// The token (JWT, valid about 10 seconds) is given to the owner, which fetches it or skips it.
 /// The connection is restored a few times when it is lost (the owner is told of the first authentication only),
-/// a search with too many results is stopped (not while paused : the results are skipped).
+/// a search with too many results is paused, not stopped : the user refines it or resumes it (while paused, its results
+/// are skipped and not counted).
+/// Stopped by the closing handshake : the waiting read ends with the answer of the server, without exception (cancelled
+/// only when the server does not answer).
 /// The steps are logged in debug only (no code in release).
 /// </remarks>
 internal sealed class LiveSearchSession : IDisposable
 {
     private const int BufferSize = 4096;
+    private static readonly TimeSpan _closeTimeout = TimeSpan.FromSeconds(3);
     private static readonly TimeSpan[] _reconnectDelays = [TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(15), TimeSpan.FromSeconds(30)];
 
     private readonly INetService _net;
@@ -34,8 +38,17 @@ internal sealed class LiveSearchSession : IDisposable
     private readonly int _maxResultsPerMinute;
     private readonly Action<LiveSearchSession, string> _onResult;
     private readonly Action<LiveSearchSession> _onAuthenticated;
+    private readonly Action<LiveSearchSession> _onTooBroad;
     private readonly ILogger _logger;
+    // connection and delays of the reconnection
     private readonly CancellationTokenSource _stop = new();
+    // reads : cancelled only when the server does not answer the closing
+    private readonly CancellationTokenSource _abort = new();
+
+    // listened socket, null between the connections
+    private volatile WebSocket _socket;
+    // 1 : the closing is sent (once)
+    private int _closing;
 
     // timestamps (Stopwatch) of the live results of the last minute
     private readonly Queue<long> _lastMinute = new();
@@ -68,7 +81,10 @@ internal sealed class LiveSearchSession : IDisposable
     /// <summary>Json of the search : the same search is not started twice.</summary>
     internal byte[] Query { get; init; }
 
-    /// <summary>Paused by the user : its results are skipped, they do not count as too many results.</summary>
+    /// <summary>Criteria of the custom search when it started : given back to the form.</summary>
+    internal LiveSearchCriteria Criteria { get; init; }
+
+    /// <summary>Paused by the user or for too many results : its results are skipped, they do not count as too many results.</summary>
     internal bool IsPaused
     {
         get => _isPaused;
@@ -76,10 +92,12 @@ internal sealed class LiveSearchSession : IDisposable
     }
 
     /// <param name="liveUrl">Websocket of the live search, league and search id included.</param>
+    /// <param name="onTooBroad">Paused for too many results in one minute.</param>
     internal LiveSearchSession(INetService net, string liveUrl, string fetchUrl, string referer, string searchId,
         int maxResultsPerMinute, Action<LiveSearchSession, string> onResult, Action<LiveSearchSession> onAuthenticated,
-        ILogger logger)
+        Action<LiveSearchSession> onTooBroad, ILogger logger)
     {
+        _onTooBroad = onTooBroad;
         _net = net;
         _liveUrl = liveUrl;
         FetchUrl = fetchUrl;
@@ -91,7 +109,7 @@ internal sealed class LiveSearchSession : IDisposable
         _logger = logger;
     }
 
-    /// <summary>Listens until stopped, refused, too broad or lost.</summary>
+    /// <summary>Listens until stopped, refused or lost.</summary>
     internal async Task<LiveSearchEnd> RunAsync()
     {
         var attempt = 0;
@@ -119,7 +137,37 @@ internal sealed class LiveSearchSession : IDisposable
         return LiveSearchEnd.Stopped;
     }
 
-    internal void Stop() => _stop.Cancel();
+    /// <summary>Stops the session : closes its socket, the listening ends with the answer of the server.</summary>
+    internal void Stop()
+    {
+        if (_stop.IsCancellationRequested)
+        {
+            return;
+        }
+        _stop.Cancel();
+        if (_socket is { } socket)
+        {
+            _ = CloseOutputAsync(socket);
+        }
+    }
+
+    // closing handshake sent once, the reads are cancelled if the server does not answer
+    private async Task CloseOutputAsync(WebSocket socket)
+    {
+        if (Interlocked.Exchange(ref _closing, 1) is 1)
+        {
+            return;
+        }
+        try
+        {
+            _abort.CancelAfter(_closeTimeout);
+            await socket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, null, _abort.Token).ConfigureAwait(false);
+        }
+        catch (Exception)
+        {
+            // already closed or aborted : the read ends anyway
+        }
+    }
 
     // one connection : ended by the server, the network, the user or a limit
     private async Task<(LiveSearchEnd End, bool Authenticated)> ListenAsync(CancellationToken cancellation)
@@ -151,6 +199,11 @@ internal sealed class LiveSearchSession : IDisposable
 
         using (socket)
         {
+            _socket = socket;
+            if (_stop.IsCancellationRequested)
+            {
+                _ = CloseOutputAsync(socket); // stopped while connecting
+            }
             var buffer = new ArrayBufferWriter<byte>(BufferSize);
             try
             {
@@ -160,13 +213,20 @@ internal sealed class LiveSearchSession : IDisposable
                     ValueWebSocketReceiveResult received;
                     do
                     {
-                        received = await socket.ReceiveAsync(buffer.GetMemory(BufferSize), cancellation).ConfigureAwait(false);
+                        received = await socket.ReceiveAsync(buffer.GetMemory(BufferSize), _abort.Token).ConfigureAwait(false);
                         buffer.Advance(received.Count);
                     }
                     while (!received.EndOfMessage);
 
                     if (received.MessageType is WebSocketMessageType.Close)
                     {
+                        if (cancellation.IsCancellationRequested)
+                        {
+#if DEBUG
+                            _logger.LogDebug("Live search {Number} : closed", Number);
+#endif
+                            return (LiveSearchEnd.Stopped, authenticated);
+                        }
 #if DEBUG
                         _logger.LogDebug("Live search {Number} : closed by the server, {Status} {Description}", Number, socket.CloseStatus, socket.CloseStatusDescription);
 #endif
@@ -200,10 +260,21 @@ internal sealed class LiveSearchSession : IDisposable
                     if (token is not null)
                     {
                         ResultCount++;
-                        if (!_isPaused && IsTooBroad())
+                        if (_isPaused)
                         {
-                            await CloseAsync(socket).ConfigureAwait(false);
-                            return (LiveSearchEnd.TooBroad, authenticated);
+                            _onResult(this, token); // skipped (paused), not counted
+                            continue;
+                        }
+                        if (IsTooBroad())
+                        {
+                            // paused, not stopped : the count starts again when it is resumed
+                            _isPaused = true;
+                            _lastMinute.Clear();
+#if DEBUG
+                            _logger.LogDebug("Live search {Number} : paused, more than {Max} results in one minute", Number, _maxResultsPerMinute);
+#endif
+                            _onTooBroad(this);
+                            continue;
                         }
                         _onResult(this, token);
                     }
@@ -215,7 +286,7 @@ internal sealed class LiveSearchSession : IDisposable
             }
             catch (OperationCanceledException)
             {
-                await CloseAsync(socket).ConfigureAwait(false);
+                // no answer of the server to the closing
                 return (LiveSearchEnd.Stopped, authenticated);
             }
 #if DEBUG
@@ -230,6 +301,10 @@ internal sealed class LiveSearchSession : IDisposable
                 return (LiveSearchEnd.ConnectionLost, authenticated);
             }
 #endif
+            finally
+            {
+                _socket = null;
+            }
         }
     }
 
@@ -287,22 +362,9 @@ internal sealed class LiveSearchSession : IDisposable
         return _lastMinute.Count > _maxResultsPerMinute;
     }
 
-    private static async Task CloseAsync(WebSocket socket)
+    public void Dispose()
     {
-        if (socket.State is not WebSocketState.Open)
-        {
-            return;
-        }
-        try
-        {
-            using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(3));
-            await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, null, timeout.Token).ConfigureAwait(false);
-        }
-        catch (Exception)
-        {
-            // closed anyway when disposed
-        }
+        _stop.Dispose();
+        _abort.Dispose();
     }
-
-    public void Dispose() => _stop.Dispose();
 }

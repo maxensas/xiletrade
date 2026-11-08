@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
@@ -58,9 +59,13 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     [ObservableProperty]
     private int presetIndex;
 
-    /// <summary>A search preset is selected : it can be updated with the criteria of the form.</summary>
+    /// <summary>A search preset was loaded : it can be updated with the criteria of the form, even changed since.</summary>
     [ObservableProperty]
     private bool canUpdatePreset;
+
+    /// <summary>A search preset is selected : it can be deleted.</summary>
+    [ObservableProperty]
+    private bool canDeletePreset;
 
     /// <summary>Name of the preset added with the criteria of the form.</summary>
     [ObservableProperty]
@@ -72,6 +77,12 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
 
     // list of presets rebuilt after a change of the file : the preset selected is not applied
     private bool _isReloading;
+
+    // criteria set by a preset, an unidentified unique or a live search : the preset list is kept
+    private bool _isApplying;
+
+    // search preset loaded, updated by "update preset" : kept when the criteria change (the list shows its header again)
+    private CustomSearchPreset _loadedPreset;
 
     /// <summary>Item categories of the trade site, the first one is any category.</summary>
     [ObservableProperty]
@@ -122,7 +133,8 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     /// <summary>Unidentified unique selected in the presets, null : none.</summary>
     internal UniqueUnidentified SelectedUnid => PresetIndex > 0 && PresetIndex < Presets.Count ? Presets[PresetIndex].Unid : null;
 
-    public CustomSearchViewModel(DataManagerService dm, MainViewModel vm,
+    /// <param name="form">Form of the custom search (not yet in the main view model) : its options are criteria.</param>
+    public CustomSearchViewModel(DataManagerService dm, MainViewModel vm, FormViewModel form,
         IViewManager view, IMessageAdapterService message, LiveSearchService live)
     {
         _live = live;
@@ -136,6 +148,11 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
             .Select(x => (Value: x.Text ?? x.Type, IsUnique: x.Text is not null, Category: cat.Label, Group: index))).ToList();
 
         search = new(searchList);
+
+        // criteria changed by the user : the preset loaded is no longer the one displayed
+        search.PropertyChanged += OnSearchPropertyChanged;
+        form.PropertyChanged += OnFormPropertyChanged;
+        form.Rarity.PropertyChanged += OnRarityPropertyChanged;
 
         // state of the live searches : they go on when this form is closed
         UpdateLiveSlots(live.GetSessions());
@@ -154,30 +171,148 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         categoryIndex = 0;
 
         filterSections = GetFilterSections(isPoe2);
-        statGroups.Add(new(dm, StatGroup.And));
+        statGroups.Add(NewStatGroup(StatGroup.And));
+    }
+
+    private StatGroupViewModel NewStatGroup(StatGroup type) => new(_dm, type, OnCriteriaChanged);
+
+    private void OnSearchPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName is nameof(SuggestionListViewModel.SearchQuery))
+        {
+            OnCriteriaChanged();
+        }
+    }
+
+    // options of the miscellaneous section and currencies of the buyout price
+    private void OnFormPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName is nameof(FormViewModel.IdentifiedIndex) or nameof(FormViewModel.CorruptedIndex)
+            or nameof(FormViewModel.DoubleCorruptedIndex) or nameof(FormViewModel.MirroredIndex) or nameof(FormViewModel.FracturedIndex)
+            or nameof(FormViewModel.SplitIndex) or nameof(FormViewModel.CraftedIndex) or nameof(FormViewModel.MutatedIndex)
+            or nameof(FormViewModel.DesecratedIndex) or nameof(FormViewModel.VeiledIndex) or nameof(FormViewModel.SanctifiedIndex)
+            or nameof(FormViewModel.BuyoutPriceIndex))
+        {
+            OnCriteriaChanged();
+        }
+    }
+
+    private void OnRarityPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName is nameof(RarityViewModel.Index))
+        {
+            OnCriteriaChanged();
+        }
+    }
+
+    private void OnMinMaxPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName is nameof(MinMaxViewModel.Min) or nameof(MinMaxViewModel.Max))
+        {
+            OnCriteriaChanged();
+        }
+    }
+
+    partial void OnCategoryIndexChanged(int value) => OnCriteriaChanged();
+
+    // criteria changed by the user after a search preset was loaded : the list shows its header, "update preset" is kept
+    // (an unidentified unique stays selected : it is a criterion of the search)
+    private void OnCriteriaChanged()
+    {
+        if (_isApplying || PresetIndex <= 0 || PresetIndex >= Presets.Count || Presets[PresetIndex].Preset is null)
+        {
+            return;
+        }
+        SelectPreset(0);
+    }
+
+    // entry of the list selected without being applied
+    private void SelectPreset(int index)
+    {
+        _isReloading = true;
+        PresetIndex = index;
+        _isReloading = false;
+    }
+
+    private void SetLoadedPreset(CustomSearchPreset preset)
+    {
+        _loadedPreset = preset;
+        CanUpdatePreset = preset is not null;
+    }
+
+    // index of a search preset in the list, 0 : not found (header)
+    private int GetPresetIndex(CustomSearchPreset preset)
+    {
+        if (preset is null)
+        {
+            return 0;
+        }
+        for (int i = 1; i < Presets.Count; i++)
+        {
+            if (Presets[i].Preset == preset)
+            {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    // index of an unidentified unique in the list (translated again with the list), 0 : not found (header)
+    private int GetUnidIndex(UniqueUnidentified unid)
+    {
+        if (unid is null)
+        {
+            return 0;
+        }
+        for (int i = 1; i < Presets.Count; i++)
+        {
+            if (Presets[i].Unid is { } current && current.Name == unid.Name && current.Type == unid.Type)
+            {
+                return i;
+            }
+        }
+        return 0;
     }
 
     partial void OnPresetIndexChanged(int value)
     {
-        CanUpdatePreset = value > 0 && value < Presets.Count && Presets[value].Preset is not null;
-        if (_isReloading || value <= 0 || value >= Presets.Count)
+        CanDeletePreset = value > 0 && value < Presets.Count && Presets[value].Preset is not null;
+        if (_isReloading)
         {
             return;
         }
+        if (value <= 0 || value >= Presets.Count)
+        {
+            SetLoadedPreset(null);
+            return;
+        }
         _view.ClearFocus();
+        _isApplying = true;
+        try
+        {
+            ApplyItem(Presets[value]);
+        }
+        finally
+        {
+            _isApplying = false;
+        }
+    }
 
+    // unidentified unique or search preset selected
+    private void ApplyItem(SearchPresetItem item)
+    {
         if (Search is not null)
         {
             Search.SearchQuery = string.Empty;
         }
 
-        var item = Presets[value];
+        SetLoadedPreset(item.Preset);
         if (item.Unid is not null)
         {
             // only the unique : criteria of a previous search preset are removed
             CategoryIndex = 0;
             StatGroups.Clear();
-            StatGroups.Add(new(_dm, StatGroup.And));
+            StatGroups.Add(NewStatGroup(StatGroup.And));
             ClearFilters();
 
             _vm.Form.IdentifiedIndex = 1;
@@ -207,10 +342,11 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
 
         ClearFilters();
         StatGroups.Clear();
-        StatGroups.Add(new(_dm, StatGroup.And));
+        StatGroups.Add(NewStatGroup(StatGroup.And));
         ShowCriteria = true;
 
         PresetIndex = CategoryIndex = _vm.Form.Rarity.Index = 0;
+        SetLoadedPreset(null);
     }
 
     // min / max of the sections, options of the miscellaneous section and currencies of the buyout price
@@ -254,7 +390,46 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         var json = _vm.GetSerialized(_vm.Form.Market[_vm.Form.MarketIndex], customSearch: true);
         if (json is { Length: > 0 })
         {
-            await _live.StartAsync(json, _vm.Form.League[_vm.Form.LeagueIndex], GetLiveLabel());
+            await _live.StartAsync(json, _vm.Form.League[_vm.Form.LeagueIndex], GetLiveLabel(), GetLiveCriteria());
+        }
+    }
+
+    // criteria of the form, given back by the dot of the live search
+    private LiveSearchCriteria GetLiveCriteria()
+    {
+        var search = new CustomSearchPreset { Poe2 = IsPoe2 };
+        FillPreset(search);
+        var item = PresetIndex > 0 && PresetIndex < Presets.Count ? Presets[PresetIndex] : null;
+        return new() { Search = search, Text = Search?.SearchQuery, Preset = item?.Preset, Unid = item?.Unid };
+    }
+
+    // criteria of a live search set without launching the search : its preset or unique is selected again
+    // when it was not changed (and still in the list)
+    private void RestoreLive(LiveSearchCriteria live)
+    {
+        if (live?.Search is null || live.Search.Poe2 != IsPoe2)
+        {
+            return;
+        }
+        _view.ClearFocus();
+        _isApplying = true;
+        try
+        {
+            ApplyPreset(live.Search);
+            if (GetRarityIndex(live.Search.Rarity) < 0)
+            {
+                _vm.Form.Rarity.Index = 0;
+            }
+            Search?.SetQuery(live.Text ?? string.Empty);
+
+            var index = live.Preset is not null ? GetPresetIndex(live.Preset) : GetUnidIndex(live.Unid);
+            SelectPreset(index);
+            SetLoadedPreset(index > 0 ? live.Preset : null);
+            ShowCriteria = true;
+        }
+        finally
+        {
+            _isApplying = false;
         }
     }
 
@@ -276,7 +451,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         var slots = new LiveSlotViewModel[sessions.Length];
         for (int i = 0; i < sessions.Length; i++)
         {
-            slots[i] = new(_live, sessions[sessions.Length - 1 - i]);
+            slots[i] = new(_live, sessions[sessions.Length - 1 - i], RestoreLive);
         }
         LiveSlots.ReplaceRange(slots);
         CanStartLive = sessions.Length < LiveSearchService.MaxSessions;
@@ -302,18 +477,18 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         }
     }
 
-    // the search preset selected takes the criteria of the form, its name and options are kept
+    // the search preset loaded takes the criteria of the form, its name and options are kept : selected again
     [RelayCommand]
     private void UpdatePreset(object commandParameter)
     {
-        var index = PresetIndex;
-        var preset = index > 0 && index < Presets.Count ? Presets[index].Preset : null;
+        var preset = _loadedPreset;
         if (preset is null)
         {
             return;
         }
         FillPreset(preset);
         _dm.SaveSearchPreset();
+        SelectPreset(GetPresetIndex(preset));
     }
 
     // the search preset selected is removed from the file, after confirmation
@@ -409,21 +584,10 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     {
         _isReloading = true;
         Presets = GetPresets(IsPoe2);
-        var index = 0;
-        if (selected is not null)
-        {
-            for (int i = 1; i < Presets.Count; i++)
-            {
-                if (Presets[i].Preset == selected)
-                {
-                    index = i;
-                    break;
-                }
-            }
-        }
-        PresetIndex = index;
-        CanUpdatePreset = index > 0;
         _isReloading = false;
+        var index = GetPresetIndex(selected);
+        SelectPreset(index);
+        SetLoadedPreset(index > 0 ? selected : null);
     }
 
     // criteria of the form : category, rarity, min / max and options of the sections, currencies of the buyout price,
@@ -528,7 +692,8 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     private void AddStatGroup(object commandParameter)
     {
         IsGroupMenuOpen = false;
-        StatGroups.Add(new(_dm, (commandParameter as string).ToStatGroup()));
+        StatGroups.Add(NewStatGroup((commandParameter as string).ToStatGroup()));
+        OnCriteriaChanged();
     }
 
     [RelayCommand]
@@ -537,6 +702,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         if (commandParameter is StatGroupViewModel group)
         {
             StatGroups.Remove(group);
+            OnCriteriaChanged();
         }
     }
 
@@ -559,7 +725,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         StatGroups.Clear();
         foreach (var type in new[] { StatGroup.And, StatGroup.Not, StatGroup.Count })
         {
-            var group = new StatGroupViewModel(_dm, type);
+            var group = NewStatGroup(type);
             if (type is StatGroup.Count)
             {
                 group.Min = preset.CountMin.ToStr();
@@ -771,6 +937,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
             foreach (var id in ids)
             {
                 var vm = new MinMaxViewModel(id, models[id]);
+                vm.PropertyChanged += OnMinMaxPropertyChanged;
                 MinMaxList.Add(vm);
                 list.Add(vm);
             }
@@ -780,6 +947,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         // buyout price : its currencies are the ones of the form (BuyoutPriceIndex, as in the detail view),
         // not in the models of the price check
         var price = new MinMaxViewModel(StatPanel.TradePrice, new(Resources.Resources.Main087_lblPrice));
+        price.PropertyChanged += OnMinMaxPropertyChanged;
         MinMaxList.Add(price);
 
         if (isPoe2)

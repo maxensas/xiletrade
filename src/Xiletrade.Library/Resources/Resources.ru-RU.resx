@@ -2532,9 +2532,6 @@
   <data name="Main300_LiveStarted" xml:space="preserve">
     <value>Живой поиск запущен: новые предметы будут показаны здесь.</value>
   </data>
-  <data name="Main301_LiveTooBroad" xml:space="preserve">
-    <value>Живой поиск остановлен: более {0} новых предметов за минуту, уточните поиск.</value>
-  </data>
   <data name="Main302_LiveConnectionLost" xml:space="preserve">
     <value>Живой поиск остановлен: соединение потеряно.</value>
   </data>
@@ -2579,6 +2576,9 @@
   </data>
   <data name="Main317_PriceCheckIn" xml:space="preserve">
     <value>Проверка цены будет доступна через {0} с</value>
+  </data>
+  <data name="Main318_LiveTooBroadPaused" xml:space="preserve">
+    <value>Живой поиск приостановлен: более {0} новых предметов за минуту, уточните поиск или возобновите его.</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Добро пожаловать в Xiletrade</value>

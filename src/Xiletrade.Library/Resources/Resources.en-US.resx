@@ -2530,9 +2530,6 @@ No sale is ignored.</value>
   <data name="Main300_LiveStarted" xml:space="preserve">
     <value>Live search started : the new items will be displayed here.</value>
   </data>
-  <data name="Main301_LiveTooBroad" xml:space="preserve">
-    <value>Live search stopped : more than {0} new items in one minute, refine the search.</value>
-  </data>
   <data name="Main302_LiveConnectionLost" xml:space="preserve">
     <value>Live search stopped : the connection was lost.</value>
   </data>
@@ -2577,6 +2574,9 @@ No sale is ignored.</value>
   </data>
   <data name="Main317_PriceCheckIn" xml:space="preserve">
     <value>Price check available in {0} s</value>
+  </data>
+  <data name="Main318_LiveTooBroadPaused" xml:space="preserve">
+    <value>Live search paused : more than {0} new items in one minute, refine the search or resume it.</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>

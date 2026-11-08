@@ -2532,9 +2532,6 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="Main300_LiveStarted" xml:space="preserve">
     <value>실시간 검색 시작: 새 아이템이 여기에 표시됩니다.</value>
   </data>
-  <data name="Main301_LiveTooBroad" xml:space="preserve">
-    <value>실시간 검색 중지: 1분 동안 새 아이템이 {0}개를 초과했습니다. 검색 조건을 좁히세요.</value>
-  </data>
   <data name="Main302_LiveConnectionLost" xml:space="preserve">
     <value>실시간 검색 중지: 연결이 끊어졌습니다.</value>
   </data>
@@ -2579,6 +2576,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="Main317_PriceCheckIn" xml:space="preserve">
     <value>{0}초 후 가격 확인 가능</value>
+  </data>
+  <data name="Main318_LiveTooBroadPaused" xml:space="preserve">
+    <value>실시간 검색 일시 중지: 1분 동안 새 아이템이 {0}개를 넘었습니다. 검색을 좁히거나 재개하세요.</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>

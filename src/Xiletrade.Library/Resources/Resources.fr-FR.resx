@@ -2531,9 +2531,6 @@ Aucune vente ne sera ignorée.</value>
   <data name="Main300_LiveStarted" xml:space="preserve">
     <value>Recherche live démarrée : les nouveaux objets s'afficheront ici.</value>
   </data>
-  <data name="Main301_LiveTooBroad" xml:space="preserve">
-    <value>Recherche live arrêtée : plus de {0} nouveaux objets en une minute, affinez la recherche.</value>
-  </data>
   <data name="Main302_LiveConnectionLost" xml:space="preserve">
     <value>Recherche live arrêtée : la connexion a été perdue.</value>
   </data>
@@ -2578,6 +2575,9 @@ Aucune vente ne sera ignorée.</value>
   </data>
   <data name="Main317_PriceCheckIn" xml:space="preserve">
     <value>Vérification des prix disponible dans {0} s</value>
+  </data>
+  <data name="Main318_LiveTooBroadPaused" xml:space="preserve">
+    <value>Recherche live en pause : plus de {0} nouveaux objets en une minute, affinez la recherche ou reprenez-la.</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenue sur Xiletrade</value>

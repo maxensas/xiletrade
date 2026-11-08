@@ -144,13 +144,8 @@ public sealed class NotificationHost : INotificationHost
             border.BorderBrush = GetThemeBrush("WindowBorderBrush", opacity);
             border.BorderThickness = new Thickness(2);
         }
-        if (message.IsPinned)
-        {
-            border.BorderBrush = GetThemeBrush("PinnedBorderBrush", opacity);
-            border.BorderThickness = new Thickness(2);
-        }
 
-        var width = _toast.Width;
+        var width = message.Content is null ? _toast.Width : _toast.ContentWidth;
         if (message.Content is not null)
         {
             // same proportions of the screen as on the reference screen
