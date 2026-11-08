@@ -5,7 +5,8 @@
 
 **Xiletrade** คือเครื่องมือโอเพ่นซอร์สที่ช่วยตรวจสอบราคาและเพิ่มประสิทธิภาพสำหรับซีรีส์ **POE** (Path Of Exile)
 
-[<img src="https://github.com/user-attachments/assets/7e2ad410-7508-4348-b968-cc0dbbf5b10e" alt="เปิดเว็บไซต์อย่างเป็นทางการ" />](https://maxensas.github.io/xiletrade/)
-[<img src="https://github.com/user-attachments/assets/c3664da6-b66b-49ef-b3c9-992ae7749dd7" alt="ดาวน์โหลดเวอร์ชันล่าสุด" />](https://github.com/maxensas/xiletrade/releases/latest/download/Xiletrade_win-x64.7z)
+[<img src="assets/btn-website.svg" alt="เปิดเว็บไซต์อย่างเป็นทางการ" />](https://maxensas.github.io/xiletrade/)
+[<img src="assets/btn-portable.svg" alt="ดาวน์โหลดไฟล์บีบอัดแบบพกพา (.7z)" />](https://github.com/maxensas/xiletrade/releases/latest/download/Xiletrade_win-x64.7z)
+[<img src="assets/btn-installer.svg" alt="ดาวน์โหลดตัวติดตั้งแบบเว็บ (.exe)" />](https://github.com/maxensas/xiletrade/releases/latest/download/Xiletrade_win-x64_Setup.exe)
 
 <img width="275" height="332" alt="Xiletrade overview" src="https://maxensas.github.io/xiletrade/th/assets/images/screenshot.png">
