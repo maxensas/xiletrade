@@ -10,6 +10,10 @@ strings:
   maintained: projet est maintenu par
   generated: Cette page a été générée par
   download: Télécharger
+  portable: Portable (.7z)
+  installer: Installeur (.exe)
+  alt_customsearch: Fenêtre de recherche personnalisée de Xiletrade avec le formulaire de recherche, un préréglage, la catégorie d'objet et les filtres de stats avec suggestions
+  alt_history: Fenêtre d'historique des devises de Xiletrade avec les graphiques de volume et de taux de change de la devise sélectionnée
   repository: Voir sur GitHub
   footer: Service gratuit nécessitant une maintenance continue pour fonctionner correctement.
   issue: et utilise
@@ -28,8 +32,8 @@ strings:
 
 #### {% include youtube.svg %} &nbsp; [Voir aperçu](https://youtu.be/NygCZvZyUX0)<br>
 
-Faible utilisation du CPU.  
-Utilise au maximum 250 Mo de RAM, sans pics.  
+Très faible utilisation du CPU.  
+170 Mo utilisés en moyenne, sans pics.  
 Aucune donnée écrite en arrière-plan.  
 
 * * *
@@ -46,7 +50,7 @@ Aucune donnée écrite en arrière-plan.
 
 ### {% include knife.svg %} Informations clés
 
-- Plateforme : **Windows** 64 bits, portable (aucune installation requise).
+- Plateforme : **Windows** 64 bits, archive **portable** ou **installeur web** (aucun droit administrateur requis).
 - Coût et licence : **gratuit** et **open source** (GPLv3), [code source sur GitHub]({{ site.github.repository_url }}).
 - Jeux pris en charge : Path of Exile et Path of Exile 2.
 
@@ -65,13 +69,48 @@ tel que le déplacement rapide vers la **cachette** ou les actions **d'échange*
 - Utilitaire **Regex manager**.
 	- Gérez une liste définie d'**expressions régulières**.
 	- Coller automatiquement dans la barre de surbrillance.  
+- **Historique des devises** permettant de voir les tendances actuelles du marché pour la devise sélectionnée.
+- Utilitaire de **recherche personnalisée** avec **préréglages** et notifications de **recherche live**.
+
+{% include history.html %}
 
 {% include regex.html %}
 <br>
 
+### {% include adjust.svg %} Utilitaire de recherche personnalisée
+
+<h2 class="keywords"><i>🧭 Des recherches de trade simplifiées, directement par-dessus votre jeu.</i></h2>
+
+Une **interface minimaliste** contenant tout le nécessaire, ouverte avec ***CTRL+E*** *par défaut*.
+
+- **Formulaire de recherche** avec une liste de résultats.
+	- Effectuez une recherche simple, comme sur le site de trade ou en jeu : vous serez comme chez vous.
+	- Nom ou type de base de l'objet, catégorie, rareté, filtres, prix d'achat immédiat et **groupes de stats**.
+- **Gestion des préréglages**.
+	- Enregistrez vos recherches, **exportez**-les et **importez**-les pour les partager avec vos amis.
+	- La compatibilité avec les **prochaines ligues** est assurée : les préréglages sont vérifiés et réparés lorsque les filtres du trade changent.
+- **Recherche live**, réservée aux **utilisateurs avancés**, pendant que vous jouez.
+	- **Plusieurs recherches live**, à mettre en pause, reprendre ou arrêter, même fenêtre fermée.
+	- Les nouveaux objets s'affichent en **notifications**, avec de nombreuses actions à découvrir :  
+aller au repaire du vendeur, fermer ou **épingler** les objets auxquels vous ne pouvez pas répondre directement.
+
+{% include customsearch.html %}
+
+La recherche live est **sûre par conception** et vous garde dans les bonnes grâces de GGG :
+
+- **Requêtes sécurisées** : les limites envoyées par l'API du trade sont respectées, elle n'est jamais sollicitée au-delà de ses règles, ce qui **évite les timeouts**.
+- **Délai entre les récupérations** : les nouveaux objets sont récupérés avec un délai entre les requêtes, seuls les résultats les plus récents arrivent dans vos notifications.
+- **Optimisée avec le vérificateur de prix** : les recherches live n'utilisent qu'une partie des limites de requêtes, vos **vérifications de prix restent prioritaires**.
+- **Pause auto** : une recherche qui reçoit trop de résultats est mise en pause, **affinez** ses critères puis reprenez-la.
+- **Aucun automatisme** : aller au repaire d'un vendeur nécessite toujours un clic sur la notification.
+
+<br>
+
+
 ### {% include install.svg %} Installation et configuration
 
-1. [**Téléchargez**]({% include download.html %}) la dernière version et **extrayez** l'archive **`.7zip`** dans le répertoire souhaité.
+1. [**Téléchargez**]({% include installer.html %}) et lancez le dernier **installeur web** *(aucun droit administrateur requis)*,  
+ou [**téléchargez**]({% include download.html %}) la version **portable** et **extrayez** l'archive **`.7z`** dans le répertoire souhaité.  
 2. **Clic droit** sur l'icône de la barre d'état système pour configurer ou fermer le programme.
 3. Sélectionnez la **version du jeu**, la **langue** et la **ligue** dans la fenêtre de démarrage ou de paramètres.
 4. **Passez la souris** sur chaque fonctionnalité jusqu'à ce qu'une info-bulle apparaisse pour obtenir une explication détaillée.  
