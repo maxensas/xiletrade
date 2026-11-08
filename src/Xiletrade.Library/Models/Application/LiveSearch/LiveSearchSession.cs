@@ -257,7 +257,8 @@ internal sealed class LiveSearchSession : IDisposable
                             _onAuthenticated(this);
                         }
                     }
-                    if (token is not null)
+                    // stopped : the results received before the answer of the server to the closing are dropped
+                    if (token is not null && !cancellation.IsCancellationRequested)
                     {
                         ResultCount++;
                         if (_isPaused)

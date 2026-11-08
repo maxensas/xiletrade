@@ -78,9 +78,7 @@ public sealed class DataUpdaterService : IDataUpdaterService
 
             taskList.Add(GithubUpdate<DivTiersData>(Strings.File.Divination));
             taskList.Add(GithubUpdate<DustData>(Strings.File.DustLevel));
-            // stat rules of the current game (StatRules.json or StatRulesTwo.json, see StatRuleExtensions)
-            // TODO : uncomment once the files are uploaded on the master branch (Strings.Url.GithubData)
-            //taskList.Add(GithubUpdate<StatRule>(Strings.File.StatRules));
+            taskList.Add(GithubUpdate<StatRule>(Strings.File.StatRules));
 
             var timeoutTask = Task.Delay(TimeSpan.FromSeconds(timeoutSecond));
             var allTasks = Task.WhenAll(taskList);
