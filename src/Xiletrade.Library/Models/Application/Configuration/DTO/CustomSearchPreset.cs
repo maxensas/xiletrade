@@ -3,7 +3,8 @@
 namespace Xiletrade.Library.Models.Application.Configuration.DTO;
 
 /// <summary>
-/// Preset of the custom search ("search_presets" of the configuration) : item category, rarity, filters of the sections, options and stat filters.
+/// Preset of the custom search ("search_presets" of the configuration) : item category, rarity, filters of the sections, options,
+/// currencies of the buyout price and stat filters.
 /// </summary>
 public sealed class CustomSearchPreset
 {
@@ -47,6 +48,14 @@ public sealed class CustomSearchPreset
     [JsonPropertyName("options")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public CustomSearchPresetOptions Options { get; set; } = null;
+
+    /// <summary>
+    /// Currencies of the buyout price (trade filters), option of the trade site : chaos, chaos_divine or divine (PoE 1),
+    /// exalted, exalted_divine, chaos or divine (PoE 2), none : all currencies.
+    /// </summary>
+    [JsonPropertyName("buyout")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string Buyout { get; set; } = null;
 
     [JsonPropertyName("stats")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

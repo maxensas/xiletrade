@@ -3069,6 +3069,9 @@ A second click to load or unload all values.</comment>
   <data name="Main310_TravelToHideout" xml:space="preserve">
     <value>隠れ家へ移動</value>
   </data>
+  <data name="Main311_TradeFilters" xml:space="preserve">
+    <value>取引フィルター</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>
     <comment>Welcome to Xiletrade</comment>

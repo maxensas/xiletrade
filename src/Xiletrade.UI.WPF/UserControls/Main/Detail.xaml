@@ -35,7 +35,7 @@
                         <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
                             <Setter Property="Visibility" Value="Collapsed"/>
                             <Style.Triggers>
-                                <!-- bound only when displayed : the PoE 2 index 3 does not exist here -->
+                                <!-- bound only when displayed : the PoE 2 index 4 does not exist here -->
                                 <DataTrigger Binding="{Binding Form.IsPoeTwo}" Value="False">
                                     <Setter Property="Visibility" Value="Visible"/>
                                     <Setter Property="SelectedIndex" Value="{Binding Form.BuyoutPriceIndex}"/>
@@ -50,6 +50,9 @@
                     </i:Interaction.Triggers>
                     <ComboBoxItem ToolTip="{ext:Localization Main263_AllCurrenciesTip}">
                         <Image Source="{StaticResource ImgAllCurency}" Height="18" Stretch="Uniform"/>
+                    </ComboBoxItem>
+                    <ComboBoxItem ToolTip="{ext:Localization Main239_ChaosOnlyTip}">
+                        <Image Source="{StaticResource ImgChaos}" Height="18" Stretch="Uniform"/>
                     </ComboBoxItem>
                     <ComboBoxItem ToolTip="{ext:Localization Main215_ChaosDivTip}">
                         <Image Source="{StaticResource ImgChaosDivine}" Height="18" Stretch="Uniform"/>
@@ -88,6 +91,9 @@
                     </ComboBoxItem>
                     <ComboBoxItem ToolTip="{ext:Localization Main239_ChaosOnlyTip}">
                         <Image Source="{StaticResource ImgChaosPoe2}" Height="18" Stretch="Uniform"/>
+                    </ComboBoxItem>
+                    <ComboBoxItem ToolTip="{ext:Localization Main262_DivineOnlyTip}">
+                        <Image Source="{StaticResource ImgDivinePoe2}" Height="18" Stretch="Uniform"/>
                     </ComboBoxItem>
                 </ComboBox>
             </StackPanel>

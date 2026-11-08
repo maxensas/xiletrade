@@ -17,11 +17,8 @@ internal record class XiletradeItem
 {
     internal bool SynthesisBlight { get; }
     internal bool BlightRavaged { get; }
-    internal bool ChaosDivOnly { get; }
-    internal bool DivineOnly { get; }
-    internal bool ExaltOnly { get; }
-    internal bool ExaltDivOnly { get; }
-    internal bool ChaosOnly { get; }
+    /// <summary>Currencies of the buyout price, option of the trade site (see <see cref="BuyoutPrice"/>), null : all currencies.</summary>
+    internal string PriceOption { get; }
     internal bool ByType { get; }
     internal bool SocketColors { get; }
 
@@ -45,6 +42,8 @@ internal record class XiletradeItem
     internal XiletradeOption CriticalChance { get; } = new();
     internal XiletradeOption MapTier { get; } = new();
     internal XiletradeOption AreaLevel { get; } = new();
+    /// <summary>Buyout price min / max (custom search), in the currency of the buyout price option.</summary>
+    internal XiletradeOption Price { get; } = new();
     internal XiletradeOption DpsPhys { get; } = new();
     internal XiletradeOption DpsElem { get; } = new();
     internal XiletradeOption Armour { get; } = new();
@@ -158,11 +157,7 @@ internal record class XiletradeItem
         RewardType = form.Panel?.Reward?.Tip.Length > 0 ? form.Panel.Reward.Tip : null;
         Reward = form.Panel?.Reward?.Text.Length > 0 ? form.Panel.Reward.Text : null;
         // buyout price option, see FormViewModel.BuyoutPriceIndex (0 : all currencies, no option sent)
-        ChaosDivOnly = !form.IsPoeTwo && form.BuyoutPriceIndex is 1;
-        DivineOnly = !form.IsPoeTwo && form.BuyoutPriceIndex is 2;
-        ExaltOnly = form.IsPoeTwo && form.BuyoutPriceIndex is 1;
-        ExaltDivOnly = form.IsPoeTwo && form.BuyoutPriceIndex is 2;
-        ChaosOnly = form.IsPoeTwo && form.BuyoutPriceIndex is 3;
+        PriceOption = new BuyoutPrice(form.IsPoeTwo).GetOption(form.BuyoutPriceIndex);
         Rarity = form.Rarity.Index >= 0 && form.Rarity.Index < form.Rarity.ComboBox.Count ?
             form.Rarity.ComboBox[form.Rarity.Index] : form.Rarity.Item;
         UniqueName = form.GetUniqueName();
@@ -277,7 +272,8 @@ internal record class XiletradeItem
             (StatPanel.HeistEngineering, HeistEngineering),
             (StatPanel.HeistBruteForce, HeistBruteForce),
             (StatPanel.HeistPerception, HeistPerception),
-            (StatPanel.HeistDeception, HeistDeception)
+            (StatPanel.HeistDeception, HeistDeception),
+            (StatPanel.TradePrice, Price)
         };
 
         foreach ((var stat, var option) in stats)

@@ -2560,6 +2560,9 @@ No sale is ignored.</value>
   <data name="Main310_TravelToHideout" xml:space="preserve">
     <value>Travel to hideout</value>
   </data>
+  <data name="Main311_TradeFilters" xml:space="preserve">
+    <value>Trade Filters</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>
   </data>

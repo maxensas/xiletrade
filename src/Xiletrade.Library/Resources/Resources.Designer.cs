@@ -7610,6 +7610,17 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
+        ///   Localized string similar to => Trade Filters
+        /// </summary>
+        public static string Main311_TradeFilters
+        {
+            get
+            {
+                return ResourceManager.GetString("Main311_TradeFilters", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Localized string similar to => Welcome to Xiletrade.
         /// </summary>
         public static string Start001_lblWelcome {

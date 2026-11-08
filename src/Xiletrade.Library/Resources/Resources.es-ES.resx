@@ -2564,6 +2564,9 @@ No se ignorará ninguna oferta.</value>
   <data name="Main310_TravelToHideout" xml:space="preserve">
     <value>Viajar al escondite</value>
   </data>
+  <data name="Main311_TradeFilters" xml:space="preserve">
+    <value>Filtros de comercio</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenida en Xiletrade</value>
   </data>

@@ -2563,6 +2563,9 @@ Nenhuma venda será ignorada.</value>
   <data name="Main310_TravelToHideout" xml:space="preserve">
     <value>Viajar para o esconderijo</value>
   </data>
+  <data name="Main311_TradeFilters" xml:space="preserve">
+    <value>Filtros de troca</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bem-vindo ao Xiletrade</value>
   </data>

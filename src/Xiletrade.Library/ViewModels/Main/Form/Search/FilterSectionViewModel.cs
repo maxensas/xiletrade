@@ -21,14 +21,20 @@ public sealed partial class FilterSectionViewModel : ViewModelBase
 
     public AsyncObservableCollection<MinMaxViewModel> MinMax { get; } = new();
 
+    /// <summary>Buyout price (trade filters) : currencies of the form and min / max, null in the other sections.</summary>
+    public MinMaxViewModel Price { get; }
+
+    public bool ShowPrice => Price is not null;
+
     /// <summary>The filters of the section are displayed.</summary>
     [ObservableProperty]
     private bool isExpanded;
 
     internal FilterSectionViewModel(string title, IEnumerable<MinMaxViewModel> minMax,
-        bool isExpanded = false, bool showRarity = false, bool showOptions = false)
+        bool isExpanded = false, bool showRarity = false, bool showOptions = false, MinMaxViewModel price = null)
     {
         Title = title;
+        Price = price;
         ShowRarity = showRarity;
         ShowOptions = showOptions;
         this.isExpanded = isExpanded;

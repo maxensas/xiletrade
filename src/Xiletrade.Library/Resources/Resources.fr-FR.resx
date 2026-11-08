@@ -2561,6 +2561,9 @@ Aucune vente ne sera ignorée.</value>
   <data name="Main310_TravelToHideout" xml:space="preserve">
     <value>Aller au repaire</value>
   </data>
+  <data name="Main311_TradeFilters" xml:space="preserve">
+    <value>Filtres d'échange</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenue sur Xiletrade</value>
   </data>

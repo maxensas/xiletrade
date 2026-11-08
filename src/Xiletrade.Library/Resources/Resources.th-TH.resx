@@ -2571,6 +2571,9 @@
   <data name="Main310_TravelToHideout" xml:space="preserve">
     <value>เดินทางไปยังที่ซ่อน</value>
   </data>
+  <data name="Main311_TradeFilters" xml:space="preserve">
+    <value>ตัวกรองการซื้อขาย</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>
   </data>

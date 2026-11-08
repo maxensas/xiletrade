@@ -74,5 +74,8 @@ public enum StatPanel
     WeaponAttacksPerSecond,
     WeaponCriticalChance,
     MapTier,
-    AreaLevel
+    AreaLevel,
+
+    /// <summary>Buyout price (trade filters of the custom search) : min / max in the currency of the buyout price option.</summary>
+    TradePrice
 }

@@ -361,20 +361,17 @@ internal sealed class JsonDataTwoFactory : JsonDataFactoryBase<JsonDataTwo>
         {
             trade.Filters.Price.Min = xItem.PriceMin;
         }
-        if (xItem.ExaltOnly)
+        if (xItem.PriceOption is not null)
         {
             trade.Disabled = false;
-            trade.Filters.Price.Option = "exalted";
+            trade.Filters.Price.Option = xItem.PriceOption;
         }
-        if (xItem.ExaltDivOnly)
+        // custom search : min / max of the buyout price, in the currency of the option
+        if (xItem.Price.Enable)
         {
             trade.Disabled = false;
-            trade.Filters.Price.Option = "exalted_divine";
-        }
-        if (xItem.ChaosOnly)
-        {
-            trade.Disabled = false;
-            trade.Filters.Price.Option = "chaos";
+            trade.Filters.Price.Min = xItem.Price.Min;
+            trade.Filters.Price.Max = xItem.Price.Max;
         }
         //TODO: Query.Filters.Trade.Filters.Collapse
         return trade.Disabled ? null : trade;

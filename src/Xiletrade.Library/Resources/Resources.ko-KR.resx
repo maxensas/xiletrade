@@ -2562,6 +2562,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="Main310_TravelToHideout" xml:space="preserve">
     <value>은신처로 이동</value>
   </data>
+  <data name="Main311_TradeFilters" xml:space="preserve">
+    <value>거래 필터</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>
   </data>

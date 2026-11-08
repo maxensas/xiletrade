@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
 using System.Text.Json;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Application.Serialization;
+using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Test.CI.Parsing;
@@ -43,6 +45,8 @@ public class SearchPresetTests
                 if (filter.Min is null && filter.Max is null)
                     errors.Add($"{preset.Name} : filter '{filter.Id}' without min or max");
             }
+            if (preset.Buyout is not null && preset.GetBuyoutIndex() is 0)
+                errors.Add($"{preset.Name} : unknown buyout option '{preset.Buyout}'");
             foreach (var stat in preset.Stats ?? [])
             {
                 if (!statIds.Contains(stat.Id))
@@ -52,6 +56,33 @@ public class SearchPresetTests
             }
         }
         errors.Should().BeEmpty();
+    }
+
+    // index of the buyout price of the form <-> option of the trade site, as sent by the item (XiletradeItem)
+    [Theory]
+    [InlineData(false, 0, null)]
+    [InlineData(false, 1, "chaos")]
+    [InlineData(false, 2, "chaos_divine")]
+    [InlineData(false, 3, "divine")]
+    [InlineData(true, 0, null)]
+    [InlineData(true, 1, "exalted")]
+    [InlineData(true, 2, "exalted_divine")]
+    [InlineData(true, 3, "chaos")]
+    [InlineData(true, 4, "divine")]
+    public void _02_Buyout_Option_Should_Match_The_Form(bool isPoe2, int index, string option)
+    {
+        new BuyoutPrice(isPoe2).GetOption(index).Should().Be(option);
+        new CustomSearchPreset { Poe2 = isPoe2, Buyout = option }.GetBuyoutIndex().Should().Be(index);
+    }
+
+    [Fact]
+    public void _03_Buyout_Option_Of_The_Other_Game_Should_Be_Removed()
+    {
+        var preset = new CustomSearchPreset { Name = "test", Poe2 = false, Buyout = "exalted" };
+        var report = new List<string>();
+        preset.Repair(null, report).Should().BeTrue();
+        preset.Buyout.Should().BeNull();
+        report.Should().ContainSingle();
     }
 
     private static SearchPresetData LoadPresets()

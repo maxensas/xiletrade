@@ -2708,6 +2708,9 @@
   <data name="Main310_TravelToHideout" xml:space="preserve">
     <value>前往藏身处</value>
   </data>
+  <data name="Main311_TradeFilters" xml:space="preserve">
+    <value>交易筛选</value>
+  </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
   </data>

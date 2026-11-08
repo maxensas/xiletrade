@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
+using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 
 internal static class CustomSearchPresetExtensions
 {
+    /// <summary>Index of the buyout price of the form for the option of the preset, 0 : all currencies (none or unknown).</summary>
+    internal static int GetBuyoutIndex(this CustomSearchPreset preset) => new BuyoutPrice(preset.Poe2).GetIndex(preset.Buyout);
+
     /// <summary>Presets added to the presets : a preset with the same name in the same game is replaced, a preset without name ignored.</summary>
     /// <returns>All the presets, null : none.</returns>
     internal static CustomSearchPreset[] Merge(this CustomSearchPreset[] presets, IEnumerable<CustomSearchPreset> added)
@@ -34,7 +38,7 @@ internal static class CustomSearchPresetExtensions
     /// <summary>
     /// Makes the preset compatible with the filters of its game : a stat id no longer in the filters is replaced
     /// by the closest one (same id with another case, then same stat with another kind), otherwise removed,
-    /// as an unknown min / max filter.
+    /// as an unknown min / max filter or an unknown option of the buyout price.
     /// </summary>
     /// <param name="filter">Filters of the game of the preset.</param>
     /// <param name="report">Changes made, displayed to the user.</param>
@@ -96,6 +100,14 @@ internal static class CustomSearchPresetExtensions
                 changed = true;
                 preset.Filters = filters.Count > 0 ? [.. filters] : null;
             }
+        }
+
+        // option of the other game or unknown : all currencies
+        if (!string.IsNullOrEmpty(preset.Buyout) && preset.GetBuyoutIndex() is 0)
+        {
+            changed = true;
+            report.Add(string.Format(Resources.Resources.Main293_PresetStatRemoved, preset.Name, preset.Buyout));
+            preset.Buyout = null;
         }
         return changed;
     }

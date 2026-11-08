@@ -214,9 +214,10 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         PresetIndex = CategoryIndex = _vm.Form.Rarity.Index = 0;
     }
 
-    // min / max of the sections and options of the miscellaneous section
+    // min / max of the sections, options of the miscellaneous section and currencies of the buyout price
     private void ClearFilters()
     {
+        _vm.Form.BuyoutPriceIndex = 0;
         foreach (var minMax in MinMaxList)
         {
             minMax.Selected = false;
@@ -407,7 +408,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         _isReloading = false;
     }
 
-    // criteria of the form : category, rarity, min / max and options of the sections,
+    // criteria of the form : category, rarity, min / max and options of the sections, currencies of the buyout price,
     // enabled stats of the enabled groups, count of the first count group
     private void FillPreset(CustomSearchPreset preset)
     {
@@ -420,6 +421,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
             .Where(filter => filter.Min is not null || filter.Max is not null)];
         preset.Filters = filters.Length > 0 ? filters : null;
         preset.Options = GetOptions();
+        preset.Buyout = new BuyoutPrice(_vm.Form.IsPoeTwo).GetOption(_vm.Form.BuyoutPriceIndex);
 
         var count = StatGroups.FirstOrDefault(x => x.IsCount && x.Enabled);
         preset.CountMin = count?.Min.ToNullableDouble();
@@ -526,6 +528,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         ClearFilters();
         SetFilters(preset.Filters);
         SetOptions(preset.Options);
+        _vm.Form.BuyoutPriceIndex = preset.GetBuyoutIndex();
 
         CategoryIndex = GetCategoryIndex(preset.Category);
         var rarityIndex = GetRarityIndex(preset.Rarity);
@@ -756,6 +759,11 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
             return list;
         }
 
+        // buyout price : its currencies are the ones of the form (BuyoutPriceIndex, as in the detail view),
+        // not in the models of the price check
+        var price = new MinMaxViewModel(StatPanel.TradePrice, new(Resources.Resources.Main087_lblPrice));
+        MinMaxList.Add(price);
+
         if (isPoe2)
         {
             return
@@ -769,7 +777,8 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
                 new(Resources.Resources.Main283_Requirements, Get(StatPanel.CommonRequiresLevel)),
                 new(Resources.Resources.Main285_EndgameFilters, Get(StatPanel.MapTier, StatPanel.WaystonePackSize,
                     StatPanel.WaystoneMonsterEffectiveness, StatPanel.WaystoneRarity, StatPanel.WaystoneMonsterRarity)),
-                new(Resources.Resources.Main286_Miscellaneous, Get(StatPanel.AreaLevel, StatPanel.CommonSocketGem), showOptions: true)
+                new(Resources.Resources.Main286_Miscellaneous, Get(StatPanel.AreaLevel, StatPanel.CommonSocketGem), showOptions: true),
+                new(Resources.Resources.Main311_TradeFilters, [], price: price)
             ];
         }
         return
@@ -784,7 +793,8 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
             new(Resources.Resources.Main284_MapFilters, Get(StatPanel.MapTier, StatPanel.MapPackSize,
                 StatPanel.MapQuantity, StatPanel.MapRarity, StatPanel.AreaLevel)),
             new(Resources.Resources.Main286_Miscellaneous, Get(StatPanel.CommonQuality, StatPanel.CommonItemLevel,
-                StatPanel.CommonIntangibility), showOptions: true)
+                StatPanel.CommonIntangibility), showOptions: true),
+            new(Resources.Resources.Main311_TradeFilters, [], price: price)
         ];
     }
 

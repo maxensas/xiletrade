@@ -201,7 +201,8 @@ public sealed partial class FormViewModel : ViewModelBase
 
     /// <summary>
     /// Buyout price option (index of the combobox) : 0 = all currencies.
-    /// PoE 1 : 1 = chaos or divine, 2 = divine. PoE 2 : 1 = exalted, 2 = exalted or divine, 3 = chaos.
+    /// PoE 1 : 1 = chaos, 2 = chaos or divine, 3 = divine. PoE 2 : 1 = exalted, 2 = exalted or divine, 3 = chaos, 4 = divine.
+    /// See <see cref="Models.Poe.Domain.BuyoutPrice"/>.
     /// </summary>
     [ObservableProperty]
     private int buyoutPriceIndex;
@@ -218,10 +219,11 @@ public sealed partial class FormViewModel : ViewModelBase
     [ObservableProperty]
     private bool unidentifiedUnique;
 
-    // buyout price changed by the user : the search is done again, as with a click on the result bar
+    // buyout price changed by the user : the search is done again, as with a click on the result bar (quick and detail views,
+    // a criterion of the next search in the custom search)
     partial void OnBuyoutPriceIndexChanged(int value)
     {
-        if (value < 0 || Freeze)
+        if (value < 0 || Freeze || !(Tab?.QuickSelected is true || Tab?.DetailSelected is true))
         {
             return;
         }

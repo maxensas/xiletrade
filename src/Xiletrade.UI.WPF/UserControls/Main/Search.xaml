@@ -493,6 +493,69 @@ VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.Virtualizati
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
+                                    <!-- buyout price (trade filters) : currencies of the form as in the detail view, min / max in this currency -->
+                                    <DockPanel Style="{StaticResource FilterRow}" Visibility="{Binding ShowPrice, Converter={StaticResource bool2VisibilityConverter}}">
+                                                <TextBox DockPanel.Dock="Right" Margin="2,0,0,0" Width="40" Height="22" Style="{StaticResource tbStat}" Tag="{ext:Localization Main063_lbMax}" Text="{Binding Price.Max, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <TextBox DockPanel.Dock="Right" Width="40" Height="22" Style="{StaticResource tbStat}" Tag="{ext:Localization Main061_lbMin}" Text="{Binding Price.Min, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <ComboBox DockPanel.Dock="Right" Margin="0,0,4,0" Width="52"
+                                                          ToolTip="{Binding SelectedItem.ToolTip, RelativeSource={RelativeSource Self}}">
+                                                    <ComboBox.Style>
+                                                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource FilterComboStyle}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <!-- bound only when displayed : the PoE 2 index 4 does not exist here -->
+                                                                <DataTrigger Binding="{Binding DataContext.Form.IsPoeTwo, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="False">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                    <Setter Property="SelectedIndex" Value="{Binding DataContext.Form.BuyoutPriceIndex, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ComboBox.Style>
+                                                    <ComboBoxItem ToolTip="{ext:Localization Main263_AllCurrenciesTip}">
+                                                        <Image Source="{StaticResource ImgAllCurency}" Height="18" Stretch="Uniform"/>
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem ToolTip="{ext:Localization Main239_ChaosOnlyTip}">
+                                                        <Image Source="{StaticResource ImgChaos}" Height="18" Stretch="Uniform"/>
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem ToolTip="{ext:Localization Main215_ChaosDivTip}">
+                                                        <Image Source="{StaticResource ImgChaosDivine}" Height="18" Stretch="Uniform"/>
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem ToolTip="{ext:Localization Main262_DivineOnlyTip}">
+                                                        <Image Source="{StaticResource ImgDivine}" Height="18" Stretch="Uniform"/>
+                                                    </ComboBoxItem>
+                                                </ComboBox>
+                                                <ComboBox DockPanel.Dock="Right" Margin="0,0,4,0" Width="52"
+                                                          ToolTip="{Binding SelectedItem.ToolTip, RelativeSource={RelativeSource Self}}">
+                                                    <ComboBox.Style>
+                                                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource FilterComboStyle}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <!-- bound only when displayed : currencies of PoE 2 -->
+                                                                <DataTrigger Binding="{Binding DataContext.Form.IsPoeTwo, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                    <Setter Property="SelectedIndex" Value="{Binding DataContext.Form.BuyoutPriceIndex, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ComboBox.Style>
+                                                    <ComboBoxItem ToolTip="{ext:Localization Main263_AllCurrenciesTip}">
+                                                        <Image Source="{StaticResource ImgAllCurencyPoe2}" Height="18" Stretch="Uniform"/>
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem ToolTip="{ext:Localization Main226_ExaltTip}">
+                                                        <Image Source="{StaticResource ImgExaltPoe2}" Height="18" Stretch="Uniform"/>
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem ToolTip="{ext:Localization Main261_ExaltDivTip}">
+                                                        <Image Source="{StaticResource ImgExaltDivinePoe2}" Height="18" Stretch="Uniform"/>
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem ToolTip="{ext:Localization Main239_ChaosOnlyTip}">
+                                                        <Image Source="{StaticResource ImgChaosPoe2}" Height="18" Stretch="Uniform"/>
+                                                    </ComboBoxItem>
+                                                    <ComboBoxItem ToolTip="{ext:Localization Main262_DivineOnlyTip}">
+                                                        <Image Source="{StaticResource ImgDivinePoe2}" Height="18" Stretch="Uniform"/>
+                                                    </ComboBoxItem>
+                                                </ComboBox>
+                                                <TextBlock Style="{StaticResource FilterLabel}" Text="{ext:Localization Main087_lblPrice}" ToolTip="{ext:Localization Main260_BuyoutPrice}"/>
+                                    </DockPanel>
                                     <!-- options of the form (miscellaneous) -->
                                     <StackPanel DataContext="{Binding DataContext.Form, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                 Visibility="{Binding DataContext.ShowOptions, RelativeSource={RelativeSource AncestorType=StackPanel, AncestorLevel=2}, Converter={StaticResource bool2VisibilityConverter}}">

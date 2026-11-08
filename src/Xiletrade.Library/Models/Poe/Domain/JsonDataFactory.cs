@@ -469,15 +469,20 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
             trade.Filters.Price.Min = xItem.PriceMin;
         }
 
-        if (xItem.ChaosDivOnly || xItem.DivineOnly)
+        if (xItem.PriceOption is not null)
         {
             trade.Disabled = false;
+            trade.Filters.Price ??= new();
+            trade.Filters.Price.Option = xItem.PriceOption;
+        }
 
-            if (trade.Filters.Price is null)
-            {
-                trade.Filters.Price = new();
-            }
-            trade.Filters.Price.Option = new(xItem.DivineOnly ? "divine" : "chaos_divine");
+        // custom search : min / max of the buyout price, in the currency of the option
+        if (xItem.Price.Enable)
+        {
+            trade.Disabled = false;
+            trade.Filters.Price ??= new();
+            trade.Filters.Price.Min = xItem.Price.Min;
+            trade.Filters.Price.Max = xItem.Price.Max;
         }
 
         return trade.Disabled ? null : trade;
