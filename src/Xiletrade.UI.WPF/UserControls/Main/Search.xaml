@@ -123,7 +123,7 @@
                     </EventTrigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
-            <!-- live search, as the buttons above : red dot while it is listening (orange while paused) -->
+            <!-- new live search, as the buttons above : gray dot (the live searches listening are LiveSlot) -->
             <ControlTemplate x:Key="LiveActionButton" TargetType="{x:Type Button}">
                 <Border x:Name="Bd" Height="26" Padding="8,0" Background="{StaticResource DarkBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1" CornerRadius="2">
                     <StackPanel Orientation="Horizontal">
@@ -133,13 +133,6 @@
                     </StackPanel>
                 </Border>
                 <ControlTemplate.Triggers>
-                    <DataTrigger Binding="{Binding IsLiveRunning}" Value="True">
-                        <Setter TargetName="Dot" Property="Fill" Value="Red"/>
-                        <Setter TargetName="Text" Property="Text" Value="{ext:Localization Main303_LiveStop}"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding IsLivePaused}" Value="True">
-                        <Setter TargetName="Dot" Property="Fill" Value="Orange"/>
-                    </DataTrigger>
                     <Trigger Property="IsMouseOver" Value="True">
                         <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource ThemeSecondForegroundBrush}"/>
                     </Trigger>
@@ -151,6 +144,27 @@
                     </Trigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
+            <!-- live search listening : red dot (orange while paused), pause / resume and stop, its label in tooltip.
+                 Only the buttons react to a click -->
+            <DataTemplate x:Key="LiveSlot">
+                <Border Height="26" Margin="6,0,0,0" Padding="7,0,2,0" Background="{StaticResource DarkBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}"
+                        BorderThickness="1" CornerRadius="2" ToolTip="{Binding Label}">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse x:Name="Dot" Width="8" Height="8" Margin="0,0,3,0" VerticalAlignment="Center" Fill="Red"/>
+                        <Button x:Name="Pause" Style="{StaticResource LiveSlotButton}" Tag="{StaticResource PauseIcon}"
+                                Command="{Binding TogglePauseCommand}" ToolTip="{ext:Localization Main305_LivePause}"/>
+                        <Button Style="{StaticResource LiveSlotButton}" Tag="{StaticResource StopIcon}"
+                                Command="{Binding StopCommand}" ToolTip="{ext:Localization Main307_LiveStopAll}"/>
+                    </StackPanel>
+                </Border>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding IsPaused}" Value="True">
+                        <Setter TargetName="Dot" Property="Fill" Value="Orange"/>
+                        <Setter TargetName="Pause" Property="Tag" Value="{StaticResource ResumeIcon}"/>
+                        <Setter TargetName="Pause" Property="ToolTip" Value="{ext:Localization Main306_LiveResume}"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
             <!-- filters of the sections : label on the left, min / max or choice on the right -->
             <Style x:Key="FilterRow" TargetType="{x:Type DockPanel}">
                 <Setter Property="Height" Value="24"/>
@@ -310,19 +324,28 @@
                 </Border>
             </DataTemplate>
         </Grid.Resources>
-        <!-- actions : search, live search, switch between the search criteria and the results once a search is launched -->
+        <!-- actions : search and switch between the search criteria and the results on the left, live searches on the right -->
         <DockPanel DataContext="{Binding Form.CustomSearch}" Margin="6,0,8,0" Height="26" VerticalAlignment="Top" LastChildFill="False">
-            <Button DockPanel.Dock="Right" Margin="6,0,0,0" Cursor="Hand" Focusable="False" Template="{StaticResource SearchActionButton}"
-                    Content="{Binding ToggleText}" d:Content="Show results" Command="{Binding ToggleCriteriaCommand}"
-                    Visibility="{Binding HasResults, Converter={StaticResource bool2VisibilityConverter}}"/>
-            <!-- live search of the criteria : red dot while it is listening (orange while paused), click to stop it -->
-            <Button DockPanel.Dock="Right" Margin="6,0,0,0" Cursor="Hand" Focusable="False" Template="{StaticResource LiveActionButton}"
-                    Command="{Binding ToggleLiveCommand}" ToolTip="{ext:Localization Main304_LiveTip}"/>
             <!-- search : only with the search criteria, not while the requests are frozen (rate limit) -->
-            <Button DockPanel.Dock="Right" Cursor="Hand" Focusable="False" Template="{StaticResource SearchActionButton}"
+            <Button DockPanel.Dock="Left" Margin="0,0,6,0" Cursor="Hand" Focusable="False" Template="{StaticResource SearchActionButton}"
                     Content="{ext:Localization Main308_Search}" Command="{Binding CustomSearchCommand}"
                     IsEnabled="{Binding DataContext.Form.Freeze, RelativeSource={RelativeSource AncestorType=UserControl}, Converter={StaticResource inverseBooleanConverter}}"
                     Visibility="{Binding ShowCriteria, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <Button DockPanel.Dock="Left" Cursor="Hand" Focusable="False" Template="{StaticResource SearchActionButton}"
+                    Content="{Binding ToggleText}" d:Content="Show results" Command="{Binding ToggleCriteriaCommand}"
+                    Visibility="{Binding HasResults, Converter={StaticResource bool2VisibilityConverter}}"/>
+            <!-- live searches listening : the oldest on the right -->
+            <ItemsControl DockPanel.Dock="Right" ItemsSource="{Binding LiveSlots}" ItemTemplate="{StaticResource LiveSlot}" Focusable="False">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+            <!-- new live search of the criteria, on the left of the others while the limit is not reached -->
+            <Button DockPanel.Dock="Right" Cursor="Hand" Focusable="False" Template="{StaticResource LiveActionButton}"
+                    Command="{Binding StartLiveCommand}" ToolTip="{ext:Localization Main304_LiveTip}"
+                    Visibility="{Binding CanStartLive, Converter={StaticResource bool2VisibilityConverter}}"/>
         </DockPanel>
 
         <!-- results -->

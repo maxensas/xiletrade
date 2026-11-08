@@ -2615,9 +2615,6 @@
   <data name="Main302_LiveConnectionLost" xml:space="preserve">
     <value>即時搜尋已停止：連線已中斷。</value>
   </data>
-  <data name="Main303_LiveStop" xml:space="preserve">
-    <value>停止即時</value>
-  </data>
   <data name="Main304_LiveTip" xml:space="preserve">
     <value>通知符合條件的新物品（需要 POESESSID）。</value>
   </data>
@@ -2641,6 +2638,24 @@
   </data>
   <data name="Main311_TradeFilters" xml:space="preserve">
     <value>交易篩選</value>
+  </data>
+  <data name="Main312_LiveDuplicate" xml:space="preserve">
+    <value>此即時搜尋已在執行。</value>
+  </data>
+  <data name="Main313_LivePauseAll" xml:space="preserve">
+    <value>暫停所有即時搜尋</value>
+  </data>
+  <data name="Main314_LiveResumeAll" xml:space="preserve">
+    <value>繼續所有即時搜尋</value>
+  </data>
+  <data name="Main315_LiveStopAll" xml:space="preserve">
+    <value>停止所有即時搜尋</value>
+  </data>
+  <data name="Main316_LiveFetchLimit" xml:space="preserve">
+    <value>即時搜尋：交易 API 即將達到上限</value>
+  </data>
+  <data name="Main317_PriceCheckIn" xml:space="preserve">
+    <value>{0} 秒後可查詢價格</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>

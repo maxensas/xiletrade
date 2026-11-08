@@ -2536,9 +2536,6 @@ Es werden keine Verkäufe ignoriert.</value>
   <data name="Main302_LiveConnectionLost" xml:space="preserve">
     <value>Live-Suche beendet: die Verbindung wurde unterbrochen.</value>
   </data>
-  <data name="Main303_LiveStop" xml:space="preserve">
-    <value>Live beenden</value>
-  </data>
   <data name="Main304_LiveTip" xml:space="preserve">
     <value>Meldet neue Gegenstände, die den Kriterien entsprechen (POESESSID erforderlich).</value>
   </data>
@@ -2562,6 +2559,24 @@ Es werden keine Verkäufe ignoriert.</value>
   </data>
   <data name="Main311_TradeFilters" xml:space="preserve">
     <value>Handelsfilter</value>
+  </data>
+  <data name="Main312_LiveDuplicate" xml:space="preserve">
+    <value>Diese Live-Suche läuft bereits.</value>
+  </data>
+  <data name="Main313_LivePauseAll" xml:space="preserve">
+    <value>Alle Live-Suchen pausieren</value>
+  </data>
+  <data name="Main314_LiveResumeAll" xml:space="preserve">
+    <value>Alle Live-Suchen fortsetzen</value>
+  </data>
+  <data name="Main315_LiveStopAll" xml:space="preserve">
+    <value>Alle Live-Suchen beenden</value>
+  </data>
+  <data name="Main316_LiveFetchLimit" xml:space="preserve">
+    <value>Live-Suche: Limit der Handels-API fast erreicht</value>
+  </data>
+  <data name="Main317_PriceCheckIn" xml:space="preserve">
+    <value>Preisprüfung in {0} s verfügbar</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Xiletrade.Library.Models.Application.LiveSearch;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain;
@@ -18,13 +20,26 @@ using Xiletrade.Library.ViewModels.Main.Result;
 namespace Xiletrade.Library.Services;
 
 /// <summary>Service used to handle behaviours when querying PoE trade APIs.</summary>
-/// <remarks>Responsible for updating ResultViewModel based on API's results</remarks>
+/// <remarks>
+/// Responsible for updating ResultViewModel based on API's results.
+/// While live searches are running, a price check which would exceed a fetch limit is refused (<see cref="FetchLimitException"/>,
+/// displayed in the result bar) : the live searches stop at <see cref="LiveSearchService.MaxFetchUsage"/> of each window,
+/// the price checks can use the rest but one request.
+/// </remarks>
 public sealed class PoeApiService
 {
+    // results of a fetch request
+    private const int FetchPageSize = 10;
+    // fetch requests kept free by a price check while live searches are running
+    private const int FetchMargin = 1;
+
     private readonly ILogger<PoeApiService> _logger;
     private readonly DataManagerService _dm;
     private readonly INetService _net;
     private readonly IMessageAdapterService _message;
+
+    // told by the live search service (weak messenger)
+    private volatile bool _isLiveRunning;
 
     // Lazzy initialization of the service.
     // No dependency on the view models : the state of the form is given by the callers (used by the live searches too).
@@ -36,27 +51,34 @@ public sealed class PoeApiService
         _net = net;
         _message = message;
 
+        WeakReferenceMessenger.Default.Register<PoeApiService, LiveSearchStateMessage>(this,
+            static (api, state) => api._isLiveRunning = state.IsRunning);
+
 #if DEBUG
         logger.LogInformation("Service launched");
 #endif
     }
 
     /// <param name="quickSelected">Quick tab of the form selected (result bar).</param>
+    /// <param name="checkLimit">Fetch limits checked while live searches are running (already done by a price check).</param>
     internal async Task<ResultBar> FetchResult(ResultViewModel rVm, int maxFetch, string market, bool hideSameUser,
-        bool quickSelected, CancellationToken token)
+        bool quickSelected, CancellationToken token, bool checkLimit = true)
     {
         CurrencyFetch currencys = new();
         try
         {
-            int fetchNbMax = 10; // previously 5
             int beginFetch = rVm.Data.StatDetail.Begin;
             var dataToFetch = rVm.Data.ResultData;
             int resultCount = dataToFetch.Result.Length;
             if (dataToFetch.Result.Length > 0)
             {
-                var pages = GetFetchPages(dataToFetch, beginFetch, maxFetch, fetchNbMax);
+                var pages = GetFetchPages(dataToFetch, beginFetch, maxFetch, FetchPageSize);
                 if (pages.Count > 0)
                 {
+                    if (checkLimit)
+                    {
+                        CheckFetchLimit(pages.Count);
+                    }
                     beginFetch = await FetchPagesAsync(rVm, pages, beginFetch, hideSameUser, currencys, token);
                 }
             }
@@ -79,7 +101,7 @@ public sealed class PoeApiService
             }
             bool abort = ex.Message.ToLowerInvariant().Contain("thread");
             if (abort || ex is ThreadAbortException
-                or HttpRequestException or TimeoutException or JsonException)
+                or HttpRequestException or TimeoutException or JsonException or FetchLimitException)
             {
                 return new(ex, abort);
             }
@@ -94,6 +116,9 @@ public sealed class PoeApiService
     {
         try
         {
+            // before the search : the pages of results it will fetch
+            CheckFetchLimit(Math.Max(1, (pricingInfo.MaximumFetch + FetchPageSize - 1) / FetchPageSize));
+
             var sResult = await _net.SendHTTPBytes(json, urlApi + pricingInfo.League, Client.Trade); // use cooldown
 
             token.ThrowIfCancellationRequested();
@@ -114,7 +139,8 @@ public sealed class PoeApiService
                     return pricingInfo.IsSimpleBulk ? FillBulkVm(rVm, bulkData, pricingInfo) : FillShopVm(rVm, bulkData);
                 }
                 rVm.Data.ResultData = _dm.Json.Deserialize<ResultData>(sResult);
-                return await FetchResult(rVm, pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, quickSelected, token);
+                return await FetchResult(rVm, pricingInfo.MaximumFetch, pricingInfo.Market, pricingInfo.HideSameUser, quickSelected, token,
+                    checkLimit: false);
             }
             return new(state: ResultBarSate.NoData);
         }
@@ -124,7 +150,7 @@ public sealed class PoeApiService
             {
                 return new(ex, abort: true);
             }
-            if (ex is HttpRequestException or TimeoutException or JsonException)
+            if (ex is HttpRequestException or TimeoutException or JsonException or FetchLimitException)
             {
                 return new(ex, false);
             }
@@ -132,6 +158,21 @@ public sealed class PoeApiService
             _message.Show(ex.GetFormated(), Resources.Resources.Error006_XUpdatePrice, MessageStatus.Error);
         }
         return new(emptyLine: true);
+    }
+
+    // live searches running : a price check is refused rather than sending a request which would exceed a fetch limit
+    // (its penalty would stop the live searches too), the time to wait is displayed in the result bar
+    private void CheckFetchLimit(int fetchCount)
+    {
+        if (!_isLiveRunning)
+        {
+            return;
+        }
+        var wait = _net.GetFetchWait(fetchCount + FetchMargin, 1);
+        if (wait > TimeSpan.Zero)
+        {
+            throw new FetchLimitException(wait);
+        }
     }
 
     /// <summary>

@@ -59,6 +59,15 @@ internal sealed class LiveSearchSession : IDisposable
     /// <summary>A fetch error was already displayed to the user.</summary>
     internal bool FetchErrorShown { get; set; }
 
+    /// <summary>Number of the live search, from 1 to the maximum : displayed on its toasts.</summary>
+    internal int Number { get; init; }
+
+    /// <summary>Name of the preset or search text when it started, null : none ("Live" and its number displayed).</summary>
+    internal string Label { get; init; }
+
+    /// <summary>Json of the search : the same search is not started twice.</summary>
+    internal byte[] Query { get; init; }
+
     /// <summary>Paused by the user : its results are skipped, they do not count as too many results.</summary>
     internal bool IsPaused
     {
@@ -118,19 +127,19 @@ internal sealed class LiveSearchSession : IDisposable
         var authenticated = false;
         WebSocket socket;
 #if DEBUG
-        _logger.LogDebug("Live search : connecting to {Url}", _liveUrl);
+        _logger.LogDebug("Live search {Number} : connecting to {Url}", Number, _liveUrl);
 #endif
         try
         {
             socket = await _net.ConnectTradeSocketAsync(_liveUrl, cancellation).ConfigureAwait(false);
 #if DEBUG
-            _logger.LogDebug("Live search : connected");
+            _logger.LogDebug("Live search {Number} : connected", Number);
 #endif
         }
         catch (HttpRequestException ex)
         {
 #if DEBUG
-            _logger.LogDebug("Live search : connection refused, {Message}", ex.Message);
+            _logger.LogDebug("Live search {Number} : connection refused, {Message}", Number, ex.Message);
 #endif
             return (ex.StatusCode is HttpStatusCode.Unauthorized or HttpStatusCode.Forbidden or HttpStatusCode.NotFound
                 ? LiveSearchEnd.Refused : LiveSearchEnd.ConnectionLost, false);
@@ -159,7 +168,7 @@ internal sealed class LiveSearchSession : IDisposable
                     if (received.MessageType is WebSocketMessageType.Close)
                     {
 #if DEBUG
-                        _logger.LogDebug("Live search : closed by the server, {Status} {Description}", socket.CloseStatus, socket.CloseStatusDescription);
+                        _logger.LogDebug("Live search {Number} : closed by the server, {Status} {Description}", Number, socket.CloseStatus, socket.CloseStatusDescription);
 #endif
                         // policy violation : refused, not restored
                         return (socket.CloseStatus is WebSocketCloseStatus.PolicyViolation ? LiveSearchEnd.Refused : LiveSearchEnd.ConnectionLost, authenticated);
@@ -168,14 +177,14 @@ internal sealed class LiveSearchSession : IDisposable
                         || !TryReadMessage(buffer.WrittenSpan, out var auth, out var token))
                     {
 #if DEBUG
-                        _logger.LogDebug("Live search : message ignored, {Type} {Length} bytes", received.MessageType, buffer.WrittenCount);
+                        _logger.LogDebug("Live search {Number} : message ignored, {Type} {Length} bytes", Number, received.MessageType, buffer.WrittenCount);
 #endif
                         continue;
                     }
                     if (auth is { } isAuthenticated)
                     {
 #if DEBUG
-                        _logger.LogDebug("Live search : auth {Auth}", isAuthenticated);
+                        _logger.LogDebug("Live search {Number} : auth {Auth}", Number, isAuthenticated);
 #endif
                         if (!isAuthenticated)
                         {
@@ -200,7 +209,7 @@ internal sealed class LiveSearchSession : IDisposable
                     }
                 }
 #if DEBUG
-                _logger.LogDebug("Live search : socket state {State}", socket.State);
+                _logger.LogDebug("Live search {Number} : socket state {State}", Number, socket.State);
 #endif
                 return (LiveSearchEnd.ConnectionLost, authenticated);
             }
@@ -212,7 +221,7 @@ internal sealed class LiveSearchSession : IDisposable
 #if DEBUG
             catch (WebSocketException ex)
             {
-                _logger.LogDebug("Live search : connection lost, {Error} {Message}", ex.WebSocketErrorCode, ex.Message);
+                _logger.LogDebug("Live search {Number} : connection lost, {Error} {Message}", Number, ex.WebSocketErrorCode, ex.Message);
                 return (LiveSearchEnd.ConnectionLost, authenticated);
             }
 #else

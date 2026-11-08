@@ -28,6 +28,9 @@ public sealed partial class LiveItemViewModel : ViewModelBase
     /// <summary>Id of the listing, also id of the toast.</summary>
     public string Id { get; }
 
+    /// <summary>Number of its live search (several live searches).</summary>
+    public int Number { get; }
+
     /// <summary>Name of the item : its name (unique, rare), its type otherwise.</summary>
     public string Title { get; }
 
@@ -61,10 +64,12 @@ public sealed partial class LiveItemViewModel : ViewModelBase
     /// <param name="referer">Page of the live search : the hideout token is checked with it.</param>
     /// <param name="travel">Travel with the hideout token and the referer : false when it failed (the error is displayed).</param>
     /// <param name="pin">Displays the toast again, pinned : false when the maximum of pinned toasts is reached.</param>
-    internal LiveItemViewModel(DataManagerService dm, FetchDataInfo info, string referer, Func<string, string, Task<bool>> travel,
+    /// <param name="number">Number of its live search.</param>
+    internal LiveItemViewModel(DataManagerService dm, FetchDataInfo info, int number, string referer, Func<string, string, Task<bool>> travel,
         Action<string> dismiss, Func<LiveItemViewModel, bool> pin, LivePinStateViewModel pins)
     {
         _referer = referer;
+        Number = number;
         _travel = travel;
         _dismiss = dismiss;
         _pin = pin;

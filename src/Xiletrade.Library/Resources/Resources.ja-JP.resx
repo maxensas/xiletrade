@@ -3045,9 +3045,6 @@ A second click to load or unload all values.</comment>
   <data name="Main302_LiveConnectionLost" xml:space="preserve">
     <value>ライブ検索を停止しました：接続が切断されました。</value>
   </data>
-  <data name="Main303_LiveStop" xml:space="preserve">
-    <value>ライブを停止</value>
-  </data>
   <data name="Main304_LiveTip" xml:space="preserve">
     <value>条件に一致する新しいアイテムを通知します（POESESSID が必要）。</value>
   </data>
@@ -3071,6 +3068,24 @@ A second click to load or unload all values.</comment>
   </data>
   <data name="Main311_TradeFilters" xml:space="preserve">
     <value>取引フィルター</value>
+  </data>
+  <data name="Main312_LiveDuplicate" xml:space="preserve">
+    <value>このライブ検索はすでに実行中です。</value>
+  </data>
+  <data name="Main313_LivePauseAll" xml:space="preserve">
+    <value>すべてのライブ検索を一時停止</value>
+  </data>
+  <data name="Main314_LiveResumeAll" xml:space="preserve">
+    <value>すべてのライブ検索を再開</value>
+  </data>
+  <data name="Main315_LiveStopAll" xml:space="preserve">
+    <value>すべてのライブ検索を停止</value>
+  </data>
+  <data name="Main316_LiveFetchLimit" xml:space="preserve">
+    <value>ライブ検索：取引APIの上限に近づいています</value>
+  </data>
+  <data name="Main317_PriceCheckIn" xml:space="preserve">
+    <value>価格チェックは {0} 秒後に利用できます</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletradeへようこそ</value>

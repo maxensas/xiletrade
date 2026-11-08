@@ -73,6 +73,9 @@ public class NetService : INetService
 
     private readonly ConcurrentDictionary<string, RateLimitInfo> _rateLimits = new(StringComparer.Ordinal);
 
+    // fetch requests of the trade api (price checks and live searches) compared to their limits
+    private readonly RateLimitTracker _fetchLimit = new();
+
     public NetService(ILogger<NetService> logger, ITokenService token, 
         DataManagerService dm)
     {
@@ -126,14 +129,23 @@ public class NetService : INetService
     public RateLimitInfo GetRateLimit(string policy)
         => policy is not null && _rateLimits.TryGetValue(policy, out var info) ? info : null;
 
+    public TimeSpan GetFetchWait(int count, double maxUsage) => _fetchLimit.GetWait(count, maxUsage);
+
     private void UpdateRateLimit(HttpResponseMessage response)
     {
         var info = RateLimitInfo.Read(response.Headers);
         if (info is not null && RateLimitInfo.IsTradePolicy(info.Policy))
         {
             _rateLimits[info.Policy] = info;
+            if (ReferenceEquals(info.Policy, Strings.Net.TradeFetchRequestLimit))
+            {
+                _fetchLimit.OnResponse(info);
+            }
         }
     }
+
+    // ".../api/trade/fetch/..." or ".../api/trade2/fetch/..." (no allocation)
+    private static bool IsFetchRequest(string urlString) => urlString.Contains("/fetch/", StringComparison.Ordinal);
 
     private bool TryAddCookie(SocketsHttpHandler handler)
     {
@@ -210,6 +222,10 @@ public class NetService : INetService
             if (idClient is Client.Xiletrade && _token.TryGetToken(out var token))
             {
                 request.Headers.Authorization = new("Bearer", token);
+            }
+            if (isTrade && IsFetchRequest(urlString))
+            {
+                _fetchLimit.OnSent(); // counted at once : the requests waiting for their response included
             }
 
             using var response = await client.SendAsync(request).ConfigureAwait(false);

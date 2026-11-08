@@ -39,13 +39,17 @@ public sealed class RateLimitInfo
     /// <summary>Moment the response was received (<see cref="Environment.TickCount64"/>).</summary>
     public long ReceivedAt { get; }
 
+    /// <summary>Windows of all the rules (ip, account...) : max, period and hits of each one.</summary>
+    internal RateLimitRule[] Rules { get; }
+
     /// <summary>
     /// Requests that can be sent right now.
     /// </summary>
     public int Spare => Restriction > 0 ? 0 : Remaining;
 
-    internal RateLimitInfo(string policy, int remaining, int restriction, int retryAfter = 0, double usage = 0)
+    internal RateLimitInfo(string policy, int remaining, int restriction, int retryAfter = 0, double usage = 0, RateLimitRule[] rules = null)
     {
+        Rules = rules ?? [];
         RetryAfter = retryAfter;
         Policy = policy;
         Remaining = remaining;
@@ -102,6 +106,7 @@ public sealed class RateLimitInfo
 
         int remaining = int.MaxValue, restriction = 0;
         double usage = 0;
+        var windows = new List<RateLimitRule>();
         var remainingRules = rules.AsSpan();
         while (NextItem(ref remainingRules, out var rule))
         {
@@ -109,7 +114,7 @@ public sealed class RateLimitInfo
             {
                 continue;
             }
-            if (!TryReadRule(limit, state, out int ruleRemaining, out int ruleRestriction, out double ruleUsage))
+            if (!TryReadRule(limit, state, windows, out int ruleRemaining, out int ruleRestriction, out double ruleUsage))
             {
                 return null;
             }
@@ -123,7 +128,8 @@ public sealed class RateLimitInfo
         {
             _ = int.TryParse(retry, NumberStyles.Integer, CultureInfo.InvariantCulture, out retryAfter);
         }
-        return remaining is int.MaxValue ? null : new RateLimitInfo(policy, Math.Max(remaining, 0), restriction, Math.Max(retryAfter, 0), usage);
+        return remaining is int.MaxValue ? null
+            : new RateLimitInfo(policy, Math.Max(remaining, 0), restriction, Math.Max(retryAfter, 0), usage, [.. windows]);
     }
 
     // finds the "X-Rate-Limit-{rule}" and "X-Rate-Limit-{rule}-State" headers without building their names
@@ -172,9 +178,10 @@ public sealed class RateLimitInfo
     {
         int remaining = int.MaxValue, restriction = 0;
         double usage = 0;
+        var windows = new List<RateLimitRule>();
         foreach (var (limit, state) in rules)
         {
-            if (!TryReadRule(limit, state, out int ruleRemaining, out int ruleRestriction, out double ruleUsage))
+            if (!TryReadRule(limit, state, windows, out int ruleRemaining, out int ruleRestriction, out double ruleUsage))
             {
                 return null;
             }
@@ -182,12 +189,13 @@ public sealed class RateLimitInfo
             restriction = Math.Max(restriction, ruleRestriction);
             usage = Math.Max(usage, ruleUsage);
         }
-        return remaining is int.MaxValue ? null : new RateLimitInfo(policy, Math.Max(remaining, 0), restriction, retryAfter, usage);
+        return remaining is int.MaxValue ? null : new RateLimitInfo(policy, Math.Max(remaining, 0), restriction, retryAfter, usage, [.. windows]);
     }
 
     // limit : "max:period:penalty[,...]" / state : "hits:period:restriction[,...]" (same number of items)
-    // gives the most constrained item of the rule, and the highest part of a limit used
-    private static bool TryReadRule(ReadOnlySpan<char> limit, ReadOnlySpan<char> state, out int remaining, out int restriction, out double usage)
+    // gives the most constrained item of the rule, the highest part of a limit used, and adds the windows of the rule
+    private static bool TryReadRule(ReadOnlySpan<char> limit, ReadOnlySpan<char> state, List<RateLimitRule> windows,
+        out int remaining, out int restriction, out double usage)
     {
         remaining = int.MaxValue;
         restriction = 0;
@@ -199,11 +207,12 @@ public sealed class RateLimitInfo
 
         while (NextItem(ref limit, out var limitItem) && NextItem(ref state, out var stateItem))
         {
-            if (!TryParseItem(limitItem, out int max, out _)
-                || !TryParseItem(stateItem, out int hits, out int active))
+            if (!TryParseItem(limitItem, out int max, out int period, out _)
+                || !TryParseItem(stateItem, out int hits, out _, out int active))
             {
                 return false;
             }
+            windows.Add(new(max, period, hits));
             remaining = Math.Min(remaining, max - hits);
             restriction = Math.Max(restriction, active);
             if (max > 0)
@@ -236,10 +245,11 @@ public sealed class RateLimitInfo
         return true;
     }
 
-    // "a:b:c" => a and c (limit and penalty, or hits and active restriction)
-    private static bool TryParseItem(ReadOnlySpan<char> text, out int first, out int third)
+    // "a:b:c" => a, b and c (limit, period and penalty, or hits, period and active restriction)
+    private static bool TryParseItem(ReadOnlySpan<char> text, out int first, out int second, out int third)
     {
         first = 0;
+        second = 0;
         third = 0;
         int c1 = text.IndexOf(':');
         if (c1 < 0)
@@ -255,6 +265,7 @@ public sealed class RateLimitInfo
         var last = rest[(c2 + 1)..];
         return last.IndexOf(':') < 0
             && int.TryParse(text[..c1], NumberStyles.Integer, CultureInfo.InvariantCulture, out first)
+            && int.TryParse(rest[..c2], NumberStyles.Integer, CultureInfo.InvariantCulture, out second)
             && int.TryParse(last, NumberStyles.Integer, CultureInfo.InvariantCulture, out third);
     }
 }

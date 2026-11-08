@@ -3365,10 +3365,6 @@ No sale is ignored.</comment>
     <value>Live search stopped : the connection was lost.</value>
     <comment>Live search stopped : the connection was lost.</comment>
   </data>
-  <data name="Main303_LiveStop" xml:space="preserve">
-    <value>Stop live</value>
-    <comment>Stop live</comment>
-  </data>
   <data name="Main304_LiveTip" xml:space="preserve">
     <value>Notifies the new items matching the criteria (POESESSID required).</value>
     <comment>Notifies the new items matching the criteria (POESESSID required).</comment>
@@ -3400,6 +3396,30 @@ No sale is ignored.</comment>
   <data name="Main311_TradeFilters" xml:space="preserve">
     <value>Trade Filters</value>
     <comment>Trade Filters</comment>
+  </data>
+  <data name="Main312_LiveDuplicate" xml:space="preserve">
+    <value>This live search is already running.</value>
+    <comment>This live search is already running.</comment>
+  </data>
+  <data name="Main313_LivePauseAll" xml:space="preserve">
+    <value>Pause all live searches</value>
+    <comment>Pause all live searches</comment>
+  </data>
+  <data name="Main314_LiveResumeAll" xml:space="preserve">
+    <value>Resume all live searches</value>
+    <comment>Resume all live searches</comment>
+  </data>
+  <data name="Main315_LiveStopAll" xml:space="preserve">
+    <value>Stop all live searches</value>
+    <comment>Stop all live searches</comment>
+  </data>
+  <data name="Main316_LiveFetchLimit" xml:space="preserve">
+    <value>Live search : trade API limit nearly reached</value>
+    <comment>Live search : trade API limit nearly reached</comment>
+  </data>
+  <data name="Main317_PriceCheckIn" xml:space="preserve">
+    <value>Price check available in {0} s</value>
+    <comment>Price check available in {0} s</comment>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>

@@ -21,25 +21,25 @@ namespace Xiletrade.Library.Services;
 /// </summary>
 /// <remarks>
 /// The fetches are limited for all the live searches together : at most one every <see cref="FetchInterval"/>,
-/// none during a fetch, and none when a fetch limit of the api is used at <see cref="RateLimitReserve"/>
-/// (the rest is kept for the price checks). A live result which can not be fetched is skipped, not queued :
+/// none during a fetch, and none when a window of the fetch limits of the api would go over <see cref="MaxFetchUsage"/>
+/// of its maximum (the rest is kept for the price checks, see <see cref="PoeApiService"/>). A live result which can not be fetched is skipped, not queued :
 /// its token expires quickly and the toasts stay fresh.
-/// The connections and requests are made by the net service (session cookie, rate limits). Each change of
-/// <see cref="IsRunning"/> or <see cref="IsPaused"/> is sent as a <see cref="LiveSearchStateMessage"/> (weak messenger)
-/// to the view models which display it.
+/// Up to <see cref="MaxSessions"/> live searches together, each one numbered (its toasts show its number) and paused
+/// or stopped alone, or all together (overlay). They share the limits above : more live results, not more requests.
+/// The connections and requests are made by the net service (session cookie, rate limits). Each change of the
+/// live searches is sent as a <see cref="LiveSearchStateMessage"/> (weak messenger) to the view models which display it.
 /// The steps are logged in debug only (no code in release).
 /// </remarks>
 public sealed class LiveSearchService : IDisposable
 {
-    /// <summary>Live searches at the same time : a new one stops the oldest.</summary>
-    internal const int MaxSessions = 1;
+    /// <summary>Live searches at the same time.</summary>
+    internal const int MaxSessions = 4;
 
     private const int MaxToasts = 5;
     private const int MaxPinned = 2;
     private const int MaxResultsPerMinute = 60;
-    private const double RateLimitReserve = 0.8;
-    // rate limit state of a response trusted during this time
-    private const int RateLimitMaxAgeMs = 60_000;
+    /// <summary>Part of each window of the fetch limits the live searches can use.</summary>
+    internal const double MaxFetchUsage = 0.6;
 
     private static readonly TimeSpan FetchInterval = TimeSpan.FromSeconds(3);
     private static readonly TimeSpan ToastDuration = TimeSpan.FromSeconds(30);
@@ -67,7 +67,7 @@ public sealed class LiveSearchService : IDisposable
     private long _nextFetch;
     private int _fetching;
 
-    // the live results are skipped, the connection is kept
+    // all the live searches paused (overlay) : set again on each one, each one can be paused or resumed alone
     private volatile bool _isPaused;
 
     /// <summary>A live search is listening.</summary>
@@ -82,7 +82,7 @@ public sealed class LiveSearchService : IDisposable
         }
     }
 
-    /// <summary>The live results are skipped, the connection is kept : resumed at once.</summary>
+    /// <summary>All the live searches paused (overlay) : their results are skipped, the connections are kept.</summary>
     internal bool IsPaused => _isPaused;
 
     public LiveSearchService(ILogger<LiveSearchService> logger, DataManagerService dm, INetService net,
@@ -105,9 +105,15 @@ public sealed class LiveSearchService : IDisposable
     /// Starts a live search : the query is searched to get its id, then its new listings are listened to.
     /// </summary>
     /// <param name="query">Json of the search (same as the custom search).</param>
+    /// <param name="label">Name of the preset or search text, null : "Live" and its number.</param>
     /// <returns>False when it could not start (the reason is displayed).</returns>
-    internal async Task<bool> StartAsync(byte[] query, string league)
+    internal async Task<bool> StartAsync(byte[] query, string league, string label)
     {
+        if (!CanStart(query))
+        {
+            return false;
+        }
+
         // the session is sent by the net service : checked here to tell the user before searching
         if (!_token.TryGetToken(out var sessionId, useCustom: true) || !RegexUtil.MD5().IsMatch(sessionId))
         {
@@ -140,27 +146,80 @@ public sealed class LiveSearchService : IDisposable
             Notify(Resources.Resources.Main299_LiveNotStarted, NotificationStatus.Error);
             return false;
         }
-#if DEBUG
-        _logger.LogDebug("Live search : search id {SearchId}, league {League}", searchId, league);
-#endif
-
-        var session = new LiveSearchSession(_net, Strings.Api.Live + league + "/" + searchId, Strings.Api.Fetch,
-            Strings.Api.GetSearchPage(league, searchId) + "/live", searchId,
-            MaxResultsPerMinute, OnResult, OnAuthenticated, _logger);
+        LiveSearchSession session;
         lock (_gate)
         {
-            // one live search at a time for now : the oldest is stopped
-            while (_sessions.Count >= MaxSessions)
+            // checked again : another form may have started one meanwhile
+            if (_sessions.Count >= MaxSessions || IsStarted(query))
             {
-                _sessions[0].Stop();
-                _sessions.RemoveAt(0);
+                return false;
             }
+            var number = GetFreeNumber();
+            session = new LiveSearchSession(_net, Strings.Api.Live + league + "/" + searchId, Strings.Api.Fetch,
+                Strings.Api.GetSearchPage(league, searchId) + "/live", searchId,
+                MaxResultsPerMinute, OnResult, OnAuthenticated, _logger)
+            {
+                Number = number,
+                Label = string.IsNullOrWhiteSpace(label) ? null : label,
+                Query = query
+            };
             _sessions.Add(session);
-            _isPaused = false; // a new session is not paused
         }
+#if DEBUG
+        _logger.LogDebug("Live search {Number} : search id {SearchId}, league {League}", session.Number, searchId, league);
+#endif
         SendState();
         _ = RunAsync(session);
         return true;
+    }
+
+    // a free place and not the same search as a running one (told to the user)
+    private bool CanStart(byte[] query)
+    {
+        lock (_gate)
+        {
+            if (_sessions.Count >= MaxSessions)
+            {
+                return false;
+            }
+            if (!IsStarted(query))
+            {
+                return true;
+            }
+        }
+        Notify(Resources.Resources.Main312_LiveDuplicate, NotificationStatus.Warning);
+        return false;
+    }
+
+    // same json : same search (under the gate)
+    private bool IsStarted(byte[] query)
+    {
+        foreach (var session in _sessions)
+        {
+            if (query.AsSpan().SequenceEqual(session.Query))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // smallest number not used by a running live search (under the gate)
+    private int GetFreeNumber()
+    {
+        for (int number = 1; number <= MaxSessions; number++)
+        {
+            var used = false;
+            foreach (var session in _sessions)
+            {
+                used |= session.Number == number;
+            }
+            if (!used)
+            {
+                return number;
+            }
+        }
+        return MaxSessions;
     }
 
     /// <summary>The criteria of the form are empty : nothing to listen to.</summary>
@@ -168,7 +227,66 @@ public sealed class LiveSearchService : IDisposable
 
     // the live search really started : the server accepted the session of the user
     private void OnAuthenticated(LiveSearchSession session)
-        => Notify(Resources.Resources.Main300_LiveStarted, NotificationStatus.Success);
+        => Notify(session, Resources.Resources.Main300_LiveStarted, NotificationStatus.Success);
+
+    /// <summary>Live searches listening, oldest first.</summary>
+    internal LiveSearchInfo[] GetSessions()
+    {
+        lock (_gate)
+        {
+            var sessions = new LiveSearchInfo[_sessions.Count];
+            for (int i = 0; i < sessions.Length; i++)
+            {
+                var session = _sessions[i];
+                sessions[i] = new(session.Number,
+                    session.Label ?? string.Concat(Resources.Resources.Main297_Live, " ", session.Number.ToString()), session.IsPaused);
+            }
+            return sessions;
+        }
+    }
+
+    /// <summary>Stops a live search.</summary>
+    internal void Stop(int number)
+    {
+        bool removed = false;
+        lock (_gate)
+        {
+            for (int i = 0; i < _sessions.Count; i++)
+            {
+                if (_sessions[i].Number == number)
+                {
+                    _sessions[i].Stop();
+                    _sessions.RemoveAt(i);
+                    removed = true;
+                    break;
+                }
+            }
+            if (_sessions.Count is 0)
+            {
+                _isPaused = false;
+            }
+        }
+        if (removed)
+        {
+            SendState();
+        }
+    }
+
+    /// <summary>Pauses a live search (results skipped) or resumes it.</summary>
+    internal void SetPaused(int number, bool paused)
+    {
+        lock (_gate)
+        {
+            foreach (var session in _sessions)
+            {
+                if (session.Number == number)
+                {
+                    session.IsPaused = paused;
+                }
+            }
+        }
+        SendState();
+    }
 
     /// <summary>Stops all the live searches.</summary>
     internal void StopAll()
@@ -185,8 +303,8 @@ public sealed class LiveSearchService : IDisposable
         SendState();
     }
 
-    /// <summary>Pauses the live searches (results skipped) or resumes them.</summary>
-    internal void SetPaused(bool paused)
+    /// <summary>Pauses all the live searches (results skipped) or resumes them all.</summary>
+    internal void SetPausedAll(bool paused)
     {
         lock (_gate)
         {
@@ -199,7 +317,7 @@ public sealed class LiveSearchService : IDisposable
         SendState();
     }
 
-    private void SendState() => WeakReferenceMessenger.Default.Send(new LiveSearchStateMessage(IsRunning, IsPaused));
+    private void SendState() => WeakReferenceMessenger.Default.Send(new LiveSearchStateMessage(GetSessions(), IsPaused));
 
     private async Task RunAsync(LiveSearchSession session)
     {
@@ -211,7 +329,7 @@ public sealed class LiveSearchService : IDisposable
 #if DEBUG
         catch (Exception ex)
         {
-            _logger.LogDebug("Live search : error {Exception} {Message}", ex.GetType().Name, ex.Message);
+            _logger.LogDebug("Live search {Number} : error {Exception} {Message}", session.Number, ex.GetType().Name, ex.Message);
         }
 #else
         catch (Exception)
@@ -238,7 +356,7 @@ public sealed class LiveSearchService : IDisposable
             session.Dispose();
         }
 #if DEBUG
-        _logger.LogDebug("Live search : ended {End}, {Count} live result(s)", end, session.ResultCount);
+        _logger.LogDebug("Live search {Number} : ended {End}, {Count} live result(s)", session.Number, end, session.ResultCount);
 #endif
 
         var message = end switch
@@ -250,7 +368,7 @@ public sealed class LiveSearchService : IDisposable
         };
         if (message is not null)
         {
-            Notify(message, end is LiveSearchEnd.TooBroad ? NotificationStatus.Warning : NotificationStatus.Error);
+            Notify(session, message, end is LiveSearchEnd.TooBroad ? NotificationStatus.Warning : NotificationStatus.Error);
         }
     }
 
@@ -258,38 +376,23 @@ public sealed class LiveSearchService : IDisposable
     private void OnResult(LiveSearchSession session, string token)
     {
         var now = Stopwatch.GetTimestamp();
-        var skip = IsPaused ? "paused"
+        var skip = session.IsPaused ? "paused"
             : now < Volatile.Read(ref _nextFetch) ? "interval"
-            : IsOverBudget(_net.GetRateLimit(Strings.Net.TradeFetchRequestLimit)) ? "rate limit"
+            : _net.GetFetchWait(1, MaxFetchUsage) > TimeSpan.Zero ? "rate limit"
             : Interlocked.CompareExchange(ref _fetching, 1, 0) is not 0 ? "fetch running"
             : null;
         if (skip is not null)
         {
 #if DEBUG
-            _logger.LogDebug("Live search : result {Count} skipped, {Reason}", session.ResultCount, skip);
+            _logger.LogDebug("Live search {Number} : result {Count} skipped, {Reason}", session.Number, session.ResultCount, skip);
 #endif
             return; // the next results will be fresher
         }
 #if DEBUG
-        _logger.LogDebug("Live search : result {Count} fetched", session.ResultCount);
+        _logger.LogDebug("Live search {Number} : result {Count} fetched", session.Number, session.ResultCount);
 #endif
         Volatile.Write(ref _nextFetch, now + (long)(FetchInterval.TotalSeconds * Stopwatch.Frequency));
         _ = FetchAsync(session, token);
-    }
-
-    // penalty running (restriction, retry after), or a limit used at the reserve
-    private static bool IsOverBudget(RateLimitInfo limit)
-    {
-        if (limit is null)
-        {
-            return false;
-        }
-        var age = Environment.TickCount64 - limit.ReceivedAt;
-        if (age < Math.Max(limit.Restriction, limit.RetryAfter) * 1000L)
-        {
-            return true;
-        }
-        return age < RateLimitMaxAgeMs && limit.Usage >= RateLimitReserve;
     }
 
     private async Task FetchAsync(LiveSearchSession session, string token)
@@ -314,26 +417,26 @@ public sealed class LiveSearchService : IDisposable
                 {
                     continue; // no longer listed
                 }
-                Show(new LiveItemViewModel(_dm, info, session.Referer, _travelToHideout, _dismissToast, _tryPin, _pins), sound);
+                Show(new LiveItemViewModel(_dm, info, session.Number, session.Referer, _travelToHideout, _dismissToast, _tryPin, _pins), sound);
                 sound = false;
 #if DEBUG
                 shown++;
 #endif
             }
 #if DEBUG
-            _logger.LogDebug("Live search : fetch {Results} result(s), {Toasts} toast(s)", data?.Result?.Length ?? 0, shown);
+            _logger.LogDebug("Live search {Number} : fetch {Results} result(s), {Toasts} toast(s)", session.Number, data?.Result?.Length ?? 0, shown);
 #endif
         }
         catch (Exception ex)
         {
             // rate limit (429) included : its state, kept by the net service, is read by the next result
 #if DEBUG
-            _logger.LogDebug("Live search : fetch failed, {Exception} {Message}", ex.GetType().Name, ex.Message);
+            _logger.LogDebug("Live search {Number} : fetch failed, {Exception} {Message}", session.Number, ex.GetType().Name, ex.Message);
 #endif
             if (!session.FetchErrorShown)
             {
                 session.FetchErrorShown = true;
-                Notify(Resources.Resources.Error008_XFetch + " : " + ex.Message, NotificationStatus.Warning);
+                Notify(session, Resources.Resources.Error008_XFetch + " : " + ex.Message, NotificationStatus.Warning);
             }
         }
         finally
@@ -450,6 +553,17 @@ public sealed class LiveSearchService : IDisposable
 
     private void Notify(string message, NotificationStatus status)
         => _notif.Show(new ToastNotification(Resources.Resources.Main296_LiveSearch, message, status));
+
+    // title : the live search, its number and its label (several live searches)
+    private void Notify(LiveSearchSession session, string message, NotificationStatus status)
+    {
+        var title = string.Concat(Resources.Resources.Main296_LiveSearch, " ", session.Number.ToString());
+        if (session.Label is not null)
+        {
+            title = string.Concat(title, " : ", session.Label);
+        }
+        _notif.Show(new ToastNotification(title, message, status));
+    }
 
     public void Dispose()
     {

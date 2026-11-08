@@ -2,7 +2,39 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:live="clr-namespace:Xiletrade.Library.ViewModels.Live;assembly=Xiletrade.Library"
                     xmlns:uc="clr-namespace:Xiletrade.UI.WPF.UserControls.Main">
-    <!-- toast of a new listing of a live search (NotificationHost) : name in the color of the rarity, price, travel and close -->
+    <!-- buttons of the live searches : overlay over the game (pause all, stop all) and live searches of the custom search -->
+    <!-- icon button : gray, in the color of the theme on hover, the geometry is the tag -->
+    <Style x:Key="OverlayButton" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="34"/>
+        <Setter Property="Height" Value="28"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="Transparent">
+                        <Path x:Name="Icon" Width="11" Height="11" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"
+                              Fill="{StaticResource ForegroundMediumBrush}" Data="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Icon" Property="Fill" Value="{StaticResource ThemeFirstForegroundBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <StreamGeometry x:Key="PauseIcon">M0,0 L3.5,0 L3.5,12 L0,12 Z M7.5,0 L11,0 L11,12 L7.5,12 Z</StreamGeometry>
+    <StreamGeometry x:Key="ResumeIcon">M0,0 L11,6 L0,12 Z</StreamGeometry>
+    <StreamGeometry x:Key="StopIcon">M0,0 L11,0 L11,11 L0,11 Z</StreamGeometry>
+    <!-- smaller, in a live search of the custom search -->
+    <Style x:Key="LiveSlotButton" TargetType="{x:Type Button}" BasedOn="{StaticResource OverlayButton}">
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="22"/>
+    </Style>
+    <!-- toast of a new listing of a live search (NotificationHost) : name in the color of the rarity and number of its live search,
+         price, travel, pin and close -->
     <DataTemplate DataType="{x:Type live:LiveItemViewModel}">
         <DockPanel>
             <!-- name, price and seller : tooltip of the item as in the results of a price check, on the left of the toast
@@ -15,31 +47,39 @@
                         <uc:ResultItem DataContext="{Binding Item}" />
                     </ToolTip>
                 </StackPanel.ToolTip>
-                <!-- name, in the color of the rarity -->
-                <TextBlock Text="{Binding Title}" FontSize="15" FontWeight="SemiBold" TextTrimming="CharacterEllipsis">
-                    <TextBlock.Style>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="Foreground" Value="{StaticResource NormalWebBrush}"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Rarity.Magic}" Value="True">
-                                    <Setter Property="Foreground" Value="{StaticResource MagicWebBrush}"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Rarity.Rare}" Value="True">
-                                    <Setter Property="Foreground" Value="{StaticResource RareWebBrush}"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Rarity.Unique}" Value="True">
-                                    <Setter Property="Foreground" Value="{StaticResource UniqueWebBrush}"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Rarity.UniqueFoil}" Value="True">
-                                    <Setter Property="Foreground" Value="{StaticResource UniqueFoilWebBrush}"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Rarity.NoRarity}" Value="True">
-                                    <Setter Property="Foreground" Value="{StaticResource NoteWebBrush}"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
+                <!-- name, then the number of its live search (several live searches) on the right, above the buttons -->
+                <DockPanel>
+                    <Border DockPanel.Dock="Right" MinWidth="18" Height="18" Margin="6,0,4,0" Padding="4,0" VerticalAlignment="Center" CornerRadius="9"
+                            Background="Transparent" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1">
+                        <TextBlock Text="{Binding Number}" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Foreground="{StaticResource GrayForegoundBrush}"/>
+                    </Border>
+                    <!-- name, in the color of the rarity -->
+                    <TextBlock Text="{Binding Title}" FontSize="15" FontWeight="SemiBold" TextTrimming="CharacterEllipsis">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Foreground" Value="{StaticResource NormalWebBrush}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Rarity.Magic}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource MagicWebBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Rarity.Rare}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource RareWebBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Rarity.Unique}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource UniqueWebBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Rarity.UniqueFoil}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource UniqueFoilWebBrush}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Rarity.NoRarity}" Value="True">
+                                        <Setter Property="Foreground" Value="{StaticResource NoteWebBrush}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </DockPanel>
                 <!-- type of a named item -->
                 <TextBlock Text="{Binding TypeLine}" FontSize="12" Foreground="{StaticResource GrayForegoundBrush}" TextTrimming="CharacterEllipsis"
                            Visibility="{Binding TypeLine, Converter={StaticResource null2CollapseConverter}}"/>

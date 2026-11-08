@@ -127,4 +127,12 @@ public class RateLimitInfoTests
     {
         RateLimitInfo.IsTradePolicy(policy).Should().Be(expected);
     }
+
+    [Fact]
+    public void _13_Windows_Of_All_Rules_Should_Be_Kept()
+    {
+        var info = RateLimitInfo.Create(Policy, [("8:10:60,15:60:120", "3:10:0,14:60:0"), ("6:4:10", "1:4:0")]);
+
+        info.Rules.Should().Equal(new RateLimitRule(8, 10, 3), new RateLimitRule(15, 60, 14), new RateLimitRule(6, 4, 1));
+    }
 }

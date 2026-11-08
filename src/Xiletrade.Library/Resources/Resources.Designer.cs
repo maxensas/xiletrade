@@ -7522,17 +7522,6 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Localized string similar to => Stop live
-        /// </summary>
-        public static string Main303_LiveStop
-        {
-            get
-            {
-                return ResourceManager.GetString("Main303_LiveStop", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Localized string similar to => Notifies the new items matching the criteria (POESESSID required).
         /// </summary>
         public static string Main304_LiveTip
@@ -7617,6 +7606,72 @@ namespace Xiletrade.Library.Resources {
             get
             {
                 return ResourceManager.GetString("Main311_TradeFilters", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => This live search is already running.
+        /// </summary>
+        public static string Main312_LiveDuplicate
+        {
+            get
+            {
+                return ResourceManager.GetString("Main312_LiveDuplicate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Pause all live searches
+        /// </summary>
+        public static string Main313_LivePauseAll
+        {
+            get
+            {
+                return ResourceManager.GetString("Main313_LivePauseAll", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Resume all live searches
+        /// </summary>
+        public static string Main314_LiveResumeAll
+        {
+            get
+            {
+                return ResourceManager.GetString("Main314_LiveResumeAll", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Stop all live searches
+        /// </summary>
+        public static string Main315_LiveStopAll
+        {
+            get
+            {
+                return ResourceManager.GetString("Main315_LiveStopAll", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Live search : trade API limit nearly reached
+        /// </summary>
+        public static string Main316_LiveFetchLimit
+        {
+            get
+            {
+                return ResourceManager.GetString("Main316_LiveFetchLimit", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Price check available in {0} s
+        /// </summary>
+        public static string Main317_PriceCheckIn
+        {
+            get
+            {
+                return ResourceManager.GetString("Main317_PriceCheckIn", resourceCulture);
             }
         }
 

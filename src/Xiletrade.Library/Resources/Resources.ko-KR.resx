@@ -2538,9 +2538,6 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="Main302_LiveConnectionLost" xml:space="preserve">
     <value>실시간 검색 중지: 연결이 끊어졌습니다.</value>
   </data>
-  <data name="Main303_LiveStop" xml:space="preserve">
-    <value>실시간 중지</value>
-  </data>
   <data name="Main304_LiveTip" xml:space="preserve">
     <value>조건에 맞는 새 아이템을 알립니다 (POESESSID 필요).</value>
   </data>
@@ -2564,6 +2561,24 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="Main311_TradeFilters" xml:space="preserve">
     <value>거래 필터</value>
+  </data>
+  <data name="Main312_LiveDuplicate" xml:space="preserve">
+    <value>이 실시간 검색은 이미 실행 중입니다.</value>
+  </data>
+  <data name="Main313_LivePauseAll" xml:space="preserve">
+    <value>모든 실시간 검색 일시 중지</value>
+  </data>
+  <data name="Main314_LiveResumeAll" xml:space="preserve">
+    <value>모든 실시간 검색 재개</value>
+  </data>
+  <data name="Main315_LiveStopAll" xml:space="preserve">
+    <value>모든 실시간 검색 중지</value>
+  </data>
+  <data name="Main316_LiveFetchLimit" xml:space="preserve">
+    <value>실시간 검색: 거래 API 한도에 거의 도달했습니다</value>
+  </data>
+  <data name="Main317_PriceCheckIn" xml:space="preserve">
+    <value>{0}초 후 가격 확인 가능</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Xiletrade 에 오신 것을 환영합니다</value>

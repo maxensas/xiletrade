@@ -8,7 +8,7 @@ using Xiletrade.Library.Services;
 namespace Xiletrade.Library.ViewModels.Live;
 
 /// <summary>
-/// Buttons of the live searches over the game : pause (the results are skipped, the connection is kept) and stop.
+/// Buttons of the live searches over the game : pause all (the results are skipped, the connections are kept) and stop all.
 /// </summary>
 /// <remarks>
 /// Own state of the live searches : the buttons stay while the forms change (the custom search can be closed,
@@ -47,7 +47,7 @@ public sealed partial class LiveOverlayViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void TogglePause(object commandParameter) => _live.SetPaused(!_live.IsPaused);
+    private void TogglePause(object commandParameter) => _live.SetPausedAll(!_live.IsPaused);
 
     [RelayCommand]
     private void Stop(object commandParameter) => _live.StopAll();

@@ -2540,9 +2540,6 @@ No se ignorará ninguna oferta.</value>
   <data name="Main302_LiveConnectionLost" xml:space="preserve">
     <value>Búsqueda en vivo detenida: se perdió la conexión.</value>
   </data>
-  <data name="Main303_LiveStop" xml:space="preserve">
-    <value>Detener en vivo</value>
-  </data>
   <data name="Main304_LiveTip" xml:space="preserve">
     <value>Notifica los nuevos objetos que cumplen los criterios (se necesita POESESSID).</value>
   </data>
@@ -2566,6 +2563,24 @@ No se ignorará ninguna oferta.</value>
   </data>
   <data name="Main311_TradeFilters" xml:space="preserve">
     <value>Filtros de comercio</value>
+  </data>
+  <data name="Main312_LiveDuplicate" xml:space="preserve">
+    <value>Esta búsqueda en vivo ya está en curso.</value>
+  </data>
+  <data name="Main313_LivePauseAll" xml:space="preserve">
+    <value>Pausar todas las búsquedas en vivo</value>
+  </data>
+  <data name="Main314_LiveResumeAll" xml:space="preserve">
+    <value>Reanudar todas las búsquedas en vivo</value>
+  </data>
+  <data name="Main315_LiveStopAll" xml:space="preserve">
+    <value>Detener todas las búsquedas en vivo</value>
+  </data>
+  <data name="Main316_LiveFetchLimit" xml:space="preserve">
+    <value>Búsqueda en vivo: límite de la API de comercio casi alcanzado</value>
+  </data>
+  <data name="Main317_PriceCheckIn" xml:space="preserve">
+    <value>Consulta de precio disponible en {0} s</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bienvenida en Xiletrade</value>

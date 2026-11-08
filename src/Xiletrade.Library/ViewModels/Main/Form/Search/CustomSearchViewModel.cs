@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Application.LiveSearch;
+using Xiletrade.Library.ViewModels.Live;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
@@ -106,13 +107,12 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     [ObservableProperty]
     private AsyncObservableCollection<FilterSectionViewModel> filterSections;
 
-    /// <summary>A live search is listening (live button).</summary>
-    [ObservableProperty]
-    private bool isLiveRunning;
+    /// <summary>Live searches listening, newest first : displayed from right to left (the oldest on the right).</summary>
+    public AsyncObservableCollection<LiveSlotViewModel> LiveSlots { get; } = new();
 
-    /// <summary>The live search is paused (live button).</summary>
+    /// <summary>Another live search can be started (live button).</summary>
     [ObservableProperty]
-    private bool isLivePaused;
+    private bool canStartLive = true;
 
     private bool IsPoe2 => _dm.Config.Options.GameVersion is 1;
 
@@ -137,11 +137,10 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
 
         search = new(searchList);
 
-        // state of the live searches : the live search goes on when this form is closed
-        IsLiveRunning = live.IsRunning;
-        IsLivePaused = live.IsPaused;
+        // state of the live searches : they go on when this form is closed
+        UpdateLiveSlots(live.GetSessions());
         WeakReferenceMessenger.Default.Register<CustomSearchViewModel, LiveSearchStateMessage>(this,
-            static (vm, state) => (vm.IsLiveRunning, vm.IsLivePaused) = (state.IsRunning, state.IsPaused));
+            static (vm, state) => vm.UpdateLiveSlots(state.Sessions));
 
         _vm.Result.Rate.ShowMin = false;
         _vm.Result.Quick.RightString = Resources.Resources.Main245_SearchPreset;
@@ -242,15 +241,10 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         LaunchCustomSearchAsync();
     }
 
-    // live search of the criteria : started, or stopped when one is running
+    // live search of the criteria, while another one can be started (the same criteria are not started twice)
     [RelayCommand]
-    private async Task ToggleLive(object commandParameter)
+    private async Task StartLive(object commandParameter)
     {
-        if (_live.IsRunning)
-        {
-            _live.StopAll();
-            return;
-        }
         if (!HasCriteria())
         {
             _live.NotifyNoCriteria();
@@ -260,8 +254,32 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         var json = _vm.GetSerialized(_vm.Form.Market[_vm.Form.MarketIndex], customSearch: true);
         if (json is { Length: > 0 })
         {
-            await _live.StartAsync(json, _vm.Form.League[_vm.Form.LeagueIndex]);
+            await _live.StartAsync(json, _vm.Form.League[_vm.Form.LeagueIndex], GetLiveLabel());
         }
+    }
+
+    // name of the preset selected, otherwise the text of the search, null : none
+    private string GetLiveLabel()
+    {
+        if (PresetIndex > 0 && PresetIndex < Presets.Count && Presets[PresetIndex] is { IsSeparator: false } preset
+            && !string.IsNullOrEmpty(preset.Name))
+        {
+            return preset.Name;
+        }
+        var query = Search?.SearchQuery?.Trim();
+        return string.IsNullOrEmpty(query) ? null : query;
+    }
+
+    // newest first : a new live search is added on the left of the others
+    private void UpdateLiveSlots(LiveSearchInfo[] sessions)
+    {
+        var slots = new LiveSlotViewModel[sessions.Length];
+        for (int i = 0; i < sessions.Length; i++)
+        {
+            slots[i] = new(_live, sessions[sessions.Length - 1 - i]);
+        }
+        LiveSlots.ReplaceRange(slots);
+        CanStartLive = sessions.Length < LiveSearchService.MaxSessions;
     }
 
     // new search preset with the criteria of the form, added after the other search presets

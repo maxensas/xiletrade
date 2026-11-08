@@ -19,6 +19,13 @@ public interface INetService
     /// <returns>Null when no response has given it yet.</returns>
     RateLimitInfo GetRateLimit(string policy);
 
+    /// <summary>
+    /// Time to wait before <paramref name="count"/> fetch requests of the trade api can be sent while each window of its
+    /// limits stays under <paramref name="maxUsage"/> of its maximum (requests sent, responses and restrictions included).
+    /// </summary>
+    /// <returns>Zero : they can be sent now.</returns>
+    TimeSpan GetFetchWait(int count, double maxUsage);
+
     /// <summary>Sends a GET request and returns the UTF-8 body as it is received (no string conversion).</summary>
     Task<byte[]> SendHTTPBytes(string urlString, Client idClient);
 

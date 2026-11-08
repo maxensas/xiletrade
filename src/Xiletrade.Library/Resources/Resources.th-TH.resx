@@ -2547,9 +2547,6 @@
   <data name="Main302_LiveConnectionLost" xml:space="preserve">
     <value>หยุดการค้นหาแบบสด: การเชื่อมต่อขาดหาย</value>
   </data>
-  <data name="Main303_LiveStop" xml:space="preserve">
-    <value>หยุดแบบสด</value>
-  </data>
   <data name="Main304_LiveTip" xml:space="preserve">
     <value>แจ้งเตือนไอเทมใหม่ที่ตรงกับเงื่อนไข (ต้องมี POESESSID)</value>
   </data>
@@ -2573,6 +2570,24 @@
   </data>
   <data name="Main311_TradeFilters" xml:space="preserve">
     <value>ตัวกรองการซื้อขาย</value>
+  </data>
+  <data name="Main312_LiveDuplicate" xml:space="preserve">
+    <value>การค้นหาแบบสดนี้กำลังทำงานอยู่แล้ว</value>
+  </data>
+  <data name="Main313_LivePauseAll" xml:space="preserve">
+    <value>หยุดการค้นหาแบบสดทั้งหมดชั่วคราว</value>
+  </data>
+  <data name="Main314_LiveResumeAll" xml:space="preserve">
+    <value>ค้นหาแบบสดทั้งหมดต่อ</value>
+  </data>
+  <data name="Main315_LiveStopAll" xml:space="preserve">
+    <value>หยุดการค้นหาแบบสดทั้งหมด</value>
+  </data>
+  <data name="Main316_LiveFetchLimit" xml:space="preserve">
+    <value>ค้นหาแบบสด: ใกล้ถึงขีดจำกัดของ API การซื้อขายแล้ว</value>
+  </data>
+  <data name="Main317_PriceCheckIn" xml:space="preserve">
+    <value>ตรวจสอบราคาได้ในอีก {0} วินาที</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>ยินดีต้อนรับสู่ Xiletrade</value>

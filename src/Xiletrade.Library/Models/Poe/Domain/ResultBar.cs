@@ -72,6 +72,11 @@ internal sealed class ResultBar
             SetThreadException();
             return;
         }
+        if (ex is FetchLimitException limitException)
+        {
+            SetFetchLimitException(limitException);
+            return;
+        }
         if (ex is HttpRequestException httpException)
         {
             SetHttpException(httpException);
@@ -231,6 +236,14 @@ internal sealed class ResultBar
     {
         FirstLine = "Abort called";
         SecondLine = "Thread ERROR";
+        State = ResultBarSate.Exception;
+    }
+
+    // fixed text (no timer) : a new price check gives the new time
+    private void SetFetchLimitException(FetchLimitException exception)
+    {
+        FirstLine = exception.Message;
+        SecondLine = string.Format(Resources.Resources.Main317_PriceCheckIn, Math.Ceiling(exception.Wait.TotalSeconds));
         State = ResultBarSate.Exception;
     }
 

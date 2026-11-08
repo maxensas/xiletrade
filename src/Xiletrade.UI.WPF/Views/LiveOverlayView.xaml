@@ -11,33 +11,6 @@
         AllowsTransparency="True" Background="Transparent" Topmost="True" ShowInTaskbar="False" ShowActivated="False"
         WindowStartupLocation="Manual"
         Visibility="{Binding IsDisplayed, Converter={StaticResource bool2VisibilityConverter}}">
-    <Window.Resources>
-        <!-- icon button : gray, in the color of the theme on hover, the geometry is the tag -->
-        <Style x:Key="OverlayButton" TargetType="{x:Type Button}">
-            <Setter Property="Width" Value="34"/>
-            <Setter Property="Height" Value="28"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Focusable" Value="False"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="Transparent">
-                            <Path x:Name="Icon" Width="11" Height="11" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                  Fill="{StaticResource ForegroundMediumBrush}" Data="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Icon" Property="Fill" Value="{StaticResource ThemeFirstForegroundBrush}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <StreamGeometry x:Key="PauseIcon">M0,0 L3.5,0 L3.5,12 L0,12 Z M7.5,0 L11,0 L11,12 L7.5,12 Z</StreamGeometry>
-        <StreamGeometry x:Key="ResumeIcon">M0,0 L11,6 L0,12 Z</StreamGeometry>
-        <StreamGeometry x:Key="StopIcon">M0,0 L11,0 L11,11 L0,11 Z</StreamGeometry>
-    </Window.Resources>
     <!-- glued to the bottom right corner of the screen : only the top left corner is rounded -->
     <Border x:Name="Root" Background="{StaticResource WindowBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}"
             BorderThickness="1,1,0,0" CornerRadius="6,0,0,0" Padding="4,0">
@@ -47,11 +20,11 @@
                 <Button.Style>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource OverlayButton}">
                         <Setter Property="Tag" Value="{StaticResource PauseIcon}"/>
-                        <Setter Property="ToolTip" Value="{ext:Localization Main305_LivePause}"/>
+                        <Setter Property="ToolTip" Value="{ext:Localization Main313_LivePauseAll}"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsPaused}" Value="True">
                                 <Setter Property="Tag" Value="{StaticResource ResumeIcon}"/>
-                                <Setter Property="ToolTip" Value="{ext:Localization Main306_LiveResume}"/>
+                                <Setter Property="ToolTip" Value="{ext:Localization Main314_LiveResumeAll}"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -59,7 +32,7 @@
             </Button>
             <!-- stop : the live searches end, these buttons disappear -->
             <Button Style="{StaticResource OverlayButton}" Tag="{StaticResource StopIcon}" Command="{Binding StopCommand}"
-                    ToolTip="{ext:Localization Main307_LiveStopAll}"/>
+                    ToolTip="{ext:Localization Main315_LiveStopAll}"/>
             <!-- logo of Xiletrade -->
             <Image Source="{StaticResource ImgLogo}" Height="22" Margin="4,3,2,3" VerticalAlignment="Center"
                    RenderOptions.BitmapScalingMode="HighQuality"/>
