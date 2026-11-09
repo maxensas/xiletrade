@@ -887,8 +887,7 @@
     <value>阿佐亚特之巅</value>
   </data>
   <data name="General069_Ultimatum" xml:space="preserve">
-    <value>Ultimatum</value>
-    <comment>GGG didnt translated yet</comment>
+    <value>致命贪婪</value>
   </data>
   <data name="General070_ReqSacrifice" xml:space="preserve">
     <value>需要献祭</value>
@@ -996,8 +995,7 @@
     <value>迷雾奖励类型:</value>
   </data>
   <data name="General099_Scourge" xml:space="preserve">
-    <value>天灾</value>
-    <comment>TO DO</comment>
+    <value>异度天灾</value>
   </data>
   <data name="General099_ScourgedItem" xml:space="preserve">
     <value>弄脏了</value>
@@ -1042,12 +1040,10 @@
     <comment>TO TRANSLATE</comment>
   </data>
   <data name="General111_Sanctum" xml:space="preserve">
-    <value>Sanctum</value>
-    <comment>TO DO</comment>
+    <value>禁域</value>
   </data>
   <data name="General112_Crucible" xml:space="preserve">
-    <value>Crucible</value>
-    <comment>TO DO</comment>
+    <value>古神熔炉</value>
   </data>
   <data name="General114_SanctumResolve" xml:space="preserve">
     <value>Resolve</value>
@@ -1163,12 +1159,10 @@
 	<comment>TO translate</comment>
   </data>
   <data name="General144_Skill" xml:space="preserve">
-    <value>Skill</value>
-	<comment>TO translate</comment>
+    <value>技能</value>
   </data>
   <data name="General145_Augment" xml:space="preserve">
-    <value>Rune</value>
-	<comment>TO translate</comment>
+    <value>增幅器</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>Lightning Damage</value>
@@ -1218,7 +1212,7 @@
 	<comment>TO translate</comment>
   </data>
   <data name="General158_Desecrated" xml:space="preserve">
-    <value>Desecrated</value>
+    <value>渎灵</value>
 	<comment>TO translate</comment>
   </data>
   <data name="General159_Exceptional" xml:space="preserve">
@@ -1354,8 +1348,7 @@
     <value>存储的经验</value>
   </data>
   <data name="General197_ImbuedFilter" xml:space="preserve">
-    <value>Imbued</value>
-	<comment>TO translate</comment>
+    <value>灌注</value>
   </data>
   <data name="General198_AreaLevelBis" xml:space="preserve">
     <value>区域等级</value>
