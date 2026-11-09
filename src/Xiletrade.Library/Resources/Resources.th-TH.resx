@@ -792,7 +792,7 @@
 	<comment>old: ซ็อกเก็ต</comment>
   </data>
   <data name="General037_Corrupt" xml:space="preserve">
-    <value>คอร์รัปต์</value>
+    <value>มีมลทิน</value>
   </data>
   <data name="General038_Vaal" xml:space="preserve">
     <value>วาล์</value>
@@ -847,7 +847,7 @@
 	<comment>old: คลิกขวาเพื่อเพิ่มเข้าสมุดรวมสัตว์</comment>
   </data>
   <data name="General055_Armour" xml:space="preserve">
-    <value>เกราะ</value>
+    <value>ค่าเกราะ</value>
   </data>
   <data name="General056_Energy" xml:space="preserve">
     <value>โล่พลังงาน</value>
@@ -915,13 +915,13 @@
     <value>ม็อดพรีฟิกซ์</value>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
-    <value>ม็อดพรีฟิกซ์ ที่ถูกคราฟท์</value>
+    <value>ม็อดพรีฟิกซ์  ที่ถูกคราฟท์</value>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
     <value>ม็อดซัฟฟิกซ์</value>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
-    <value>ม็อดซัฟฟิกซ์ ที่ถูกคราฟท์</value>
+    <value>ม็อดซัฟฟิกซ์  ที่ถูกคราฟท์</value>
   </data>
   <data name="General079_ModifierUnique" xml:space="preserve">
     <value>ม็อดยูนิค</value>
@@ -1123,7 +1123,7 @@
 	<comment>old: ความเสียหายน้ำสายฟ้า</comment>
   </data>
   <data name="General147_CriticalHitChance" xml:space="preserve">
-    <value>โอกาสคริติคอล</value>
+    <value>โอกาสปะทะคริติคอล</value>
 	<comment>old: โอกาสปะทะคริติคอล</comment>
   </data>
   <data name="General148_ColdDamage" xml:space="preserve">
@@ -1187,10 +1187,10 @@
     <value>ไอเทมแตกร้าว</value>
   </data>
   <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
-    <value>ม็อดซัฟฟิกซ์ สามานย์</value>
+    <value>ม็อดซัฟฟิกซ์  สามานย์</value>
   </data>
   <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
-    <value>ม็อดพรีฟิกซ์ สามานย์</value>
+    <value>ม็อดพรีฟิกซ์  สามานย์</value>
   </data>
   <data name="General170_ModifierEaterImplicit" xml:space="preserve">
     <value>ม็อดแฝงผู้กลืนกินโลกา</value>
@@ -1199,10 +1199,10 @@
     <value>ม็อดแฝงอุปราชอาบเพลิง</value>
   </data>
   <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
-    <value>ม็อดพรีฟิกซ์ แตกร้าว</value>
+    <value>ม็อดพรีฟิกซ์ แตกร้าว/ม็อดพรีฟิกซ์  แตกร้าว</value>
   </data>
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
-    <value>ม็อดซัฟฟิกซ์ แตกร้าว</value>
+    <value>ม็อดซัฟฟิกซ์ แตกร้าว/ม็อดซัฟฟิกซ์  แตกร้าว</value>
   </data>
   <data name="General174_Imbued" xml:space="preserve">
     <value>เสริมพลัง</value>
@@ -1280,7 +1280,7 @@
     <value>ด่านเลเวล</value>
   </data>
   <data name="General199_CorruptionEnhance" xml:space="preserve">
-    <value>ม็อดแฝง</value>
+    <value>เอนแชนท์มลทิน</value>
   </data>
   <data name="General200_MonsterRarity" xml:space="preserve">
     <value>ระดับความหายากของมอนสเตอร์</value>
@@ -1295,16 +1295,16 @@
     <value>เอนแชนท์</value>
   </data>
   <data name="General204_CraftedPrefixModifier" xml:space="preserve">
-    <value>ม็อดพรีฟิกซ์ ที่ถูกคราฟท์</value>
+    <value>ม็อดพรีฟิกซ์  ที่ถูกคราฟท์</value>
   </data>
   <data name="General205_CraftedSuffixModifier" xml:space="preserve">
-    <value>ม็อดซัฟฟิกซ์ ที่ถูกคราฟท์</value>
+    <value>ม็อดซัฟฟิกซ์  ที่ถูกคราฟท์</value>
   </data>
   <data name="General206_FracturedCraftedPrefixModifier" xml:space="preserve">
-    <value>ม็อดพรีฟิกซ์ ที่ถูกคราฟท์ แตกร้าว</value>
+    <value>ม็อดพรีฟิกซ์ ที่ถูกคราฟท์ แตกร้าว/ม็อดพรีฟิกซ์  ที่ถูกคราฟท์ แตกร้าว</value>
   </data>
   <data name="General207_FracturedCraftedSuffixModifier" xml:space="preserve">
-	<value>ม็อดซัฟฟิกซ์ ที่ถูกคราฟท์ แตกร้าว</value>
+	<value>ม็อดซัฟฟิกซ์ ที่ถูกคราฟท์ แตกร้าว/ม็อดซัฟฟิกซ์  ที่ถูกคราฟท์ แตกร้าว</value>
   </data>
   <data name="General208_RunicWard" xml:space="preserve">
     <value>วอร์ดอักขระ</value>
