@@ -13,6 +13,9 @@ strings:
   installer: Instalador (.exe)
   alt_customsearch: Janela de pesquisa personalizada do Xiletrade com o formulário de pesquisa, uma predefinição, a categoria do item e os filtros de atributos com sugestões
   alt_history: Janela do histórico de moedas do Xiletrade com gráficos de volume e taxa de câmbio da moeda selecionada
+  alt_searchresult: Resultados da pesquisa personalizada do Xiletrade com preços, nível do item, antiguidade e vendedores, e a dica de um item
+  alt_settings_common: Definições do Xiletrade, separador de teclas comuns com os atalhos das funcionalidades
+  alt_settings_additional: Definições do Xiletrade, separador de teclas adicionais com comandos de chat e atalhos de sussurros
   repository: Ver no GitHub
   footer: Serviço gratuito que requer manutenção contínua para funcionar corretamente.
   issue: e usar

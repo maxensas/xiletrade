@@ -13,6 +13,9 @@ strings:
   installer: インストーラー (.exe)
   alt_customsearch: Xiletrade のカスタム検索ウィンドウ（検索フォーム、プリセット、アイテムカテゴリー、候補付きステータスフィルター）
   alt_history: 選択した通貨の取引量と交換レートのチャートを表示する Xiletrade の通貨履歴ウィンドウ
+  alt_searchresult: 価格、アイテムレベル、出品経過時間、出品者とアイテムのツールチップを表示する Xiletrade のカスタム検索結果
+  alt_settings_common: Xiletrade の設定、機能のショートカットを設定する共通キータブ
+  alt_settings_additional: Xiletrade の設定、チャットコマンドとささやきのショートカットを設定する追加キータブ
   repository: GitHub で表示
   footer: 正常に機能するには継続的なメンテナンスが必要な無料サービス。
   issue: そして

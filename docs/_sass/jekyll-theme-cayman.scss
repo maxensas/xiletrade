@@ -511,6 +511,36 @@ svg.icon [fill="#010101"] {
     margin: 2.5rem 0;
 }
 
+// screenshots side by side, centered : same height for two, same width for three (wrapped on small screens)
+.main-content .shots {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+}
+
+.main-content .shots img {
+    width: auto;
+    height: 24rem;
+    max-width: 100%;
+}
+
+.main-content .shots-3 {
+    gap: 1rem;
+}
+
+.main-content .shots-3 a {
+    flex: 0 1 16rem;
+    min-width: 12rem;
+}
+
+.main-content .shots-3 img {
+    width: 100%;
+    height: auto;
+}
+
 // accordions (details and FAQ)
 .main-content p.accordion {
     position: relative;
@@ -645,6 +675,15 @@ svg.icon [fill="#010101"] {
 
     .main-content h3 {
         font-size: 1.45rem;
+    }
+
+    .main-content .shots img {
+        width: 100%;
+        height: auto;
+    }
+
+    .main-content .shots-3 a {
+        flex-basis: 100%;
     }
 
     .main-content .shot {

@@ -13,6 +13,9 @@ strings:
   installer: 설치 프로그램 (.exe)
   alt_customsearch: 검색 양식, 사전 설정, 아이템 카테고리, 제안이 표시된 능력치 필터가 있는 Xiletrade 맞춤 검색 창
   alt_history: 선택한 통화의 거래량과 환율 차트를 보여주는 Xiletrade 통화 내역 창
+  alt_searchresult: 가격, 아이템 레벨, 등록 경과 시간, 판매자와 아이템 툴팁이 표시된 Xiletrade 맞춤 검색 결과
+  alt_settings_common: 기능 단축키가 있는 Xiletrade 설정의 공통 키 탭
+  alt_settings_additional: 채팅 명령과 귓속말 단축키가 있는 Xiletrade 설정의 추가 키 탭
   repository: GitHub에서 보기
   footer: 제대로 작동하려면 지속적인 유지 관리가 필요한 무료 서비스입니다.
   issue: 그리고 사용

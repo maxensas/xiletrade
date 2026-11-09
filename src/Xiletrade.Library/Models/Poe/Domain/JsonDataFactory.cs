@@ -33,7 +33,16 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
         var json = new JsonData(market);
 
         if (!string.IsNullOrEmpty(search))
-            json.Query.Term = search;
+        {
+            if (_dm.Bases.FindBaseByName(search) is var findBase && findBase is not null)
+            {
+                json.Query.Type = findBase.Name;
+            }
+            else 
+            {
+                json.Query.Term = search;
+            }
+        }
         else if (unid is not null)
         {
             json.Query.Name = unid.Name;

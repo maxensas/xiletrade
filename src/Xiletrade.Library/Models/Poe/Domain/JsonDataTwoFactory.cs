@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
+using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Contract.Two;
@@ -33,7 +34,14 @@ internal sealed class JsonDataTwoFactory : JsonDataFactoryBase<JsonDataTwo>
 
         if (!string.IsNullOrEmpty(search))
         {
-            json.Query.Term = search;
+            if (_dm.Bases.FindBaseByName(search) is var findBase && findBase is not null)
+            {
+                json.Query.Type = findBase.Name;
+            }
+            else
+            {
+                json.Query.Term = search;
+            }
         }
         else if (unid is not null)
         {
