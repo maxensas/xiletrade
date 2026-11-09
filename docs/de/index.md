@@ -13,6 +13,9 @@ strings:
   installer: Installer (.exe)
   alt_customsearch: Fenster der benutzerdefinierten Suche von Xiletrade mit Suchformular, einer Voreinstellung, der Gegenstandskategorie und Stat-Filtern mit Vorschlägen
   alt_history: Währungsverlauf-Fenster von Xiletrade mit Diagrammen zu Volumen und Wechselkurs der ausgewählten Währung
+  alt_searchresult: Ergebnisse der benutzerdefinierten Suche von Xiletrade mit Preisen, Gegenstandsstufe, Alter des Angebots und Verkäufern sowie dem Tooltip eines Gegenstands
+  alt_settings_common: Xiletrade-Einstellungen, Registerkarte allgemeine Tasten mit den Tastenkürzeln der Funktionen
+  alt_settings_additional: Xiletrade-Einstellungen, Registerkarte zusätzliche Tasten mit Chatbefehlen und Flüster-Tastenkürzeln
   repository: Auf GitHub anzeigen
   footer: Kostenloser Service, der für seine ordnungsgemäße Funktion fortlaufende Wartung erfordert.
   issue: und verwenden

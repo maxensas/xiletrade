@@ -13,6 +13,9 @@ strings:
   installer: 安装程序 (.exe)
   alt_customsearch: Xiletrade 自定义搜索窗口，包含搜索表单、预设、物品类别以及带建议的属性过滤器
   alt_history: Xiletrade 货币历史窗口，显示所选货币的交易量和汇率图表
+  alt_searchresult: Xiletrade 自定义搜索结果，显示价格、物品等级、上架时间、卖家以及物品提示
+  alt_settings_common: Xiletrade 设置的常用按键标签页，包含各功能的快捷键
+  alt_settings_additional: Xiletrade 设置的附加按键标签页，包含聊天命令和私聊快捷键
   repository: 在 GitHub 上查看
   footer: 免费服务需要持续维护才能正常运行。
   issue: 并使用
