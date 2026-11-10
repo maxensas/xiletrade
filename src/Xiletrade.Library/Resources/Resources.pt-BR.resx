@@ -1208,7 +1208,7 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
     <value>Salas Obstruídas:</value>
   </data>
   <data name="General178_ModDescTier" xml:space="preserve">
-    <value>Tier:</value>
+    <value>Tier:/Nível:</value>
   </data>
   <data name="General179_Cobalt" xml:space="preserve">
     <value>Joia Cobalto</value>

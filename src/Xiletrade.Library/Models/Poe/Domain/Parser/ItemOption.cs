@@ -20,7 +20,8 @@ internal sealed class ItemOption
         [Resources.Resources.General231_Deception] = string.Empty
     };
 
-    private readonly Dictionary<string, string> _options = new(StringComparer.Ordinal)
+    // case ignored : same label with another case between the games (fr "Dégâts physiques" PoE1, "Dégâts Physiques" PoE2)
+    private readonly Dictionary<string, string> _options = new(StringComparer.OrdinalIgnoreCase)
     {
         [Resources.Resources.General035_Quality] = string.Empty,
         [Resources.Resources.General031_Lv] = string.Empty,
@@ -197,9 +198,10 @@ internal sealed class ItemOption
         {
             keySpan = Resources.Resources.General110_FoilUnique; // Ignore Foil Variation 
         }
-        else if (keySpan.StartWith(Resources.Resources.General035_Quality))
+        else if (idx >= 0 && keySpan.StartWith(Resources.Resources.General035_Quality))
         {
-            keySpan = Resources.Resources.General035_Quality; // Ignore catalyst quality type
+            // Ignore catalyst quality type : only an option line, an enchantment starting with the quality word is a mod
+            keySpan = Resources.Resources.General035_Quality;
         }
 
         var keyStr = keySpan.ToString();

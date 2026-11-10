@@ -97,7 +97,8 @@ internal sealed record ModDescription
         if (idxOpening >= 0 && idxClosing > idxOpening)
         {
             var bracketString = opt.Substring(idxOpening + 1, idxClosing - idxOpening - 1);
-            if (bracketString.AsSpan().StartWith(Resources.Resources.General178_ModDescTier))
+            // several labels possible (pt "Tier:" PoE1, "Nível:" PoE2)
+            if (bracketString.AsSpan().StartWithAny(Resources.Resources.General178_ModDescTier))
             {
                 var match = RegexUtil.DecimalNoPlusPattern().Match(bracketString);
                 if (match.Success && int.TryParse(match.Value, out int tier))

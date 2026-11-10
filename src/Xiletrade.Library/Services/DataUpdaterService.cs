@@ -69,7 +69,7 @@ public sealed class DataUpdaterService : IDataUpdaterService
                 if (updateGenerated)
                 {
                     taskList.Add(GithubUpdate<BaseData>(Strings.File.Bases, i));
-                    taskList.Add(GithubUpdate<BaseData>(Strings.File.Mods, i));
+                    taskList.Add(GithubUpdate<ModData>(Strings.File.Mods, i));
                     taskList.Add(GithubUpdate<BaseData>(Strings.File.Monsters, i));
                     taskList.Add(GithubUpdate<WordData>(Strings.File.Words, i));
                     taskList.Add(GithubUpdate<GemData>(Strings.File.Gems, i));
