@@ -13,6 +13,7 @@ strings:
   installer: Instalador (.exe)
   alt_customsearch: Ventana de búsqueda personalizada de Xiletrade con el formulario de búsqueda, un ajuste preestablecido, la categoría del objeto y los filtros de estadísticas con sugerencias
   alt_history: Ventana del historial de divisas de Xiletrade con gráficos de volumen y tipo de cambio de la divisa seleccionada
+  alt_detailed: Consulta de precios detallada de Xiletrade con los anuncios del objeto y la descripción emergente de un objeto anunciado
   alt_searchresult: Resultados de la búsqueda personalizada de Xiletrade con precios, nivel de objeto, antigüedad y vendedores, y la descripción emergente de un objeto
   alt_settings_common: Ajustes de Xiletrade, pestaña de teclas comunes con los atajos de las funciones
   alt_settings_additional: Ajustes de Xiletrade, pestaña de teclas adicionales con comandos de chat y atajos de susurros

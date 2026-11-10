@@ -13,6 +13,7 @@ strings:
   installer: 安裝程式 (.exe)
   alt_customsearch: Xiletrade 自訂搜尋視窗，包含搜尋表單、預設、物品類別以及附建議的屬性篩選器
   alt_history: Xiletrade 貨幣歷史視窗，顯示所選貨幣的交易量與匯率圖表
+  alt_detailed: Xiletrade 詳細價格檢查，顯示物品的上架清單與已上架物品的提示
   alt_searchresult: Xiletrade 自訂搜尋結果，顯示價格、物品等級、上架時間、賣家以及物品提示
   alt_settings_common: Xiletrade 設定的常用按鍵分頁，包含各功能的快捷鍵
   alt_settings_additional: Xiletrade 設定的附加按鍵分頁，包含聊天指令與密語快捷鍵
