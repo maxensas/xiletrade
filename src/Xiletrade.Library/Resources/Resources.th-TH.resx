@@ -2533,7 +2533,7 @@
     <value>สด</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>การค้นหาแบบสดถูกปฏิเสธ: ต้องมี POESESSID ที่ถูกต้อง (การตั้งค่า, ส่วนการยืนยันตัวตน)</value>
+    <value>การค้นหาแบบสดถูกปฏิเสธ: ต้องมีคุกกี้เซสชันที่ถูกต้อง (การตั้งค่า, ส่วนการยืนยันตัวตน)</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>ไม่สามารถเริ่มการค้นหาแบบสดได้</value>
@@ -2545,7 +2545,7 @@
     <value>หยุดการค้นหาแบบสด: การเชื่อมต่อขาดหาย</value>
   </data>
   <data name="Main304_LiveTip" xml:space="preserve">
-    <value>แจ้งเตือนไอเทมใหม่ที่ตรงกับเงื่อนไข (ต้องมี POESESSID)</value>
+    <value>แจ้งเตือนไอเทมใหม่ที่ตรงกับเงื่อนไข (ต้องมีคุกกี้เซสชัน)</value>
   </data>
   <data name="Main305_LivePause" xml:space="preserve">
     <value>หยุดการค้นหาแบบสดชั่วคราว</value>
@@ -2806,15 +2806,15 @@
 ไม่มีการส่งข้อมูลโดยอัตโนมัติ คุณสามารถตรวจสอบและแก้ไขรายงานก่อนส่งได้</value>
   </data>
   <data name="Error036_TravelNoToken" xml:space="preserve">
-    <value>POESESSID ของคุณไม่มีหรือหมดอายุแล้ว!
+    <value>คุกกี้เซสชันของคุณไม่มีหรือหมดอายุแล้ว!
 
-สำหรับผู้ใช้ขั้นสูง: คุณสามารถอัปเดต POESESSID ด้วยตนเองในการตั้งค่า โดยใช้ตัวจัดการนักพัฒนาในส่วนการยืนยันตัวตน</value>
+สำหรับผู้ใช้ขั้นสูง: คุณสามารถอัปเดตคุกกี้เซสชันด้วยตนเองในการตั้งค่า โดยใช้ตัวจัดการนักพัฒนาในส่วนการยืนยันตัวตน</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>บัญชีของคุณเชื่อมต่ออย่างถูกต้องหรือไม่?</value>
   </data>
   <data name="Error038_TravelSession" xml:space="preserve">
-    <value>POESESSID ของคุณอาจไม่มีหรือหมดอายุแล้ว!
+    <value>คุกกี้เซสชันของคุณอาจไม่มีหรือหมดอายุแล้ว!
 
 คุณสามารถอัปเดตด้วยตนเองในการตั้งค่า โดยใช้ตัวจัดการนักพัฒนาในส่วนการยืนยันตัวตน</value>
   </data>

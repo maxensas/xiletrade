@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Services.Linux.Helper;
-using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services.Linux;
 
@@ -16,18 +15,17 @@ namespace Xiletrade.Library.Services.Linux;
 /// Start a local socket server that listens for protocol URLs sent by secondary instances.
 /// </summary>
 /// <remarks>
-/// Registers the protocol (freedesktop.org desktop entry) and starts listening upon instantiation.
+/// Registers the protocol (freedesktop.org desktop entry) and starts listening with Start() : primary instance only.
 /// <br/>On Linux, a named pipe is a Unix domain socket restricted to the current user.
 /// </remarks>
 [SupportedOSPlatform("linux")]
 public sealed class LinuxProtocolHandlerService : IProtocolHandlerService, IDisposable
 {
-    private readonly IMessageAdapterService _message;
-    private readonly ITokenService _token;
     private readonly IFileLoggerService _fileLogger;
     private readonly ILogger<LinuxProtocolHandlerService> _logger;
     private readonly StartupArguments _startup;
     private readonly IUIService _ui;
+    private readonly ProtocolUrlHandler _handler;
 
     private const string PipeName = "XiletradePipe";
     private const string DesktopFileName = "xiletrade-url-handler.desktop";
@@ -35,19 +33,15 @@ public sealed class LinuxProtocolHandlerService : IProtocolHandlerService, IDisp
     private Task _listeningTask;
     private bool _init;
 
-    public LinuxProtocolHandlerService(IMessageAdapterService message, ITokenService token,
+    public LinuxProtocolHandlerService(IMessageAdapterService message, ITokenService token, INetService net, DataManagerService dm,
         IFileLoggerService fileLogger, ILogger<LinuxProtocolHandlerService> logger,
         StartupArguments startup, IUIService ui)
     {
-        _message = message;
-        _token = token;
         _fileLogger = fileLogger;
         _logger = logger;
         _startup = startup;
         _ui = ui;
-
-        RegisterOrUpdateProtocol();
-        StartListening();
+        _handler = new(message, token, net, dm);
 
 #if DEBUG
         logger.LogInformation("Service launched");
@@ -155,6 +149,16 @@ public sealed class LinuxProtocolHandlerService : IProtocolHandlerService, IDisp
         _cts?.Dispose();
     }
 
+    public void Start()
+    {
+        if (_cts is not null)
+        {
+            return; // already started
+        }
+        RegisterOrUpdateProtocol();
+        StartListening();
+    }
+
     public void SendToRunningInstance(string url)
     {
         try
@@ -178,20 +182,7 @@ public sealed class LinuxProtocolHandlerService : IProtocolHandlerService, IDisp
     }
 
     //private
-    private void HandleUrl(string url)
-    {
-        if (!Uri.TryCreate(url, UriKind.Absolute, out var uri))
-        {
-            _message.Show($"Unknown protocol URL: {url}", "Protocol Handler", MessageStatus.Error);
-            return;
-        }
-        if (uri.Host is "oauth")
-        {
-            _token.TryInitToken(uri.Query);
-            return;
-        }
-        _message.Show($"Unknown protocol URL: {url}", "Protocol Handler", MessageStatus.Error);
-    }
+    private void HandleUrl(string url) => _handler.Handle(url);
 
     private void ListenLoop(CancellationToken token)
     {

@@ -1,0 +1,35 @@
+{
+  "extName": {
+    "message": "Xiletrade Sync"
+  },
+  "extDescription": {
+    "message": "一鍵將 Path of Exile 工作階段 Cookie 傳送到 Xiletrade 應用程式，無需複製貼上。"
+  },
+  "hint": {
+    "message": "請先登入交易網站，再將工作階段 Cookie 傳送到 Xiletrade。需要已安裝該應用程式。"
+  },
+  "found": {
+    "message": "已找到工作階段"
+  },
+  "notFound": {
+    "message": "尚未登入。"
+  },
+  "login": {
+    "message": "登入"
+  },
+  "send": {
+    "message": "傳送"
+  },
+  "sent": {
+    "message": "已傳送：如果瀏覽器詢問，請允許開啟 Xiletrade。"
+  },
+  "allow": {
+    "message": "允許存取交易網站"
+  },
+  "needAccess": {
+    "message": "需要存取交易網站才能讀取工作階段 Cookie。"
+  },
+  "privacy": {
+    "message": "不儲存也不上網傳送任何資料：工作階段 Cookie 只會傳給這台電腦上的應用程式。"
+  }
+}

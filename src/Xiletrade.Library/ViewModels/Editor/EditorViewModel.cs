@@ -119,7 +119,7 @@ public sealed partial class EditorViewModel : ViewModelBase
     private void RemovePoeId(object commandParameter)
     {
         var auth = _tokenService.CacheToken is not null ? "\n0Auth token removed." : string.Empty;
-        var poeid = _tokenService.CustomToken is not null ? "\nPOESESSID token removed." : string.Empty;
+        var poeid = _tokenService.CustomToken is not null ? "\nSession cookie removed." : string.Empty;
         _tokenService.ClearTokens();
         _net.InitTradeClient(_dm.Config.Options.TimeoutTradeApi); // session cookie removed
         

@@ -1,0 +1,35 @@
+{
+  "extName": {
+    "message": "Xiletrade Sync"
+  },
+  "extDescription": {
+    "message": "Envía tu cookie de sesión de Path of Exile a la aplicación Xiletrade en un clic, sin copiar y pegar."
+  },
+  "hint": {
+    "message": "Inicia sesión en el sitio de comercio y envía tu cookie de sesión a Xiletrade. La aplicación debe estar instalada."
+  },
+  "found": {
+    "message": "Sesión encontrada"
+  },
+  "notFound": {
+    "message": "Sin sesión iniciada."
+  },
+  "login": {
+    "message": "Iniciar sesión"
+  },
+  "send": {
+    "message": "Enviar"
+  },
+  "sent": {
+    "message": "Enviado: acepta abrir Xiletrade si el navegador lo pide."
+  },
+  "allow": {
+    "message": "Permitir el acceso a los sitios de comercio"
+  },
+  "needAccess": {
+    "message": "Se necesita acceso a los sitios de comercio para leer la cookie de sesión."
+  },
+  "privacy": {
+    "message": "Nada se guarda ni se envía por internet: la cookie de sesión solo va a la aplicación de este ordenador."
+  }
+}

@@ -1,0 +1,30 @@
+:root { color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  width: 320px; margin: 0; padding: 12px 14px;
+  font: 13px/1.4 system-ui, "Segoe UI", sans-serif;
+  background: #16181d; color: #d8dbe2;
+}
+header { display: flex; align-items: center; gap: 8px; }
+h1 { font-size: 15px; margin: 0; color: #e8c37a; }
+.hint { margin: 8px 0 10px; color: #9aa1ad; }
+ul { list-style: none; margin: 0; padding: 0; }
+li {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 7px 9px; margin-bottom: 6px; border-radius: 6px; background: #20232a;
+}
+.site { font-weight: 600; }
+.state { display: block; font-size: 11px; color: #9aa1ad; }
+.state.ok { color: #7fc77f; }
+button {
+  font: inherit; cursor: pointer; border: 0; border-radius: 5px;
+  padding: 5px 10px; background: #b8862f; color: #16181d; font-weight: 600;
+}
+button:hover { background: #d29c3a; }
+button:disabled { cursor: default; background: #3a3e47; color: #7d838e; }
+a { color: #e8c37a; }
+#allow { width: 100%; margin-top: 4px; }
+#status { min-height: 1.4em; margin: 8px 0 0; }
+#status.error { color: #e57373; }
+#status.ok { color: #7fc77f; }
+footer { margin-top: 8px; font-size: 11px; color: #6f7581; }

@@ -1,0 +1,35 @@
+{
+  "extName": {
+    "message": "Xiletrade Sync"
+  },
+  "extDescription": {
+    "message": "Sendet Ihr Path of Exile Sitzungscookie mit einem Klick an die Xiletrade-App, ohne Kopieren und Einfügen."
+  },
+  "hint": {
+    "message": "Melden Sie sich auf der Handelsseite an und senden Sie dann Ihr Sitzungscookie an Xiletrade. Die App muss installiert sein."
+  },
+  "found": {
+    "message": "Sitzung gefunden"
+  },
+  "notFound": {
+    "message": "Nicht angemeldet."
+  },
+  "login": {
+    "message": "Anmelden"
+  },
+  "send": {
+    "message": "Senden"
+  },
+  "sent": {
+    "message": "Gesendet: Bestätigen Sie das Öffnen von Xiletrade, wenn Ihr Browser fragt."
+  },
+  "allow": {
+    "message": "Zugriff auf die Handelsseiten erlauben"
+  },
+  "needAccess": {
+    "message": "Der Zugriff auf die Handelsseiten ist nötig, um das Sitzungscookie zu lesen."
+  },
+  "privacy": {
+    "message": "Nichts wird gespeichert oder online gesendet: Das Sitzungscookie geht nur an die App auf diesem Computer."
+  }
+}

@@ -2525,7 +2525,7 @@ Nenhuma venda será ignorada.</value>
     <value>Ao vivo</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>Busca ao vivo recusada: é necessário um POESESSID válido (configurações, seção de autenticação).</value>
+    <value>Busca ao vivo recusada: é necessário um cookie de sessão válido (configurações, seção de autenticação).</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>Não foi possível iniciar a busca ao vivo.</value>
@@ -2537,7 +2537,7 @@ Nenhuma venda será ignorada.</value>
     <value>Busca ao vivo interrompida: a conexão foi perdida.</value>
   </data>
   <data name="Main304_LiveTip" xml:space="preserve">
-    <value>Notifica os novos itens que correspondem aos critérios (POESESSID necessário).</value>
+    <value>Notifica os novos itens que correspondem aos critérios (cookie de sessão necessário).</value>
   </data>
   <data name="Main305_LivePause" xml:space="preserve">
     <value>Pausar a busca ao vivo</value>
@@ -2849,15 +2849,15 @@ Deseja abrir um relatório de erro pré-preenchido no GitHub?
 Nada é enviado automaticamente: pode rever e editar o relatório antes de o submeter.</value>
   </data>
   <data name="Error036_TravelNoToken" xml:space="preserve">
-    <value>Seu POESESSID está ausente ou expirado!
+    <value>Seu cookie de sessão está ausente ou expirado!
 
-Usuários avançados: você pode atualizar seu POESESSID manualmente nas configurações, usando o gerenciador de desenvolvedor na seção de autenticação.</value>
+Usuários avançados: você pode atualizar seu cookie de sessão manualmente nas configurações, usando o gerenciador de desenvolvedor na seção de autenticação.</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>Sua conta está conectada corretamente?</value>
   </data>
   <data name="Error038_TravelSession" xml:space="preserve">
-    <value>Seu POESESSID provavelmente está ausente ou expirado!
+    <value>Seu cookie de sessão provavelmente está ausente ou expirado!
 
 Você pode atualizá-lo manualmente nas configurações, usando o gerenciador de desenvolvedor na seção de autenticação.</value>
   </data>

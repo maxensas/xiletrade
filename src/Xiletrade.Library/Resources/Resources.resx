@@ -3346,8 +3346,8 @@ No sale is ignored.</comment>
     <comment>Live</comment>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>Live search refused : a valid POESESSID is required (settings, authentication section).</value>
-    <comment>Live search refused : a valid POESESSID is required (settings, authentication section).</comment>
+    <value>Live search refused : a valid session cookie is required (settings, authentication section).</value>
+    <comment>Live search refused : a valid session cookie is required (settings, authentication section).</comment>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>The live search could not be started.</value>
@@ -3362,8 +3362,8 @@ No sale is ignored.</comment>
     <comment>Live search stopped : the connection was lost.</comment>
   </data>
   <data name="Main304_LiveTip" xml:space="preserve">
-    <value>Notifies the new items matching the criteria (POESESSID required).</value>
-    <comment>Notifies the new items matching the criteria (POESESSID required).</comment>
+    <value>Notifies the new items matching the criteria (session cookie required).</value>
+    <comment>Notifies the new items matching the criteria (session cookie required).</comment>
   </data>
   <data name="Main305_LivePause" xml:space="preserve">
     <value>Pause live search</value>
@@ -3722,22 +3722,22 @@ Do you want to open a pre-filled bug report on GitHub?
 Nothing is sent automatically: you can review and edit the report before submitting it.</comment>
   </data>
   <data name="Error036_TravelNoToken" xml:space="preserve">
-    <value>Your POESESSID is missing or expired !
+    <value>Your session cookie is missing or expired !
 
-For advanced users : You can manually update your POESESSID under settings by using the developer manager in the authentication section.</value>
-    <comment>Your POESESSID is missing or expired !
+For advanced users : You can manually update your session cookie under settings by using the developer manager in the authentication section.</value>
+    <comment>Your session cookie is missing or expired !
 
-For advanced users : You can manually update your POESESSID under settings by using the developer manager in the authentication section.</comment>
+For advanced users : You can manually update your session cookie under settings by using the developer manager in the authentication section.</comment>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>Is your account correctly connected ?</value>
     <comment>Is your account correctly connected ?</comment>
   </data>
   <data name="Error038_TravelSession" xml:space="preserve">
-    <value>Your POESESSID is probably missing or expired !
+    <value>Your session cookie is probably missing or expired !
 
 You can manually update it under settings by using the developer manager in the authentication section.</value>
-    <comment>Your POESESSID is probably missing or expired !
+    <comment>Your session cookie is probably missing or expired !
 
 You can manually update it under settings by using the developer manager in the authentication section.</comment>
   </data>

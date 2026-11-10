@@ -7,7 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application;
 using Xiletrade.Library.Services.Interface;
-using Xiletrade.Library.Shared.Enum;
 
 namespace Xiletrade.Library.Services.Windows;
 
@@ -15,36 +14,31 @@ namespace Xiletrade.Library.Services.Windows;
 /// Start a named pipe server that listens for protocol URLs sent by secondary instances.
 /// </summary>
 /// <remarks>
-/// Registers the protocol and starts listening upon instantiation.
+/// Registers the protocol and starts listening with Start() : primary instance only.
 /// </remarks>
 [SupportedOSPlatform("windows")]
 public class WindowsProtocolHandlerService : IProtocolHandlerService, IDisposable
 {
-    private readonly IMessageAdapterService _message;
-    private readonly ITokenService _token;
     private readonly IFileLoggerService _fileLogger;
     private readonly ILogger<WindowsProtocolHandlerService> _logger;
     private readonly StartupArguments _startup;
     private readonly IUIService _ui;
+    private readonly ProtocolUrlHandler _handler;
 
     private const string PipeName = "XiletradePipe";
     private CancellationTokenSource _cts;
     private Task _listeningTask;
     private bool _init;
 
-    public WindowsProtocolHandlerService(IMessageAdapterService message, ITokenService token, 
+    public WindowsProtocolHandlerService(IMessageAdapterService message, ITokenService token, INetService net, DataManagerService dm, 
         IFileLoggerService fileLogger, ILogger<WindowsProtocolHandlerService> logger,
         StartupArguments startup, IUIService ui)
     {
-        _message = message;
-        _token = token;
         _fileLogger = fileLogger;
         _logger = logger;
         _startup = startup;
         _ui = ui;
-
-        RegisterOrUpdateProtocol();
-        StartListening();
+        _handler = new(message, token, net, dm);
 
 #if DEBUG
         logger.LogInformation("Service launched");
@@ -117,6 +111,16 @@ public class WindowsProtocolHandlerService : IProtocolHandlerService, IDisposabl
         _cts?.Dispose();
     }
 
+    public void Start()
+    {
+        if (_cts is not null)
+        {
+            return; // already started
+        }
+        RegisterOrUpdateProtocol();
+        StartListening();
+    }
+
     public void SendToRunningInstance(string url)
     {
         try
@@ -140,16 +144,7 @@ public class WindowsProtocolHandlerService : IProtocolHandlerService, IDisposabl
     }
 
     //private
-    private void HandleUrl(string url)
-    {
-        var uri = new Uri(url);
-        if (uri.Host is "oauth")
-        {
-            _token.TryInitToken(uri.Query);
-            return;
-        }
-        _message.Show($"Unknown protocol URL: {url}", "Protocol Handler", MessageStatus.Error);
-    }
+    private void HandleUrl(string url) => _handler.Handle(url);
 
     private void ListenLoop(CancellationToken token)
     {

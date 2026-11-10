@@ -2526,7 +2526,7 @@ No se ignorará ninguna oferta.</value>
     <value>En vivo</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>Búsqueda en vivo rechazada: se necesita un POESESSID válido (ajustes, sección de autenticación).</value>
+    <value>Búsqueda en vivo rechazada: se necesita una cookie de sesión válida (ajustes, sección de autenticación).</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>No se pudo iniciar la búsqueda en vivo.</value>
@@ -2538,7 +2538,7 @@ No se ignorará ninguna oferta.</value>
     <value>Búsqueda en vivo detenida: se perdió la conexión.</value>
   </data>
   <data name="Main304_LiveTip" xml:space="preserve">
-    <value>Notifica los nuevos objetos que cumplen los criterios (se necesita POESESSID).</value>
+    <value>Notifica los nuevos objetos que cumplen los criterios (se necesita la cookie de sesión).</value>
   </data>
   <data name="Main305_LivePause" xml:space="preserve">
     <value>Pausar la búsqueda en vivo</value>
@@ -2821,16 +2821,16 @@ Servidor Garena: chino tradicional.</value>
 No se envía nada automáticamente: puede revisar y editar el informe antes de enviarlo.</value>
   </data>
   <data name="Error036_TravelNoToken" xml:space="preserve">
-    <value>¡Tu POESESSID falta o ha caducado!
+    <value>¡Tu cookie de sesión falta o ha caducado!
 
-Usuarios avanzados: puedes actualizar tu POESESSID manualmente en la configuración, con el gestor de desarrollador de la sección de autenticación.</value>
+Usuarios avanzados: puedes actualizar tu cookie de sesión manualmente en la configuración, con el gestor de desarrollador de la sección de autenticación.</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>¿Tu cuenta está correctamente conectada?</value>
   </data>
   <data name="Error038_TravelSession" xml:space="preserve">
-    <value>¡Probablemente tu POESESSID falta o ha caducado!
+    <value>¡Probablemente tu cookie de sesión falta o ha caducado!
 
-Puedes actualizarlo manualmente en la configuración, con el gestor de desarrollador de la sección de autenticación.</value>
+Puedes actualizarla manualmente en la configuración, con el gestor de desarrollador de la sección de autenticación.</value>
   </data>
 </root>

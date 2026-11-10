@@ -2663,7 +2663,7 @@
     <value>实时</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>实时搜索被拒绝：需要有效的 POESESSID（设置，认证部分）。</value>
+    <value>实时搜索被拒绝：需要有效的会话 Cookie（设置，认证部分）。</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>无法启动实时搜索。</value>
@@ -2675,7 +2675,7 @@
     <value>实时搜索已停止：连接已断开。</value>
   </data>
   <data name="Main304_LiveTip" xml:space="preserve">
-    <value>通知符合条件的新物品（需要 POESESSID）。</value>
+    <value>通知符合条件的新物品（需要会话 Cookie）。</value>
   </data>
   <data name="Main305_LivePause" xml:space="preserve">
     <value>暂停实时搜索</value>
@@ -2983,15 +2983,15 @@ Garena服务器：繁体中文。</value>
 不会自动发送任何数据：您可以在提交前查看并编辑报告。</value>
   </data>
   <data name="Error036_TravelNoToken" xml:space="preserve">
-    <value>您的 POESESSID 缺失或已过期！
+    <value>您的会话 Cookie 缺失或已过期！
 
-高级用户：可以在设置的身份验证部分，使用开发者管理器手动更新 POESESSID。</value>
+高级用户：可以在设置的身份验证部分，使用开发者管理器手动更新会话 Cookie。</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>您的账户是否已正确连接？</value>
   </data>
   <data name="Error038_TravelSession" xml:space="preserve">
-    <value>您的 POESESSID 可能缺失或已过期！
+    <value>您的会话 Cookie 可能缺失或已过期！
 
 可以在设置的身份验证部分，使用开发者管理器手动更新。</value>
   </data>
