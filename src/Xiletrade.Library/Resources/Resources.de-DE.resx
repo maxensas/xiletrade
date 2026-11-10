@@ -2522,7 +2522,7 @@ Es werden keine Verkäufe ignoriert.</value>
     <value>Live</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>Live-Suche abgelehnt: eine gültige POESESSID ist erforderlich (Einstellungen, Authentifizierung).</value>
+    <value>Live-Suche abgelehnt: ein gültiges Sitzungscookie ist erforderlich (Einstellungen, Authentifizierung).</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>Die Live-Suche konnte nicht gestartet werden.</value>
@@ -2534,7 +2534,7 @@ Es werden keine Verkäufe ignoriert.</value>
     <value>Live-Suche beendet: die Verbindung wurde unterbrochen.</value>
   </data>
   <data name="Main304_LiveTip" xml:space="preserve">
-    <value>Meldet neue Gegenstände, die den Kriterien entsprechen (POESESSID erforderlich).</value>
+    <value>Meldet neue Gegenstände, die den Kriterien entsprechen (Sitzungscookie erforderlich).</value>
   </data>
   <data name="Main305_LivePause" xml:space="preserve">
     <value>Live-Suche pausieren</value>
@@ -2846,16 +2846,16 @@ Möchten Sie einen vorausgefüllten Fehlerbericht auf GitHub öffnen?
 Es werden keine Daten automatisch gesendet: Sie können den Bericht vor dem Absenden überprüfen und bearbeiten.</value>
   </data>
   <data name="Error036_TravelNoToken" xml:space="preserve">
-    <value>Ihre POESESSID fehlt oder ist abgelaufen!
+    <value>Ihr Sitzungscookie fehlt oder ist abgelaufen!
 
-Für fortgeschrittene Benutzer: Sie können Ihre POESESSID in den Einstellungen über den Entwickler-Manager im Bereich Authentifizierung manuell aktualisieren.</value>
+Für fortgeschrittene Benutzer: Sie können Ihr Sitzungscookie in den Einstellungen über den Entwickler-Manager im Bereich Authentifizierung manuell aktualisieren.</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>Ist Ihr Konto richtig verbunden?</value>
   </data>
   <data name="Error038_TravelSession" xml:space="preserve">
-    <value>Ihre POESESSID fehlt wahrscheinlich oder ist abgelaufen!
+    <value>Ihr Sitzungscookie fehlt wahrscheinlich oder ist abgelaufen!
 
-Sie können sie in den Einstellungen über den Entwickler-Manager im Bereich Authentifizierung manuell aktualisieren.</value>
+Sie können es in den Einstellungen über den Entwickler-Manager im Bereich Authentifizierung manuell aktualisieren.</value>
   </data>
 </root>

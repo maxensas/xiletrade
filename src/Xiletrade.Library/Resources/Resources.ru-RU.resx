@@ -2524,7 +2524,7 @@
     <value>Живой</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>Живой поиск отклонён: нужен действительный POESESSID (настройки, раздел аутентификации).</value>
+    <value>Живой поиск отклонён: нужен действительный cookie сессии (настройки, раздел аутентификации).</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>Не удалось запустить живой поиск.</value>
@@ -2536,7 +2536,7 @@
     <value>Живой поиск остановлен: соединение потеряно.</value>
   </data>
   <data name="Main304_LiveTip" xml:space="preserve">
-    <value>Уведомляет о новых предметах, подходящих под критерии (нужен POESESSID).</value>
+    <value>Уведомляет о новых предметах, подходящих под критерии (нужен cookie сессии).</value>
   </data>
   <data name="Main305_LivePause" xml:space="preserve">
     <value>Приостановить живой поиск</value>
@@ -2844,15 +2844,15 @@
 Ничего не отправляется автоматически: перед отправкой вы можете проверить и отредактировать отчёт.</value>
   </data>
   <data name="Error036_TravelNoToken" xml:space="preserve">
-    <value>Ваш POESESSID отсутствует или устарел!
+    <value>Ваш cookie сессии отсутствует или устарел!
 
-Для опытных пользователей: вы можете вручную обновить POESESSID в настройках с помощью менеджера разработчика в разделе аутентификации.</value>
+Для опытных пользователей: вы можете вручную обновить cookie сессии в настройках с помощью менеджера разработчика в разделе аутентификации.</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>Ваша учётная запись правильно подключена?</value>
   </data>
   <data name="Error038_TravelSession" xml:space="preserve">
-    <value>Ваш POESESSID, вероятно, отсутствует или устарел!
+    <value>Ваш cookie сессии, вероятно, отсутствует или устарел!
 
 Вы можете вручную обновить его в настройках с помощью менеджера разработчика в разделе аутентификации.</value>
   </data>

@@ -3031,7 +3031,7 @@ A second click to load or unload all values.</comment>
     <value>ライブ</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>ライブ検索が拒否されました：有効な POESESSID が必要です（設定、認証セクション）。</value>
+    <value>ライブ検索が拒否されました：有効なセッションCookieが必要です（設定、認証セクション）。</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>ライブ検索を開始できませんでした。</value>
@@ -3043,7 +3043,7 @@ A second click to load or unload all values.</comment>
     <value>ライブ検索を停止しました：接続が切断されました。</value>
   </data>
   <data name="Main304_LiveTip" xml:space="preserve">
-    <value>条件に一致する新しいアイテムを通知します（POESESSID が必要）。</value>
+    <value>条件に一致する新しいアイテムを通知します（セッションCookieが必要）。</value>
   </data>
   <data name="Main305_LivePause" xml:space="preserve">
     <value>ライブ検索を一時停止</value>
@@ -3380,15 +3380,15 @@ GitHubで事前入力済みのバグレポートを開きますか？
 データが自動的に送信されることはありません。送信する前にレポートを確認・編集できます。</value>
   </data>
   <data name="Error036_TravelNoToken" xml:space="preserve">
-    <value>POESESSIDがないか、期限切れです！
+    <value>セッションCookieがないか、期限切れです！
 
-上級者向け：設定の認証セクションにある開発者マネージャーから、POESESSIDを手動で更新できます。</value>
+上級者向け：設定の認証セクションにある開発者マネージャーから、セッションCookieを手動で更新できます。</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>アカウントは正しく接続されていますか？</value>
   </data>
   <data name="Error038_TravelSession" xml:space="preserve">
-    <value>POESESSIDがないか、期限切れの可能性があります！
+    <value>セッションCookieがないか、期限切れの可能性があります！
 
 設定の認証セクションにある開発者マネージャーから手動で更新できます。</value>
   </data>

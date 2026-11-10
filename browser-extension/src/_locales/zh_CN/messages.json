@@ -1,0 +1,35 @@
+{
+  "extName": {
+    "message": "Xiletrade Sync"
+  },
+  "extDescription": {
+    "message": "一键将 Path of Exile 会话 Cookie 发送到 Xiletrade 应用，无需复制粘贴。"
+  },
+  "hint": {
+    "message": "请先登录交易网站，再将会话 Cookie 发送到 Xiletrade。需要已安装该应用。"
+  },
+  "found": {
+    "message": "已找到会话"
+  },
+  "notFound": {
+    "message": "未登录。"
+  },
+  "login": {
+    "message": "登录"
+  },
+  "send": {
+    "message": "发送"
+  },
+  "sent": {
+    "message": "已发送：如果浏览器询问，请允许打开 Xiletrade。"
+  },
+  "allow": {
+    "message": "允许访问交易网站"
+  },
+  "needAccess": {
+    "message": "需要访问交易网站才能读取会话 Cookie。"
+  },
+  "privacy": {
+    "message": "不保存也不联网发送任何数据：会话 Cookie 只会传给本机上的应用。"
+  }
+}

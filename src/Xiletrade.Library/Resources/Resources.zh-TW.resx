@@ -2599,7 +2599,7 @@
     <value>即時</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>即時搜尋被拒絕：需要有效的 POESESSID（設定，認證部分）。</value>
+    <value>即時搜尋被拒絕：需要有效的工作階段 Cookie（設定，認證部分）。</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>無法啟動即時搜尋。</value>
@@ -2611,7 +2611,7 @@
     <value>即時搜尋已停止：連線已中斷。</value>
   </data>
   <data name="Main304_LiveTip" xml:space="preserve">
-    <value>通知符合條件的新物品（需要 POESESSID）。</value>
+    <value>通知符合條件的新物品（需要工作階段 Cookie）。</value>
   </data>
   <data name="Main305_LivePause" xml:space="preserve">
     <value>暫停即時搜尋</value>
@@ -2919,15 +2919,15 @@ Garena服務器：繁體中文。</value>
 不會自動傳送任何資料：您可以在提交前檢查並編輯回報內容。</value>
   </data>
   <data name="Error036_TravelNoToken" xml:space="preserve">
-    <value>您的 POESESSID 遺失或已過期！
+    <value>您的工作階段 Cookie 遺失或已過期！
 
-進階使用者：可以在設定的驗證區塊，使用開發者管理器手動更新 POESESSID。</value>
+進階使用者：可以在設定的驗證區塊，使用開發者管理器手動更新工作階段 Cookie。</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>您的帳戶是否已正確連線？</value>
   </data>
   <data name="Error038_TravelSession" xml:space="preserve">
-    <value>您的 POESESSID 可能遺失或已過期！
+    <value>您的工作階段 Cookie 可能遺失或已過期！
 
 可以在設定的驗證區塊，使用開發者管理器手動更新。</value>
   </data>

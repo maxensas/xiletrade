@@ -21,6 +21,8 @@ public sealed class XiletradeService
 #if DEBUG
         logger.LogInformation("Launching Xiletrade service");
 #endif
+        // primary instance only : a secondary instance just forwards its URL
+        protocol.Start();
 
         _ = StartAsync(logger, dm, report, dataUpdater, view, message, updater);
     }

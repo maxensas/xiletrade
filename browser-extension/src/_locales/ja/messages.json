@@ -1,0 +1,35 @@
+{
+  "extName": {
+    "message": "Xiletrade Sync"
+  },
+  "extDescription": {
+    "message": "Path of Exile のセッションCookieをワンクリックで Xiletrade アプリに送信します。コピー＆ペースト不要。"
+  },
+  "hint": {
+    "message": "トレードサイトにログインしてから、セッションCookieを Xiletrade に送信してください。アプリのインストールが必要です。"
+  },
+  "found": {
+    "message": "セッションあり"
+  },
+  "notFound": {
+    "message": "ログインしていません。"
+  },
+  "login": {
+    "message": "ログイン"
+  },
+  "send": {
+    "message": "送信"
+  },
+  "sent": {
+    "message": "送信しました：ブラウザーに確認されたら Xiletrade を開くことを許可してください。"
+  },
+  "allow": {
+    "message": "トレードサイトへのアクセスを許可"
+  },
+  "needAccess": {
+    "message": "セッションCookieを読み取るには、トレードサイトへのアクセスが必要です。"
+  },
+  "privacy": {
+    "message": "保存やオンライン送信は一切ありません：セッションCookieはこのPCのアプリにのみ渡されます。"
+  }
+}

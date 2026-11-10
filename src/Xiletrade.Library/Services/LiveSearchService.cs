@@ -119,7 +119,7 @@ public sealed class LiveSearchService : IDisposable
         if (!_token.TryGetToken(out var sessionId, useCustom: true) || !RegexUtil.MD5().IsMatch(sessionId))
         {
 #if DEBUG
-            _logger.LogDebug("Live search : no valid POESESSID");
+            _logger.LogDebug("Live search : no valid session cookie");
 #endif
             Notify(Resources.Resources.Main298_LiveNoSession, NotificationStatus.Error);
             return false;

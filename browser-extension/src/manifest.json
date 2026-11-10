@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "short_name": "Xiletrade Sync",
+  "description": "__MSG_extDescription__",
+  "version": "1.0.0",
+  "default_locale": "en",
+  "homepage_url": "https://maxensas.github.io/xiletrade/",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "__MSG_extName__",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "permissions": [
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://*.pathofexile.com/*",
+    "https://poe.kakaogames.com/*",
+    "https://pathofexile.tw/*",
+    "https://poe.game.qq.com/*"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "xiletrade-sync@maxensas",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": [
+          "authenticationInfo"
+        ]
+      }
+    }
+  }
+}

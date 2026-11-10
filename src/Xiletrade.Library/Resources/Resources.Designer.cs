@@ -7466,7 +7466,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Localized string similar to => Live search refused : a valid POESESSID is required (settings, authentication section).
+        ///   Localized string similar to => Live search refused : a valid session cookie is required (settings, authentication section).
         /// </summary>
         public static string Main298_LiveNoSession
         {
@@ -7510,7 +7510,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Localized string similar to => Notifies the new items matching the criteria (POESESSID required).
+        ///   Localized string similar to => Notifies the new items matching the criteria (session cookie required).
         /// </summary>
         public static string Main304_LiveTip
         {
@@ -8327,7 +8327,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Localized string similar to => Your POESESSID is missing or expired !
+        ///   Localized string similar to => Your session cookie is missing or expired !
         /// </summary>
         public static string Error036_TravelNoToken
         {
@@ -8349,7 +8349,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Localized string similar to => Your POESESSID is probably missing or expired !
+        ///   Localized string similar to => Your session cookie is probably missing or expired !
         /// </summary>
         public static string Error038_TravelSession
         {
