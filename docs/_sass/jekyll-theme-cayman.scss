@@ -531,6 +531,11 @@ svg.icon [fill="#010101"] {
     gap: 1rem;
 }
 
+// two screenshots of different widths on the same row : lower height to fit
+.main-content .shots-row img {
+    height: 18rem;
+}
+
 .main-content .shots-3 a {
     flex: 0 1 16rem;
     min-width: 12rem;

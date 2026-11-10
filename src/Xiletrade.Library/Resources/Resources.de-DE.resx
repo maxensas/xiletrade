@@ -1104,7 +1104,7 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
     <value>Fertigkeit</value>
   </data>
   <data name="General145_Augment" xml:space="preserve">
-    <value>Augment</value>
+    <value>Aufwerten</value>
   </data>
   <data name="General146_LightningDamage" xml:space="preserve">
     <value>Blitzschaden</value>

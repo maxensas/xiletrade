@@ -896,19 +896,19 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
     <value>Un Objet et sa Copie reflétée</value>
   </data>
   <data name="General073_ModifierImplicit" xml:space="preserve">
-    <value>Modificateur implicite</value>
+    <value>Modificateur implicite/Modificateur Implicite</value>
   </data>
   <data name="General074_ModifierCorrupt" xml:space="preserve">
     <value>Corruption, Modificateur implicite</value>
   </data>
   <data name="General075_ModifierPrefix" xml:space="preserve">
-    <value>Modificateur de préfixe :</value>
+    <value>Modificateur de préfixe :/Préfixe :</value>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
     <value>Artisanat de maître Modificateur de préfixe :</value>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
-    <value>Modificateur de suffixe :</value>
+    <value>Modificateur de suffixe :/Suffixe :</value>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
     <value>Artisanat de maître Modificateur de suffixe :</value>
@@ -1175,10 +1175,10 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
     <value>Objet fissuré</value>
   </data>
   <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
-    <value>Profané Modificateur de suffixe</value>
+    <value>Profané Suffixe</value>
   </data>
   <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
-    <value>Profané Modificateur de préfixe</value>
+    <value>Profané Préfixe</value>
   </data>
   <data name="General170_ModifierEaterImplicit" xml:space="preserve">
     <value>Implicite du Mangeur de mondes</value>
@@ -1187,10 +1187,10 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
     <value>Implicite de l'Exarque ardent</value>
   </data>
   <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
-    <value>Fissuré Modificateur de préfixe</value>
+    <value>Fissuré Modificateur de préfixe/Fissuré Préfixe</value>
   </data>
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
-    <value>Fissuré Modificateur de suffixe</value>
+    <value>Fissuré Modificateur de suffixe/Fissuré Suffixe</value>
   </data>
   <data name="General174_Imbued" xml:space="preserve">
     <value>Imprégnée</value>

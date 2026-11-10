@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
@@ -109,13 +110,14 @@ internal sealed record ItemModifier
                 var left = content[..dashIdx];
                 var right = content[(dashIdx + 1)..];
 
-                if (double.TryParse(left, out double min) && double.TryParse(right, out double max))
+                if (double.TryParse(left, NumberStyles.Float, CultureInfo.InvariantCulture, out double min)
+                    && double.TryParse(right, NumberStyles.Float, CultureInfo.InvariantCulture, out double max))
                 {
                     tierValMin = tierValMin.IsEmpty() ? min : (tierValMin + min) / 2;
                     tierValMax = tierValMax.IsEmpty() ? max : (tierValMax + max) / 2;
                 }
             }
-            else if (double.TryParse(content, out double val))
+            else if (double.TryParse(content, NumberStyles.Float, CultureInfo.InvariantCulture, out double val))
             {
                 tierValMin = val;
                 tierValMax = val;

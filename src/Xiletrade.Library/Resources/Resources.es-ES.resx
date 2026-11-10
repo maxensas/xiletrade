@@ -906,13 +906,13 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
     <value>Mod. de prefijo</value>
   </data>
   <data name="General076_ModifierPrefixCraft" xml:space="preserve">
-    <value>Mod. de prefijo fabricado con maestros</value>
+    <value>Mod. de prefijo  fabricado por maestros</value>
   </data>
   <data name="General077_ModifierSuffix" xml:space="preserve">
     <value>Mod. de sufijo</value>
   </data>
   <data name="General078_ModifierSuffixCraft" xml:space="preserve">
-    <value>Mod. de sufijo fabricado con maestros</value>
+    <value>Mod. de sufijo  fabricado por maestros</value>
   </data>
   <data name="General079_ModifierUnique" xml:space="preserve">
     <value>Mod. único</value>
@@ -1148,7 +1148,7 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
     <value>Dividido</value>
   </data>
   <data name="General158_Desecrated" xml:space="preserve">
-    <value>Desecrated</value>
+    <value>Profanado</value>
   </data>
   <data name="General159_Exceptional" xml:space="preserve">
     <value>Excepcional</value>
@@ -1178,10 +1178,10 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
     <value>Objeto fracturado</value>
   </data>
   <data name="General168_ModifierDesecratedSuffix" xml:space="preserve">
-    <value>Mod. de sufijo profanado</value>
+    <value>Mod. de sufijo  profanado</value>
   </data>
   <data name="General169_ModifierDesecratedPrefix" xml:space="preserve">
-    <value>Mod. de prefijo profanado</value>
+    <value>Mod. de prefijo  profanado</value>
   </data>
   <data name="General170_ModifierEaterImplicit" xml:space="preserve">
     <value>Mod. implícito del Devorador de mundos</value>
@@ -1190,10 +1190,10 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
     <value>Mod. implícito del Exarca abrasador</value>
   </data>
   <data name="General172_ModifierFracturedPrefix" xml:space="preserve">
-    <value>Mod. de prefijo fracturado</value>
+    <value>Mod. de prefijo fracturado/Mod. de prefijo  fracturado</value>
   </data>
   <data name="General173_ModifierFracturedSuffix" xml:space="preserve">
-    <value>Mod. de sufijo fracturado</value>
+    <value>Mod. de sufijo fracturado/Mod. de sufijo  fracturado</value>
   </data>
   <data name="General174_Imbued" xml:space="preserve">
     <value>Imbuida</value>
@@ -1298,16 +1298,16 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
     <value>Mejoría</value>
   </data>
   <data name="General204_CraftedPrefixModifier" xml:space="preserve">
-    <value>Mod. de prefijo de fabricación</value>
+    <value>Mod. de prefijo  de fabricación</value>
   </data>
   <data name="General205_CraftedSuffixModifier" xml:space="preserve">
-    <value>Mod. de sufijo de fabricación</value>
+    <value>Mod. de sufijo  de fabricación</value>
   </data>
   <data name="General206_FracturedCraftedPrefixModifier" xml:space="preserve">
-    <value>Mod. de prefijo de fabricación fracturado</value>
+    <value>Mod. de prefijo de fabricación fracturado/Mod. de prefijo  de fabricación fracturado</value>
   </data>
   <data name="General207_FracturedCraftedSuffixModifier" xml:space="preserve">
-    <value>Mod. de sufijo de fabricación fracturado</value>
+    <value>Mod. de sufijo de fabricación fracturado/Mod. de sufijo  de fabricación fracturado</value>
   </data>
   <data name="General208_RunicWard" xml:space="preserve">
     <value>Barrera rúnica</value>

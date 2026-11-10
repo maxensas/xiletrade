@@ -990,8 +990,7 @@
     <value>譫妄獎勵類型：</value>
   </data>
   <data name="General099_Scourge" xml:space="preserve">
-    <value>天災</value>
-    <comment>TODO</comment>
+    <value>災魘聯盟</value>
   </data>
   <data name="General099_ScourgedItem" xml:space="preserve">
     <value>弄髒了</value>
@@ -1271,7 +1270,7 @@
     <value>紅玉</value>
   </data>
   <data name="General184_Emerald" xml:space="preserve">
-    <value>翠綠碧雲</value>
+    <value>綠寶石</value>
   </data>
   <data name="General185_PrismaticJewel" xml:space="preserve">
     <value>三相珠寶</value>
@@ -1310,8 +1309,7 @@
     <value>儲存經驗</value>
   </data>
   <data name="General197_ImbuedFilter" xml:space="preserve">
-    <value>Imbued</value>
-	<comment>TO translate</comment>
+    <value>注能</value>
   </data>
   <data name="General198_AreaLevelBis" xml:space="preserve">
     <value>區域等級</value>
