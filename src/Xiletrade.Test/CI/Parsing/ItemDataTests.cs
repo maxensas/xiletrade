@@ -2,10 +2,16 @@
 using Microsoft.Extensions.DependencyInjection;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
 using Xiletrade.Library.Services;
+using Xiletrade.Test.CI.Live;
 using Xiletrade.Test.Configuration;
 
 namespace Xiletrade.Test.CI.Parsing;
 
+/// <remarks>
+/// Not run with the other tests : loading the data sets the static game context (<c>Strings.InitializeGameContext</c>)
+/// that gives the files to read, another test loading the other game at the same time would mix the files.
+/// </remarks>
+[Collection(GameContextCollection.Name)]
 public class ItemDataTests : LibServiceConfiguration
 {
     private readonly DataManagerService _poe1Dm;

@@ -478,7 +478,7 @@
 				},
 				{
 					"match": {
-						"ids": [ "explicit.stat_2261942307", "explicit.stat_1602191394", "explicit.stat_3917489142" ]
+						"ids": [ "explicit.stat_2261942307", "explicit.stat_1602191394" ]
 					},
 					"when": [ "unique" ],
 					"mode": "first",
@@ -490,9 +490,6 @@
 						{
 							"when": [ "unique:Gravebind" ],
 							"id": "explicit.stat_1602191394"
-						},
-						{
-							"id": "explicit.stat_3917489142"
 						}
 					]
 				},

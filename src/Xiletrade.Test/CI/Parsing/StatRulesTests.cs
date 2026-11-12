@@ -853,12 +853,13 @@ public class StatRulesTests
             bool isVestige = item.IsUniqueName("Vestige of Darkness" /* Strings.UniqueTwo.Vestige */);
             entrie.ID = isVestige ? "explicit.stat_2080373320" /* Strings.StatPoe2.Blinded1 */ : "explicit.stat_1464727508" /* Strings.StatPoe2.Blinded2 */;
         }
+        // the text on one line (explicit.stat_3917489142) is a mod of its own : Loreweave can have it (item level 65)
         if (item.Unique && entrie.ID is "explicit.stat_2261942307" /* Strings.StatPoe2.Rarity1 */
-            or "explicit.stat_1602191394" /* Strings.StatPoe2.Rarity2 */ or "explicit.stat_3917489142" /* Strings.StatPoe2.Rarity3 */) // TO FIX : Loreweave can have regular rarity mod
+            or "explicit.stat_1602191394" /* Strings.StatPoe2.Rarity2 */)
         {
             bool isLoreweave = item.IsUniqueName("Loreweave" /* Strings.UniqueTwo.Loreweave */);
             bool isGravebind = item.IsUniqueName("Gravebind" /* Strings.UniqueTwo.Gravebind */);
-            entrie.ID = isLoreweave ? "explicit.stat_2261942307" /* Strings.StatPoe2.Rarity1 */ : isGravebind ? "explicit.stat_1602191394" /* Strings.StatPoe2.Rarity2 */ : "explicit.stat_3917489142" /* Strings.StatPoe2.Rarity3 */;
+            entrie.ID = isLoreweave ? "explicit.stat_2261942307" /* Strings.StatPoe2.Rarity1 */ : isGravebind ? "explicit.stat_1602191394" /* Strings.StatPoe2.Rarity2 */ : entrie.ID;
         }
         if (entrie.ID is "explicit.stat_2257118425" /* Strings.StatPoe2.VaalPact1 */ or "explicit.stat_3831171903|20" /* Strings.StatPoe2.VaalPact2 */)
         {
