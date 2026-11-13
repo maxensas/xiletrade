@@ -20,7 +20,7 @@
     },
     {
       "name": "baseitemtypes",
-      "rowLength": 374,
+      "rowLength": 373,
       "key": "Id",
       "columns": [
         {
@@ -48,7 +48,7 @@
     },
     {
       "name": "mods",
-      "rowLength": 654,
+      "rowLength": 692,
       "key": "Id",
       "columns": [
         {

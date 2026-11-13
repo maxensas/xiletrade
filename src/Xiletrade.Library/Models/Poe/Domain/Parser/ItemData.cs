@@ -36,6 +36,12 @@ public sealed class ItemData
 
     internal string Rarity { get; }
     internal string Name { get; }
+
+    /// <summary>
+    /// Name of a unique item, read before the mods : the stat rules read it while the mods are parsed ("unique:&lt;name&gt;").
+    /// Empty for the other items.
+    /// </summary>
+    internal string UniqueName { get; }
     internal string Type { get; }
     internal string NameEn { get; }
     internal string TypeEn { get; }
@@ -118,6 +124,7 @@ public sealed class ItemData
         Rule = new(Flag);
         (Type, TypeEn) = GetTypes(Flag, Rule, infoDesc, header.Type);
         (Id, IdCurrency) = GetItemIds(Flag, Type);
+        UniqueName = Flag.Rarity.Unique ? GetUniqueName(header.Name, IsPoe2) : string.Empty;
 
         Options = new();
         if (Rule.Parseable)
@@ -319,6 +326,10 @@ public sealed class ItemData
         return string.Empty;
     }
 
+    // without "Foulborn" (PoE1) : name of the unique item
+    private static string GetUniqueName(string name, bool isPoe2)
+        => isPoe2 ? name : name.RemoveStringFromArrayDesc(Resources.Resources.General166_Foulborn.Split('/'));
+
     private string GetName(ItemOption options, ItemFlag flag, InfoDescription infoDesc, ReadOnlySpan<char> dataName, bool isPoe2)
     {
         if (flag.Tag.CapturedBeast || (flag.Currency && !flag.ScryingOrb) || flag.Divcard 
@@ -328,7 +339,7 @@ public sealed class ItemData
 
         if (!isPoe2 && flag.Rarity.Unique)
         {
-            return dataName.RemoveStringFromArrayDesc(Resources.Resources.General166_Foulborn.Split('/'));
+            return UniqueName;
         }
         if (flag.Map.Chart || flag.MercenaryWarrant || flag.ScryingOrb)
         {

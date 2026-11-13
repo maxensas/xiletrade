@@ -119,7 +119,7 @@ internal static class FilterResultEntrieExtensions
             _ => false // unknown names are rejected when the rules are loaded
         };
 
-        public bool IsUnique(ReadOnlySpan<char> nameEn) => _dm.Words.MatchNameEn(nameEn, _item.Name);
+        public bool IsUnique(ReadOnlySpan<char> nameEn) => _dm.Words.MatchNameEn(nameEn, _item.UniqueName);
 
         public bool IsTypeEn(ReadOnlySpan<char> typeEn) => typeEn.SequenceEqual(_item.TypeEn);
     }
