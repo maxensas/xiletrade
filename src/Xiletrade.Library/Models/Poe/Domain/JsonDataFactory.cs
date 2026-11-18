@@ -412,6 +412,11 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
         if (xItem.Corrupted is DefaultOption.False)
             misc.Filters.Corrupted = GetOptionFalse();
 
+        if (xItem.TwiceCorrupted is DefaultOption.True)
+            misc.Filters.TwiceCorrupted = GetOptionTrue();
+        if (xItem.TwiceCorrupted is DefaultOption.False)
+            misc.Filters.TwiceCorrupted = GetOptionFalse();
+
         if (xItem.Identified is DefaultOption.True)
             misc.Filters.Identified = GetOptionTrue();
         if (xItem.Identified is DefaultOption.False)
@@ -443,9 +448,9 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
             misc.Filters.Mutated = GetOptionFalse();
 
         var activeFilter = misc.Filters.Identified is not null || misc.Filters.Corrupted is not null
-            || misc.Filters.Fractured is not null || misc.Filters.Mirrored is not null
-            || misc.Filters.Crafted is not null || misc.Filters.Mutated is not null
-            || misc.Filters.Split is not null;
+            || misc.Filters.TwiceCorrupted is not null || misc.Filters.Fractured is not null
+            || misc.Filters.Mirrored is not null || misc.Filters.Crafted is not null
+            || misc.Filters.Mutated is not null || misc.Filters.Split is not null;
 
         var enable = (activeFilter || xItem.FacetorExp.Enable || xItem.Quality.Enable 
             || xItem.MemoryStrand.Enable || xItem.Intangibility.Enable || !item.Flag.Map.IsMap && 

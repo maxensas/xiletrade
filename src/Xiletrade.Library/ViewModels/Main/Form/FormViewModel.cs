@@ -316,7 +316,7 @@ public sealed partial class FormViewModel : ViewModelBase
         corruptedIndex = !flag.Tag.Corrupted && (flag.Gem.IsGem || (!flag.Rarity.Unique
             && (flag.Map.IsMap || flag.Waystones || flag.Invitation || flag.Area.Logbook))) ? 1
             : flag.Tag.Corrupted && _dm.Config.Options.AutoSelectCorrupt ? 2
-            : (flag.Rarity.Normal || (isPoeTwo && flag.Rarity.Unique)) ? 1 : 0;
+            : (flag.Rarity.Normal || flag.Rarity.Unique) ? 1 : 0;
         doubleCorruptedIndex = flag.Tag.TwiceCorrupted && _dm.Config.Options.AutoSelectCorrupt ? 2 : 0; // to refine
 
         var poe2SkillWeapon = item.IsPoe2 && (flag.Weapon.Wand || flag.Weapon.IsStave || flag.Weapon.Sceptre);
