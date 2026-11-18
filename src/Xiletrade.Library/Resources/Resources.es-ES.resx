@@ -1631,6 +1631,9 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="ItemClass_chart" xml:space="preserve">
     <value>Carta de navegación</value>
   </data>
+  <data name="ItemClass_viscera" xml:space="preserve">
+    <value>Víscera</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Seleccionar monedas:
 OBTENER Y PAGAR</value>

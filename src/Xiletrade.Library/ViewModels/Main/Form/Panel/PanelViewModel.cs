@@ -46,7 +46,7 @@ public sealed partial class PanelViewModel : ViewModelBase
         synthesisBlight = flag.Map.Blight || flag.Tag.Synthesised;
         blighRavaged = flag.Map.BlightRavaged;
         tierSelection = dm.Config.Options.AutoSelectMinTierValue
-            && !item.Flag.Rarity.Unique && !item.Flag.Tag.Mirrored && !item.Flag.Tag.Corrupted;
+            && !item.Flag.Rarity.Unique && !item.Flag.Tag.Mirrored && !item.Flag.Tag.Corrupted && !item.Flag.Viscera;
 
         if (flag.Facetor)
         {

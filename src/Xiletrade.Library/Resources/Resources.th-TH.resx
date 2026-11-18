@@ -1639,6 +1639,9 @@
   <data name="ItemClass_chart" xml:space="preserve">
     <value>ผังประดาน้ำ</value>
   </data>
+  <data name="ItemClass_viscera" xml:space="preserve">
+    <value>อวัยวะ</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>เลือกสกุลเงิน:
 รับและจ่าย</value>

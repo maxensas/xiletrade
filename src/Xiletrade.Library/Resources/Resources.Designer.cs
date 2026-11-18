@@ -4690,6 +4690,15 @@ namespace Xiletrade.Library.Resources {
             }
         }
 		
+		/// <summary>
+        ///   Localized string similar to => Viscera.
+        /// </summary>
+        public static string ItemClass_viscera {
+            get {
+                return ResourceManager.GetString("ItemClass_viscera", resourceCulture);
+            }
+        }
+		
         /// <summary>
         ///   Localized string similar to => Select currencies :
         ///GET and PAY.

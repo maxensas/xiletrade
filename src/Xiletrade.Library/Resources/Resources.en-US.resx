@@ -1628,6 +1628,9 @@ It will deselect all attribute mod values ! (not uniques)</value>
   <data name="ItemClass_chart" xml:space="preserve">
     <value>Chart</value>
   </data>
+  <data name="ItemClass_viscera" xml:space="preserve">
+    <value>Viscera</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Select currencies :
 GET and PAY</value>

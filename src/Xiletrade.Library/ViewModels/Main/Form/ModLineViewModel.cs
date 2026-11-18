@@ -238,7 +238,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
         DefaultMax = max;
         IsDefaultMax = !IsSlidable && max.Length > 0;
         preferMinMax = !IsSlidable || showMinMax;
-        slideValue = min.ToDoubleEmptyField();
+        slideValue = item.Flag.Viscera ? modLine.CurrentVal : min.ToDoubleEmptyField();
         currentSlide = modLine.CurrentVal;
         modKind = modLine.ModKind;
         crafted = modLine.ExplicitCrafted;
@@ -276,7 +276,7 @@ public sealed partial class ModLineViewModel : ViewModelBase
 
         if (selAffix.IsImplicitRegular || selAffix.IsImplicitCorruption || selAffix.IsImplicitEnch)
         {
-            bool condImpAuto = opt.AutoCheckImplicits && selAffix.IsImplicitRegular || flag.Tablet;
+            bool condImpAuto = opt.AutoCheckImplicits && selAffix.IsImplicitRegular || flag.Tablet || flag.Viscera;
             bool condCorruptAuto = opt.AutoCheckCorruptions && selAffix.IsImplicitCorruption;
             bool condEnchAuto = opt.AutoCheckEnchants && selAffix.IsImplicitEnch;
 

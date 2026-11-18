@@ -1700,6 +1700,9 @@
   <data name="ItemClass_chart" xml:space="preserve">
     <value>海圖</value>
   </data>
+  <data name="ItemClass_viscera" xml:space="preserve">
+    <value>臟器</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>選擇貨幣：
 取款並付款</value>

@@ -54,6 +54,7 @@ public sealed record ItemFlag
     internal bool Blueprints { get; }
     internal bool Contracts { get; }
     internal bool Breachstone { get; }
+    internal bool Viscera { get; }
 
     // other flags
     internal bool AllflameEmber { get; }
@@ -101,6 +102,7 @@ public sealed record ItemFlag
         Blueprints = itemClass.Contain(Resources.Resources.ItemClass_blueprints);
         Contracts = itemClass.Contain(Resources.Resources.ItemClass_contracts);
         Breachstone = itemClass.Contain(Resources.Resources.ItemClass_breachstones);
+        Viscera = itemClass.Contain(Resources.Resources.ItemClass_viscera);
 
         Rarity = new(itemRarity);
         Jewel = new(itemClass, itemType);
@@ -159,7 +161,7 @@ public sealed record ItemFlag
             : Divcard ? "card" : MemoryLine ? "memoryline" : Tag.CapturedBeast ? "monster.beast"
             : Slot.Flask ? "flask" : Gem.IsGem ? "gem" : Sentinel ? "sentinel" : Slot.Tincture ? "tincture"
             : SanctumRelic ? "sanctum.relic" : Area.SanctumResearch ? "sanctum.research" : Corpses ? "corpse"
-            : Wombgift ? "wombgift" : Graft ? "graft"
+            : Wombgift ? "wombgift" : Graft ? "graft" : Viscera ? "viscera"
             : Area.Ultimatum || PinnacleKeys || Slot.Charm || Area.Logbook || Gem.Uncut || VaultKeys ? string.Empty
             : Pieces ? "currency.piece" : Currency || StackableCurrency ? "currency"
             : string.Empty; 

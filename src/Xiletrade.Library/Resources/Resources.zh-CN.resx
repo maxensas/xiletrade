@@ -1757,6 +1757,9 @@
   <data name="ItemClass_chart" xml:space="preserve">
     <value>海图</value>
   </data>
+  <data name="ItemClass_viscera" xml:space="preserve">
+    <value>内脏</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>选择货币：
 取款并付款</value>

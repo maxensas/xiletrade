@@ -1919,6 +1919,9 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="ItemClass_chart" xml:space="preserve">
     <value>海図</value>
   </data>
+  <data name="ItemClass_viscera" xml:space="preserve">
+    <value>臓器</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>通貨を選択:
 欲しい と持っている</value>

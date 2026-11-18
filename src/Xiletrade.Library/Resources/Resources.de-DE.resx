@@ -1627,6 +1627,9 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="ItemClass_chart" xml:space="preserve">
     <value>Seekarte</value>
   </data>
+  <data name="ItemClass_viscera" xml:space="preserve">
+    <value>Körperteile</value>
+  </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Währungen auswählen:
 ERHALTEN und ZAHLEN</value>
