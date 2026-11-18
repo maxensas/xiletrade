@@ -1686,6 +1686,12 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="General246_CannotUse" xml:space="preserve">
     <value>このアイテムを使用できません。アイテムの効果は無視されます</value>
   </data>
+  <data name="General247_Lesser" xml:space="preserve">
+    <value>(低級)</value>
+  </data>
+  <data name="General248_Greater" xml:space="preserve">
+    <value>(上級)</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>
     <comment>Embers of the Allflame</comment>

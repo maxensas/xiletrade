@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Contract.Extension;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
@@ -35,7 +36,8 @@ internal sealed record ModFilter
             if (entries?.Count > 0)
             {
                 var (entrie, min, max) = entries.GetMinMaxEntrie(dm, mod, item);
-                if (entrie is not null)
+                // a filter without any word ("#") is never the one of a modifier
+                if (entrie is not null && HasLetter(entrie.Text))
                 {
                     ModValue.ListAffix.Add(new(dm, filter, entrie, item, mod.Affix));
                     if (Entrie.ID.Length is 0)
@@ -50,6 +52,18 @@ internal sealed record ModFilter
         }
 
         IsFetched = Entrie.ID != string.Empty;
+    }
+
+    private static bool HasLetter(ReadOnlySpan<char> text)
+    {
+        foreach (var c in text)
+        {
+            if (char.IsLetter(c))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     // not used anymore

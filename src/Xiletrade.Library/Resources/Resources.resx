@@ -1853,6 +1853,14 @@ It will deselect all attribute mod values ! (not uniques)</comment>
     <value>You cannot use this item. Its stats will be ignored</value>
     <value>You cannot use this item. Its stats will be ignored</value>
   </data>
+  <data name="General247_Lesser" xml:space="preserve">
+    <value>Lesser</value>
+    <comment>Lesser (viscera grade, written before or after the base)</comment>
+  </data>
+  <data name="General248_Greater" xml:space="preserve">
+    <value>Greater</value>
+    <comment>Greater (viscera grade, written before or after the base)</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>
     <comment>Embers of the Allflame</comment>

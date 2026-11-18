@@ -30,6 +30,11 @@ internal sealed record class NinjaInfoExchange : NinjaInfoBase
     {
         if (item.IdCurrency.Length > 0)
         {
+            // threads : by their id, whatever the group of the trade website
+            if (item.Id.EndWith("-thread"))
+            {
+                return Strings.NinjaTypeOne.Thread;
+            }
             return item.IdCurrency is Strings.CurrencyTypePoe1.Currency ? Strings.NinjaTypeOne.Currency
             : item.IdCurrency is Strings.CurrencyTypePoe1.EldritchCurrency ? Strings.NinjaTypeOne.Currency
             : item.IdCurrency is Strings.CurrencyTypePoe1.TaintedCurrency ? Strings.NinjaTypeOne.Currency
@@ -99,6 +104,7 @@ internal sealed record class NinjaInfoExchange : NinjaInfoBase
             : Type is Strings.NinjaTypeOne.Astrolabe ? "astrolabes"
             : Type is Strings.NinjaTypeOne.Ducat ? "ducats"
             : Type is Strings.NinjaTypeOne.EnshroudingCrystal ? "enshrouding-crystals"
+            : Type is Strings.NinjaTypeOne.Thread ? "threads"
             : string.Empty;
     }
 

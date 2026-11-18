@@ -68,7 +68,7 @@ public sealed partial class NinjaViewModel(ILogger<NinjaViewModel> logger, PoeNi
             var ninja = await NinjaInfoBase.GetNinjaValueAsync();
             if (ninja is not null)
             {
-                if (NinjaInfoBase is NinjaInfo info && info.Map)
+                if (NinjaInfoBase is NinjaInfo info && (info.Map || info.Viscera))
                 {
                     NinjaInfoBase.Link += ninja.Id;
                 }

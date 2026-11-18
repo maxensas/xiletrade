@@ -1414,6 +1414,12 @@ Isso desmarcará todos os valores de modificadores de atributo (exceto únicos).
   <data name="General246_CannotUse" xml:space="preserve">
     <value>Você não pode utilizar este item. Suas propriedades serão ignoradas/Você não pode usar este item. Os efeitos serão ignorados.</value>
   </data>
+  <data name="General247_Lesser" xml:space="preserve">
+    <value>Menor</value>
+  </data>
+  <data name="General248_Greater" xml:space="preserve">
+    <value>Maior</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>
   </data>

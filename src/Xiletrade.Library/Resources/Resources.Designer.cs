@@ -4039,6 +4039,24 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General246_CannotUse", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Lesser.
+        /// </summary>
+        public static string General247_Lesser {
+            get {
+                return ResourceManager.GetString("General247_Lesser", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Greater.
+        /// </summary>
+        public static string General248_Greater {
+            get {
+                return ResourceManager.GetString("General248_Greater", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.

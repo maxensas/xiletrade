@@ -1537,6 +1537,14 @@
     <value>You cannot use this item. Its stats will be ignored</value>
     <comment>TO translate</comment>
   </data>
+  <data name="General247_Lesser" xml:space="preserve">
+    <value>次级</value>
+    <comment>TO check : eldritch embers</comment>
+  </data>
+  <data name="General248_Greater" xml:space="preserve">
+    <value>高级</value>
+    <comment>TO check : eldritch embers</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>

@@ -1423,6 +1423,12 @@
   <data name="General246_CannotUse" xml:space="preserve">
     <value>คุณ​ไม่​สามารถ​ใช้​ไอเทม​ชิ้น​นี้​ได้ Stats ของ​ไอเทม​นี้​จะ​ไม่มี​ผล/คุณไม่สามารถใช้ไอเทมชิ้นนี้ได้ Stats ของไอเทมนี้จะไม่มีผล</value>
   </data>
+  <data name="General247_Lesser" xml:space="preserve">
+    <value>ชั้นต่ำ</value>
+  </data>
+  <data name="General248_Greater" xml:space="preserve">
+    <value>ชั้นสูง</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>
   </data>

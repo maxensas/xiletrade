@@ -1412,6 +1412,12 @@ Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</va
   <data name="General246_CannotUse" xml:space="preserve">
     <value>Vous ne pouvez pas utiliser cet objet ; ses stats sont ignorées.</value>
   </data>
+  <data name="General247_Lesser" xml:space="preserve">
+    <value>(mineur)</value>
+  </data>
+  <data name="General248_Greater" xml:space="preserve">
+    <value>(majeur)</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>
   </data>

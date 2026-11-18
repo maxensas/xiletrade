@@ -27,6 +27,25 @@ internal static class BaseResultDataExtensions
         return null;
     }
 
+    /// <summary>
+    /// Longest viscera base whose name is in the type, case ignored : "Greater Solar Shield", "Sonnenschild (groß)".
+    /// </summary>
+    internal static BaseResultData FindVisceraBase(this BaseResultData[] bases, ReadOnlySpan<char> type)
+    {
+        BaseResultData found = null;
+        for (int i = 0; i < bases.Length; i++)
+        {
+            var name = bases[i].Name;
+            if (string.IsNullOrEmpty(name) || !bases[i].Id.StartWith(Strings.NinjaTypeOne.Viscera)
+                || type.IndexOf(name, StringComparison.OrdinalIgnoreCase) < 0)
+                continue;
+
+            if (found is null || name.Length > found.Name.Length)
+                found = bases[i];
+        }
+        return found;
+    }
+
     internal static string GetLongestMatchingNameEn(this BaseResultData[] bases,
         ReadOnlySpan<char> type)
     {

@@ -42,6 +42,12 @@ public sealed class ItemData
     /// Empty for the other items.
     /// </summary>
     internal string UniqueName { get; }
+
+    /// <summary>
+    /// Grade of a viscera, english prefix of its name : <see cref="Strings.Lesser"/>, <see cref="Strings.Greater"/>.
+    /// Empty for the other items.
+    /// </summary>
+    internal string VisceraGrade { get; }
     internal string Type { get; }
     internal string NameEn { get; }
     internal string TypeEn { get; }
@@ -124,6 +130,7 @@ public sealed class ItemData
         Rule = new(Flag);
         (Type, TypeEn) = GetTypes(Flag, Rule, infoDesc, header.Type);
         (Id, IdCurrency) = GetItemIds(Flag, Type);
+        VisceraGrade = Flag.Viscera ? GetVisceraGrade(header.Type, Type) : string.Empty;
         UniqueName = Flag.Rarity.Unique ? GetUniqueName(header.Name, IsPoe2) : string.Empty;
 
         Options = new();
@@ -245,6 +252,13 @@ public sealed class ItemData
             }
         }
         
+        if (flag.Viscera && _dm.Bases.FindVisceraBase(inputType) is var visceraBase && visceraBase is not null)
+        {
+            // the grade around the base (see GetVisceraGrade)
+            type = visceraBase.Name;
+            typeEn = visceraBase.NameEn;
+        }
+
         if (string.IsNullOrEmpty(type))
         {
             var checkVestigial = !IsPoe2 && (flag.Rarity.Unique || (flag.Rarity.Rare && flag.Tag.Corrupted));
@@ -311,6 +325,31 @@ public sealed class ItemData
             type = Resources.Resources.General064_FacetorLens;
         }
         return (type, typeEn);
+    }
+
+    /// <summary>
+    /// Grade of a viscera, written before ("Greater", "Крупная часть тела:", "상위") or after its base ("(majeur)", "Maior", "(上級)").
+    /// </summary>
+    /// <remarks>Words of the grades : <see cref="Resources.Resources.General247_Lesser"/>, <see cref="Resources.Resources.General248_Greater"/>.</remarks>
+    private static string GetVisceraGrade(ReadOnlySpan<char> inputType, ReadOnlySpan<char> type)
+    {
+        int index = type.IsEmpty ? -1 : inputType.IndexOf(type, StringComparison.OrdinalIgnoreCase);
+        if (index < 0)
+        {
+            return string.Empty;
+        }
+        var grade = inputType[..index].Trim();
+        if (grade.IsEmpty)
+        {
+            grade = inputType[(index + type.Length)..].Trim();
+        }
+        var rm = Resources.Resources.ResourceManager;
+        return grade.IsEmpty ? string.Empty
+            : grade.Equals(Resources.Resources.General248_Greater, StringComparison.OrdinalIgnoreCase)
+                ? rm.GetEnglish(nameof(Resources.Resources.General248_Greater))
+            : grade.Equals(Resources.Resources.General247_Lesser, StringComparison.OrdinalIgnoreCase)
+                ? rm.GetEnglish(nameof(Resources.Resources.General247_Lesser))
+            : string.Empty;
     }
 
     private string GetVaalGemName(InfoDescription infoDesc)

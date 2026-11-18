@@ -1282,6 +1282,12 @@ Esto deseleccionará todos los valores de modificadores de atributo (excepto ún
   <data name="General246_CannotUse" xml:space="preserve">
     <value>No puedes usar este objeto. Sus estadísticas serán ignoradas</value>
   </data>
+  <data name="General247_Lesser" xml:space="preserve">
+    <value>menor</value>
+  </data>
+  <data name="General248_Greater" xml:space="preserve">
+    <value>mayor</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>
   </data>
