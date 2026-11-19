@@ -58,9 +58,10 @@ public sealed class MinMaxModel(string text)
             { StatPanel.MapTier, new(Resources.Resources.General034_MaTier) },
             { StatPanel.AreaLevel, new(Resources.Resources.General067_AreaLevel) },
             { StatPanel.MapQuantity, new(Resources.Resources.General133_Iiq) },
+            { StatPanel.MapAtlasDrops, new(Resources.Resources.General249_AtlasDrops) },
             { StatPanel.MapRarity, new(Resources.Resources.General134_Iir) },
             { StatPanel.MapPackSize, new(Resources.Resources.General138_MonsterPackSize) },
-            { StatPanel.MapMoreScarab, new(Resources.Resources.General140_MoreScarabs) },
+            { StatPanel.MapMoreThread, new(Resources.Resources.General140_MoreThreads) },
             { StatPanel.MapMoreCurrency, new(Resources.Resources.General139_MoreCurrency) },
             { StatPanel.MapMoreDivCard, new(Resources.Resources.General142_MoreDivinationCards) },
             { StatPanel.MapMoreMap, new(Resources.Resources.General141_MoreMaps) },
@@ -299,13 +300,15 @@ public sealed class MinMaxModel(string text)
                 level.Selected = true;
 
                 var mapQuant = minMax[StatPanel.MapQuantity];
-                mapQuant.Min = item.Options.ItemQuantity;
+                mapQuant.Min = item.Options.ItemQuantity; // maps before 3.30 (standard league)
+                var mapAtlasDrops = minMax[StatPanel.MapAtlasDrops];
+                mapAtlasDrops.Min = item.Options.AtlasDrops; // 3.30 : replaces the item quantity
                 var mapRarity = minMax[StatPanel.MapRarity];
                 mapRarity.Min = item.Options.ItemRarity;
                 var mapPackSize = minMax[StatPanel.MapPackSize];
                 mapPackSize.Min = item.Options.MonsterPackSize;
-                var mapScarab = minMax[StatPanel.MapMoreScarab];
-                mapScarab.Min = item.Options.MoreScarabs;
+                var mapThread = minMax[StatPanel.MapMoreThread];
+                mapThread.Min = item.Options.MoreThreads;
                 var mapCurrency = minMax[StatPanel.MapMoreCurrency];
                 mapCurrency.Min = item.Options.MoreCurrency;
                 var mapDivCard = minMax[StatPanel.MapMoreDivCard];
@@ -314,14 +317,15 @@ public sealed class MinMaxModel(string text)
                 mapMoreMap.Min = item.Options.MoreMaps;
 
                 // new auto select behaviour
-                if (mapQuant.Min.ToDoubleDefault() >= 100
+                var mapDrops = mapAtlasDrops.Min.Length > 0 ? mapAtlasDrops : mapQuant;
+                if (mapDrops.Min.ToDoubleDefault() >= 100
                     && mapRarity.Min.ToDoubleDefault() >= 90
                     && mapPackSize.Min.ToDoubleDefault() >= 40)
                 {
-                    mapQuant.Selected = mapRarity.Selected = mapPackSize.Selected = true;
-                    if (mapScarab.Min.ToDoubleDefault() >= 70)
+                    mapDrops.Selected = mapRarity.Selected = mapPackSize.Selected = true;
+                    if (mapThread.Min.ToDoubleDefault() >= 70)
                     {
-                        mapScarab.Selected = true;
+                        mapThread.Selected = true;
                     }
                     if (mapCurrency.Min.ToDoubleDefault() >= 70)
                     {

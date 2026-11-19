@@ -1157,8 +1157,8 @@
   <data name="General139_MoreCurrency" xml:space="preserve">
     <value>Больше валюты</value>
   </data>
-  <data name="General140_MoreScarabs" xml:space="preserve">
-    <value>Больше скарабеев</value>
+  <data name="General140_MoreThreads" xml:space="preserve">
+    <value>Больше нитей</value>
   </data>
   <data name="General141_MoreMaps" xml:space="preserve">
     <value>Больше карт</value>
@@ -1483,6 +1483,9 @@
   </data>
   <data name="General248_Greater" xml:space="preserve">
     <value>Крупная часть тела:</value>
+  </data>
+  <data name="General249_AtlasDrops" xml:space="preserve">
+    <value>Награды в Атласе</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Уголья Всепламени</value>

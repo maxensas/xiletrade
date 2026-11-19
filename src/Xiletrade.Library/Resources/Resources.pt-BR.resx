@@ -1158,8 +1158,8 @@ Aba Gerais: marque "Dev" e depois Manager &gt; Authentication.</value>
   <data name="General139_MoreCurrency" xml:space="preserve">
     <value>Mais Itens Monetários</value>
   </data>
-  <data name="General140_MoreScarabs" xml:space="preserve">
-    <value>Mais Escaravelhos</value>
+  <data name="General140_MoreThreads" xml:space="preserve">
+    <value>Mais Segmentos</value>
   </data>
   <data name="General141_MoreMaps" xml:space="preserve">
     <value>Mais Mapas</value>
@@ -1484,6 +1484,9 @@ Aba Gerais: marque "Dev" e depois Manager &gt; Authentication.</value>
   </data>
   <data name="General248_Greater" xml:space="preserve">
     <value>Maior</value>
+  </data>
+  <data name="General249_AtlasDrops" xml:space="preserve">
+    <value>Itens do Atlas</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas da Omnichama</value>

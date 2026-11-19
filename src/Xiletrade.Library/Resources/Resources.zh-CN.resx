@@ -1207,8 +1207,8 @@
     <value>More Currency</value>
     <comment>TO translate</comment>
   </data>
-  <data name="General140_MoreScarabs" xml:space="preserve">
-    <value>More Scarabs</value>
+  <data name="General140_MoreThreads" xml:space="preserve">
+    <value>More Threads</value>
     <comment>TO translate</comment>
   </data>
   <data name="General141_MoreMaps" xml:space="preserve">

@@ -1158,8 +1158,8 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="General139_MoreCurrency" xml:space="preserve">
     <value>화폐 더 많음</value>
   </data>
-  <data name="General140_MoreScarabs" xml:space="preserve">
-    <value>갑충석 더 많음</value>
+  <data name="General140_MoreThreads" xml:space="preserve">
+    <value>실낱 더 많음</value>
   </data>
   <data name="General141_MoreMaps" xml:space="preserve">
     <value>지도 더 많음</value>
@@ -1484,6 +1484,9 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   </data>
   <data name="General248_Greater" xml:space="preserve">
     <value>상위</value>
+  </data>
+  <data name="General249_AtlasDrops" xml:space="preserve">
+    <value>아틀라스 획득물</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>올플레임의 잉걸불</value>

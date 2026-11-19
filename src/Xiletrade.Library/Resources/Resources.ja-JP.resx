@@ -1452,8 +1452,8 @@ General tab: check "Dev", then Manager &gt; Authentication.</comment>
   <data name="General139_MoreCurrency" xml:space="preserve">
     <value>より多くのカレンシー</value>
   </data>
-  <data name="General140_MoreScarabs" xml:space="preserve">
-    <value>より多くのスカラベ</value>
+  <data name="General140_MoreThreads" xml:space="preserve">
+    <value>スレッド量が上昇</value>
   </data>
   <data name="General141_MoreMaps" xml:space="preserve">
     <value>より多くのマップ</value>
@@ -1779,6 +1779,10 @@ General tab: check "Dev", then Manager &gt; Authentication.</comment>
   </data>
   <data name="General248_Greater" xml:space="preserve">
     <value>(上級)</value>
+  </data>
+  <data name="General249_AtlasDrops" xml:space="preserve">
+    <value>アトラスドロップ</value>
+    <comment>Atlas Drops</comment>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>オールフレイムの残り火</value>

@@ -1155,8 +1155,8 @@ Onglet Général : cochez « Dev », puis Manager &gt; Authentication.</value>
   <data name="General139_MoreCurrency" xml:space="preserve">
     <value>Davantage d'Objets monétaires</value>
   </data>
-  <data name="General140_MoreScarabs" xml:space="preserve">
-    <value>Davantage de Scarabées</value>
+  <data name="General140_MoreThreads" xml:space="preserve">
+    <value>Davantage de Fils</value>
   </data>
   <data name="General141_MoreMaps" xml:space="preserve">
     <value>Davantage de Cartes</value>
@@ -1482,6 +1482,9 @@ Onglet Général : cochez « Dev », puis Manager &gt; Authentication.</value>
   </data>
   <data name="General248_Greater" xml:space="preserve">
     <value>(majeur)</value>
+  </data>
+  <data name="General249_AtlasDrops" xml:space="preserve">
+    <value>Butin de l'Atlas</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Les Braises de l’Omniflamme</value>

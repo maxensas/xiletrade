@@ -216,7 +216,7 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
     // custom search : map / chart filters with a value
     private static Map GetMapFilters(XiletradeItem xItem)
     {
-        if (!(xItem.MapTier.Enable || xItem.MapPack.Enable || xItem.MapIiq.Enable || xItem.MapIir.Enable || xItem.AreaLevel.Enable))
+        if (!(xItem.MapTier.Enable || xItem.MapPack.Enable || xItem.MapIiq.Enable || xItem.MapAtlasDrops.Enable || xItem.MapIir.Enable || xItem.AreaLevel.Enable))
         {
             return null;
         }
@@ -233,6 +233,10 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
         if (xItem.MapIiq.Enable)
         {
             map.Filters.Iiq = new() { Min = xItem.MapIiq.Min, Max = xItem.MapIiq.Max };
+        }
+        if (xItem.MapAtlasDrops.Enable)
+        {
+            map.Filters.AtlasDrops = new() { Min = xItem.MapAtlasDrops.Min, Max = xItem.MapAtlasDrops.Max };
         }
         if (xItem.MapIir.Enable)
         {
@@ -288,6 +292,10 @@ internal sealed class JsonDataFactory : JsonDataFactoryBase<JsonData>
             if (xItem.MapIiq.Enable)
             {
                 map.Filters.Iiq = new() { Min = xItem.MapIiq.Min, Max = xItem.MapIiq.Max };
+            }
+            if (xItem.MapAtlasDrops.Enable)
+            {
+                map.Filters.AtlasDrops = new() { Min = xItem.MapAtlasDrops.Min, Max = xItem.MapAtlasDrops.Max };
             }
             if (xItem.MapIir.Enable)
             {

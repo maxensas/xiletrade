@@ -1165,8 +1165,8 @@
   <data name="General139_MoreCurrency" xml:space="preserve">
     <value>เพิ่มเงินตรา อีก</value>
   </data>
-  <data name="General140_MoreScarabs" xml:space="preserve">
-    <value>เพิ่มสคารับ อีก</value>
+  <data name="General140_MoreThreads" xml:space="preserve">
+    <value>เพิ่มสายใย อีก</value>
   </data>
   <data name="General141_MoreMaps" xml:space="preserve">
     <value>เพิ่มแผนที่ อีก</value>
@@ -1493,6 +1493,9 @@
   </data>
   <data name="General248_Greater" xml:space="preserve">
     <value>ชั้นสูง</value>
+  </data>
+  <data name="General249_AtlasDrops" xml:space="preserve">
+    <value>แอตลาสดรอป</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>เถ้าถ่านแห่งออลเฟลม</value>

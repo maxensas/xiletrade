@@ -984,7 +984,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
             new(Resources.Resources.Main282_SocketFilters, Get(StatPanel.CommonSocket, StatPanel.CommonLink)),
             new(Resources.Resources.Main283_Requirements, Get(StatPanel.CommonRequiresLevel)),
             new(Resources.Resources.Main284_MapFilters, Get(StatPanel.MapTier, StatPanel.MapPackSize,
-                StatPanel.MapQuantity, StatPanel.MapRarity, StatPanel.AreaLevel)),
+                StatPanel.MapQuantity, StatPanel.MapAtlasDrops, StatPanel.MapRarity, StatPanel.AreaLevel)),
             new(Resources.Resources.Main286_Miscellaneous, Get(StatPanel.CommonQuality, StatPanel.CommonItemLevel,
                 StatPanel.CommonIntangibility), showOptions: true),
             new(Resources.Resources.Main311_TradeFilters, [], price: price)

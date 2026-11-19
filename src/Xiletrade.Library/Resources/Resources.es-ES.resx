@@ -1158,8 +1158,8 @@ Pestaña General: marca «Dev» y luego Manager &gt; Authentication.</value>
   <data name="General139_MoreCurrency" xml:space="preserve">
     <value>Más objetos monetarios</value>
   </data>
-  <data name="General140_MoreScarabs" xml:space="preserve">
-    <value>Más escarabajos</value>
+  <data name="General140_MoreThreads" xml:space="preserve">
+    <value>Más hilos</value>
   </data>
   <data name="General141_MoreMaps" xml:space="preserve">
     <value>Más mapas</value>
@@ -1352,6 +1352,9 @@ Pestaña General: marca «Dev» y luego Manager &gt; Authentication.</value>
   </data>
   <data name="General248_Greater" xml:space="preserve">
     <value>mayor</value>
+  </data>
+  <data name="General249_AtlasDrops" xml:space="preserve">
+    <value>Botín del Atlas</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Brasas de la Llama eterna</value>

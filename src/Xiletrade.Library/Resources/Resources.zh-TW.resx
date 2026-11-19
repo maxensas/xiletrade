@@ -1192,8 +1192,8 @@
   <data name="General139_MoreCurrency" xml:space="preserve">
     <value>更多通貨</value>
   </data>
-  <data name="General140_MoreScarabs" xml:space="preserve">
-    <value>更多聖甲蟲</value>
+  <data name="General140_MoreThreads" xml:space="preserve">
+    <value>更多 綢帶</value>
   </data>
   <data name="General141_MoreMaps" xml:space="preserve">
     <value>更多地圖</value>
@@ -1558,6 +1558,9 @@
   <data name="General248_Greater" xml:space="preserve">
     <value>高階</value>
     <comment>TO check : eldritch embers</comment>
+  </data>
+  <data name="General249_AtlasDrops" xml:space="preserve">
+    <value>輿圖掉落物</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不滅之火餘燼</value>

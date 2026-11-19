@@ -1513,9 +1513,9 @@ General tab: check "Dev", then Manager &gt; Authentication.</comment>
     <value>More Currency</value>
     <comment>More Currency</comment>
   </data>
-  <data name="General140_MoreScarabs" xml:space="preserve">
-    <value>More Scarabs</value>
-    <comment>More Scarabs</comment>
+  <data name="General140_MoreThreads" xml:space="preserve">
+    <value>More Threads</value>
+    <comment>More Threads (3.30, was More Scarabs)</comment>
   </data>
   <data name="General141_MoreMaps" xml:space="preserve">
     <value>More Maps</value>
@@ -1948,6 +1948,10 @@ General tab: check "Dev", then Manager &gt; Authentication.</comment>
   <data name="General248_Greater" xml:space="preserve">
     <value>Greater</value>
     <comment>Greater (viscera grade, written before or after the base)</comment>
+  </data>
+  <data name="General249_AtlasDrops" xml:space="preserve">
+    <value>Atlas Drops</value>
+    <comment>Atlas Drops (3.30 map property, trade filter map_bonus)</comment>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Embers of the Allflame</value>

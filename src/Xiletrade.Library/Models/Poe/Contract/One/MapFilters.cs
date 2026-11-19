@@ -24,6 +24,11 @@ public sealed class MapFilters
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public MinMax PackSize { get; set; }
 
+    /// <summary>Atlas Drops (3.30), replaces the item quantity of maps.</summary>
+    [JsonPropertyName("map_bonus")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public MinMax AtlasDrops { get; set; }
+
     [JsonPropertyName("map_gold")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public MinMax Gold { get; set; }

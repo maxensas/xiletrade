@@ -62,10 +62,11 @@ internal sealed class ItemOption
         [Resources.Resources.General129_CorpseLevel] = string.Empty,
         [Resources.Resources.General130_MonsterCategory] = string.Empty,
         [Resources.Resources.General136_ItemQuantity] = string.Empty,
+        [Resources.Resources.General249_AtlasDrops] = string.Empty,
         [Resources.Resources.General137_ItemRarity] = string.Empty,
         [Resources.Resources.General138_MonsterPackSize] = string.Empty,
         [Resources.Resources.General139_MoreCurrency] = string.Empty,
-        [Resources.Resources.General140_MoreScarabs] = string.Empty,
+        [Resources.Resources.General140_MoreThreads] = string.Empty,
         [Resources.Resources.General141_MoreMaps] = string.Empty,
         [Resources.Resources.General142_MoreDivinationCards] = string.Empty,
         [Resources.Resources.General215_GoldFound] = string.Empty,
@@ -139,10 +140,11 @@ internal sealed class ItemOption
     internal string CorpseLevel => RemoveSpaces(Get(Resources.Resources.General129_CorpseLevel));
     internal string MonsterCategory => Get(Resources.Resources.General130_MonsterCategory);
     internal string ItemQuantity => RemoveSpaces(Get(Resources.Resources.General136_ItemQuantity));
+    internal string AtlasDrops => RemoveSpaces(Get(Resources.Resources.General249_AtlasDrops));
     internal string ItemRarity => RemoveSpaces(Get(Resources.Resources.General137_ItemRarity));
     internal string MonsterPackSize => RemoveSpaces(Get(Resources.Resources.General138_MonsterPackSize));
     internal string MoreCurrency => RemoveSpaces(Get(Resources.Resources.General139_MoreCurrency));
-    internal string MoreScarabs => RemoveSpaces(Get(Resources.Resources.General140_MoreScarabs));
+    internal string MoreThreads => RemoveSpaces(Get(Resources.Resources.General140_MoreThreads));
     internal string MoreMaps => RemoveSpaces(Get(Resources.Resources.General141_MoreMaps));
     internal string GoldFound => RemoveSpaces(Get(Resources.Resources.General215_GoldFound));
     internal string DeadSulphur => RemoveSpaces(Get(Resources.Resources.General216_DeadSulphur));

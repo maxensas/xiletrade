@@ -1153,8 +1153,8 @@ Reiter Allgemein: „Dev“ ankreuzen, dann Manager &gt; Authentication.</value>
   <data name="General139_MoreCurrency" xml:space="preserve">
     <value>Mehr Währung</value>
   </data>
-  <data name="General140_MoreScarabs" xml:space="preserve">
-    <value>Mehr Skarabäen</value>
+  <data name="General140_MoreThreads" xml:space="preserve">
+    <value>Mehr Fäden</value>
   </data>
   <data name="General141_MoreMaps" xml:space="preserve">
     <value>Mehr Karten</value>
@@ -1481,6 +1481,9 @@ Reiter Allgemein: „Dev“ ankreuzen, dann Manager &gt; Authentication.</value>
   </data>
   <data name="General248_Greater" xml:space="preserve">
     <value>(groß)</value>
+  </data>
+  <data name="General249_AtlasDrops" xml:space="preserve">
+    <value>Atlasbeute</value>
   </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>

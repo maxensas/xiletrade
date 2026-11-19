@@ -42,6 +42,7 @@ public static partial class Strings
             internal const string MoreScarab = "pseudo.pseudo_map_more_scarab_drops"; // More Scarabs: #%
             internal const string MoreCurrency = "pseudo.pseudo_map_more_currency_drops"; // More Currency: #%
             internal const string MoreDivCard = "pseudo.pseudo_map_more_card_drops"; // More Divination Cards: #%
+            internal const string MoreMap = "pseudo.pseudo_map_more_map_drops"; // More Maps: #%
 
             internal const string EmmptyPrefix = "pseudo.pseudo_number_of_empty_prefix_mods"; // # Empty Prefix Modifiers
             internal const string EmptySuffix = "pseudo.pseudo_number_of_empty_suffix_mods"; // # Empty Suffix Modifiers

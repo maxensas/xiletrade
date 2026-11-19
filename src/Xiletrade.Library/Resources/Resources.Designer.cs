@@ -3151,13 +3151,13 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Localized string similar to => More Scarabs.
+        ///   Localized string similar to => More Threads.
         /// </summary>
-        public static string General140_MoreScarabs
+        public static string General140_MoreThreads
         {
             get
             {
-                return ResourceManager.GetString("General140_MoreScarabs", resourceCulture);
+                return ResourceManager.GetString("General140_MoreThreads", resourceCulture);
             }
         }
 
@@ -4244,6 +4244,15 @@ namespace Xiletrade.Library.Resources {
         public static string General248_Greater {
             get {
                 return ResourceManager.GetString("General248_Greater", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Atlas Drops.
+        /// </summary>
+        public static string General249_AtlasDrops {
+            get {
+                return ResourceManager.GetString("General249_AtlasDrops", resourceCulture);
             }
         }
 
