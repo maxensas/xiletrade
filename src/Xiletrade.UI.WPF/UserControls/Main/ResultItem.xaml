@@ -203,6 +203,8 @@
                     <ListBox.Resources>
                         <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                             <Setter Property="Foreground" Value="{StaticResource ModWebBrush}"/>
+                            <!-- the whole width of the tooltip : the ranges on the right -->
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding TagLife}" Value="True">
                                     <Setter Property="Foreground" Value="{StaticResource LifeTagBrush}"/>
@@ -234,8 +236,9 @@
                     </ListBox.Resources>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Tier}" d:Text="P10" Width="23" Margin="0,0,8,0" Visibility="{Binding Tier, Converter={StaticResource null2CollapseConverter}}">
+                            <!-- tier, mod, then the item level of the tier and the ranges of the values in blue on the right (trade site) -->
+                            <DockPanel LastChildFill="True">
+                                <TextBlock DockPanel.Dock="Left" Text="{Binding Tier}" d:Text="P10" Width="23" Margin="0,0,8,0" Visibility="{Binding Tier, Converter={StaticResource null2CollapseConverter}}">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                                             <Setter Property="Foreground" Value="{StaticResource DescWebBrush}"/>
@@ -253,8 +256,12 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
+                                <TextBlock DockPanel.Dock="Right" Text="{Binding Range}" d:Text="50—60" Margin="8,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                           Foreground="{StaticResource MagicDarkWebBrush}" Visibility="{Binding Range, Converter={StaticResource null2CollapseConverter}}"/>
+                                <TextBlock DockPanel.Dock="Right" Text="{Binding RequiredLevel}" d:Text="≥50" Margin="12,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                           Foreground="{StaticResource MagicDarkerWebBrush}" Visibility="{Binding RequiredLevel, Converter={StaticResource null2CollapseConverter}}"/>
                                 <TextBlock Text="{Binding Mod}" TextWrapping="Wrap" MaxWidth="800"/>
-                            </StackPanel>
+                            </DockPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

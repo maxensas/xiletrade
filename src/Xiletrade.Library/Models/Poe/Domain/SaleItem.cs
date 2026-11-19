@@ -127,9 +127,9 @@ public sealed record SaleItem
             }
         }
 
-        var explicitmods = item.ExplicitMods?.Count > 0;
-
-        IsVisibleExplicit = explicitmods && item.ExplicitMods[0]?.Mods?.Count > 0;
+        // a mod without its details ("mods" : tier, values) is displayed as well, as the first one
+        // of a Replica Dragonfang's Flight ("+3 to Level of all <gem> Gems")
+        IsVisibleExplicit = item.ExplicitMods?.Exists(static mod => mod?.Description?.Length > 0) is true;
 
         if (item.BaseType?.Length > 0)
         {
