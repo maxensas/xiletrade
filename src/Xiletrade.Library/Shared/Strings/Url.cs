@@ -11,6 +11,8 @@ public static partial class Strings
         internal const string XiletradeAuth = "https://maxensas.github.io/xiletrade-oauth/poe";
         internal const string Changelog = "https://github.com/maxensas/xiletrade/releases";
         internal const string Issues = "https://github.com/maxensas/xiletrade/issues/new";
+        internal const string ExtensionChrome = "https://chromewebstore.google.com/detail/xiletrade-sync/hgbbjjlfaigilmoljmekcebpjdphnhog";
+        internal const string ExtensionFirefox = "https://addons.mozilla.org/firefox/addon/xiletrade-sync/";
         internal const string PoeRegex = "https://poe.re";
         internal const string PoeRegexKr = "https://poeregexkr.web.app";
         internal const string PoeRegexJp = "https://ochi3.github.io/poe-jp-regex";

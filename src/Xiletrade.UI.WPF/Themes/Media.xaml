@@ -226,6 +226,8 @@
     <ext:ImageAsset x:Key="ImgGithub" Path="github.png"/>
     <ext:ImageAsset x:Key="ImgPaypal" Path="paypal.png"/>
     <ext:ImageAsset x:Key="ImgDiscord" Path="discord.png"/>
+    <ext:ImageAsset x:Key="ImgChrome" Path="chrome.png"/>
+    <ext:ImageAsset x:Key="ImgFirefox" Path="firefox.png"/>
 
     <ext:ImageAsset x:Key="ImgChaosGray" Path="chaos.png"/>
     <ext:ImageAsset x:Key="ImgExaltGray" Path="exalt.png"/>

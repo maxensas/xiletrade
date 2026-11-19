@@ -139,7 +139,7 @@
     <value>Additional keys</value>
   </data>
   <data name="Config008_tabHelp" xml:space="preserve">
-    <value>Help / Contribute</value>
+    <value>Help</value>
   </data>
   <data name="Config009_lbPref" xml:space="preserve">
     <value>Preferences :</value>
@@ -538,7 +538,7 @@ Useful to thanks people or asking them to wait before a trade.</value>
     <value>You are encountering a bug or abnormal tool behavior ?</value>
   </data>
   <data name="Config137_lbHelp2" xml:space="preserve">
-    <value>You can report an issue on github.</value>
+    <value>Report an issue</value>
   </data>
   <data name="Config138_tbIssues" xml:space="preserve">
     <value>Make sure you give all informations to reproduce the problem and find a solution. For price checking : Give item datas (CTRL-C on an item) while opening issue.</value>
@@ -547,7 +547,7 @@ Useful to thanks people or asking them to wait before a trade.</value>
     <value>You like the project and want to lend a helping hand ?</value>
   </data>
   <data name="Config140_lbHelp4" xml:space="preserve">
-    <value>You can donate a custom amount.</value>
+    <value>Donate any amount</value>
   </data>
   <data name="Config141_lbHelp5" xml:space="preserve">
     <value>You can become a new patron.</value>
@@ -584,7 +584,7 @@ Useful to thanks people or asking them to wait before a trade.</value>
 in seconds before cancelling.</value>
   </data>
   <data name="Config152_lbHelp7" xml:space="preserve">
-    <value>You can join the project discord.</value>
+    <value>Join the community</value>
   </data>
   <data name="Config153_btnDiscordTip" xml:space="preserve">
     <value>Follow the invitation on discord.gg.</value>
@@ -678,6 +678,71 @@ Do you want to overwrite the previous one ?</value>
   <data name="Config181_totalAttributeTip" xml:space="preserve">
     <value>Auto select Total attributes stat when additional attribute value is encountered.
 It will deselect all attribute mod values ! (not uniques)</value>
+  </data>
+  <data name="Config182_tabExtension" xml:space="preserve">
+    <value>Extension</value>
+  </data>
+  <data name="Config183_extTagline" xml:space="preserve">
+    <value>Sends your Path of Exile session cookie to Xiletrade in one click, no more copy and paste. Needed for live search and every feature that requires you to be logged in.</value>
+  </data>
+  <data name="Config184_extInstall" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="Config185_extChromeInfo" xml:space="preserve">
+    <value>Also Edge, Brave, Opera…</value>
+  </data>
+  <data name="Config186_extFirefoxInfo" xml:space="preserve">
+    <value>Version 140 or later</value>
+  </data>
+  <data name="Config187_extChromeTip" xml:space="preserve">
+    <value>Open the extension page on the Chrome Web Store</value>
+  </data>
+  <data name="Config188_extFirefoxTip" xml:space="preserve">
+    <value>Open the extension page on Firefox Add-ons</value>
+  </data>
+  <data name="Config189_extHowTo" xml:space="preserve">
+    <value>How it works</value>
+  </data>
+  <data name="Config190_extStep1" xml:space="preserve">
+    <value>Install the extension in your browser.</value>
+  </data>
+  <data name="Config191_extStep2" xml:space="preserve">
+    <value>Log in on the official trade site.</value>
+  </data>
+  <data name="Config192_extStep3" xml:space="preserve">
+    <value>Click the extension icon, then "Send" and allow your browser to open Xiletrade.</value>
+  </data>
+  <data name="Config193_extPrivacy" xml:space="preserve">
+    <value>Nothing is sent online: the session cookie only goes to Xiletrade on this computer, where it is stored encrypted.</value>
+  </data>
+  <data name="Config194_helpTagline" xml:space="preserve">
+    <value>Xiletrade is free, open source and ad-free. Works on Path of Exile 1 and 2.
+It grows thanks to your feedback and support.</value>
+  </data>
+  <data name="Config195_helpIssue1" xml:space="preserve">
+    <value>Explain how to reproduce the problem.</value>
+  </data>
+  <data name="Config196_helpIssue2" xml:space="preserve">
+    <value>Price check: include the item (Ctrl+C on it).</value>
+  </data>
+  <data name="Config197_helpDonate1" xml:space="preserve">
+    <value>Donate the amount of your choice.</value>
+  </data>
+  <data name="Config198_helpDonate2" xml:space="preserve">
+    <value>Every contribution helps keep Xiletrade ad-free.</value>
+  </data>
+  <data name="Config199_helpDiscord1" xml:space="preserve">
+    <value>Ask your questions about using Xiletrade.</value>
+  </data>
+  <data name="Config200_helpDiscord2" xml:space="preserve">
+    <value>Follow and discuss its development.</value>
+  </data>
+  <data name="Config201_extManual" xml:space="preserve">
+    <value>Advanced users: you can also add or remove the session manually in the developer manager.
+General tab: check "Dev", then Manager &gt; Authentication.</value>
+  </data>
+  <data name="Config202_helpProject" xml:space="preserve">
+    <value>The project</value>
   </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
@@ -2531,7 +2596,7 @@ No sale is ignored.</value>
     <value>Live</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>Live search refused : a valid session cookie is required (settings, authentication section).</value>
+    <value>Live search refused : a valid session cookie is required (Settings &gt; Extension).</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>The live search could not be started.</value>
@@ -2829,7 +2894,7 @@ Nothing is sent automatically: you can review and edit the report before submitt
   <data name="Error036_TravelNoToken" xml:space="preserve">
     <value>Your session cookie is missing or expired !
 
-For advanced users : You can manually update your session cookie under settings by using the developer manager in the authentication section.</value>
+Send it in one click with the Xiletrade Sync browser extension: Settings &gt; Extension.</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>Is your account correctly connected ?</value>
@@ -2837,6 +2902,6 @@ For advanced users : You can manually update your session cookie under settings 
   <data name="Error038_TravelSession" xml:space="preserve">
     <value>Your session cookie is probably missing or expired !
 
-You can manually update it under settings by using the developer manager in the authentication section.</value>
+Send it again with the Xiletrade Sync browser extension: Settings &gt; Extension.</value>
   </data>
 </root>

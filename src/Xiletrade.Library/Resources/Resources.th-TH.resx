@@ -139,7 +139,7 @@
     <value>คีย์เพิ่มเติม</value>
   </data>
   <data name="Config008_tabHelp" xml:space="preserve">
-    <value>ช่วยเหลือและมีส่วนร่วม</value>
+    <value>ช่วยเหลือ</value>
   </data>
   <data name="Config009_lbPref" xml:space="preserve">
     <value>ค่ากำหนด :</value>
@@ -538,7 +538,7 @@
     <value>คุณกำลังพบข้อบกพร่องหรือพฤติกรรมของเครื่องมือที่ผิดปกติหรือไม่ ?</value>
   </data>
   <data name="Config137_lbHelp2" xml:space="preserve">
-    <value>คุณสามารถรายงานปัญหาบน github</value>
+    <value>รายงานปัญหา</value>
   </data>
   <data name="Config138_tbIssues" xml:space="preserve">
     <value>ตรวจสอบให้แน่ใจว่าคุณได้ให้ข้อมูลทั้งหมดเพื่อสร้างปัญหาซ้ำและหาทางแก้ไข สำหรับการตรวจสอบราคา: ให้ข้อมูลสินค้า (CTRL-C สำหรับสินค้า) ในขณะที่เปิดปัญหา</value>
@@ -547,7 +547,7 @@
     <value>คุณชอบโครงการและต้องการให้ความช่วยเหลือหรือไม่ ?</value>
   </data>
   <data name="Config140_lbHelp4" xml:space="preserve">
-    <value>คุณสามารถบริจาคจำนวนที่กำหนดเองได้</value>
+    <value>บริจาคตามต้องการ</value>
   </data>
   <data name="Config141_lbHelp5" xml:space="preserve">
     <value>คุณสามารถเป็นผู้มีพระคุณคนใหม่ได้</value>
@@ -584,7 +584,7 @@
 เป็นวินาทีก่อนที่จะยกเลิก</value>
   </data>
   <data name="Config152_lbHelp7" xml:space="preserve">
-    <value>คุณสามารถเข้าร่วมโครงการ Discord</value>
+    <value>เข้าร่วมชุมชน</value>
   </data>
   <data name="Config153_btnDiscordTip" xml:space="preserve">
     <value>ติดตามคำเชิญได้ที่ discord.gg</value>
@@ -678,6 +678,71 @@
   <data name="Config181_totalAttributeTip" xml:space="preserve">
     <value>เลือกค่าสถานะรวมโดยอัตโนมัติเมื่อพบค่าคุณสมบัติเพิ่มเติม
 การดำเนินการนี้จะยกเลิกการเลือกค่าม็อดคุณสมบัติทั้งหมด (ไม่รวมไอเทมยูนิค)</value>
+  </data>
+  <data name="Config182_tabExtension" xml:space="preserve">
+    <value>ส่วนขยาย</value>
+  </data>
+  <data name="Config183_extTagline" xml:space="preserve">
+    <value>ส่งคุกกี้เซสชัน Path of Exile ไปยัง Xiletrade ในคลิกเดียว ไม่ต้องคัดลอกและวาง จำเป็นสำหรับการค้นหาสดและทุกฟีเจอร์ที่ต้องเข้าสู่ระบบ</value>
+  </data>
+  <data name="Config184_extInstall" xml:space="preserve">
+    <value>ติดตั้ง</value>
+  </data>
+  <data name="Config185_extChromeInfo" xml:space="preserve">
+    <value>รองรับ Edge, Brave, Opera ฯลฯ</value>
+  </data>
+  <data name="Config186_extFirefoxInfo" xml:space="preserve">
+    <value>เวอร์ชัน 140 ขึ้นไป</value>
+  </data>
+  <data name="Config187_extChromeTip" xml:space="preserve">
+    <value>เปิดหน้าส่วนขยายใน Chrome Web Store</value>
+  </data>
+  <data name="Config188_extFirefoxTip" xml:space="preserve">
+    <value>เปิดหน้าส่วนขยายใน Firefox Add-ons</value>
+  </data>
+  <data name="Config189_extHowTo" xml:space="preserve">
+    <value>วิธีการทำงาน</value>
+  </data>
+  <data name="Config190_extStep1" xml:space="preserve">
+    <value>ติดตั้งส่วนขยายในเบราว์เซอร์ของคุณ</value>
+  </data>
+  <data name="Config191_extStep2" xml:space="preserve">
+    <value>เข้าสู่ระบบเว็บไซต์เทรดอย่างเป็นทางการ</value>
+  </data>
+  <data name="Config192_extStep3" xml:space="preserve">
+    <value>คลิกไอคอนส่วนขยาย แล้วกด "ส่ง" และอนุญาตให้เบราว์เซอร์เปิด Xiletrade</value>
+  </data>
+  <data name="Config193_extPrivacy" xml:space="preserve">
+    <value>ไม่มีการส่งข้อมูลออนไลน์: คุกกี้เซสชันจะถูกส่งไปยัง Xiletrade บนคอมพิวเตอร์เครื่องนี้เท่านั้น และจัดเก็บแบบเข้ารหัส</value>
+  </data>
+  <data name="Config194_helpTagline" xml:space="preserve">
+    <value>Xiletrade ฟรี โอเพ่นซอร์ส และไม่มีโฆษณา ใช้งานได้กับ Path of Exile 1 และ 2
+และเติบโตได้ด้วยความคิดเห็นและการสนับสนุนของคุณ</value>
+  </data>
+  <data name="Config195_helpIssue1" xml:space="preserve">
+    <value>อธิบายวิธีทำให้เกิดปัญหาซ้ำ</value>
+  </data>
+  <data name="Config196_helpIssue2" xml:space="preserve">
+    <value>ตรวจสอบราคา: แนบข้อมูลไอเทม (Ctrl+C บนไอเทม)</value>
+  </data>
+  <data name="Config197_helpDonate1" xml:space="preserve">
+    <value>บริจาคตามจำนวนที่คุณต้องการ</value>
+  </data>
+  <data name="Config198_helpDonate2" xml:space="preserve">
+    <value>ทุกการสนับสนุนช่วยให้ Xiletrade ไม่มีโฆษณา</value>
+  </data>
+  <data name="Config199_helpDiscord1" xml:space="preserve">
+    <value>ถามคำถามเกี่ยวกับการใช้งาน Xiletrade</value>
+  </data>
+  <data name="Config200_helpDiscord2" xml:space="preserve">
+    <value>ติดตามและพูดคุยเรื่องการพัฒนา</value>
+  </data>
+  <data name="Config201_extManual" xml:space="preserve">
+    <value>สำหรับผู้ใช้ขั้นสูง: คุณยังสามารถเพิ่มหรือลบเซสชันด้วยตนเองได้ในตัวจัดการนักพัฒนา
+แท็บการตั้งค่าทั่วไป: ทำเครื่องหมาย "นักพัฒนา" แล้วไปที่ Manager &gt; Authentication</value>
+  </data>
+  <data name="Config202_helpProject" xml:space="preserve">
+    <value>โปรเจกต์</value>
   </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Anomalous</value>
@@ -2542,7 +2607,7 @@
     <value>สด</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>การค้นหาแบบสดถูกปฏิเสธ: ต้องมีคุกกี้เซสชันที่ถูกต้อง (การตั้งค่า, ส่วนการยืนยันตัวตน)</value>
+    <value>การค้นหาแบบสดถูกปฏิเสธ: ต้องมีคุกกี้เซสชันที่ถูกต้อง (การตั้งค่า &gt; ส่วนขยาย)</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>ไม่สามารถเริ่มการค้นหาแบบสดได้</value>
@@ -2826,7 +2891,7 @@
   <data name="Error036_TravelNoToken" xml:space="preserve">
     <value>คุกกี้เซสชันของคุณไม่มีหรือหมดอายุแล้ว!
 
-สำหรับผู้ใช้ขั้นสูง: คุณสามารถอัปเดตคุกกี้เซสชันด้วยตนเองในการตั้งค่า โดยใช้ตัวจัดการนักพัฒนาในส่วนการยืนยันตัวตน</value>
+ส่งได้ในคลิกเดียวด้วยส่วนขยายเบราว์เซอร์ Xiletrade Sync: การตั้งค่า &gt; ส่วนขยาย</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>บัญชีของคุณเชื่อมต่ออย่างถูกต้องหรือไม่?</value>
@@ -2834,6 +2899,6 @@
   <data name="Error038_TravelSession" xml:space="preserve">
     <value>คุกกี้เซสชันของคุณอาจไม่มีหรือหมดอายุแล้ว!
 
-คุณสามารถอัปเดตด้วยตนเองในการตั้งค่า โดยใช้ตัวจัดการนักพัฒนาในส่วนการยืนยันตัวตน</value>
+ส่งใหม่อีกครั้งด้วยส่วนขยายเบราว์เซอร์ Xiletrade Sync: การตั้งค่า &gt; ส่วนขยาย</value>
   </data>
 </root>

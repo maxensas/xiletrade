@@ -97,6 +97,10 @@ public sealed partial class EditorViewModel : ViewModelBase
     [RelayCommand]
     private void AddPoeId(object commandParameter)
     {
+        if (string.IsNullOrEmpty(PoeSessId))
+        {
+            return; // nothing entered (#143)
+        }
         if (RegexUtil.MD5().IsMatch(PoeSessId))
         {
             _tokenService.TryInitToken(PoeSessId, useCustom: true);

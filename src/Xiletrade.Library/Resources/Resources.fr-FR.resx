@@ -133,10 +133,10 @@
     <value>Général</value>
   </data>
   <data name="Config006_tabCommon" xml:space="preserve">
-    <value>Touches communes</value>
+    <value>Touches</value>
   </data>
   <data name="Config007_tabAdd" xml:space="preserve">
-    <value>Touches additionelles</value>
+    <value>Autres touches</value>
   </data>
   <data name="Config008_tabHelp" xml:space="preserve">
     <value>Aide</value>
@@ -537,7 +537,7 @@ Utile pour remercier les gens ou leur demander d'attendre avant un échange.</va
     <value>Vous rencontrez un bug ou un comportement d'outil anormal?</value>
   </data>
   <data name="Config137_lbHelp2" xml:space="preserve">
-    <value>Vous pouvez signaler un problème sur github.</value>
+    <value>Signaler un problème</value>
   </data>
   <data name="Config138_tbIssues" xml:space="preserve">
     <value>Assurez-vous de donner toutes les informations pour reproduire le problème et trouver une solution. Pour la vérification des prix: donnez les données d'article (CTRL-C sur un article) lors de l'ouverture du problème.</value>
@@ -546,7 +546,7 @@ Utile pour remercier les gens ou leur demander d'attendre avant un échange.</va
     <value>Vous aimez le projet et souhaitez donner un coup de main?</value>
   </data>
   <data name="Config140_lbHelp4" xml:space="preserve">
-    <value>Vous pouvez donner un montant personnalisé.</value>
+    <value>Faire un don libre</value>
   </data>
   <data name="Config141_lbHelp5" xml:space="preserve">
     <value>Vous pouvez devenir un nouveau mécène.</value>
@@ -583,7 +583,7 @@ Utile pour remercier les gens ou leur demander d'attendre avant un échange.</va
 en secondes avant l'annulation.</value>
   </data>
   <data name="Config152_lbHelp7" xml:space="preserve">
-    <value>Vous pouvez rejoindre le discord du projet.</value>
+    <value>Rejoindre la communauté</value>
   </data>
   <data name="Config153_btnDiscordTip" xml:space="preserve">
     <value>Suivez l'invitation sur discord.gg.</value>
@@ -677,6 +677,71 @@ Voulez-vous écraser le précédent ?</value>
   <data name="Config181_totalAttributeTip" xml:space="preserve">
     <value>Sélectionne automatiquement la statistique Total des attributs lorsqu'une valeur d'attribut supplémentaire est détectée.
 Cela désélectionnera toutes les valeurs de mod d'attribut ! (hors uniques)</value>
+  </data>
+  <data name="Config182_tabExtension" xml:space="preserve">
+    <value>Extension</value>
+  </data>
+  <data name="Config183_extTagline" xml:space="preserve">
+    <value>Envoie votre cookie de session Path of Exile à Xiletrade en un clic, sans copier-coller. Indispensable pour la recherche live et toutes les fonctionnalités qui demandent d'être connecté.</value>
+  </data>
+  <data name="Config184_extInstall" xml:space="preserve">
+    <value>Installer</value>
+  </data>
+  <data name="Config185_extChromeInfo" xml:space="preserve">
+    <value>Aussi Edge, Brave, Opera…</value>
+  </data>
+  <data name="Config186_extFirefoxInfo" xml:space="preserve">
+    <value>Version 140 ou plus récente</value>
+  </data>
+  <data name="Config187_extChromeTip" xml:space="preserve">
+    <value>Ouvrir la page de l'extension sur le Chrome Web Store</value>
+  </data>
+  <data name="Config188_extFirefoxTip" xml:space="preserve">
+    <value>Ouvrir la page de l'extension sur Firefox Add-ons</value>
+  </data>
+  <data name="Config189_extHowTo" xml:space="preserve">
+    <value>Comment ça marche</value>
+  </data>
+  <data name="Config190_extStep1" xml:space="preserve">
+    <value>Installez l'extension dans votre navigateur.</value>
+  </data>
+  <data name="Config191_extStep2" xml:space="preserve">
+    <value>Connectez-vous sur le site de trade officiel.</value>
+  </data>
+  <data name="Config192_extStep3" xml:space="preserve">
+    <value>Cliquez sur l'icône de l'extension, puis sur « Envoyer » et autorisez le navigateur à ouvrir Xiletrade.</value>
+  </data>
+  <data name="Config193_extPrivacy" xml:space="preserve">
+    <value>Rien n'est envoyé en ligne : le cookie de session va uniquement à Xiletrade sur cet ordinateur, où il est stocké chiffré.</value>
+  </data>
+  <data name="Config194_helpTagline" xml:space="preserve">
+    <value>Xiletrade est gratuit, open source et sans publicité. Fonctionne avec Path of Exile 1 et 2.
+Il grandit grâce à vos retours et à votre soutien.</value>
+  </data>
+  <data name="Config195_helpIssue1" xml:space="preserve">
+    <value>Expliquez comment reproduire le problème.</value>
+  </data>
+  <data name="Config196_helpIssue2" xml:space="preserve">
+    <value>Prix d'un objet : joignez l'objet (Ctrl+C dessus).</value>
+  </data>
+  <data name="Config197_helpDonate1" xml:space="preserve">
+    <value>Donnez le montant de votre choix.</value>
+  </data>
+  <data name="Config198_helpDonate2" xml:space="preserve">
+    <value>Chaque contribution aide à garder Xiletrade sans publicité.</value>
+  </data>
+  <data name="Config199_helpDiscord1" xml:space="preserve">
+    <value>Posez vos questions sur l'utilisation de Xiletrade.</value>
+  </data>
+  <data name="Config200_helpDiscord2" xml:space="preserve">
+    <value>Suivez et discutez de son développement.</value>
+  </data>
+  <data name="Config201_extManual" xml:space="preserve">
+    <value>Utilisateurs avancés : vous pouvez aussi ajouter ou supprimer la session manuellement dans le gestionnaire développeur.
+Onglet Général : cochez « Dev », puis Manager &gt; Authentication.</value>
+  </data>
+  <data name="Config202_helpProject" xml:space="preserve">
+    <value>Le projet</value>
   </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anormale</value>
@@ -2532,7 +2597,7 @@ Aucune vente ne sera ignorée.</value>
     <value>Live</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>Recherche live refusée : un cookie de session valide est nécessaire (paramètres, section authentification).</value>
+    <value>Recherche live refusée : un cookie de session valide est nécessaire (Paramètres &gt; Extension).</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>La recherche live n'a pas pu démarrer.</value>
@@ -2867,7 +2932,7 @@ Aucune donnée n'est envoyée automatiquement : vous pouvez vérifier et modifie
   <data name="Error036_TravelNoToken" xml:space="preserve">
     <value>Votre cookie de session est absent ou expiré !
 
-Utilisateurs avancés : vous pouvez mettre à jour votre cookie de session manuellement dans les paramètres, avec le gestionnaire développeur de la section authentification.</value>
+Envoyez-le en un clic avec l'extension de navigateur Xiletrade Sync : Paramètres &gt; Extension.</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>Votre compte est-il bien connecté ?</value>
@@ -2875,6 +2940,6 @@ Utilisateurs avancés : vous pouvez mettre à jour votre cookie de session manue
   <data name="Error038_TravelSession" xml:space="preserve">
     <value>Votre cookie de session est probablement absent ou expiré !
 
-Vous pouvez le mettre à jour manuellement dans les paramètres, avec le gestionnaire développeur de la section authentification.</value>
+Renvoyez-le avec l'extension de navigateur Xiletrade Sync : Paramètres &gt; Extension.</value>
   </data>
 </root>

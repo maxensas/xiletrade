@@ -538,7 +538,7 @@ desde un sitio web comercial, admite cualquier idioma.</value>
     <value>¿Está encontrando un error o un comportamiento anormal de la herramienta?</value>
   </data>
   <data name="Config137_lbHelp2" xml:space="preserve">
-    <value>Puede informar un problema en github.</value>
+    <value>Informar de un problema</value>
   </data>
   <data name="Config138_tbIssues" xml:space="preserve">
     <value>Asegúrese de proporcionar toda la información para reproducir el problema y encontrar una solución. Para verificar el precio: proporcione los datos del artículo (CTRL-C en un artículo) al abrir el problema.</value>
@@ -547,7 +547,7 @@ desde un sitio web comercial, admite cualquier idioma.</value>
     <value>¿Te gusta el proyecto y quieres echar una mano?</value>
   </data>
   <data name="Config140_lbHelp4" xml:space="preserve">
-    <value>Puedes donar una cantidad personalizada.</value>
+    <value>Donar libremente</value>
   </data>
   <data name="Config141_lbHelp5" xml:space="preserve">
     <value>Puede convertirse en un nuevo mecenas.</value>
@@ -585,7 +585,7 @@ desde un sitio web comercial, admite cualquier idioma.</value>
 en segundos antes de cancelar.</value>
   </data>
   <data name="Config152_lbHelp7" xml:space="preserve">
-    <value>Puedes unirte al proyecto en discord.</value>
+    <value>Unirse a la comunidad</value>
   </data>
   <data name="Config153_btnDiscordTip" xml:space="preserve">
     <value>Sigue la invitación en discord.gg.</value>
@@ -679,6 +679,71 @@ Solo funciona cuando la ventana del juego POE está activa.</value>
   <data name="Config181_totalAttributeTip" xml:space="preserve">
     <value>Selecciona automáticamente la estadística Atributos totales cuando se detecta un valor de atributo adicional.
 Esto deseleccionará todos los valores de modificadores de atributo (excepto únicos).</value>
+  </data>
+  <data name="Config182_tabExtension" xml:space="preserve">
+    <value>Extensión</value>
+  </data>
+  <data name="Config183_extTagline" xml:space="preserve">
+    <value>Envía tu cookie de sesión de Path of Exile a Xiletrade en un clic, sin copiar y pegar. Necesaria para la búsqueda en vivo y todas las funciones que requieren haber iniciado sesión.</value>
+  </data>
+  <data name="Config184_extInstall" xml:space="preserve">
+    <value>Instalar</value>
+  </data>
+  <data name="Config185_extChromeInfo" xml:space="preserve">
+    <value>También Edge, Brave, Opera…</value>
+  </data>
+  <data name="Config186_extFirefoxInfo" xml:space="preserve">
+    <value>Versión 140 o posterior</value>
+  </data>
+  <data name="Config187_extChromeTip" xml:space="preserve">
+    <value>Abrir la página de la extensión en Chrome Web Store</value>
+  </data>
+  <data name="Config188_extFirefoxTip" xml:space="preserve">
+    <value>Abrir la página de la extensión en Firefox Add-ons</value>
+  </data>
+  <data name="Config189_extHowTo" xml:space="preserve">
+    <value>Cómo funciona</value>
+  </data>
+  <data name="Config190_extStep1" xml:space="preserve">
+    <value>Instala la extensión en tu navegador.</value>
+  </data>
+  <data name="Config191_extStep2" xml:space="preserve">
+    <value>Inicia sesión en el sitio de comercio oficial.</value>
+  </data>
+  <data name="Config192_extStep3" xml:space="preserve">
+    <value>Haz clic en el icono de la extensión, luego en «Enviar» y permite que el navegador abra Xiletrade.</value>
+  </data>
+  <data name="Config193_extPrivacy" xml:space="preserve">
+    <value>Nada se envía por internet: la cookie de sesión solo va a Xiletrade en este ordenador, donde se guarda cifrada.</value>
+  </data>
+  <data name="Config194_helpTagline" xml:space="preserve">
+    <value>Xiletrade es gratuito, de código abierto y sin anuncios. Funciona con Path of Exile 1 y 2.
+Crece gracias a tus comentarios y tu apoyo.</value>
+  </data>
+  <data name="Config195_helpIssue1" xml:space="preserve">
+    <value>Explica cómo reproducir el problema.</value>
+  </data>
+  <data name="Config196_helpIssue2" xml:space="preserve">
+    <value>Comprobación de precio: incluye el objeto (Ctrl+C sobre él).</value>
+  </data>
+  <data name="Config197_helpDonate1" xml:space="preserve">
+    <value>Dona la cantidad que quieras.</value>
+  </data>
+  <data name="Config198_helpDonate2" xml:space="preserve">
+    <value>Cada aportación ayuda a mantener Xiletrade sin anuncios.</value>
+  </data>
+  <data name="Config199_helpDiscord1" xml:space="preserve">
+    <value>Haz tus preguntas sobre el uso de Xiletrade.</value>
+  </data>
+  <data name="Config200_helpDiscord2" xml:space="preserve">
+    <value>Sigue y comenta su desarrollo.</value>
+  </data>
+  <data name="Config201_extManual" xml:space="preserve">
+    <value>Usuarios avanzados: también puedes añadir o eliminar la sesión manualmente en el gestor de desarrollador.
+Pestaña General: marca «Dev» y luego Manager &gt; Authentication.</value>
+  </data>
+  <data name="Config202_helpProject" xml:space="preserve">
+    <value>El proyecto</value>
   </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anómala</value>
@@ -2535,7 +2600,7 @@ No se ignorará ninguna oferta.</value>
     <value>En vivo</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>Búsqueda en vivo rechazada: se necesita una cookie de sesión válida (ajustes, sección de autenticación).</value>
+    <value>Búsqueda en vivo rechazada: se necesita una cookie de sesión válida (Ajustes &gt; Extensión).</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>No se pudo iniciar la búsqueda en vivo.</value>
@@ -2841,7 +2906,7 @@ No se envía nada automáticamente: puede revisar y editar el informe antes de e
   <data name="Error036_TravelNoToken" xml:space="preserve">
     <value>¡Tu cookie de sesión falta o ha caducado!
 
-Usuarios avanzados: puedes actualizar tu cookie de sesión manualmente en la configuración, con el gestor de desarrollador de la sección de autenticación.</value>
+Envíala en un clic con la extensión de navegador Xiletrade Sync: Ajustes &gt; Extensión.</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>¿Tu cuenta está correctamente conectada?</value>
@@ -2849,6 +2914,6 @@ Usuarios avanzados: puedes actualizar tu cookie de sesión manualmente en la con
   <data name="Error038_TravelSession" xml:space="preserve">
     <value>¡Probablemente tu cookie de sesión falta o ha caducado!
 
-Puedes actualizarla manualmente en la configuración, con el gestor de desarrollador de la sección de autenticación.</value>
+Vuelve a enviarla con la extensión de navegador Xiletrade Sync: Ajustes &gt; Extensión.</value>
   </data>
 </root>

@@ -146,8 +146,8 @@
     <comment>Additional keys</comment>
   </data>
   <data name="Config008_tabHelp" xml:space="preserve">
-    <value>ヘルプと貢献</value>
-    <comment>Help and Contribute</comment>
+    <value>ヘルプ</value>
+    <comment>Help</comment>
   </data>
   <data name="Config009_lbPref" xml:space="preserve">
     <value>環境設定 ：</value>
@@ -686,8 +686,8 @@ Useful to thanks people or asking them to wait before a trade.</comment>
     <comment>You are encountering a bug or abnormal tool behavior ?</comment>
   </data>
   <data name="Config137_lbHelp2" xml:space="preserve">
-    <value>github で問題を報告できます。</value>
-    <comment>You can report an issue on github.</comment>
+    <value>問題を報告</value>
+    <comment>Report an issue</comment>
   </data>
   <data name="Config138_tbIssues" xml:space="preserve">
     <value>問題を再現して解決策を見つけるために、必ずすべての情報を提供してください。 価格確認の場合 : 発行時にアイテム データ (アイテムで CTRL-C) を指定します。</value>
@@ -698,8 +698,8 @@ Useful to thanks people or asking them to wait before a trade.</comment>
     <comment>You like the project and want to lend a helping hand ?</comment>
   </data>
   <data name="Config140_lbHelp4" xml:space="preserve">
-    <value>任意の金額を寄付できます。</value>
-    <comment>You can donate a custom amount.</comment>
+    <value>任意の金額を寄付</value>
+    <comment>Donate any amount</comment>
   </data>
   <data name="Config141_lbHelp5" xml:space="preserve">
     <value>新しいパトロンになることができます。</value>
@@ -748,7 +748,7 @@ Useful to thanks people or asking them to wait before a trade.</comment>
 in seconds before cancelling.</comment>
   </data>
   <data name="Config152_lbHelp7" xml:space="preserve">
-    <value>プロジェクトのDiscordに参加できます。</value>
+    <value>コミュニティに参加</value>
   </data>
   <data name="Config153_btnDiscordTip" xml:space="preserve">
     <value>discord.gg の招待に従ってください。</value>
@@ -842,6 +842,94 @@ POE ゲーム ウィンドウがアクティブな場合にのみ機能します
   <data name="Config181_totalAttributeTip" xml:space="preserve">
     <value>追加の属性値が検出されると、自動的に合計属性ステータスを選択します。
 これにより、すべての属性モッド値の選択が解除されます（ユニークを除く）。</value>
+  </data>
+  <data name="Config182_tabExtension" xml:space="preserve">
+    <value>拡張機能</value>
+    <comment>Extension</comment>
+  </data>
+  <data name="Config183_extTagline" xml:space="preserve">
+    <value>Path of Exile のセッションCookieをワンクリックで Xiletrade に送信します。コピー＆ペースト不要。ライブ検索など、ログインが必要なすべての機能に必要です。</value>
+    <comment>Sends your Path of Exile session cookie to Xiletrade in one click, no more copy and paste. Needed for live search and every feature that requires you to be logged in.</comment>
+  </data>
+  <data name="Config184_extInstall" xml:space="preserve">
+    <value>インストール</value>
+    <comment>Install</comment>
+  </data>
+  <data name="Config185_extChromeInfo" xml:space="preserve">
+    <value>Edge、Brave、Opera などにも対応</value>
+    <comment>Also Edge, Brave, Opera…</comment>
+  </data>
+  <data name="Config186_extFirefoxInfo" xml:space="preserve">
+    <value>バージョン 140 以降</value>
+    <comment>Version 140 or later</comment>
+  </data>
+  <data name="Config187_extChromeTip" xml:space="preserve">
+    <value>Chrome ウェブストアで拡張機能のページを開く</value>
+    <comment>Open the extension page on the Chrome Web Store</comment>
+  </data>
+  <data name="Config188_extFirefoxTip" xml:space="preserve">
+    <value>Firefox Add-ons で拡張機能のページを開く</value>
+    <comment>Open the extension page on Firefox Add-ons</comment>
+  </data>
+  <data name="Config189_extHowTo" xml:space="preserve">
+    <value>使い方</value>
+    <comment>How it works</comment>
+  </data>
+  <data name="Config190_extStep1" xml:space="preserve">
+    <value>ブラウザーに拡張機能をインストールします。</value>
+    <comment>Install the extension in your browser.</comment>
+  </data>
+  <data name="Config191_extStep2" xml:space="preserve">
+    <value>公式トレードサイトにログインします。</value>
+    <comment>Log in on the official trade site.</comment>
+  </data>
+  <data name="Config192_extStep3" xml:space="preserve">
+    <value>拡張機能のアイコンをクリックし、「送信」を押して、ブラウザーが Xiletrade を開くことを許可します。</value>
+    <comment>Click the extension icon, then "Send" and allow your browser to open Xiletrade.</comment>
+  </data>
+  <data name="Config193_extPrivacy" xml:space="preserve">
+    <value>オンラインには何も送信されません：セッションCookieはこのPCの Xiletrade にのみ渡され、暗号化して保存されます。</value>
+    <comment>Nothing is sent online: the session cookie only goes to Xiletrade on this computer, where it is stored encrypted.</comment>
+  </data>
+  <data name="Config194_helpTagline" xml:space="preserve">
+    <value>Xiletrade は無料・オープンソース・広告なし。Path of Exile 1・2 に対応しています。
+皆さんのフィードバックと支援によって成長しています。</value>
+    <comment>Xiletrade is free, open source and ad-free. Works on Path of Exile 1 and 2.
+It grows thanks to your feedback and support.</comment>
+  </data>
+  <data name="Config195_helpIssue1" xml:space="preserve">
+    <value>問題の再現方法を説明してください。</value>
+    <comment>Explain how to reproduce the problem.</comment>
+  </data>
+  <data name="Config196_helpIssue2" xml:space="preserve">
+    <value>価格チェック：アイテムを添付してください（アイテム上で Ctrl+C）。</value>
+    <comment>Price check: include the item (Ctrl+C on it).</comment>
+  </data>
+  <data name="Config197_helpDonate1" xml:space="preserve">
+    <value>お好きな金額を寄付できます。</value>
+    <comment>Donate the amount of your choice.</comment>
+  </data>
+  <data name="Config198_helpDonate2" xml:space="preserve">
+    <value>すべての支援が Xiletrade を広告なしに保つ助けになります。</value>
+    <comment>Every contribution helps keep Xiletrade ad-free.</comment>
+  </data>
+  <data name="Config199_helpDiscord1" xml:space="preserve">
+    <value>Xiletrade の使い方について質問できます。</value>
+    <comment>Ask your questions about using Xiletrade.</comment>
+  </data>
+  <data name="Config200_helpDiscord2" xml:space="preserve">
+    <value>開発の様子を追いかけ、議論に参加できます。</value>
+    <comment>Follow and discuss its development.</comment>
+  </data>
+  <data name="Config201_extManual" xml:space="preserve">
+    <value>上級者向け：開発者マネージャーでセッションを手動で追加・削除することもできます。
+一般設定タブで「開発」にチェックを入れ、Manager &gt; Authentication を開きます。</value>
+    <comment>Advanced users: you can also add or remove the session manually in the developer manager.
+General tab: check "Dev", then Manager &gt; Authentication.</comment>
+  </data>
+  <data name="Config202_helpProject" xml:space="preserve">
+    <value>プロジェクト</value>
+    <comment>The project</comment>
   </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常な</value>
@@ -3040,7 +3128,7 @@ A second click to load or unload all values.</comment>
     <value>ライブ</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>ライブ検索が拒否されました：有効なセッションCookieが必要です（設定、認証セクション）。</value>
+    <value>ライブ検索が拒否されました：有効なセッションCookieが必要です（設定 &gt; 拡張機能）。</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>ライブ検索を開始できませんでした。</value>
@@ -3400,7 +3488,7 @@ GitHubで事前入力済みのバグレポートを開きますか？
   <data name="Error036_TravelNoToken" xml:space="preserve">
     <value>セッションCookieがないか、期限切れです！
 
-上級者向け：設定の認証セクションにある開発者マネージャーから、セッションCookieを手動で更新できます。</value>
+ブラウザー拡張機能 Xiletrade Sync を使えばワンクリックで送信できます：設定 &gt; 拡張機能。</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>アカウントは正しく接続されていますか？</value>
@@ -3408,6 +3496,6 @@ GitHubで事前入力済みのバグレポートを開きますか？
   <data name="Error038_TravelSession" xml:space="preserve">
     <value>セッションCookieがないか、期限切れの可能性があります！
 
-設定の認証セクションにある開発者マネージャーから手動で更新できます。</value>
+ブラウザー拡張機能 Xiletrade Sync から再送信してください：設定 &gt; 拡張機能。</value>
   </data>
 </root>

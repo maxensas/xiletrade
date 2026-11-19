@@ -139,7 +139,7 @@
     <value>разное ключи</value>
   </data>
   <data name="Config008_tabHelp" xml:space="preserve">
-    <value>Помощь и вклад</value>
+    <value>Помощь</value>
   </data>
   <data name="Config009_lbPref" xml:space="preserve">
     <value>Предпочтения :</value>
@@ -538,7 +538,7 @@
     <value>Вы столкнулись с ошибкой или ненормальным поведением инструмента?</value>
   </data>
   <data name="Config137_lbHelp2" xml:space="preserve">
-    <value>Вы можете сообщить о проблеме на github.</value>
+    <value>Сообщить о проблеме</value>
   </data>
   <data name="Config138_tbIssues" xml:space="preserve">
     <value>Убедитесь, что вы предоставили всю информацию, чтобы воспроизвести проблему и найти решение. Для проверки цены: предоставьте данные о товаре (скопируйте информацию о товаре) при открытии выпуска.</value>
@@ -547,7 +547,7 @@
     <value>Вам нравится проект и вы хотите протянуть руку помощи?</value>
   </data>
   <data name="Config140_lbHelp4" xml:space="preserve">
-    <value>Вы можете пожертвовать произвольную сумму.</value>
+    <value>Пожертвовать любую сумму</value>
   </data>
   <data name="Config141_lbHelp5" xml:space="preserve">
     <value>Вы можете стать новым покровителем.</value>
@@ -585,7 +585,7 @@
 в секундах перед отменой.</value>
   </data>
   <data name="Config152_lbHelp7" xml:space="preserve">
-    <value>Вы можете присоединиться к проекту Discord.</value>
+    <value>Вступить в сообщество</value>
   </data>
   <data name="Config153_btnDiscordTip" xml:space="preserve">
     <value>Следуйте приглашению на discord.gg.</value>
@@ -679,6 +679,71 @@
   <data name="Config181_totalAttributeTip" xml:space="preserve">
     <value>Автоматически выбирает характеристику «Общие атрибуты», когда обнаружено дополнительное значение атрибута.
 Это снимет выбор со всех значений модификаторов атрибутов (кроме уникальных).</value>
+  </data>
+  <data name="Config182_tabExtension" xml:space="preserve">
+    <value>Расширение</value>
+  </data>
+  <data name="Config183_extTagline" xml:space="preserve">
+    <value>Отправляет cookie сессии Path of Exile в Xiletrade одним кликом, без копирования. Нужно для живого поиска и всех функций, требующих входа в аккаунт.</value>
+  </data>
+  <data name="Config184_extInstall" xml:space="preserve">
+    <value>Установка</value>
+  </data>
+  <data name="Config185_extChromeInfo" xml:space="preserve">
+    <value>Также Edge, Brave, Opera…</value>
+  </data>
+  <data name="Config186_extFirefoxInfo" xml:space="preserve">
+    <value>Версия 140 или новее</value>
+  </data>
+  <data name="Config187_extChromeTip" xml:space="preserve">
+    <value>Открыть страницу расширения в Chrome Web Store</value>
+  </data>
+  <data name="Config188_extFirefoxTip" xml:space="preserve">
+    <value>Открыть страницу расширения в Firefox Add-ons</value>
+  </data>
+  <data name="Config189_extHowTo" xml:space="preserve">
+    <value>Как это работает</value>
+  </data>
+  <data name="Config190_extStep1" xml:space="preserve">
+    <value>Установите расширение в браузер.</value>
+  </data>
+  <data name="Config191_extStep2" xml:space="preserve">
+    <value>Войдите на официальный сайт торговли.</value>
+  </data>
+  <data name="Config192_extStep3" xml:space="preserve">
+    <value>Нажмите на значок расширения, затем «Отправить» и разрешите браузеру открыть Xiletrade.</value>
+  </data>
+  <data name="Config193_extPrivacy" xml:space="preserve">
+    <value>Ничего не отправляется в сеть: cookie сессии передаётся только Xiletrade на этом компьютере и хранится в зашифрованном виде.</value>
+  </data>
+  <data name="Config194_helpTagline" xml:space="preserve">
+    <value>Xiletrade — бесплатный, с открытым кодом и без рекламы. Работает с Path of Exile 1 и 2.
+Он развивается благодаря вашим отзывам и поддержке.</value>
+  </data>
+  <data name="Config195_helpIssue1" xml:space="preserve">
+    <value>Опишите, как воспроизвести проблему.</value>
+  </data>
+  <data name="Config196_helpIssue2" xml:space="preserve">
+    <value>Проверка цены: приложите предмет (Ctrl+C на нём).</value>
+  </data>
+  <data name="Config197_helpDonate1" xml:space="preserve">
+    <value>Пожертвуйте любую сумму.</value>
+  </data>
+  <data name="Config198_helpDonate2" xml:space="preserve">
+    <value>Каждый вклад помогает сохранить Xiletrade без рекламы.</value>
+  </data>
+  <data name="Config199_helpDiscord1" xml:space="preserve">
+    <value>Задавайте вопросы об использовании Xiletrade.</value>
+  </data>
+  <data name="Config200_helpDiscord2" xml:space="preserve">
+    <value>Следите за разработкой и обсуждайте её.</value>
+  </data>
+  <data name="Config201_extManual" xml:space="preserve">
+    <value>Для опытных пользователей: сессию можно также добавить или удалить вручную в менеджере разработчика.
+Вкладка «Настройка»: отметьте «разра», затем Manager &gt; Authentication.</value>
+  </data>
+  <data name="Config202_helpProject" xml:space="preserve">
+    <value>О проекте</value>
   </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>Аномальный:</value>
@@ -2533,7 +2598,7 @@
     <value>Живой</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>Живой поиск отклонён: нужен действительный cookie сессии (настройки, раздел аутентификации).</value>
+    <value>Живой поиск отклонён: нужен действительный cookie сессии (Настройки &gt; Расширение).</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>Не удалось запустить живой поиск.</value>
@@ -2864,7 +2929,7 @@
   <data name="Error036_TravelNoToken" xml:space="preserve">
     <value>Ваш cookie сессии отсутствует или устарел!
 
-Для опытных пользователей: вы можете вручную обновить cookie сессии в настройках с помощью менеджера разработчика в разделе аутентификации.</value>
+Отправьте его одним кликом с помощью расширения браузера Xiletrade Sync: Настройки &gt; Расширение.</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>Ваша учётная запись правильно подключена?</value>
@@ -2872,6 +2937,6 @@
   <data name="Error038_TravelSession" xml:space="preserve">
     <value>Ваш cookie сессии, вероятно, отсутствует или устарел!
 
-Вы можете вручную обновить его в настройках с помощью менеджера разработчика в разделе аутентификации.</value>
+Отправьте его заново с помощью расширения браузера Xiletrade Sync: Настройки &gt; Расширение.</value>
   </data>
 </root>

@@ -139,7 +139,7 @@
     <value>추가 키</value>
   </data>
   <data name="Config008_tabHelp" xml:space="preserve">
-    <value>도움과 기여</value>
+    <value>도움말</value>
   </data>
   <data name="Config009_lbPref" xml:space="preserve">
     <value>환경 설정 :</value>
@@ -536,7 +536,7 @@
     <value>버그 또는 비정상적인 도구 동작이 발생합니까 ?</value>
   </data>
   <data name="Config137_lbHelp2" xml:space="preserve">
-    <value>Github에서 문제를보고 할 수 있습니다.</value>
+    <value>문제 보고</value>
   </data>
   <data name="Config138_tbIssues" xml:space="preserve">
     <value>문제를 재현하고 해결책을 찾기 위해 모든 정보를 제공했는지 확인하십시오. 가격 확인을 위해 : 발행물을 열 때 항목 데이터 (항목에 CTRL-C)를 제공합니다.</value>
@@ -545,7 +545,7 @@
     <value>당신은 프로젝트를 좋아하고 도움의 손길을 빌려주고 싶습니까 ?</value>
   </data>
   <data name="Config140_lbHelp4" xml:space="preserve">
-    <value>맞춤 금액을 기부 할 수 있습니다.</value>
+    <value>원하는 금액 기부</value>
   </data>
   <data name="Config141_lbHelp5" xml:space="preserve">
     <value>새로운 후원자가 될 수 있습니다.</value>
@@ -581,7 +581,7 @@
     <value>취소하기 전에 GGG 요청(trade/fetch API)을 기다리는 시간 제한(초)입니다.</value>
   </data>
   <data name="Config152_lbHelp7" xml:space="preserve">
-    <value>Discord 프로젝트에 참여할 수 있습니다.</value>
+    <value>커뮤니티 참여</value>
   </data>
   <data name="Config153_btnDiscordTip" xml:space="preserve">
     <value>discord.gg 의 초대를 따르세요.</value>
@@ -675,6 +675,71 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
   <data name="Config181_totalAttributeTip" xml:space="preserve">
     <value>추가 속성 값이 감지되면 자동으로 총 속성 스탯을 선택합니다.
 이 작업은 모든 속성 모드 값을 선택 해제합니다 (고유 아이템 제외).</value>
+  </data>
+  <data name="Config182_tabExtension" xml:space="preserve">
+    <value>확장 프로그램</value>
+  </data>
+  <data name="Config183_extTagline" xml:space="preserve">
+    <value>Path of Exile 세션 쿠키를 클릭 한 번으로 Xiletrade에 보냅니다. 복사·붙여넣기가 필요 없습니다. 실시간 검색 등 로그인이 필요한 모든 기능에 필요합니다.</value>
+  </data>
+  <data name="Config184_extInstall" xml:space="preserve">
+    <value>설치</value>
+  </data>
+  <data name="Config185_extChromeInfo" xml:space="preserve">
+    <value>Edge, Brave, Opera 등도 지원</value>
+  </data>
+  <data name="Config186_extFirefoxInfo" xml:space="preserve">
+    <value>버전 140 이상</value>
+  </data>
+  <data name="Config187_extChromeTip" xml:space="preserve">
+    <value>Chrome 웹 스토어에서 확장 프로그램 페이지 열기</value>
+  </data>
+  <data name="Config188_extFirefoxTip" xml:space="preserve">
+    <value>Firefox 부가 기능에서 확장 프로그램 페이지 열기</value>
+  </data>
+  <data name="Config189_extHowTo" xml:space="preserve">
+    <value>사용 방법</value>
+  </data>
+  <data name="Config190_extStep1" xml:space="preserve">
+    <value>브라우저에 확장 프로그램을 설치하세요.</value>
+  </data>
+  <data name="Config191_extStep2" xml:space="preserve">
+    <value>공식 거래 사이트에 로그인하세요.</value>
+  </data>
+  <data name="Config192_extStep3" xml:space="preserve">
+    <value>확장 프로그램 아이콘을 클릭한 뒤 '보내기'를 누르고, 브라우저가 Xiletrade를 열도록 허용하세요.</value>
+  </data>
+  <data name="Config193_extPrivacy" xml:space="preserve">
+    <value>온라인으로는 아무것도 보내지 않습니다: 세션 쿠키는 이 컴퓨터의 Xiletrade로만 전달되며 암호화되어 저장됩니다.</value>
+  </data>
+  <data name="Config194_helpTagline" xml:space="preserve">
+    <value>Xiletrade는 무료 오픈 소스이며 광고가 없습니다. Path of Exile 1, 2에서 작동합니다.
+여러분의 의견과 후원으로 성장합니다.</value>
+  </data>
+  <data name="Config195_helpIssue1" xml:space="preserve">
+    <value>문제를 재현하는 방법을 설명해 주세요.</value>
+  </data>
+  <data name="Config196_helpIssue2" xml:space="preserve">
+    <value>가격 확인: 아이템을 첨부하세요 (아이템 위에서 Ctrl+C).</value>
+  </data>
+  <data name="Config197_helpDonate1" xml:space="preserve">
+    <value>원하는 금액을 기부하세요.</value>
+  </data>
+  <data name="Config198_helpDonate2" xml:space="preserve">
+    <value>모든 후원은 Xiletrade를 광고 없이 유지하는 데 도움이 됩니다.</value>
+  </data>
+  <data name="Config199_helpDiscord1" xml:space="preserve">
+    <value>Xiletrade 사용에 대해 질문하세요.</value>
+  </data>
+  <data name="Config200_helpDiscord2" xml:space="preserve">
+    <value>개발 소식을 확인하고 의견을 나누세요.</value>
+  </data>
+  <data name="Config201_extManual" xml:space="preserve">
+    <value>고급 사용자: 개발자 관리자에서 세션을 직접 추가하거나 삭제할 수도 있습니다.
+일반 설정 탭에서 '개발자'를 체크한 뒤 Manager &gt; Authentication.</value>
+  </data>
+  <data name="Config202_helpProject" xml:space="preserve">
+    <value>프로젝트</value>
   </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>기묘한</value>
@@ -2533,7 +2598,7 @@ POE 게임 창이 활성화된 경우에만 작동합니다.</value>
     <value>실시간</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>실시간 검색 거부됨: 유효한 세션 쿠키가 필요합니다 (설정, 인증 섹션).</value>
+    <value>실시간 검색 거부됨: 유효한 세션 쿠키가 필요합니다 (설정 &gt; 확장 프로그램).</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>실시간 검색을 시작할 수 없습니다.</value>
@@ -2868,7 +2933,7 @@ GitHub에서 미리 작성된 버그 보고서를 여시겠습니까?
   <data name="Error036_TravelNoToken" xml:space="preserve">
     <value>세션 쿠키가 없거나 만료되었습니다!
 
-고급 사용자: 설정의 인증 섹션에 있는 개발자 관리자에서 세션 쿠키를 직접 업데이트할 수 있습니다.</value>
+브라우저 확장 프로그램 Xiletrade Sync로 클릭 한 번에 보낼 수 있습니다: 설정 &gt; 확장 프로그램.</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>계정이 올바르게 연결되어 있습니까?</value>
@@ -2876,6 +2941,6 @@ GitHub에서 미리 작성된 버그 보고서를 여시겠습니까?
   <data name="Error038_TravelSession" xml:space="preserve">
     <value>세션 쿠키가 없거나 만료되었을 수 있습니다!
 
-설정의 인증 섹션에 있는 개발자 관리자에서 직접 업데이트할 수 있습니다.</value>
+브라우저 확장 프로그램 Xiletrade Sync로 다시 보내세요: 설정 &gt; 확장 프로그램.</value>
   </data>
 </root>

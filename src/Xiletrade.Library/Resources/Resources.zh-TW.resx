@@ -139,7 +139,7 @@
     <value>附加鍵</value>
   </data>
   <data name="Config008_tabHelp" xml:space="preserve">
-    <value>幫助和貢獻</value>
+    <value>幫助</value>
   </data>
   <data name="Config009_lbPref" xml:space="preserve">
     <value>首選項 ：</value>
@@ -538,7 +538,7 @@
     <value>您遇到錯誤或異常的工具行為？</value>
   </data>
   <data name="Config137_lbHelp2" xml:space="preserve">
-    <value>您可以在github上報告問題。</value>
+    <value>回報問題</value>
   </data>
   <data name="Config138_tbIssues" xml:space="preserve">
     <value>確保提供所有信息以重現問題並找到解決方案。 對於價格檢查：在開票時提供項目數據（項目上的CTRL-C）。</value>
@@ -547,7 +547,7 @@
     <value>您喜歡這個項目並希望伸出援手嗎？</value>
   </data>
   <data name="Config140_lbHelp4" xml:space="preserve">
-    <value>您可以捐贈自定義金額。</value>
+    <value>隨意金額捐贈</value>
   </data>
   <data name="Config141_lbHelp5" xml:space="preserve">
     <value>您可以成為新的讚助人。</value>
@@ -584,7 +584,7 @@
 的時間限制（以秒為單位）。</value>
   </data>
   <data name="Config152_lbHelp7" xml:space="preserve">
-    <value>您可以加入專案Discord。</value>
+    <value>加入社群</value>
   </data>
   <data name="Config153_btnDiscordTip" xml:space="preserve">
     <value>按照discord.gg 上的邀請進行操作。</value>
@@ -678,6 +678,71 @@
   <data name="Config181_totalAttributeTip" xml:space="preserve">
     <value>當偵測到額外的屬性數值時，會自動選擇「總屬性」。
 這將取消選取所有屬性詞綴數值（不包含傳奇/唯一）。</value>
+  </data>
+  <data name="Config182_tabExtension" xml:space="preserve">
+    <value>擴充功能</value>
+  </data>
+  <data name="Config183_extTagline" xml:space="preserve">
+    <value>一鍵將 Path of Exile 工作階段 Cookie 傳送到 Xiletrade，無需複製貼上。即時搜尋及所有需要登入的功能都需要它。</value>
+  </data>
+  <data name="Config184_extInstall" xml:space="preserve">
+    <value>安裝</value>
+  </data>
+  <data name="Config185_extChromeInfo" xml:space="preserve">
+    <value>也支援 Edge、Brave、Opera…</value>
+  </data>
+  <data name="Config186_extFirefoxInfo" xml:space="preserve">
+    <value>版本 140 或更新</value>
+  </data>
+  <data name="Config187_extChromeTip" xml:space="preserve">
+    <value>在 Chrome 線上應用程式商店開啟擴充功能頁面</value>
+  </data>
+  <data name="Config188_extFirefoxTip" xml:space="preserve">
+    <value>在 Firefox 附加元件開啟擴充功能頁面</value>
+  </data>
+  <data name="Config189_extHowTo" xml:space="preserve">
+    <value>使用方式</value>
+  </data>
+  <data name="Config190_extStep1" xml:space="preserve">
+    <value>在瀏覽器中安裝擴充功能。</value>
+  </data>
+  <data name="Config191_extStep2" xml:space="preserve">
+    <value>登入官方交易網站。</value>
+  </data>
+  <data name="Config192_extStep3" xml:space="preserve">
+    <value>點擊擴充功能圖示，再點擊「傳送」，並允許瀏覽器開啟 Xiletrade。</value>
+  </data>
+  <data name="Config193_extPrivacy" xml:space="preserve">
+    <value>不會上網傳送任何資料：工作階段 Cookie 只會傳給這台電腦上的 Xiletrade，並加密儲存。</value>
+  </data>
+  <data name="Config194_helpTagline" xml:space="preserve">
+    <value>Xiletrade 免費、開源、無廣告，支援 Path of Exile 1 和 2。
+它在你的回饋與支持下不斷成長。</value>
+  </data>
+  <data name="Config195_helpIssue1" xml:space="preserve">
+    <value>請說明如何重現該問題。</value>
+  </data>
+  <data name="Config196_helpIssue2" xml:space="preserve">
+    <value>價格查詢：請附上物品（在物品上按 Ctrl+C）。</value>
+  </data>
+  <data name="Config197_helpDonate1" xml:space="preserve">
+    <value>捐贈任意金額。</value>
+  </data>
+  <data name="Config198_helpDonate2" xml:space="preserve">
+    <value>每一份支持都讓 Xiletrade 保持無廣告。</value>
+  </data>
+  <data name="Config199_helpDiscord1" xml:space="preserve">
+    <value>提出關於使用 Xiletrade 的問題。</value>
+  </data>
+  <data name="Config200_helpDiscord2" xml:space="preserve">
+    <value>關注並討論開發進展。</value>
+  </data>
+  <data name="Config201_extManual" xml:space="preserve">
+    <value>進階使用者：也可以在開發者管理器中手動新增或移除工作階段。
+常規設置分頁：勾選「開發者」，然後 Manager &gt; Authentication。</value>
+  </data>
+  <data name="Config202_helpProject" xml:space="preserve">
+    <value>專案</value>
   </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>異常的</value>
@@ -2610,7 +2675,7 @@
     <value>即時</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>即時搜尋被拒絕：需要有效的工作階段 Cookie（設定，認證部分）。</value>
+    <value>即時搜尋被拒絕：需要有效的工作階段 Cookie（設定 &gt; 擴充功能）。</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>無法啟動即時搜尋。</value>
@@ -2941,7 +3006,7 @@ Garena服務器：繁體中文。</value>
   <data name="Error036_TravelNoToken" xml:space="preserve">
     <value>您的工作階段 Cookie 遺失或已過期！
 
-進階使用者：可以在設定的驗證區塊，使用開發者管理器手動更新工作階段 Cookie。</value>
+使用瀏覽器擴充功能 Xiletrade Sync 一鍵傳送：設定 &gt; 擴充功能。</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>您的帳戶是否已正確連線？</value>
@@ -2949,6 +3014,6 @@ Garena服務器：繁體中文。</value>
   <data name="Error038_TravelSession" xml:space="preserve">
     <value>您的工作階段 Cookie 可能遺失或已過期！
 
-可以在設定的驗證區塊，使用開發者管理器手動更新。</value>
+請使用瀏覽器擴充功能 Xiletrade Sync 重新傳送：設定 &gt; 擴充功能。</value>
   </data>
 </root>
