@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.LiveSearch;
@@ -13,11 +14,13 @@ using Xiletrade.Library.Services.Interface;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 using Xiletrade.Library.ViewModels.Live;
+using Xiletrade.Library.ViewModels.Main.Result;
 
 namespace Xiletrade.Library.Services;
 
 /// <summary>
-/// Live searches of the trade site : the new listings are fetched and displayed in toasts.
+/// Live searches of the trade site : the new listings are fetched and displayed in toasts,
+/// the last <see cref="MaxHistory"/> of each live search are listed in its tab.
 /// </summary>
 /// <remarks>
 /// The fetches are limited for all the live searches together : at most one every <see cref="FetchInterval"/>,
@@ -34,6 +37,9 @@ public sealed class LiveSearchService : IDisposable
 {
     /// <summary>Live searches at the same time.</summary>
     internal const int MaxSessions = 4;
+
+    /// <summary>Live results kept by live search, listed in its tab.</summary>
+    internal const int MaxHistory = 100;
 
     private const int MaxToasts = 6;
     private const int MaxPinned = 3;
@@ -249,7 +255,7 @@ public sealed class LiveSearchService : IDisposable
                 var session = _sessions[i];
                 sessions[i] = new(session.Number,
                     session.Label ?? string.Concat(Resources.Resources.Main297_Live, " ", session.Number.ToString()), session.IsPaused,
-                    session.Criteria);
+                    session.Criteria, session.History, session.Referer);
             }
             return sessions;
         }
@@ -422,6 +428,7 @@ public sealed class LiveSearchService : IDisposable
                 return;
             }
             var data = _dm.Json.Deserialize<FetchData>(body, replace: true);
+            var time = DateTime.Now.ToString("HH:mm:ss", CultureInfo.InvariantCulture); // the same for the items of a fetch
             var sound = true; // one sound for the items of a fetch
 #if DEBUG
             var shown = 0;
@@ -433,6 +440,7 @@ public sealed class LiveSearchService : IDisposable
                     continue; // no longer listed
                 }
                 Show(new LiveItemViewModel(_dm, info, session.Number, session.Referer, _travelToHideout, _dismissToast, _tryPin, _toastState), sound);
+                AddHistory(session, info, time);
                 sound = false;
 #if DEBUG
                 shown++;
@@ -459,6 +467,30 @@ public sealed class LiveSearchService : IDisposable
             Volatile.Write(ref _fetching, 0);
         }
     }
+
+    // listed in the tab of the live search as the results of a price check, the time it appeared instead of its age :
+    // newest first, at most MaxHistory (one fetch at a time, see OnResult)
+    private void AddHistory(LiveSearchSession session, FetchDataInfo info, string time)
+    {
+        var price = info.Listing.Price;
+        if (price is null || price.Amount <= 0 || string.IsNullOrEmpty(price.Currency))
+        {
+            return;
+        }
+        var currency = _dm.GetCurrencyInfo(price.Currency.ReplaceCurrencyChars(), _dm.Config.Options.GameVersion is 1);
+        var sale = new SaleInfo(price.Amount, PoeApiService.GetQuality(info), string.Empty, string.Empty,
+            info.Listing.Account?.Name, info.Listing.HideoutToken);
+        var history = session.History;
+        history.Insert(0, new(_dm, info.Item, sale, currency, info.Listing.Account?.Status ?? default, time));
+        while (history.Count > MaxHistory)
+        {
+            history.RemoveAt(history.Count - 1);
+        }
+    }
+
+    /// <summary>Travel to the hideout of the seller of a live result : false when it failed (the error is displayed).</summary>
+    /// <param name="referer">Page of its live search.</param>
+    internal Task<bool> TravelToHideoutAsync(string hideoutToken, string referer) => _travelToHideout(hideoutToken, referer);
 
     // at most MaxToasts toasts of the live searches : the oldest disappear at once (no fading), before the new one is displayed
     private void Show(LiveItemViewModel item, bool sound)

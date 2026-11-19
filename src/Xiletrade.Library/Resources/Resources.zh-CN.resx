@@ -139,7 +139,7 @@
     <value>附加键</value>
   </data>
   <data name="Config008_tabHelp" xml:space="preserve">
-    <value>帮助和贡献</value>
+    <value>帮助</value>
   </data>
   <data name="Config009_lbPref" xml:space="preserve">
     <value>首选项 ：</value>
@@ -357,7 +357,7 @@
     <value>价格查询</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>搜索 / 交换</value>
+    <value>自定义搜索</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>设定视窗</value>
@@ -402,7 +402,7 @@
     <value>当您使用快捷方式在游戏中单击某个项目时，将显示价格查找器窗口。</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>显示自定义搜索和批量物品交换窗口。</value>
+    <value>显示自定义搜索窗口，也可在其中启动实时搜索。</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>显示Xiletrade设置窗口。</value>
@@ -538,7 +538,7 @@
     <value>您遇到错误或异常的工具行为？</value>
   </data>
   <data name="Config137_lbHelp2" xml:space="preserve">
-    <value>您可以在github上报告问题。</value>
+    <value>报告问题</value>
   </data>
   <data name="Config138_tbIssues" xml:space="preserve">
     <value>确保提供所有信息以重现问题并找到解决方案。 对于价格检查：在开票时提供项目数据（项目上的CTRL-C）。</value>
@@ -547,7 +547,7 @@
     <value>您喜欢这个项目并希望伸出援手吗？</value>
   </data>
   <data name="Config140_lbHelp4" xml:space="preserve">
-    <value>您可以捐赠自定义金额。</value>
+    <value>随意金额捐赠</value>
   </data>
   <data name="Config141_lbHelp5" xml:space="preserve">
     <value>您可以成为新的赞助人。</value>
@@ -584,7 +584,7 @@
 的时间限制（以秒为单位）。</value>
   </data>
   <data name="Config152_lbHelp7" xml:space="preserve">
-    <value>您可以加入项目Discord。</value>
+    <value>加入社区</value>
   </data>
   <data name="Config153_btnDiscordTip" xml:space="preserve">
     <value>按照discord.gg 上的邀请进行操作。</value>
@@ -678,6 +678,71 @@
   <data name="Config181_totalAttributeTip" xml:space="preserve">
     <value>检测到额外属性值时，将自动选择“总属性”统计。
 这将取消选择所有属性词缀数值（不包括传奇/唯一）。</value>
+  </data>
+  <data name="Config182_tabExtension" xml:space="preserve">
+    <value>扩展</value>
+  </data>
+  <data name="Config183_extTagline" xml:space="preserve">
+    <value>一键将 Path of Exile 会话 Cookie 发送到 Xiletrade，无需复制粘贴。实时搜索及所有需要登录的功能都需要它。</value>
+  </data>
+  <data name="Config184_extInstall" xml:space="preserve">
+    <value>安装</value>
+  </data>
+  <data name="Config185_extChromeInfo" xml:space="preserve">
+    <value>也支持 Edge、Brave、Opera…</value>
+  </data>
+  <data name="Config186_extFirefoxInfo" xml:space="preserve">
+    <value>版本 140 或更高</value>
+  </data>
+  <data name="Config187_extChromeTip" xml:space="preserve">
+    <value>在 Chrome 网上应用店打开扩展页面</value>
+  </data>
+  <data name="Config188_extFirefoxTip" xml:space="preserve">
+    <value>在 Firefox 附加组件打开扩展页面</value>
+  </data>
+  <data name="Config189_extHowTo" xml:space="preserve">
+    <value>使用方法</value>
+  </data>
+  <data name="Config190_extStep1" xml:space="preserve">
+    <value>在浏览器中安装扩展。</value>
+  </data>
+  <data name="Config191_extStep2" xml:space="preserve">
+    <value>登录官方交易网站。</value>
+  </data>
+  <data name="Config192_extStep3" xml:space="preserve">
+    <value>点击扩展图标，再点击“发送”，并允许浏览器打开 Xiletrade。</value>
+  </data>
+  <data name="Config193_extPrivacy" xml:space="preserve">
+    <value>不会联网发送任何数据：会话 Cookie 只会传给本机上的 Xiletrade，并加密保存。</value>
+  </data>
+  <data name="Config194_helpTagline" xml:space="preserve">
+    <value>Xiletrade 免费、开源、无广告，支持 Path of Exile 1 和 2。
+它在你的反馈与支持下不断成长。</value>
+  </data>
+  <data name="Config195_helpIssue1" xml:space="preserve">
+    <value>请说明如何重现该问题。</value>
+  </data>
+  <data name="Config196_helpIssue2" xml:space="preserve">
+    <value>价格查询：请附上物品（在物品上按 Ctrl+C）。</value>
+  </data>
+  <data name="Config197_helpDonate1" xml:space="preserve">
+    <value>捐赠任意金额。</value>
+  </data>
+  <data name="Config198_helpDonate2" xml:space="preserve">
+    <value>每一份支持都让 Xiletrade 保持无广告。</value>
+  </data>
+  <data name="Config199_helpDiscord1" xml:space="preserve">
+    <value>提出关于使用 Xiletrade 的问题。</value>
+  </data>
+  <data name="Config200_helpDiscord2" xml:space="preserve">
+    <value>关注并讨论开发进展。</value>
+  </data>
+  <data name="Config201_extManual" xml:space="preserve">
+    <value>高级用户：也可以在开发者管理器中手动添加或删除会话。
+常规设置选项卡：勾选“开发者”，然后 Manager &gt; Authentication。</value>
+  </data>
+  <data name="Config202_helpProject" xml:space="preserve">
+    <value>项目</value>
   </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>异常</value>
@@ -1142,8 +1207,8 @@
     <value>More Currency</value>
     <comment>TO translate</comment>
   </data>
-  <data name="General140_MoreScarabs" xml:space="preserve">
-    <value>More Scarabs</value>
+  <data name="General140_MoreThreads" xml:space="preserve">
+    <value>More Threads</value>
     <comment>TO translate</comment>
   </data>
   <data name="General141_MoreMaps" xml:space="preserve">
@@ -1537,6 +1602,14 @@
     <value>You cannot use this item. Its stats will be ignored</value>
     <comment>TO translate</comment>
   </data>
+  <data name="General247_Lesser" xml:space="preserve">
+    <value>次级</value>
+    <comment>TO check : eldritch embers</comment>
+  </data>
+  <data name="General248_Greater" xml:space="preserve">
+    <value>高级</value>
+    <comment>TO check : eldritch embers</comment>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>不灭余烬</value>
   </data>
@@ -1756,6 +1829,9 @@
   </data>
   <data name="ItemClass_chart" xml:space="preserve">
     <value>海图</value>
+  </data>
+  <data name="ItemClass_viscera" xml:space="preserve">
+    <value>内脏</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>选择货币：
@@ -2663,7 +2739,7 @@
     <value>实时</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>实时搜索被拒绝：需要有效的会话 Cookie（设置，认证部分）。</value>
+    <value>实时搜索被拒绝：需要有效的会话 Cookie（设定 &gt; 扩展）。</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>无法启动实时搜索。</value>
@@ -2718,6 +2794,15 @@
   </data>
   <data name="Main318_LiveTooBroadPaused" xml:space="preserve">
     <value>实时搜索已暂停：一分钟内新物品超过 {0} 个，请缩小搜索范围或恢复搜索。</value>
+  </data>
+  <data name="Main319_LiveTime" xml:space="preserve">
+    <value>时间</value>
+  </data>
+  <data name="Main320_LiveOpenSettings" xml:space="preserve">
+    <value>打开实时搜索设置</value>
+  </data>
+  <data name="Main321_OpenLive" xml:space="preserve">
+    <value>打开实时</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>欢迎来到Xiletrade</value>
@@ -2985,7 +3070,7 @@ Garena服务器：繁体中文。</value>
   <data name="Error036_TravelNoToken" xml:space="preserve">
     <value>您的会话 Cookie 缺失或已过期！
 
-高级用户：可以在设置的身份验证部分，使用开发者管理器手动更新会话 Cookie。</value>
+使用浏览器扩展 Xiletrade Sync 一键发送：设定 &gt; 扩展。</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>您的账户是否已正确连接？</value>
@@ -2993,6 +3078,6 @@ Garena服务器：繁体中文。</value>
   <data name="Error038_TravelSession" xml:space="preserve">
     <value>您的会话 Cookie 可能缺失或已过期！
 
-可以在设置的身份验证部分，使用开发者管理器手动更新。</value>
+请使用浏览器扩展 Xiletrade Sync 重新发送：设定 &gt; 扩展。</value>
   </data>
 </root>

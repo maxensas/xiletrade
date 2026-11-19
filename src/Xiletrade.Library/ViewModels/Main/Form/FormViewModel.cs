@@ -259,8 +259,8 @@ public sealed partial class FormViewModel : ViewModelBase
         itemBaseType = useCustomOrBulk ? Resources.Resources.Main247_CustomSearch : string.Empty;
         itemBaseTypeColor = useCustomOrBulk ? Strings.Color.Moccasin : string.Empty;
         baseTypeFontSize = useCustomOrBulk ? 16 : 12; // FontSize cannot be equal to 0
-        itemExchange = new(_dm, _vm, _view, _message, useCustomOrBulk);
-        tab = new(this, useCustomOrBulk);
+        itemExchange = new(_dm, _vm, _view, _message);
+        tab = new(this, live, useCustomOrBulk);
         if (useCustomOrBulk)
         {
             visible = new();
@@ -316,7 +316,7 @@ public sealed partial class FormViewModel : ViewModelBase
         corruptedIndex = !flag.Tag.Corrupted && (flag.Gem.IsGem || (!flag.Rarity.Unique
             && (flag.Map.IsMap || flag.Waystones || flag.Invitation || flag.Area.Logbook))) ? 1
             : flag.Tag.Corrupted && _dm.Config.Options.AutoSelectCorrupt ? 2
-            : (flag.Rarity.Normal || (isPoeTwo && flag.Rarity.Unique)) ? 1 : 0;
+            : (flag.Rarity.Normal || flag.Rarity.Unique) ? 1 : 0;
         doubleCorruptedIndex = flag.Tag.TwiceCorrupted && _dm.Config.Options.AutoSelectCorrupt ? 2 : 0; // to refine
 
         var poe2SkillWeapon = item.IsPoe2 && (flag.Weapon.Wand || flag.Weapon.IsStave || flag.Weapon.Sceptre);
@@ -339,7 +339,7 @@ public sealed partial class FormViewModel : ViewModelBase
         panel = new(_dm, item, minMax);
         visible = new(_dm, item, showDust);
         rarity = new(item);
-        tab = new(this, item);
+        tab = new(this, live, item);
         condition = new(item, panel.Sockets);
         influence = new(item.Flag.Tag);
         checkComboCondition = new(condition);

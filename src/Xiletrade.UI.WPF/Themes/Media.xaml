@@ -51,6 +51,8 @@
     <Color x:Key="DescWebColor">#7F7F7F</Color>
     <Color x:Key="NormalWebColor">#C8C8C8</Color>
     <Color x:Key="MagicWebColor">#8888FF</Color>
+    <Color x:Key="MagicDarkWebColor">#5A5AB0</Color>
+    <Color x:Key="MagicDarkerWebColor">#3E3E85</Color>
     <Color x:Key="RareWebColor">#FFFF77</Color>
     <Color x:Key="UniqueWebColor">#AF6025</Color>
     <Color x:Key="UniqueFoilWebColor">#82AD6A</Color>
@@ -121,6 +123,8 @@
     <SolidColorBrush x:Key="DescWebBrush" Color="{StaticResource DescWebColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="NormalWebBrush" Color="{StaticResource NormalWebColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="MagicWebBrush" Color="{StaticResource MagicWebColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="MagicDarkWebBrush" Color="{StaticResource MagicDarkWebColor}" options:Freeze="True"/>
+    <SolidColorBrush x:Key="MagicDarkerWebBrush" Color="{StaticResource MagicDarkerWebColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="RareWebBrush" Color="{StaticResource RareWebColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="UniqueWebBrush" Color="{StaticResource UniqueWebColor}" options:Freeze="True"/>
     <SolidColorBrush x:Key="UniqueFoilWebBrush" Color="{StaticResource UniqueFoilWebColor}" options:Freeze="True"/>
@@ -222,6 +226,8 @@
     <ext:ImageAsset x:Key="ImgGithub" Path="github.png"/>
     <ext:ImageAsset x:Key="ImgPaypal" Path="paypal.png"/>
     <ext:ImageAsset x:Key="ImgDiscord" Path="discord.png"/>
+    <ext:ImageAsset x:Key="ImgChrome" Path="chrome.png"/>
+    <ext:ImageAsset x:Key="ImgFirefox" Path="firefox.png"/>
 
     <ext:ImageAsset x:Key="ImgChaosGray" Path="chaos.png"/>
     <ext:ImageAsset x:Key="ImgExaltGray" Path="exalt.png"/>

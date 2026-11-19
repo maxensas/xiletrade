@@ -51,9 +51,10 @@ internal record class XiletradeItem
     internal XiletradeOption Evasion { get; } = new();
     internal XiletradeOption Ward { get; } = new();
     internal XiletradeOption MapIiq { get; } = new();
+    internal XiletradeOption MapAtlasDrops { get; } = new();
     internal XiletradeOption MapIir { get; } = new();
     internal XiletradeOption MapPack { get; } = new();
-    internal XiletradeOption MapScarab { get; } = new();
+    internal XiletradeOption MapThread { get; } = new();
     internal XiletradeOption MapCurrency { get; } = new();
     internal XiletradeOption MapDivCard { get; } = new();
     internal XiletradeOption Resolve { get; } = new();
@@ -245,6 +246,7 @@ internal record class XiletradeItem
             (StatPanel.DefenseRunicWard, Ward),
             (StatPanel.MapPackSize, MapPack),
             (StatPanel.MapQuantity, MapIiq),
+            (StatPanel.MapAtlasDrops, MapAtlasDrops),
             (StatPanel.MapRarity, MapIir),
             (StatPanel.GoldFound, GoldFound),
             (StatPanel.DeadSulphur, DeadSulphur),
@@ -294,10 +296,10 @@ internal record class XiletradeItem
             (StatPanel.TotalLife, Strings.StatPoe1.Pseudo.TotalLife),
             (StatPanel.TotalAttribute, Strings.StatPoe1.Pseudo.TotalAttribute),
             (StatPanel.TotalGlobalEs, Strings.StatPoe1.Pseudo.TotalEs),
-            (StatPanel.MapMoreScarab, Strings.StatPoe1.Pseudo.MoreScarab),
+            (StatPanel.MapMoreThread, Strings.StatPoe1.Pseudo.MoreScarab), // 3.30 : the trade pseudo is still named More Scarabs
             (StatPanel.MapMoreCurrency, Strings.StatPoe1.Pseudo.MoreCurrency),
-            (StatPanel.MapMoreDivCard, Strings.StatPoe1.Pseudo.MoreDivCard)
-            //(StatPanel.MapMoreMap, "pseudo.pseudo_map_more_map_drops")
+            (StatPanel.MapMoreDivCard, Strings.StatPoe1.Pseudo.MoreDivCard),
+            (StatPanel.MapMoreMap, Strings.StatPoe1.Pseudo.MoreMap)
         };
 
         foreach ((var stat, var pseudo) in pseudos)

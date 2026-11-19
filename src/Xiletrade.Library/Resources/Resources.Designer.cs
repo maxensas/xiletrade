@@ -761,7 +761,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Localized string similar to => Bulk Exchange.
+        ///   Localized string similar to => Custom Search.
         /// </summary>
         public static string Config078_lbBulkEx {
             get {
@@ -896,7 +896,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Localized string similar to => Display The Bulk item Exchange window..
+        ///   Localized string similar to => Display the custom search window, which can also start live searches..
         /// </summary>
         public static string Config093_lbBulkExTip {
             get {
@@ -1700,6 +1700,195 @@ namespace Xiletrade.Library.Resources {
         public static string Config181_totalAttributeTip {
             get {
                 return ResourceManager.GetString("Config181_totalAttributeTip", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config182_tabExtension {
+            get {
+                return ResourceManager.GetString("Config182_tabExtension", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config183_extTagline {
+            get {
+                return ResourceManager.GetString("Config183_extTagline", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config184_extInstall {
+            get {
+                return ResourceManager.GetString("Config184_extInstall", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config185_extChromeInfo {
+            get {
+                return ResourceManager.GetString("Config185_extChromeInfo", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config186_extFirefoxInfo {
+            get {
+                return ResourceManager.GetString("Config186_extFirefoxInfo", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config187_extChromeTip {
+            get {
+                return ResourceManager.GetString("Config187_extChromeTip", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config188_extFirefoxTip {
+            get {
+                return ResourceManager.GetString("Config188_extFirefoxTip", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config189_extHowTo {
+            get {
+                return ResourceManager.GetString("Config189_extHowTo", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config190_extStep1 {
+            get {
+                return ResourceManager.GetString("Config190_extStep1", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config191_extStep2 {
+            get {
+                return ResourceManager.GetString("Config191_extStep2", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config192_extStep3 {
+            get {
+                return ResourceManager.GetString("Config192_extStep3", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config193_extPrivacy {
+            get {
+                return ResourceManager.GetString("Config193_extPrivacy", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config194_helpTagline {
+            get {
+                return ResourceManager.GetString("Config194_helpTagline", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config195_helpIssue1 {
+            get {
+                return ResourceManager.GetString("Config195_helpIssue1", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config196_helpIssue2 {
+            get {
+                return ResourceManager.GetString("Config196_helpIssue2", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config197_helpDonate1 {
+            get {
+                return ResourceManager.GetString("Config197_helpDonate1", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config198_helpDonate2 {
+            get {
+                return ResourceManager.GetString("Config198_helpDonate2", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config199_helpDiscord1 {
+            get {
+                return ResourceManager.GetString("Config199_helpDiscord1", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config200_helpDiscord2 {
+            get {
+                return ResourceManager.GetString("Config200_helpDiscord2", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config201_extManual {
+            get {
+                return ResourceManager.GetString("Config201_extManual", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => string.
+        /// </summary>
+        public static string Config202_helpProject {
+            get {
+                return ResourceManager.GetString("Config202_helpProject", resourceCulture);
             }
         }
 		
@@ -2962,13 +3151,13 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Localized string similar to => More Scarabs.
+        ///   Localized string similar to => More Threads.
         /// </summary>
-        public static string General140_MoreScarabs
+        public static string General140_MoreThreads
         {
             get
             {
-                return ResourceManager.GetString("General140_MoreScarabs", resourceCulture);
+                return ResourceManager.GetString("General140_MoreThreads", resourceCulture);
             }
         }
 
@@ -4039,6 +4228,33 @@ namespace Xiletrade.Library.Resources {
                 return ResourceManager.GetString("General246_CannotUse", resourceCulture);
             }
         }
+		
+		/// <summary>
+        ///   Localized string similar to => Lesser.
+        /// </summary>
+        public static string General247_Lesser {
+            get {
+                return ResourceManager.GetString("General247_Lesser", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Greater.
+        /// </summary>
+        public static string General248_Greater {
+            get {
+                return ResourceManager.GetString("General248_Greater", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Localized string similar to => Atlas Drops.
+        /// </summary>
+        public static string General249_AtlasDrops {
+            get {
+                return ResourceManager.GetString("General249_AtlasDrops", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Localized string similar to => Embers of the Allflame.
@@ -4687,6 +4903,15 @@ namespace Xiletrade.Library.Resources {
         public static string ItemClass_chart {
             get {
                 return ResourceManager.GetString("ItemClass_chart", resourceCulture);
+            }
+        }
+		
+		/// <summary>
+        ///   Localized string similar to => Viscera.
+        /// </summary>
+        public static string ItemClass_viscera {
+            get {
+                return ResourceManager.GetString("ItemClass_viscera", resourceCulture);
             }
         }
 		
@@ -7466,7 +7691,7 @@ namespace Xiletrade.Library.Resources {
         }
 
         /// <summary>
-        ///   Localized string similar to => Live search refused : a valid session cookie is required (settings, authentication section).
+        ///   Localized string similar to => Live search refused : a valid session cookie is required (Settings > Extension).
         /// </summary>
         public static string Main298_LiveNoSession
         {
@@ -7671,6 +7896,33 @@ namespace Xiletrade.Library.Resources {
             get
             {
                 return ResourceManager.GetString("Main318_LiveTooBroadPaused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Localized string similar to => Time.
+        /// </summary>
+        public static string Main319_LiveTime {
+            get {
+                return ResourceManager.GetString("Main319_LiveTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Localized string similar to => Open the live search settings.
+        /// </summary>
+        public static string Main320_LiveOpenSettings {
+            get {
+                return ResourceManager.GetString("Main320_LiveOpenSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Localized string similar to => Open live.
+        /// </summary>
+        public static string Main321_OpenLive {
+            get {
+                return ResourceManager.GetString("Main321_OpenLive", resourceCulture);
             }
         }
 

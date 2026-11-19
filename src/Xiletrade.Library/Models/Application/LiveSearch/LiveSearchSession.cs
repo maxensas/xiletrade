@@ -10,7 +10,9 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Xiletrade.Library.Services.Interface;
+using Xiletrade.Library.Shared.Collection;
 using Xiletrade.Library.Shared.Enum;
+using Xiletrade.Library.ViewModels.Main.Result;
 
 namespace Xiletrade.Library.Models.Application.LiveSearch;
 
@@ -83,6 +85,9 @@ internal sealed class LiveSearchSession : IDisposable
 
     /// <summary>Criteria of the custom search when it started : given back to the form.</summary>
     internal LiveSearchCriteria Criteria { get; init; }
+
+    /// <summary>Last live results fetched, newest first : listed in the tab of the live search, purged when it ends (<see cref="Dispose"/>).</summary>
+    internal AsyncObservableCollection<ResultListItemViewModel> History { get; } = new();
 
     /// <summary>Paused by the user or for too many results : its results are skipped, they do not count as too many results.</summary>
     internal bool IsPaused
@@ -367,5 +372,7 @@ internal sealed class LiveSearchSession : IDisposable
     {
         _stop.Dispose();
         _abort.Dispose();
+        // its tab is closed : the results (and their items) are released
+        History.Clear();
     }
 }

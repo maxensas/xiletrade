@@ -30,9 +30,10 @@ public enum StatPanel
     TotalAttribute,
 
     MapQuantity,
+    MapAtlasDrops,
     MapRarity,
     MapPackSize,
-    MapMoreScarab,
+    MapMoreThread,
     MapMoreCurrency,
     MapMoreDivCard,
     MapMoreMap,

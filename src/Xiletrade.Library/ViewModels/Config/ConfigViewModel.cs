@@ -181,6 +181,32 @@ public sealed partial class ConfigViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    private void OpenChromeExtension(object commandParameter)
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo { FileName = Strings.Url.ExtensionChrome, UseShellExecute = true });
+        }
+        catch (Exception)
+        {
+            _message.Show("Chrome Web Store website", Resources.Resources.Error025_XRedirection, MessageStatus.Warning);
+        }
+    }
+
+    [RelayCommand]
+    private void OpenFirefoxExtension(object commandParameter)
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo { FileName = Strings.Url.ExtensionFirefox, UseShellExecute = true });
+        }
+        catch (Exception)
+        {
+            _message.Show("Firefox Add-ons website", Resources.Resources.Error025_XRedirection, MessageStatus.Warning);
+        }
+    }
+
+    [RelayCommand]
     private void OpenDiscord(object commandParameter)
     {
         string url = "https://discord.gg/AXP5VntYgA";

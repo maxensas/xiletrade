@@ -489,71 +489,178 @@
                             <TextBox x:Name="tbLeave2" HorizontalAlignment="Left" Height="22" Margin="481,339,0,0" Text="{Binding AdditionalKeys.PartyLeave.Val}" IsEnabled="{Binding AdditionalKeys.PartyLeave.IsEnable}" Style="{StaticResource tbConfig}" VerticalAlignment="Top" Width="91" Tag="textbox" FontFamily="Arial" HorizontalContentAlignment="Left"/>
                         </Grid>
                     </TabItem>
-                    <TabItem x:Name="tabHelp" Header="{ext:Localization Config008_tabHelp}" Margin="0,1,0,-1">
-                        <Grid Margin="0,10,0,0" Cursor="">
-                            <TextBlock Text="{ext:Localization Config136_lbHelp1}" HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}"/>
-                            <TextBlock Text="{ext:Localization Config137_lbHelp2}" HorizontalAlignment="Left" Margin="161,64,0,0" VerticalAlignment="Top" Foreground="{StaticResource ForegroundBrush}" FontWeight="Bold"/>
-                            <Button HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="31,52,0,0" Width="115" Height="35" Command="{Binding OpenGitHubIssueCommand}" ToolTip="{ext:Localization Config144_btnGithubTip}">
-                                <Grid Margin="0,0,0,0" Width="110">
-                                    <Image x:Name="imgGithub" Height="25" Margin="15,1,68,2" Source="{StaticResource ImgGithub}"/>
-                                    <TextBlock Text="Github" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" HorizontalAlignment="Left" Margin="48,6,0,0" VerticalAlignment="Top" FontSize="14" />
-                                </Grid>
-                            </Button>
-                            <TextBlock Text="{ext:Localization Config138_tbIssues}" Margin="32,97,0,0" Width="500" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" FontWeight="Light"/>
+                    <TabItem x:Name="tabExtension" Header="{ext:Localization Config182_tabExtension}" Margin="0,1,0,-1">
+                        <TabItem.Resources>
+                            <!-- numbered step badge -->
+                            <Style x:Key="ExtStepBadge" TargetType="{x:Type Border}">
+                                <Setter Property="Width" Value="22"/>
+                                <Setter Property="Height" Value="22"/>
+                                <Setter Property="CornerRadius" Value="11"/>
+                                <Setter Property="BorderThickness" Value="1.5"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource ThemeFirstForegroundBrush}"/>
+                                <Setter Property="Background" Value="#1A61CCFF"/>
+                                <Setter Property="VerticalAlignment" Value="Top"/>
+                            </Style>
+                        </TabItem.Resources>
+                        <DockPanel Margin="18,16,18,14">
+                            <!-- header -->
+                            <DockPanel DockPanel.Dock="Top">
+                                <Image DockPanel.Dock="Left" Source="{StaticResource ImgLogo}" Height="46" Width="46" Stretch="Uniform" VerticalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="Xiletrade Sync" FontFamily="{DynamicResource FontinSmallCaps}" FontSize="22" FontWeight="Bold" Foreground="{StaticResource ThemeFirstForegroundBrush}"/>
+                                    <TextBlock Text="{ext:Localization Config183_extTagline}" Margin="0,3,0,0" TextWrapping="Wrap" LineHeight="16" Foreground="{StaticResource ForegroundTextBrush}"/>
+                                </StackPanel>
+                            </DockPanel>
+                            <Border DockPanel.Dock="Top" Height="1" Margin="0,14,0,14" Background="{StaticResource ForegroundShadeBrush}" Opacity="0.6"/>
 
-                            <TextBlock Text="{ext:Localization Config139_lbHelp3}" HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top" Style="{StaticResource TextBlockTitle}"/>
+                            <!-- privacy -->
+                            <Border DockPanel.Dock="Bottom" Padding="12,8" CornerRadius="5" Background="#33000000" BorderBrush="{StaticResource WindowBorderBrush}" BorderThickness="1">
+                                <DockPanel>
+                                    <Canvas DockPanel.Dock="Left" Width="14" Height="16" VerticalAlignment="Center">
+                                        <Path Data="M3.5,7 V4.5 A3.5,3.5 0 0 1 10.5,4.5 V7" Stroke="#FF3CB043" StrokeThickness="1.6"/>
+                                        <Rectangle Canvas.Top="7" Width="14" Height="9" RadiusX="1.5" RadiusY="1.5" Fill="#FF3CB043"/>
+                                    </Canvas>
+                                    <TextBlock Text="{ext:Localization Config193_extPrivacy}" Margin="12,0,0,0" FontSize="11" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="{StaticResource GrayForegoundBrush}"/>
+                                </DockPanel>
+                            </Border>
 
-                            <TextBlock Text="{ext:Localization Config140_lbHelp4}" HorizontalAlignment="Left" Margin="161,204,0,0" VerticalAlignment="Top" Foreground="{StaticResource ForegroundBrush}" FontWeight="Bold"/>
-                            <Button HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="31,191,0,0" Width="115" Height="35" Command="{Binding OpenPaypalCommand}" ToolTip="{ext:Localization Config145_btnDonateTip}">
-                                <Grid Margin="0,0,0,0" Width="110">
-                                    <Image x:Name="imgPaypal" Source="{StaticResource ImgPaypal}" Height="25" Margin="15,1,68,2"/>
-                                    <TextBlock Text="Paypal" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" HorizontalAlignment="Left" Margin="48,6,0,0" VerticalAlignment="Top" FontSize="14"/>
-                                </Grid>
-                            </Button>
-                            <TextBlock Text="{ext:Localization Config170_donate}" Margin="32,237,0,0" Width="500" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" FontWeight="Light"/>
+                            <!-- manual session management -->
+                            <TextBlock DockPanel.Dock="Bottom" Text="{ext:Localization Config201_extManual}" Margin="2,0,2,8" FontSize="11" LineHeight="15" TextWrapping="Wrap" Foreground="{StaticResource GrayForegoundBrush}"/>
 
-                            <TextBlock Text="{ext:Localization Config152_lbHelp7}" HorizontalAlignment="Left" Margin="161,298,0,0" VerticalAlignment="Top" Foreground="{StaticResource ForegroundBrush}" FontWeight="Bold"/>
-                            <Button HorizontalAlignment="Left" VerticalAlignment="Top" Margin="31,285,0,0" Width="115" Height="35" FontWeight="Bold" Command="{Binding OpenDiscordCommand}" ToolTip="{ext:Localization Config153_btnDiscordTip}" Visibility="Visible">
-                                <Grid Width="110">
-                                    <Image Source="{StaticResource ImgDiscord}" Height="25" Margin="7,1,76,2"/>
-                                    <TextBlock Text="Discord" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" HorizontalAlignment="Left" Margin="38,6,0,0" VerticalAlignment="Top" FontSize="14"/>
-                                </Grid>
-                            </Button>
-                            <TextBlock Text="{ext:Localization Config171_discord}" Margin="32,330,0,0" Width="500" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" FontWeight="Light"/>
-
-                            <!--
-                            <Label x:Name="lbHelp5" Content="{ext:Localization Config141_lbHelp5}" HorizontalAlignment="Left" Margin="156,246,0,0" VerticalAlignment="Top" Width="414" Visibility="Hidden"/>
-                            <Label x:Name="lbHelp6" Content="{ext:Localization Config142_lbHelp6}" HorizontalAlignment="Left" Margin="5,293,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="265"/>
-                            <TextBlock x:Name="tbHelp" Text="{ext:Localization Config143_tbHelp}" Margin="32,326,10,3" TextWrapping="Wrap" Foreground="#FFC8C8C8" />
-                            -->
-                            <!--
-                            <Grid Visibility="Hidden">
-                                <Label Content="Xiletrade thanks his patrons by giving some privileges, how to get them :" HorizontalAlignment="Left" Margin="5,152,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-                                <Label Content="1) Make sure you will use this computer and Get your ID : " HorizontalAlignment="Left" Margin="27,186,0,0" VerticalAlignment="Top"/>
-                                <Button x:Name="btnId" ToolTipService.ShowDuration="30000" Content="Generate and Copy to clipboard" HorizontalAlignment="Left" Margin="360,185,0,158" Width="201" Height="27" FontWeight="Bold" Click="Generate">
-                                    <Button.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock>
-                                        If you are validated, a SINGLE CODE will be sent on patreon with current month validity (renewed each month following your contribution).
-                                        <LineBreak /> Make sure to use this computer during the validity period, remember to send your new ID before the start of a new month if you change your computer. 
-                                        <LineBreak /> An account system will be put in place if enough people contribute to this project.
-                                            </TextBlock>
-                                        </ToolTip>
-                                    </Button.ToolTip>
-                                </Button>
-                                <Label Content="2) Paste from clipboard and send your ID using memberships management :" HorizontalAlignment="Left" Margin="27,216,0,0" VerticalAlignment="Top"/>
-                                <Button x:Name="btnMembership" Content="Send message" HorizontalAlignment="Left" Margin="465,216,0,127" Width="95" Height="27" FontWeight="Bold" Click="SendID" ToolTip="Find and choose Xiletrade's patron"/>
-                                <TextBox x:Name="tbCode" HorizontalAlignment="Left" Height="34" Margin="84,275,0,0"  Text="" VerticalAlignment="Top" Width="331" Tag="textbox" Foreground="LimeGreen" FontFamily="Consolas" HorizontalContentAlignment="Left" VerticalContentAlignment="Top" TextWrapping="Wrap" MaxLength="95" TextChanged="ChangeCode"/>
-                                <Button x:Name="btnSaveCode" Content="Save code and Exit" HorizontalAlignment="Left" Margin="438,279,0,64" Width="121" Height="27" FontWeight="Bold" Click="SaveCode" ToolTip="New code will erase older one."/>
-
-
-                                <Label Content="3) Put the code given by the author in that data field, save and restart Xiletrade." HorizontalAlignment="Left" Margin="27,244,0,0" VerticalAlignment="Top"/>
-                                <Label Content="4) After restart, check your status right below." HorizontalAlignment="Left" Margin="27,312,0,0" VerticalAlignment="Top"/>
-                                <Label Content="Status :" HorizontalAlignment="Left" Margin="5,342,0,0" VerticalAlignment="Top" Foreground="#FF22F00D"/>
-                                <Label x:Name="lblStatus" Content="You do not have patron's privileges" HorizontalAlignment="Left" Margin="52,342,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                            <!-- install / how it works -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="245"/>
+                                    <ColumnDefinition Width="22"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="{ext:Localization Config184_extInstall}" Margin="0,0,0,8" Style="{StaticResource TextBlockTitle}"/>
+                                    <Button Style="{StaticResource ButtonCard}" Command="{Binding OpenChromeExtensionCommand}" ToolTip="{ext:Localization Config187_extChromeTip}">
+                                        <DockPanel>
+                                            <Image DockPanel.Dock="Left" Source="{StaticResource ImgChrome}" Width="38" Height="38" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                            <Path DockPanel.Dock="Right" Data="{StaticResource RightArrow}" Width="7" Height="12" Stretch="Fill" VerticalAlignment="Center" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                            <StackPanel Margin="12,0,8,0" VerticalAlignment="Center">
+                                                <TextBlock Text="Chrome" FontFamily="{DynamicResource FontinSmallCaps}" FontSize="17" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}"/>
+                                                <TextBlock Text="{ext:Localization Config185_extChromeInfo}" Margin="0,1,0,0" FontSize="11" TextTrimming="CharacterEllipsis" Foreground="{StaticResource GrayForegoundBrush}"/>
+                                            </StackPanel>
+                                        </DockPanel>
+                                    </Button>
+                                    <Button Style="{StaticResource ButtonCard}" Command="{Binding OpenFirefoxExtensionCommand}" ToolTip="{ext:Localization Config188_extFirefoxTip}">
+                                        <DockPanel>
+                                            <Image DockPanel.Dock="Left" Source="{StaticResource ImgFirefox}" Width="38" Height="38" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                            <Path DockPanel.Dock="Right" Data="{StaticResource RightArrow}" Width="7" Height="12" Stretch="Fill" VerticalAlignment="Center" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                            <StackPanel Margin="12,0,8,0" VerticalAlignment="Center">
+                                                <TextBlock Text="Firefox" FontFamily="{DynamicResource FontinSmallCaps}" FontSize="17" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}"/>
+                                                <TextBlock Text="{ext:Localization Config186_extFirefoxInfo}" Margin="0,1,0,0" FontSize="11" TextTrimming="CharacterEllipsis" Foreground="{StaticResource GrayForegoundBrush}"/>
+                                            </StackPanel>
+                                        </DockPanel>
+                                    </Button>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="{ext:Localization Config189_extHowTo}" Margin="0,0,0,8" Style="{StaticResource TextBlockTitle}"/>
+                                    <DockPanel Margin="0,0,0,8">
+                                        <Border DockPanel.Dock="Left" Style="{StaticResource ExtStepBadge}">
+                                            <TextBlock Text="1" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource ThemeFirstForegroundBrush}"/>
+                                        </Border>
+                                        <TextBlock Text="{ext:Localization Config190_extStep1}" Margin="10,3,0,0" TextWrapping="Wrap" LineHeight="16" Foreground="{StaticResource ForegroundTextBrush}"/>
+                                    </DockPanel>
+                                    <DockPanel Margin="0,0,0,8">
+                                        <Border DockPanel.Dock="Left" Style="{StaticResource ExtStepBadge}">
+                                            <TextBlock Text="2" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource ThemeFirstForegroundBrush}"/>
+                                        </Border>
+                                        <TextBlock Text="{ext:Localization Config191_extStep2}" Margin="10,3,0,0" TextWrapping="Wrap" LineHeight="16" Foreground="{StaticResource ForegroundTextBrush}"/>
+                                    </DockPanel>
+                                    <DockPanel Margin="0,0,0,8">
+                                        <Border DockPanel.Dock="Left" Style="{StaticResource ExtStepBadge}">
+                                            <TextBlock Text="3" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource ThemeFirstForegroundBrush}"/>
+                                        </Border>
+                                        <TextBlock Text="{ext:Localization Config192_extStep3}" Margin="10,3,0,0" TextWrapping="Wrap" LineHeight="16" Foreground="{StaticResource ForegroundTextBrush}"/>
+                                    </DockPanel>
+                                </StackPanel>
                             </Grid>
-                            -->
-                        </Grid>
+                        </DockPanel>
+                    </TabItem>
+                    <TabItem x:Name="tabHelp" Header="{ext:Localization Config008_tabHelp}" Margin="0,1,0,-1">
+                        <!-- not focusable : a focused ScrollViewer handles the click, so the window could not be dragged from this tab -->
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
+                        <StackPanel Margin="18,16,18,10">
+                            <!-- header -->
+                            <TextBlock Text="{ext:Localization Config202_helpProject}" FontFamily="{DynamicResource FontinSmallCaps}" FontSize="22" FontWeight="Bold" Foreground="{StaticResource ThemeFirstForegroundBrush}"/>
+                            <TextBlock Text="{ext:Localization Config194_helpTagline}" Margin="0,3,0,0" TextWrapping="Wrap" LineHeight="16" Foreground="{StaticResource ForegroundTextBrush}"/>
+                            <Border Height="1" Margin="0,14,0,14" Background="{StaticResource ForegroundShadeBrush}" Opacity="0.6"/>
+
+                            <TextBlock Text="{ext:Localization Config136_lbHelp1}" Margin="0,0,0,8" Style="{StaticResource TextBlockTitle}"/>
+                            <DockPanel Margin="0,0,0,12">
+                                <Button DockPanel.Dock="Left" Width="245" Margin="0" Style="{StaticResource ButtonCard}" Command="{Binding OpenGitHubIssueCommand}" ToolTip="{ext:Localization Config144_btnGithubTip}">
+                                    <DockPanel>
+                                        <Image DockPanel.Dock="Left" Source="{StaticResource ImgGithub}" Width="38" Height="38" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                        <Path DockPanel.Dock="Right" Data="{StaticResource RightArrow}" Width="7" Height="12" Stretch="Fill" VerticalAlignment="Center" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                        <StackPanel Margin="12,0,8,0" VerticalAlignment="Center">
+                                            <TextBlock Text="GitHub" FontFamily="{DynamicResource FontinSmallCaps}" FontSize="17" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}"/>
+                                            <TextBlock Text="{ext:Localization Config137_lbHelp2}" Margin="0,1,0,0" FontSize="11" TextTrimming="CharacterEllipsis" Foreground="{StaticResource GrayForegoundBrush}"/>
+                                        </StackPanel>
+                                    </DockPanel>
+                                </Button>
+                                <StackPanel Margin="22,0,0,0" VerticalAlignment="Center">
+                                    <DockPanel Margin="0,2,0,2">
+                                        <Ellipse DockPanel.Dock="Left" Width="5" Height="5" Margin="0,7,0,0" VerticalAlignment="Top" Fill="{StaticResource ThemeFirstForegroundBrush}"/>
+                                        <TextBlock Text="{ext:Localization Config195_helpIssue1}" Margin="10,0,0,0" TextWrapping="Wrap" LineHeight="17" Foreground="{StaticResource ForegroundTextBrush}"/>
+                                    </DockPanel>
+                                    <DockPanel Margin="0,2,0,2">
+                                        <Ellipse DockPanel.Dock="Left" Width="5" Height="5" Margin="0,7,0,0" VerticalAlignment="Top" Fill="{StaticResource ThemeFirstForegroundBrush}"/>
+                                        <TextBlock Text="{ext:Localization Config196_helpIssue2}" Margin="10,0,0,0" TextWrapping="Wrap" LineHeight="17" Foreground="{StaticResource ForegroundTextBrush}"/>
+                                    </DockPanel>
+                                </StackPanel>
+                            </DockPanel>
+
+                            <TextBlock Text="{ext:Localization Config139_lbHelp3}" Margin="0,6,0,8" Style="{StaticResource TextBlockTitle}"/>
+                            <DockPanel Margin="0,0,0,12">
+                                <Button DockPanel.Dock="Left" Width="245" Margin="0" Style="{StaticResource ButtonCard}" Command="{Binding OpenPaypalCommand}" ToolTip="{ext:Localization Config145_btnDonateTip}">
+                                    <DockPanel>
+                                        <Image DockPanel.Dock="Left" Source="{StaticResource ImgPaypal}" Width="38" Height="38" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                        <Path DockPanel.Dock="Right" Data="{StaticResource RightArrow}" Width="7" Height="12" Stretch="Fill" VerticalAlignment="Center" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                        <StackPanel Margin="12,0,8,0" VerticalAlignment="Center">
+                                            <TextBlock Text="PayPal" FontFamily="{DynamicResource FontinSmallCaps}" FontSize="17" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}"/>
+                                            <TextBlock Text="{ext:Localization Config140_lbHelp4}" Margin="0,1,0,0" FontSize="11" TextTrimming="CharacterEllipsis" Foreground="{StaticResource GrayForegoundBrush}"/>
+                                        </StackPanel>
+                                    </DockPanel>
+                                </Button>
+                                <StackPanel Margin="22,0,0,0" VerticalAlignment="Center">
+                                    <DockPanel Margin="0,2,0,2">
+                                        <Ellipse DockPanel.Dock="Left" Width="5" Height="5" Margin="0,7,0,0" VerticalAlignment="Top" Fill="{StaticResource ThemeFirstForegroundBrush}"/>
+                                        <TextBlock Text="{ext:Localization Config197_helpDonate1}" Margin="10,0,0,0" TextWrapping="Wrap" LineHeight="17" Foreground="{StaticResource ForegroundTextBrush}"/>
+                                    </DockPanel>
+                                    <DockPanel Margin="0,2,0,2">
+                                        <Ellipse DockPanel.Dock="Left" Width="5" Height="5" Margin="0,7,0,0" VerticalAlignment="Top" Fill="{StaticResource ThemeFirstForegroundBrush}"/>
+                                        <TextBlock Text="{ext:Localization Config198_helpDonate2}" Margin="10,0,0,0" TextWrapping="Wrap" LineHeight="17" Foreground="{StaticResource ForegroundTextBrush}"/>
+                                    </DockPanel>
+                                </StackPanel>
+                            </DockPanel>
+                            <DockPanel Margin="0">
+                                <Button DockPanel.Dock="Left" Width="245" Margin="0" Style="{StaticResource ButtonCard}" Command="{Binding OpenDiscordCommand}" ToolTip="{ext:Localization Config153_btnDiscordTip}">
+                                    <DockPanel>
+                                        <Image DockPanel.Dock="Left" Source="{StaticResource ImgDiscord}" Width="38" Height="38" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                        <Path DockPanel.Dock="Right" Data="{StaticResource RightArrow}" Width="7" Height="12" Stretch="Fill" VerticalAlignment="Center" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                        <StackPanel Margin="12,0,8,0" VerticalAlignment="Center">
+                                            <TextBlock Text="Discord" FontFamily="{DynamicResource FontinSmallCaps}" FontSize="17" FontWeight="Bold" Foreground="{StaticResource ForegroundBrush}"/>
+                                            <TextBlock Text="{ext:Localization Config152_lbHelp7}" Margin="0,1,0,0" FontSize="11" TextTrimming="CharacterEllipsis" Foreground="{StaticResource GrayForegoundBrush}"/>
+                                        </StackPanel>
+                                    </DockPanel>
+                                </Button>
+                                <StackPanel Margin="22,0,0,0" VerticalAlignment="Center">
+                                    <DockPanel Margin="0,2,0,2">
+                                        <Ellipse DockPanel.Dock="Left" Width="5" Height="5" Margin="0,7,0,0" VerticalAlignment="Top" Fill="{StaticResource ThemeFirstForegroundBrush}"/>
+                                        <TextBlock Text="{ext:Localization Config199_helpDiscord1}" Margin="10,0,0,0" TextWrapping="Wrap" LineHeight="17" Foreground="{StaticResource ForegroundTextBrush}"/>
+                                    </DockPanel>
+                                    <DockPanel Margin="0,2,0,2">
+                                        <Ellipse DockPanel.Dock="Left" Width="5" Height="5" Margin="0,7,0,0" VerticalAlignment="Top" Fill="{StaticResource ThemeFirstForegroundBrush}"/>
+                                        <TextBlock Text="{ext:Localization Config200_helpDiscord2}" Margin="10,0,0,0" TextWrapping="Wrap" LineHeight="17" Foreground="{StaticResource ForegroundTextBrush}"/>
+                                    </DockPanel>
+                                </StackPanel>
+                            </DockPanel>
+                        </StackPanel>
+                        </ScrollViewer>
                     </TabItem>
                 </TabControl>
             </Grid>

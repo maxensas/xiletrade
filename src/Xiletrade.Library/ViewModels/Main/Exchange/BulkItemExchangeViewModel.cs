@@ -23,15 +23,12 @@ public sealed partial class BulkItemExchangeViewModel : ViewModelBase
     private ShopViewModel shop;
 
     public BulkItemExchangeViewModel(DataManagerService dm, MainViewModel vm, 
-        IViewManager view, IMessageAdapterService message, bool useCustomOrBulk)
+        IViewManager view, IMessageAdapterService message)
     {
         _dm = dm;
 
         bulk = new(_dm, vm, view, message); // mandatory (auto select currency item on price check)
-        if (useCustomOrBulk)
-        {
-            shop = new(_dm, vm, view, message);
-        }
+        shop = new(_dm, vm, view, message); // also enabled on the price check of a currency
     }
 
     [RelayCommand]

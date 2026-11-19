@@ -126,7 +126,7 @@
                 </ComboBox>
             </StackPanel>
             <!-- DOUBLE CORRUPTED -->
-            <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.IsPoeTwo, Converter={StaticResource bool2VisibilityConverter}}">
+            <StackPanel Margin="0,6,0,0" Visibility="{Binding Form.Visible.TwiceCorrupted, Converter={StaticResource bool2VisibilityConverter}}">
                 <TextBlock Text="{ext:Localization Main254_twiceCorrupted}" FontSize="10"
                            TextAlignment="Center" Style="{StaticResource TextBlockTitle}" />
                 <ComboBox SelectedIndex="{Binding Form.DoubleCorruptedIndex}"

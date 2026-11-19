@@ -93,7 +93,7 @@ public sealed partial class MainViewModel : ViewModelBase
     private void ViewDeactivated(object commandParameter)
     {
         if (Form is not null && !Form.Tab.CustomSearchSelected
-            && !Form.Tab.BulkSelected && !Form.Tab.ShopSelected
+            && !Form.Tab.BulkSelected && !Form.Tab.ShopSelected && Form.Tab.SelectedLive is null
             && _dm.Config.Options.Autoclose)
         {
             _view.CloseMainView();
@@ -160,6 +160,12 @@ public sealed partial class MainViewModel : ViewModelBase
         if (Form.Tab.ShopSelected)
         {
             await Form.ItemExchange.Shop.OpenTask(market, league);
+            return;
+        }
+        // tab of a live search : its page on the trade site
+        if (Form.Tab.SelectedLive?.Url is { Length: > 0 } liveUrl)
+        {
+            Process.Start(new ProcessStartInfo { FileName = liveUrl, UseShellExecute = true });
             return;
         }
         var priceCheck = Form.Tab.QuickSelected || Form.Tab.DetailSelected;

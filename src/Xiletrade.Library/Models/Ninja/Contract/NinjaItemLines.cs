@@ -21,12 +21,13 @@ public sealed class NinjaItemLines
 
     [JsonPropertyName("divineValue")]
     public double DivinePrice { get; set; } = 0;
+
+    /// <summary>Implicit modifiers of a viscera, texts of the trade website separated by " / ".</summary>
+    [JsonPropertyName("variant")]
+    public string Variant { get; set; } = null;
     /*
     [JsonPropertyName("baseType")]
     public string BaseType { get; set; } = null;
-
-    [JsonPropertyName("variant")]
-    public string Variant { get; set; } = null;
 
     [JsonPropertyName("mapTier")]
     public int MapTier { get; set; } = 0;

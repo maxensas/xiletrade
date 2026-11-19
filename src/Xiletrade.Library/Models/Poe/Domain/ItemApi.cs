@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Shared;
 
@@ -12,6 +14,12 @@ public class ItemApi
     public List<ExtendedMagnitudes> Magnitudes { get; }
 
     public string Mod { get; }
+
+    /// <summary>Item level required by the tier : "≥50", null : unknown.</summary>
+    public string RequiredLevel { get; }
+
+    /// <summary>Range of each value : "50—60", the fixed values are not displayed, null : nothing to display.</summary>
+    public string Range { get; }
     public bool TagLife { get; }
     public bool TagFire { get; }
     public bool TagCold { get; }
@@ -33,6 +41,8 @@ public class ItemApi
         Level = affix.Level;
         Magnitudes = affix.Magnitudes;
         Mod = mod;
+        RequiredLevel = Level > 0 ? "≥" + Level.ToString(CultureInfo.InvariantCulture) : null;
+        Range = GetRange(Magnitudes);
 
         if (Magnitudes?.Count is 1)
         {
@@ -58,5 +68,25 @@ public class ItemApi
         {
             TagCrafted = true;
         }
+    }
+
+    private static string GetRange(List<ExtendedMagnitudes> magnitudes)
+    {
+        if (magnitudes is null)
+        {
+            return null;
+        }
+        StringBuilder range = null;
+        foreach (var magnitude in magnitudes)
+        {
+            if (magnitude?.Min is not decimal min || magnitude.Max is not decimal max || min == max)
+            {
+                continue;
+            }
+            range = range is null ? new StringBuilder() : range.Append(' ');
+            range.Append(min.ToString(CultureInfo.InvariantCulture)).Append('—')
+                .Append(max.ToString(CultureInfo.InvariantCulture));
+        }
+        return range?.ToString();
     }
 }

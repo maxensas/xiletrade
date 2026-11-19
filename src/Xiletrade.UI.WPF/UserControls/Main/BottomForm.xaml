@@ -73,7 +73,7 @@
                     </TextBox>
                 </Grid>
 
-                <ScrollViewer Margin="4,0,0,0" FlowDirection="RightToLeft" Background="{x:Null}" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left">
+                <ScrollViewer Margin="4,0,0,0" FlowDirection="RightToLeft" Background="{x:Null}" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Visibility="{Binding Form.Visible.FilterOptions, Converter={StaticResource bool2VisibilityConverter}}">
                     <uc:FilterOptionList Height="87"/>
                 </ScrollViewer>
 

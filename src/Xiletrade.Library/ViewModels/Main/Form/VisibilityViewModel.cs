@@ -12,6 +12,12 @@ public sealed partial class VisibilityViewModel : ViewModelBase
     private bool corrupted;
 
     [ObservableProperty]
+    private bool twiceCorrupted;
+
+    [ObservableProperty]
+    private bool filterOptions;
+
+    [ObservableProperty]
     private bool btnPoeDb;
 
     [ObservableProperty]
@@ -132,6 +138,8 @@ public sealed partial class VisibilityViewModel : ViewModelBase
     {
         rarity = true;
         corrupted = true;
+        twiceCorrupted = true;
+        filterOptions = true;
     }
 
     internal VisibilityViewModel(DataManagerService dm, ItemData item, bool useDust)
@@ -180,6 +188,8 @@ public sealed partial class VisibilityViewModel : ViewModelBase
         checkAll = !item.State.ExchangeCurrency || flag.Tag.Imbued;
         quality = !item.State.ExchangeCurrency && !flag.Waystones && !flag.Area.IsArea;
         corrupted = !item.State.ExchangeCurrency && !flag.Area.IsArea;
+        twiceCorrupted = corrupted;
+        filterOptions = !flag.Viscera;
         panelStat = !item.State.ExchangeCurrency && !flag.Facetor && !flag.Tag.CapturedBeast 
             && !flag.Corpses && !flag.Area.SanctumResearch && !flag.Area.Chronicle;
         panelForm = !item.State.ExchangeCurrency

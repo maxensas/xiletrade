@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Xiletrade.Library.Models.Application.Configuration.DTO;
 using Xiletrade.Library.Models.Application.Configuration.DTO.Extension;
 using Xiletrade.Library.Models.Application.LiveSearch;
-using Xiletrade.Library.ViewModels.Live;
 using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Domain;
 using Xiletrade.Library.Services;
@@ -118,12 +117,17 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
     [ObservableProperty]
     private AsyncObservableCollection<FilterSectionViewModel> filterSections;
 
-    /// <summary>Live searches listening, newest first : displayed from right to left (the oldest on the right).</summary>
-    public AsyncObservableCollection<LiveSlotViewModel> LiveSlots { get; } = new();
-
     /// <summary>Another live search can be started (live button).</summary>
     [ObservableProperty]
     private bool canStartLive = true;
+
+    /// <summary>A live search is listening : the buttons of all the live searches are displayed (as the overlay).</summary>
+    [ObservableProperty]
+    private bool isLiveRunning;
+
+    /// <summary>All the live searches paused (as the overlay).</summary>
+    [ObservableProperty]
+    private bool isLivePaused;
 
     private bool IsPoe2 => _dm.Config.Options.GameVersion is 1;
 
@@ -154,10 +158,10 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         form.PropertyChanged += OnFormPropertyChanged;
         form.Rarity.PropertyChanged += OnRarityPropertyChanged;
 
-        // state of the live searches : they go on when this form is closed
-        UpdateLiveSlots(live.GetSessions());
+        // state of the live searches (displayed in their tabs) : they go on when this form is closed
+        UpdateLive(new(live.GetSessions(), live.IsPaused));
         WeakReferenceMessenger.Default.Register<CustomSearchViewModel, LiveSearchStateMessage>(this,
-            static (vm, state) => vm.UpdateLiveSlots(state.Sessions));
+            static (vm, state) => vm.UpdateLive(state));
 
         _vm.Result.Rate.ShowMin = false;
         _vm.Result.Quick.RightString = Resources.Resources.Main245_SearchPreset;
@@ -394,7 +398,22 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         }
     }
 
-    // criteria of the form, given back by the dot of the live search
+    // all the live searches, as the overlay : paused (results skipped, connections kept) or resumed
+    [RelayCommand]
+    private void ToggleLivePauseAll(object commandParameter) => _live.SetPausedAll(!_live.IsPaused);
+
+    // all the live searches, as the overlay : stopped
+    [RelayCommand]
+    private void StopLiveAll(object commandParameter) => _live.StopAll();
+
+    private void UpdateLive(LiveSearchStateMessage state)
+    {
+        CanStartLive = state.Sessions.Length < LiveSearchService.MaxSessions;
+        IsLiveRunning = state.IsRunning;
+        IsLivePaused = state.IsPaused;
+    }
+
+    // criteria of the form, given back by the dot of the tab of the live search
     private LiveSearchCriteria GetLiveCriteria()
     {
         var search = new CustomSearchPreset { Poe2 = IsPoe2 };
@@ -405,7 +424,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
 
     // criteria of a live search set without launching the search : its preset or unique is selected again
     // when it was not changed (and still in the list)
-    private void RestoreLive(LiveSearchCriteria live)
+    internal void RestoreLive(LiveSearchCriteria live)
     {
         if (live?.Search is null || live.Search.Poe2 != IsPoe2)
         {
@@ -443,18 +462,6 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
         }
         var query = Search?.SearchQuery?.Trim();
         return string.IsNullOrEmpty(query) ? null : query;
-    }
-
-    // newest first : a new live search is added on the left of the others
-    private void UpdateLiveSlots(LiveSearchInfo[] sessions)
-    {
-        var slots = new LiveSlotViewModel[sessions.Length];
-        for (int i = 0; i < sessions.Length; i++)
-        {
-            slots[i] = new(_live, sessions[sessions.Length - 1 - i], RestoreLive);
-        }
-        LiveSlots.ReplaceRange(slots);
-        CanStartLive = sessions.Length < LiveSearchService.MaxSessions;
     }
 
     // new search preset with the criteria of the form, added after the other search presets
@@ -977,7 +984,7 @@ public sealed partial class CustomSearchViewModel : ViewModelBase
             new(Resources.Resources.Main282_SocketFilters, Get(StatPanel.CommonSocket, StatPanel.CommonLink)),
             new(Resources.Resources.Main283_Requirements, Get(StatPanel.CommonRequiresLevel)),
             new(Resources.Resources.Main284_MapFilters, Get(StatPanel.MapTier, StatPanel.MapPackSize,
-                StatPanel.MapQuantity, StatPanel.MapRarity, StatPanel.AreaLevel)),
+                StatPanel.MapQuantity, StatPanel.MapAtlasDrops, StatPanel.MapRarity, StatPanel.AreaLevel)),
             new(Resources.Resources.Main286_Miscellaneous, Get(StatPanel.CommonQuality, StatPanel.CommonItemLevel,
                 StatPanel.CommonIntangibility), showOptions: true),
             new(Resources.Resources.Main311_TradeFilters, [], price: price)

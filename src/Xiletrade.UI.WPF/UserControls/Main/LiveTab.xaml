@@ -1,0 +1,215 @@
+﻿<UserControl x:Class="Xiletrade.UI.WPF.UserControls.Main.LiveTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:live="clr-namespace:Xiletrade.Library.ViewModels.Live;assembly=Xiletrade.Library"
+             xmlns:ext="clr-namespace:Xiletrade.UI.WPF.Util.Extensions"
+             xmlns:uc="clr-namespace:Xiletrade.UI.WPF.UserControls.Main"
+             mc:Ignorable="d" d:DesignHeight="440" d:DesignWidth="505"
+             d:DataContext="{d:DesignInstance Type=live:LiveTabViewModel}">
+    <!-- tab of a live search (LiveTabViewModel) : its controls above its last results, listed as the results of a price check
+         with the time they appeared instead of their age -->
+    <Grid Margin="2,0,-2,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="505" Height="433">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="26"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- controls : green dot (orange while paused) and its label, pause / resume and stop.
+             A click on the dot or the label gives its criteria back to the custom search (the label in the color of the theme on hover) -->
+        <Border Grid.Row="0" Margin="6,0,8,0" Padding="7,0,2,0" Background="{StaticResource DarkBackgroundBrush}" BorderBrush="{StaticResource WindowBorderBrush}"
+                BorderThickness="1" CornerRadius="2">
+            <DockPanel LastChildFill="True">
+                <Button DockPanel.Dock="Right" Style="{StaticResource LiveSlotButton}" Tag="{StaticResource StopIcon}"
+                        Command="{Binding StopCommand}" ToolTip="{ext:Localization Main307_LiveStopAll}"/>
+                <Button DockPanel.Dock="Right" Command="{Binding TogglePauseCommand}">
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource LiveSlotButton}">
+                            <Setter Property="Tag" Value="{StaticResource PauseIcon}"/>
+                            <Setter Property="ToolTip" Value="{ext:Localization Main305_LivePause}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsPaused}" Value="True">
+                                    <Setter Property="Tag" Value="{StaticResource ResumeIcon}"/>
+                                    <Setter Property="ToolTip" Value="{ext:Localization Main306_LiveResume}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button x:Name="RestoreButton" Margin="0,0,6,0" Cursor="Hand" Focusable="False" HorizontalContentAlignment="Stretch"
+                        Command="{Binding RestoreCommand}" ToolTip="{ext:Localization Main320_LiveOpenSettings}">
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="Transparent" Height="22" VerticalAlignment="Center">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <DockPanel LastChildFill="True">
+                        <Ellipse DockPanel.Dock="Left" Margin="0,0,8,0" Width="8" Height="8" VerticalAlignment="Center">
+                            <Ellipse.Style>
+                                <Style TargetType="{x:Type Ellipse}">
+                                    <Setter Property="Fill" Value="{StaticResource LiveRunningBrush}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsPaused}" Value="True">
+                                            <Setter Property="Fill" Value="{StaticResource LivePausedBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Ellipse.Style>
+                        </Ellipse>
+                        <TextBlock VerticalAlignment="Center" FontSize="12" FontFamily="{StaticResource FontinSmallCaps}"
+                                   TextTrimming="CharacterEllipsis" Text="{Binding Label}" d:Text="Live 1">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=RestoreButton}" Value="True">
+                                            <Setter Property="Foreground" Value="{DynamicResource ThemeFirstForegroundBrush}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </DockPanel>
+                </Button>
+            </DockPanel>
+        </Border>
+
+        <!-- header of the results : the time instead of the age -->
+        <StackPanel Grid.Row="1" Margin="0,6,0,5" Orientation="Horizontal" Height="15">
+            <TextBlock Text="{ext:Localization Main087_lblPrice}" HorizontalAlignment="Left" Margin="30,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource ForegroundBrush}" Width="79"/>
+            <TextBlock Text="iLvl" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource ForegroundBrush}" Width="40"/>
+            <TextBlock Text="{ext:Localization Main066_tbQuality}" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource ForegroundBrush}" Width="70"/>
+            <TextBlock Text="{ext:Localization Main319_LiveTime}" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource ForegroundBrush}" Width="93" TextAlignment="Left"/>
+            <TextBlock Text="{ext:Localization Main089_lblSellers}" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" FontSize="10" Style="{StaticResource TextBlockTitle}" Foreground="{StaticResource ForegroundBrush}" Width="125"/>
+        </StackPanel>
+
+        <!-- last results, newest first -->
+        <ListBox Grid.Row="2" FontFamily="Consolas" BorderThickness="1" AlternationCount="2"
+                 ItemsSource="{Binding Results}"
+                 d:ItemsSource="{d:SampleData ItemCount=20}"
+                 VirtualizingStackPanel.IsVirtualizing="True"
+                 VirtualizingStackPanel.VirtualizationMode="Recycling"
+                 HorizontalContentAlignment="Stretch">
+            <ListBox.Resources>
+                <!-- item level, quality, time, seller : darker once the hideout of the seller has been visited -->
+                <Style x:Key="SaleInfoText" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+                    <Setter Property="Foreground" Value="{StaticResource GrayForegoundBrush}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsVisited}" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource GrayDarkForegroundBrush}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="3"/>
+                </Style>
+                <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                    <Setter Property="Padding" Value="0"/>
+                    <Style.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                            <Setter Property="Background" Value="{DynamicResource BlackBrush}"/>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding FgColor}" Value="Red">
+                            <Setter Property="Foreground" Value="Red"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FgColor}" Value="YellowGreen">
+                            <Setter Property="Foreground" Value="YellowGreen"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FgColor}" Value="LimeGreen">
+                            <Setter Property="Foreground" Value="LimeGreen"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FgColor}" Value="Yellow">
+                            <Setter Property="Foreground" Value="Yellow"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FgColor}" Value="DeepSkyBlue">
+                            <Setter Property="Foreground" Value="DeepSkyBlue"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FgColor}" Value="DarkRed">
+                            <Setter Property="Foreground" Value="DarkRed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FgColor}" Value="LightGray">
+                            <Setter Property="Foreground" Value="LightGray"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FgColor}" Value="Azure">
+                            <Setter Property="Foreground" Value="Azure"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FgColor}" Value="White">
+                            <Setter Property="Foreground" Value="White"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding FgColor}" Value="Gray">
+                            <Setter Property="Foreground" Value="Gray"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.Resources>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <!-- the tooltip is on this wrapper : it covers the whole item, the hideout Button keeps its own tooltip -->
+                    <Border Padding="2,1,0,1" Background="Transparent"
+                            ToolTipService.BetweenShowDelay="0" ToolTipService.InitialShowDelay="0" 
+                            ToolTipService.HorizontalOffset="40" ToolTipService.VerticalOffset="40"
+                            MouseLeave="ResultItem_MouseLeave">
+                        <Border.ToolTip>
+                            <ToolTip Style="{StaticResource resultItem}">
+                                <uc:ResultItem DataContext="{Binding Item}" />
+                            </ToolTip>
+                        </Border.ToolTip>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="16"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <!-- amount -->
+                                <ColumnDefinition Width="30"/>
+                                <!-- currency -->
+                                <ColumnDefinition Width="25"/>
+                                <!-- hideout -->
+                                <ColumnDefinition Width="35"/>
+                                <!-- item level -->
+                                <ColumnDefinition Width="30"/>
+                                <!-- quality -->
+                                <ColumnDefinition Width="48"/>
+                                <!-- time, under its title (age and its label in the results of a price check) -->
+                                <ColumnDefinition Width="140"/>
+                                <!-- account -->
+                                <ColumnDefinition Width="144"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Margin="0,-1,0,0" FontSize="14" d:Text="200" Text="{Binding Info.Amount}" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                <TextBlock.ToolTip>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Info.Amount"/>
+                                                <Binding Path="Currency.Name"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <Image Margin="6,0,0,0" Source="{Binding Currency, Converter={StaticResource imageSourceConverter}}" d:Source="{StaticResource ImgDivine}" Width="16" Height="16" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" d:Visibility="Visible" Visibility="{Binding Source={RelativeSource Self}, Path=Source, Converter={StaticResource null2CollapseConverter}}"/>
+                            <Button Grid.Column="2" Height="13" Width="15" Command="{Binding DataContext.TravelToHideoutCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}" ToolTip="{ext:Localization Main310_TravelToHideout}" Cursor="Hand">
+                                <Viewbox Width="10" Height="10" Cursor="">
+                                    <Path Style="{StaticResource HouseIcon}" Stretch="Uniform"/>
+                                </Viewbox>
+                            </Button>
+                            <TextBlock Margin="0,-1,0,0" FontSize="14" d:Text="83" Text="{Binding Item.ItemLevel}" Style="{StaticResource SaleInfoText}" Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            <TextBlock Margin="0,-1,0,0" FontSize="14" d:Text="20" Text="{Binding Info.QualityOrCount}" Style="{StaticResource SaleInfoText}" Grid.Column="4" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            <TextBlock Margin="41,-1,0,0" FontSize="14" d:Text="14:32:05" Text="{Binding Time}" Style="{StaticResource SaleInfoText}" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock Margin="0,-1,0,1" FontSize="14" d:Text="Samathor" Text="{Binding Info.Account}" Style="{StaticResource SaleInfoText}" Grid.Column="6" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>

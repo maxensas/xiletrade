@@ -130,13 +130,13 @@
     <value>Schließen</value>
   </data>
   <data name="Config005_tabGeneral" xml:space="preserve">
-    <value>Allgemeine</value>
+    <value>Allgemein</value>
   </data>
   <data name="Config006_tabCommon" xml:space="preserve">
-    <value>Häufig Schlüssel</value>
+    <value>Tasten</value>
   </data>
   <data name="Config007_tabAdd" xml:space="preserve">
-    <value>Zugabe Schlüssel</value>
+    <value>Zusatztasten</value>
   </data>
   <data name="Config008_tabHelp" xml:space="preserve">
     <value>Hilfe</value>
@@ -357,7 +357,7 @@ Deaktivieren Sie alle Widerstandsmod-Werte! (keine Unikate)</value>
     <value>Preischeck</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>Suche / Austausch</value>
+    <value>Benutzerdefinierte Suche</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>Einstellungsfenster</value>
@@ -402,7 +402,7 @@ Deaktivieren Sie alle Widerstandsmod-Werte! (keine Unikate)</value>
     <value>Zeigen Sie das Preisfinderfenster an, wenn Sie mit der Verknüpfung auf einen Gegenstand im Spiel klicken.</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>Zeigt die Fenster „Benutzerdefinierte Suche“ und „Massenartikelaustausch“ an.</value>
+    <value>Zeigt das Fenster der benutzerdefinierten Suche an, in dem auch Live-Suchen gestartet werden können.</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>Fenster Xiletrade-Einstellungen anzeigen.</value>
@@ -538,7 +538,7 @@ Nützlich, um Leuten zu danken oder sie zu bitten, vor einem Handel zu warten.</
     <value>Sie haben einen Fehler oder ein abnormales Werkzeugverhalten festgestellt?</value>
   </data>
   <data name="Config137_lbHelp2" xml:space="preserve">
-    <value>Sie können ein Problem auf Github melden.</value>
+    <value>Problem melden</value>
   </data>
   <data name="Config138_tbIssues" xml:space="preserve">
     <value>Stellen Sie sicher, dass Sie alle Informationen angeben, um das Problem zu reproduzieren und eine Lösung zu finden. Zur Preisprüfung: Geben Sie beim Öffnen der Ausgabe Artikeldaten (STRG-C für einen Artikel) an.</value>
@@ -547,7 +547,7 @@ Nützlich, um Leuten zu danken oder sie zu bitten, vor einem Handel zu warten.</
     <value>Sie mögen das Projekt und möchten helfen?</value>
   </data>
   <data name="Config140_lbHelp4" xml:space="preserve">
-    <value>Sie können einen benutzerdefinierten Betrag spenden.</value>
+    <value>Beliebig spenden</value>
   </data>
   <data name="Config141_lbHelp5" xml:space="preserve">
     <value>Sie können ein neuer Benutzer werden.</value>
@@ -585,7 +585,7 @@ Nützlich, um Leuten zu danken oder sie zu bitten, vor einem Handel zu warten.</
 in Sekunden vor dem Abbrechen.</value>
   </data>
   <data name="Config152_lbHelp7" xml:space="preserve">
-    <value>Sie können dem Projekt-Discord beitreten.</value>
+    <value>Der Community beitreten</value>
   </data>
   <data name="Config153_btnDiscordTip" xml:space="preserve">
     <value>Folgen Sie der Einladung auf discord.gg.</value>
@@ -679,6 +679,71 @@ Möchten Sie den vorherigen überschreiben?</value>
   <data name="Config181_totalAttributeTip" xml:space="preserve">
     <value>Wählt automatisch die Statistik „Gesamtattribute“, wenn ein zusätzlicher Attributwert erkannt wird.
 Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
+  </data>
+  <data name="Config182_tabExtension" xml:space="preserve">
+    <value>Erweiterung</value>
+  </data>
+  <data name="Config183_extTagline" xml:space="preserve">
+    <value>Sendet Ihr Path-of-Exile-Sitzungscookie mit einem Klick an Xiletrade, ohne Kopieren und Einfügen. Erforderlich für die Live-Suche und alle Funktionen, die eine Anmeldung voraussetzen.</value>
+  </data>
+  <data name="Config184_extInstall" xml:space="preserve">
+    <value>Installieren</value>
+  </data>
+  <data name="Config185_extChromeInfo" xml:space="preserve">
+    <value>Auch Edge, Brave, Opera…</value>
+  </data>
+  <data name="Config186_extFirefoxInfo" xml:space="preserve">
+    <value>Version 140 oder neuer</value>
+  </data>
+  <data name="Config187_extChromeTip" xml:space="preserve">
+    <value>Seite der Erweiterung im Chrome Web Store öffnen</value>
+  </data>
+  <data name="Config188_extFirefoxTip" xml:space="preserve">
+    <value>Seite der Erweiterung bei Firefox Add-ons öffnen</value>
+  </data>
+  <data name="Config189_extHowTo" xml:space="preserve">
+    <value>So funktioniert es</value>
+  </data>
+  <data name="Config190_extStep1" xml:space="preserve">
+    <value>Installieren Sie die Erweiterung in Ihrem Browser.</value>
+  </data>
+  <data name="Config191_extStep2" xml:space="preserve">
+    <value>Melden Sie sich auf der offiziellen Handelsseite an.</value>
+  </data>
+  <data name="Config192_extStep3" xml:space="preserve">
+    <value>Klicken Sie auf das Symbol der Erweiterung, dann auf „Senden“, und erlauben Sie Ihrem Browser, Xiletrade zu öffnen.</value>
+  </data>
+  <data name="Config193_extPrivacy" xml:space="preserve">
+    <value>Nichts wird online gesendet: Das Sitzungscookie geht nur an Xiletrade auf diesem Computer, wo es verschlüsselt gespeichert wird.</value>
+  </data>
+  <data name="Config194_helpTagline" xml:space="preserve">
+    <value>Xiletrade ist kostenlos, quelloffen und werbefrei. Läuft mit Path of Exile 1 und 2.
+Es wächst dank Ihres Feedbacks und Ihrer Unterstützung.</value>
+  </data>
+  <data name="Config195_helpIssue1" xml:space="preserve">
+    <value>Erklären Sie, wie sich das Problem reproduzieren lässt.</value>
+  </data>
+  <data name="Config196_helpIssue2" xml:space="preserve">
+    <value>Preisprüfung: Fügen Sie den Gegenstand bei (Strg+C darauf).</value>
+  </data>
+  <data name="Config197_helpDonate1" xml:space="preserve">
+    <value>Spenden Sie einen Betrag Ihrer Wahl.</value>
+  </data>
+  <data name="Config198_helpDonate2" xml:space="preserve">
+    <value>Jeder Beitrag hilft, Xiletrade werbefrei zu halten.</value>
+  </data>
+  <data name="Config199_helpDiscord1" xml:space="preserve">
+    <value>Stellen Sie Ihre Fragen zur Nutzung von Xiletrade.</value>
+  </data>
+  <data name="Config200_helpDiscord2" xml:space="preserve">
+    <value>Verfolgen und diskutieren Sie die Entwicklung.</value>
+  </data>
+  <data name="Config201_extManual" xml:space="preserve">
+    <value>Fortgeschrittene Benutzer: Sie können die Sitzung auch manuell im Entwickler-Manager hinzufügen oder entfernen.
+Reiter Allgemein: „Dev“ ankreuzen, dann Manager &gt; Authentication.</value>
+  </data>
+  <data name="Config202_helpProject" xml:space="preserve">
+    <value>Das Projekt</value>
   </data>
   <data name="General001_Anomalous" xml:space="preserve">
     <value>anormal</value>
@@ -1088,8 +1153,8 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General139_MoreCurrency" xml:space="preserve">
     <value>Mehr Währung</value>
   </data>
-  <data name="General140_MoreScarabs" xml:space="preserve">
-    <value>Mehr Skarabäen</value>
+  <data name="General140_MoreThreads" xml:space="preserve">
+    <value>Mehr Fäden</value>
   </data>
   <data name="General141_MoreMaps" xml:space="preserve">
     <value>Mehr Karten</value>
@@ -1411,6 +1476,15 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   <data name="General246_CannotUse" xml:space="preserve">
     <value>Du kannst diesen Gegenstand nicht benutzen. Seine Eigenschaften werden ignoriert.</value>
   </data>
+  <data name="General247_Lesser" xml:space="preserve">
+    <value>(klein)</value>
+  </data>
+  <data name="General248_Greater" xml:space="preserve">
+    <value>(groß)</value>
+  </data>
+  <data name="General249_AtlasDrops" xml:space="preserve">
+    <value>Atlasbeute</value>
+  </data>
   <data name="ItemClass_allflame" xml:space="preserve">
     <value>Gluten der Allflamme</value>
   </data>
@@ -1626,6 +1700,9 @@ Dies deaktiviert alle Attribut-Modifikatorwerte! (keine Unique-Items)</value>
   </data>
   <data name="ItemClass_chart" xml:space="preserve">
     <value>Seekarte</value>
+  </data>
+  <data name="ItemClass_viscera" xml:space="preserve">
+    <value>Körperteile</value>
   </data>
   <data name="Main001_PriceSelect" xml:space="preserve">
     <value>Währungen auswählen:
@@ -2522,7 +2599,7 @@ Es werden keine Verkäufe ignoriert.</value>
     <value>Live</value>
   </data>
   <data name="Main298_LiveNoSession" xml:space="preserve">
-    <value>Live-Suche abgelehnt: ein gültiges Sitzungscookie ist erforderlich (Einstellungen, Authentifizierung).</value>
+    <value>Live-Suche abgelehnt: ein gültiges Sitzungscookie ist erforderlich (Einstellungen &gt; Erweiterung).</value>
   </data>
   <data name="Main299_LiveNotStarted" xml:space="preserve">
     <value>Die Live-Suche konnte nicht gestartet werden.</value>
@@ -2577,6 +2654,15 @@ Es werden keine Verkäufe ignoriert.</value>
   </data>
   <data name="Main318_LiveTooBroadPaused" xml:space="preserve">
     <value>Live-Suche pausiert: mehr als {0} neue Gegenstände in einer Minute, verfeinern Sie die Suche oder setzen Sie sie fort.</value>
+  </data>
+  <data name="Main319_LiveTime" xml:space="preserve">
+    <value>Uhrzeit</value>
+  </data>
+  <data name="Main320_LiveOpenSettings" xml:space="preserve">
+    <value>Einstellungen der Live-Suche öffnen</value>
+  </data>
+  <data name="Main321_OpenLive" xml:space="preserve">
+    <value>Live öffnen</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>
@@ -2848,7 +2934,7 @@ Es werden keine Daten automatisch gesendet: Sie können den Bericht vor dem Abse
   <data name="Error036_TravelNoToken" xml:space="preserve">
     <value>Ihr Sitzungscookie fehlt oder ist abgelaufen!
 
-Für fortgeschrittene Benutzer: Sie können Ihr Sitzungscookie in den Einstellungen über den Entwickler-Manager im Bereich Authentifizierung manuell aktualisieren.</value>
+Senden Sie es mit einem Klick über die Browsererweiterung Xiletrade Sync: Einstellungen &gt; Erweiterung.</value>
   </data>
   <data name="Error037_TravelAccount" xml:space="preserve">
     <value>Ist Ihr Konto richtig verbunden?</value>
@@ -2856,6 +2942,6 @@ Für fortgeschrittene Benutzer: Sie können Ihr Sitzungscookie in den Einstellun
   <data name="Error038_TravelSession" xml:space="preserve">
     <value>Ihr Sitzungscookie fehlt wahrscheinlich oder ist abgelaufen!
 
-Sie können es in den Einstellungen über den Entwickler-Manager im Bereich Authentifizierung manuell aktualisieren.</value>
+Senden Sie es erneut über die Browsererweiterung Xiletrade Sync: Einstellungen &gt; Erweiterung.</value>
   </data>
 </root>

@@ -22,6 +22,7 @@ public static partial class Strings
         internal const string Astrolabe = "Astrolabe";
         internal const string Ducat = "Ducat";
         internal const string EnshroudingCrystal = "EnshroudingCrystal";
+        internal const string Thread = "Thread";
 
         internal static readonly string[] ExchangeNames =
         [
@@ -30,7 +31,8 @@ public static partial class Strings
             Resonator, Essence, DivinationCard,
             Omen, DjinnCoin, Tattoo,
             AllflameEmber, Runegraft, Artifact,
-            Astrolabe, Ducat, EnshroudingCrystal
+            Astrolabe, Ducat, EnshroudingCrystal,
+            Thread
         ];
 
         // non currency exchange
@@ -58,6 +60,7 @@ public static partial class Strings
         internal const string UniqueTincture = "UniqueTincture";
         internal const string IncursionTemple = "IncursionTemple";
         internal const string Wombgift = "Wombgift";
+        internal const string Viscera = "Viscera";
 
         internal static readonly string[] ItemNames =
         [
@@ -67,7 +70,8 @@ public static partial class Strings
             UniqueRelic, SkillGem, ClusterJewel,
             Map, BlightedMap, BlightRavagedMap,
             UniqueMap, Invitation, IncursionTemple,
-            BaseType, Beast, Vial
+            BaseType, Beast, Vial,
+            Viscera
         ];
     }
 }

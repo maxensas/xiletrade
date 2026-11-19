@@ -1,6 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using Xiletrade.Library.Models.Application.LiveSearch;
 using Xiletrade.Library.Models.Poe.Domain.Parser;
+using Xiletrade.Library.Services;
+using Xiletrade.Library.ViewModels.Live;
 
 namespace Xiletrade.Library.ViewModels.Main.Form;
 
@@ -24,10 +28,16 @@ public sealed partial class TabViewModel : ViewModelBase
     private bool bulkEnable;
 
     [ObservableProperty]
+    private bool bulkVisible = true;
+
+    [ObservableProperty]
     private bool bulkSelected;
 
     [ObservableProperty]
     private bool shopEnable;
+
+    [ObservableProperty]
+    private bool shopVisible = true;
 
     [ObservableProperty]
     private bool shopSelected;
@@ -49,6 +59,28 @@ public sealed partial class TabViewModel : ViewModelBase
 
     [ObservableProperty]
     private bool historySelected;
+
+    /// <summary>
+    /// Tabs of the live searches, one by number (see <see cref="LiveSearchService.MaxSessions"/>) :
+    /// displayed with the custom search while their live search is listening.
+    /// </summary>
+    public LiveTabViewModel[] Lives { get; }
+
+    /// <summary>Tab of a live search selected, null : none.</summary>
+    internal LiveTabViewModel SelectedLive
+    {
+        get
+        {
+            foreach (var live in Lives)
+            {
+                if (live.IsSelected)
+                {
+                    return live;
+                }
+            }
+            return null;
+        }
+    }
 
     partial void OnQuickSelectedChanged(bool value) => OnSelectedChanged(value, useBulk: false);
 
@@ -73,23 +105,35 @@ public sealed partial class TabViewModel : ViewModelBase
         _form.UpdateMarket(useBulk);
     }
 
-    internal TabViewModel(FormViewModel form, bool useCustomOrBulk = false)
+    /// <param name="live">Live searches, displayed in their tabs with the custom search.</param>
+    internal TabViewModel(FormViewModel form, LiveSearchService live, bool useCustomOrBulk = false)
     {
         _form = form;
+        Lives = new LiveTabViewModel[LiveSearchService.MaxSessions];
+        for (int i = 0; i < Lives.Length; i++)
+        {
+            Lives[i] = new(live, i + 1, RestoreLive);
+        }
         if (useCustomOrBulk)
         {
             bulkEnable = shopEnable = customSearchEnable = customSearchSelected = true;
+            // hidden for now : the custom search and the tabs of its live searches
+            bulkVisible = shopVisible = false;
+
+            // the live searches go on when this form is closed
+            UpdateLives(live.GetSessions());
+            WeakReferenceMessenger.Default.Register<TabViewModel, LiveSearchStateMessage>(this,
+                static (vm, state) => vm.UpdateLives(state.Sessions));
         }
     }
 
-    internal TabViewModel(FormViewModel form, ItemData item)
+    internal TabViewModel(FormViewModel form, LiveSearchService live, ItemData item) : this(form, live)
     {
-        _form = form;
-
         var flag = item.Flag;
         if (item.State.ExchangeCurrency && (!flag.Rarity.Unique || flag.Map.IsMap))
         {
             bulkEnable = true;
+            shopEnable = true;
             HistoryEnable = true;
             HistorySelected = true;
         }
@@ -109,6 +153,37 @@ public sealed partial class TabViewModel : ViewModelBase
         }
     }
 
+    // tab of each live search listening, the custom search selected when the one selected ends
+    private void UpdateLives(LiveSearchInfo[] sessions)
+    {
+        foreach (var tab in Lives)
+        {
+            LiveSearchInfo info = null;
+            foreach (var session in sessions)
+            {
+                if (session.Number == tab.Number)
+                {
+                    info = session;
+                    break;
+                }
+            }
+            var wasSelected = tab.IsSelected;
+            tab.Update(info);
+            if (info is null && wasSelected)
+            {
+                tab.IsSelected = false;
+                CustomSearchSelected = true;
+            }
+        }
+    }
+
+    // criteria of a live search given back to the custom search, displayed
+    private void RestoreLive(LiveSearchCriteria criteria)
+    {
+        _form.CustomSearch?.RestoreLive(criteria);
+        CustomSearchSelected = true;
+    }
+
     [RelayCommand]
     private void SwitchTab(object commandParameter)
     {
@@ -120,7 +195,7 @@ public sealed partial class TabViewModel : ViewModelBase
             }
             if (tab is "detail")
             {
-                if (BulkEnable)
+                if (BulkEnable && BulkVisible)
                 {
                     BulkSelected = true;
                     return;
@@ -140,7 +215,7 @@ public sealed partial class TabViewModel : ViewModelBase
                 }
                 CustomSearchSelected = true;
             }
-            if (tab is "custom")
+            if (tab is "custom" && BulkVisible)
             {
                 BulkSelected = true;
             }

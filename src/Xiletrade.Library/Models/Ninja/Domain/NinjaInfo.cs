@@ -19,9 +19,11 @@ internal sealed record NinjaInfo : NinjaInfoBase
 {
     private readonly string _lvlMin;
     private readonly string _qualMin;
+    private readonly string[] _implicits; // viscera : english texts of the trade website
 
     internal string SubType { get; }
     internal bool Map { get; }
+    internal bool Viscera { get; }
 
     internal NinjaInfo(DataManagerService dm, PoeNinjaService ninja, MainViewModel vm) : base(dm, ninja, vm)
     {
@@ -33,7 +35,9 @@ internal sealed record NinjaInfo : NinjaInfoBase
 
         League = _vm.Form.League[_vm.Form.LeagueIndex];
         Map = item.Flag.Map.IsMap;
+        Viscera = item.Flag.Viscera;
         Name = GetName(xItem, item);
+        _implicits = Viscera ? GetImplicitTexts(xItem) : [];
 
         var subLink = GetSubLink(xItem, item, out bool isForbidden);
         var itemLink = subLink.Split('/');
@@ -53,6 +57,11 @@ internal sealed record NinjaInfo : NinjaInfoBase
         if (item.Flag.Rarity.Unique)
         {
             return item.NameEn;
+        }
+        if (item.Flag.Viscera)
+        {
+            // poe.ninja : one line by grade ("Greater Infested Torso")
+            return item.VisceraGrade.Length > 0 ? item.VisceraGrade + " " + item.TypeEn : item.TypeEn;
         }
         if (!item.Flag.Map.IsMap)
         {
@@ -229,6 +238,15 @@ internal sealed record NinjaInfo : NinjaInfoBase
         {
             tab = "unique-tinctures";
             useName = true;
+        }
+        if (item.Flag.Viscera)
+        {
+            // one line by base and implicits : its id is added to the link when found (see GetNinjaValueAsync)
+            tab = "viscera/";
+            useBase = false;
+            useName = false;
+            useLvl = false;
+            useInfluence = false;
         }
 
         if (!item.Flag.Map.IsMap)
@@ -550,9 +568,58 @@ internal sealed record NinjaInfo : NinjaInfoBase
             .Replace("\"", string.Empty).Replace("ö", "o").ToString().ToLowerInvariant();
     }
 
+    // english texts of the trade website of the implicit modifiers, selected or not
+    private string[] GetImplicitTexts(XiletradeItem xItem)
+    {
+        var texts = new List<string>(4);
+        foreach (var filter in xItem.ItemFilters)
+        {
+            if (!filter.Id.StartWith(Strings.Type.Implicit))
+            {
+                continue;
+            }
+            var text = _dm.FilterEn.GetFilterDataEntry(filter.Id)?.Text;
+            if (!string.IsNullOrEmpty(text))
+            {
+                texts.Add(text);
+            }
+        }
+        return [.. texts];
+    }
+
+    // same implicit modifiers : each text of the variant ("text / text") is one of the item
+    private bool IsSameVariant(ReadOnlySpan<char> variant)
+    {
+        if (variant.IsEmpty || _implicits.Length is 0)
+        {
+            return false;
+        }
+        int count = 0;
+        foreach (var range in variant.Split(" / "))
+        {
+            var part = variant[range];
+            bool found = false;
+            foreach (var text in _implicits)
+            {
+                if (part.SequenceEqual(text))
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                return false;
+            }
+            count++;
+        }
+        return count == _implicits.Length;
+    }
+
     private static string GetNinjaType(ItemData item, bool isForbidden)
     {
         return isForbidden ? Strings.NinjaTypeOne.ForbiddenJewel
+            : item.Flag.Viscera ? Strings.NinjaTypeOne.Viscera
             : item.Flag.Map.BlightRavaged ? Strings.NinjaTypeOne.BlightRavagedMap
             : item.Flag.Map.Blight ? Strings.NinjaTypeOne.BlightedMap
             : item.Flag.Map.IsMap && !item.Flag.Rarity.Unique ? Strings.NinjaTypeOne.Map
@@ -583,8 +650,9 @@ internal sealed record NinjaInfo : NinjaInfoBase
         }
         var firstLine = jsonItem.Lines?.FirstOrDefault();
 
-        var line = jsonItem.Lines.FirstOrDefault(x => Map ?
-            x.Name.SequenceEqual(Name) : x.Id == SubType);
+        var line = jsonItem.Lines.FirstOrDefault(x => Map ? x.Name.SequenceEqual(Name)
+            : Viscera ? x.Name.SequenceEqual(Name) && IsSameVariant(x.Variant)
+            : x.Id == SubType);
         return line is null ? null : new()
         {
             Id = line.Id,
