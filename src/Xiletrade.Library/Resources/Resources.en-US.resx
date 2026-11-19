@@ -357,7 +357,7 @@ Unselect all resistance mod values ! (not uniques)</value>
     <value>Price Check</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>Search / Exchange</value>
+    <value>Custom Search</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>Settings window</value>
@@ -402,7 +402,7 @@ Unselect all resistance mod values ! (not uniques)</value>
     <value>Display the price finder window when you click on an item in game using the shortcut.</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>Display The Custom Search and Bulk Item Exchange windows.</value>
+    <value>Display the custom search window, which can also start live searches.</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>Display Xiletrade settings window.</value>
@@ -2586,6 +2586,15 @@ No sale is ignored.</value>
   </data>
   <data name="Main318_LiveTooBroadPaused" xml:space="preserve">
     <value>Live search paused : more than {0} new items in one minute, refine the search or resume it.</value>
+  </data>
+  <data name="Main319_LiveTime" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="Main320_LiveOpenSettings" xml:space="preserve">
+    <value>Open the live search settings</value>
+  </data>
+  <data name="Main321_OpenLive" xml:space="preserve">
+    <value>Open live</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Welcome to Xiletrade</value>

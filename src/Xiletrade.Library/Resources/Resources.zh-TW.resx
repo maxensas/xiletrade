@@ -357,7 +357,7 @@
     <value>價格查詢</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>搜尋 / 交換</value>
+    <value>自訂搜尋</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>設定視窗</value>
@@ -402,7 +402,7 @@
     <value>當您使用快捷方式在遊戲中單擊某個項目時，將顯示價格查找器窗口。</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>顯示自訂搜尋和批量物品交換視窗。</value>
+    <value>顯示自訂搜尋視窗，也可在其中啟動即時搜尋。</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>顯示Xiletrade設置窗口。</value>
@@ -2665,6 +2665,15 @@
   </data>
   <data name="Main318_LiveTooBroadPaused" xml:space="preserve">
     <value>即時搜尋已暫停：一分鐘內新物品超過 {0} 個，請縮小搜尋範圍或繼續搜尋。</value>
+  </data>
+  <data name="Main319_LiveTime" xml:space="preserve">
+    <value>時間</value>
+  </data>
+  <data name="Main320_LiveOpenSettings" xml:space="preserve">
+    <value>開啟即時搜尋設定</value>
+  </data>
+  <data name="Main321_OpenLive" xml:space="preserve">
+    <value>開啟即時</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>歡迎來到Xiletrade</value>

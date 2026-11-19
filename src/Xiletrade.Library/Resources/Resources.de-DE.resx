@@ -357,7 +357,7 @@ Deaktivieren Sie alle Widerstandsmod-Werte! (keine Unikate)</value>
     <value>Preischeck</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>Suche / Austausch</value>
+    <value>Benutzerdefinierte Suche</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>Einstellungsfenster</value>
@@ -402,7 +402,7 @@ Deaktivieren Sie alle Widerstandsmod-Werte! (keine Unikate)</value>
     <value>Zeigen Sie das Preisfinderfenster an, wenn Sie mit der Verknüpfung auf einen Gegenstand im Spiel klicken.</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>Zeigt die Fenster „Benutzerdefinierte Suche“ und „Massenartikelaustausch“ an.</value>
+    <value>Zeigt das Fenster der benutzerdefinierten Suche an, in dem auch Live-Suchen gestartet werden können.</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>Fenster Xiletrade-Einstellungen anzeigen.</value>
@@ -2586,6 +2586,15 @@ Es werden keine Verkäufe ignoriert.</value>
   </data>
   <data name="Main318_LiveTooBroadPaused" xml:space="preserve">
     <value>Live-Suche pausiert: mehr als {0} neue Gegenstände in einer Minute, verfeinern Sie die Suche oder setzen Sie sie fort.</value>
+  </data>
+  <data name="Main319_LiveTime" xml:space="preserve">
+    <value>Uhrzeit</value>
+  </data>
+  <data name="Main320_LiveOpenSettings" xml:space="preserve">
+    <value>Einstellungen der Live-Suche öffnen</value>
+  </data>
+  <data name="Main321_OpenLive" xml:space="preserve">
+    <value>Live öffnen</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Willkommen bei Xiletrade</value>

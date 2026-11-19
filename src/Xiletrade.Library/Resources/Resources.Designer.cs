@@ -761,7 +761,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Localized string similar to => Bulk Exchange.
+        ///   Localized string similar to => Custom Search.
         /// </summary>
         public static string Config078_lbBulkEx {
             get {
@@ -896,7 +896,7 @@ namespace Xiletrade.Library.Resources {
         }
         
         /// <summary>
-        ///   Localized string similar to => Display The Bulk item Exchange window..
+        ///   Localized string similar to => Display the custom search window, which can also start live searches..
         /// </summary>
         public static string Config093_lbBulkExTip {
             get {
@@ -7698,6 +7698,33 @@ namespace Xiletrade.Library.Resources {
             get
             {
                 return ResourceManager.GetString("Main318_LiveTooBroadPaused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Localized string similar to => Time.
+        /// </summary>
+        public static string Main319_LiveTime {
+            get {
+                return ResourceManager.GetString("Main319_LiveTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Localized string similar to => Open the live search settings.
+        /// </summary>
+        public static string Main320_LiveOpenSettings {
+            get {
+                return ResourceManager.GetString("Main320_LiveOpenSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Localized string similar to => Open live.
+        /// </summary>
+        public static string Main321_OpenLive {
+            get {
+                return ResourceManager.GetString("Main321_OpenLive", resourceCulture);
             }
         }
 

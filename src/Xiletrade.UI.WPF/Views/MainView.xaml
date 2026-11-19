@@ -157,9 +157,37 @@
                         </TabItem.Style>
                         <uc:Search/>
                     </TabItem>
+                    <!-- TODO: make dynamic tabs -->
+                    <!-- Live search 1 : its tab while it is listening (custom search) -->
+                    <TabItem Header="{Binding Form.Tab.Lives[0].Header}" IsSelected="{Binding Form.Tab.Lives[0].IsSelected}"
+                             Visibility="{Binding Form.Tab.Lives[0].IsActive, Converter={StaticResource bool2VisibilityConverter}, FallbackValue=Collapsed}"
+                             IsEnabled="{Binding Path=Form.Freeze, Converter={StaticResource inverseBooleanConverter}}">
+                        <uc:LiveTab DataContext="{Binding Form.Tab.Lives[0]}"/>
+                    </TabItem>
+
+                    <!-- Live search 2 : its tab while it is listening (custom search) -->
+                    <TabItem Header="{Binding Form.Tab.Lives[1].Header}" IsSelected="{Binding Form.Tab.Lives[1].IsSelected}"
+                             Visibility="{Binding Form.Tab.Lives[1].IsActive, Converter={StaticResource bool2VisibilityConverter}, FallbackValue=Collapsed}"
+                             IsEnabled="{Binding Path=Form.Freeze, Converter={StaticResource inverseBooleanConverter}}">
+                        <uc:LiveTab DataContext="{Binding Form.Tab.Lives[1]}"/>
+                    </TabItem>
+
+                    <!-- Live search 3 : its tab while it is listening (custom search) -->
+                    <TabItem Header="{Binding Form.Tab.Lives[2].Header}" IsSelected="{Binding Form.Tab.Lives[2].IsSelected}"
+                             Visibility="{Binding Form.Tab.Lives[2].IsActive, Converter={StaticResource bool2VisibilityConverter}, FallbackValue=Collapsed}"
+                             IsEnabled="{Binding Path=Form.Freeze, Converter={StaticResource inverseBooleanConverter}}">
+                        <uc:LiveTab DataContext="{Binding Form.Tab.Lives[2]}"/>
+                    </TabItem>
+
+                    <!-- Live search 4 : its tab while it is listening (custom search) -->
+                    <TabItem Header="{Binding Form.Tab.Lives[3].Header}" IsSelected="{Binding Form.Tab.Lives[3].IsSelected}"
+                             Visibility="{Binding Form.Tab.Lives[3].IsActive, Converter={StaticResource bool2VisibilityConverter}, FallbackValue=Collapsed}"
+                             IsEnabled="{Binding Path=Form.Freeze, Converter={StaticResource inverseBooleanConverter}}">
+                        <uc:LiveTab DataContext="{Binding Form.Tab.Lives[3]}"/>
+                    </TabItem>
 
                     <!-- Bulk Tab -->
-                    <TabItem x:Name="tabItemExchange" Header="{ext:Localization Main086_tabItemExchange}" IsSelected="{Binding Form.Tab.BulkSelected}">
+                    <TabItem x:Name="tabItemExchange" Header="{ext:Localization Main086_tabItemExchange}" IsSelected="{Binding Form.Tab.BulkSelected}" Visibility="{Binding Form.Tab.BulkVisible, Converter={StaticResource bool2VisibilityConverter}}">
                         <TabItem.Style>
                             <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
                                 <Style.Triggers>
@@ -176,7 +204,7 @@
                     </TabItem>
 
                     <!-- Shop Tab -->
-                    <TabItem x:Name="tabItemShop" Header="{ext:Localization Main206_tabItemShop}" IsSelected="{Binding Form.Tab.ShopSelected}">
+                    <TabItem x:Name="tabItemShop" Header="{ext:Localization Main206_tabItemShop}" IsSelected="{Binding Form.Tab.ShopSelected}" Visibility="{Binding Form.Tab.ShopVisible, Converter={StaticResource bool2VisibilityConverter}}">
                         <TabItem.Style>
                             <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource {x:Type TabItem}}">
                                 <Style.Triggers>

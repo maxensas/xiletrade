@@ -681,7 +681,7 @@ public sealed class PoeApiService
     }
 
 
-    private static string GetQuality(FetchDataInfo info)
+    internal static string GetQuality(FetchDataInfo info)
     {
         var qual = info.Item.Properties?.FirstOrDefault(x => x.Name.Contain(Strings.ItemApi.Quality));
         if (qual?.Values[0] is not null)

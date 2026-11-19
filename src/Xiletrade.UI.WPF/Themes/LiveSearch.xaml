@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:live="clr-namespace:Xiletrade.Library.ViewModels.Live;assembly=Xiletrade.Library"
                     xmlns:uc="clr-namespace:Xiletrade.UI.WPF.UserControls.Main">
-    <!-- buttons of the live searches : overlay over the game (pause all, stop all) and live searches of the custom search -->
+    <!-- buttons of the live searches : overlay over the game (pause all, stop all) and tabs of the live searches -->
     <!-- colors of the live searches : dot running or paused, stop -->
     <SolidColorBrush x:Key="LiveRunningBrush" Color="#FF3CB043"/>
     <SolidColorBrush x:Key="LivePausedBrush" Color="#FFFFA000"/>
@@ -33,7 +33,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <!-- smaller, in a live search of the custom search -->
+    <!-- smaller, in the tab of a live search (LiveTab) -->
     <Style x:Key="LiveSlotButton" TargetType="{x:Type Button}" BasedOn="{StaticResource OverlayButton}">
         <Setter Property="Width" Value="20"/>
         <Setter Property="Height" Value="22"/>

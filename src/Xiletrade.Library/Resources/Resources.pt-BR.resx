@@ -357,7 +357,7 @@ Desmarque todos os valores do mod de resistência! (não únicos)</value>
     <value>Verificação de preço</value>
   </data>
   <data name="Config078_lbBulkEx" xml:space="preserve">
-    <value>Pesquisar / Trocar</value>
+    <value>Pesquisa personalizada</value>
   </data>
   <data name="Config079_lbSettingsWin" xml:space="preserve">
     <value>Janela de configurações</value>
@@ -402,7 +402,7 @@ Desmarque todos os valores do mod de resistência! (não únicos)</value>
     <value>Exibe a janela do localizador de preços ao clicar em um item no jogo usando o atalho.</value>
   </data>
   <data name="Config093_lbBulkExTip" xml:space="preserve">
-    <value>Exibe as janelas de Pesquisa Personalizada e Troca em Massa de Itens.</value>
+    <value>Exibe a janela de pesquisa personalizada, que também permite iniciar buscas ao vivo.</value>
   </data>
   <data name="Config094_lbSettingsWinTip" xml:space="preserve">
     <value>Exibir janela de configurações do Xiletrade.</value>
@@ -2589,6 +2589,15 @@ Nenhuma venda será ignorada.</value>
   </data>
   <data name="Main318_LiveTooBroadPaused" xml:space="preserve">
     <value>Busca ao vivo pausada: mais de {0} itens novos em um minuto, refine a busca ou retome-a.</value>
+  </data>
+  <data name="Main319_LiveTime" xml:space="preserve">
+    <value>Hora</value>
+  </data>
+  <data name="Main320_LiveOpenSettings" xml:space="preserve">
+    <value>Abrir os parâmetros da busca ao vivo</value>
+  </data>
+  <data name="Main321_OpenLive" xml:space="preserve">
+    <value>Abrir ao vivo</value>
   </data>
   <data name="Start001_lblWelcome" xml:space="preserve">
     <value>Bem-vindo ao Xiletrade</value>

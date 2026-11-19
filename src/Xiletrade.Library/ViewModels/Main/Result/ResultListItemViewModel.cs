@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Xiletrade.Library.Models.Poe.Contract;
 using Xiletrade.Library.Models.Poe.Domain;
+using Xiletrade.Library.Services;
 using Xiletrade.Library.Shared;
 using Xiletrade.Library.Shared.Enum;
 
@@ -7,6 +9,11 @@ namespace Xiletrade.Library.ViewModels.Main.Result;
 
 public sealed partial class ResultListItemViewModel : ViewModelBase
 {
+    // live search : the item is built when it is displayed first (see Item)
+    private readonly DataManagerService _dm;
+    private readonly ItemDataApi _itemData;
+    private SaleItem _item;
+
     [ObservableProperty]
     private int index;
 
@@ -22,8 +29,12 @@ public sealed partial class ResultListItemViewModel : ViewModelBase
     public string Tag { get; }
 
     public SaleInfo Info { get; }
-    public SaleItem Item { get; }
+    /// <summary>Item of the result (tooltip, item level) : built when it is displayed first for a live search.</summary>
+    public SaleItem Item => _item ??= _itemData is null ? null : new(_dm, _itemData);
     public CurrencyInfo Currency { get; }
+
+    /// <summary>Live search : time the result appeared, instead of its age.</summary>
+    public string Time { get; }
 
     public ResultListItemViewModel(string cont)
     {
@@ -35,9 +46,18 @@ public sealed partial class ResultListItemViewModel : ViewModelBase
         CurrencyInfo curInfo, TradeStatus status) : this(string.Empty)
     {
         fgColor = Strings.Status.GetColorStatus(status);
-        Item = saleItem;
+        _item = saleItem;
         Info = saleInfo;
         Currency = curInfo;
+    }
+
+    // live search : the item is built when it is displayed (only the lines visible in the list)
+    internal ResultListItemViewModel(DataManagerService dm, ItemDataApi itemData, SaleInfo saleInfo,
+        CurrencyInfo curInfo, TradeStatus status, string time) : this(saleItem: null, saleInfo, curInfo, status)
+    {
+        _dm = dm;
+        _itemData = itemData;
+        Time = time;
     }
 
     // bulk and shop
